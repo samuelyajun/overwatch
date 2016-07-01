@@ -23,12 +23,12 @@ render(
     <Provider store = {store}>
         <Router history={browserHistory}>
             <Route path="/" component={App}>
-                    <IndexRoute component={HomePage} />
-                    <Route path="schedule" component={SchedulePage} />
-                    <Route path="report" component={ReportPage} />
-                    <Route path="survey" component={ManageSurveyPage} />
-                </Route>
-                <Route path="/survey/:id" component={SurveyPage} />
+                <IndexRoute component={HomePage} />
+                <Route path="schedules" component={SchedulePage} />
+                <Route path="report" component={ReportPage} />
+                <Route path="survey" component={ManageSurveyPage} />
+            </Route>
+            <Route path="/survey/:id" component={SurveyPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );
