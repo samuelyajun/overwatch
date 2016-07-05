@@ -9,7 +9,7 @@ class CheckboxGroup extends React.Component {
 
     render() {
         return(
-            <div class="form-group">
+            <div className="form-group">
                    {
                         this.props.list.map((obj) => {
                             return (
