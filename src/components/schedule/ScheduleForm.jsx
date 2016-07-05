@@ -1,21 +1,67 @@
 import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
+import CheckboxGroup from '../common/CheckboxGroup.jsx';
 
 class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
+        const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        this.days = daysOfTheWeek;
+
         this.onClickSubmit = this.onClickSubmit.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
+        this.updateDays = this.updateDays.bind(this);
 
         this.state = {
-            schedule: {username: 'test'}
+            schedule: {
+                username: 'test',
+                survey: '',
+                client: '',
+                project: '',
+                frequency: '',
+                role: '',
+                startDate: '',
+                endDate: '',
+                office: '',
+                days: []
+            }
         };
     }
 
     onClickSubmit() {
         console.log(this.state.schedule);
+    }
+
+    onUpdate(event) {
+        const property = event.target.name;
+        let val = event.target.value;
+        let schedule = Object.assign({}, this.state.schedule);
+        schedule[property] = event.target.value;
+        console.log(property);
+        console.log(val);
+        return this.setState({schedule});
+    }
+
+    updateDays(event) {
+        let isChecked = event.target.checked;
+        let schedule = Object.assign({}, this.state.schedule);
+        let days = schedule['days'];
+        let name = event.target.name;
+
+        if (isChecked) {
+            days.push(name);
+        } else {
+            let dayIndex = days.indexOf(name);
+            if (dayIndex != -1) {
+                days.splice(dayIndex, 1);
+            }
+        }
+        console.log(days);
+        schedule['days'] = days;
+        return this.setState({schedule});
     }
 
     render() {
@@ -28,17 +74,20 @@ class ScheduleForm extends React.Component {
                                 name="usernameInput"
                                 label="Username"
                                 placeholder="Enter username"
-                                onchange={() => {}}
+                                onChange={this.onClickSubmit}
                             />
                         </div>
                         <div className="col-md-2">
                             <SelectInput
-                                name="surveySelect"
+                                name="survey"
                                 label="Select a Survey"
-                                defaultOption="Sprint Checkup"
-                                value="SC"
-                                onChange={() => {}}
+                                value={this.state.schedule.survey}
+                                onChange={this.onUpdate}
                                 options={[
+                                    {
+                                        text: 'Sprint Checkup',
+                                        value: 'SC'
+                                    },
                                     {
                                         text: "SPD Team",
                                         value: "ST"
@@ -65,7 +114,8 @@ class ScheduleForm extends React.Component {
                                 name="startDate"
                                 label="Start Date"
                                 type="date"
-                                onchange={() => {}}
+                                value={this.state.schedule.startDate}
+                                onChange={this.onUpdate}
                             />
                         </div>
                         <div className="col-md-2">
@@ -73,7 +123,8 @@ class ScheduleForm extends React.Component {
                                 name="endDate"
                                 label="End Date"
                                 type="date"
-                                onchange={() => {}}
+                                value={this.state.schedule.endDate}
+                                onChange={this.onUpdate}
                             />
                         </div>
                     </div>
@@ -81,8 +132,11 @@ class ScheduleForm extends React.Component {
                    <div className="row">
                         <div className="col-md-8">
                             <fieldset className="form-group">
-                                <label>Choose atleast one day:</label>
-
+                                <label>Choose at least one day:</label>
+                                <CheckboxGroup
+                                    list={this.days}
+                                    onClick={this.updateDays}
+                                />
                             </fieldset>
                         </div>
                     </div>
@@ -92,10 +146,13 @@ class ScheduleForm extends React.Component {
                             <SelectInput
                                 name="frequency"
                                 label="Frequency"
-                                defaultOption="1 Week"
-                                value="1"
-                                onChange={() => {}}
+                                value={this.state.schedule.frequency}
+                                onChange={this.onUpdate}
                                 options={[
+                                    {
+                                        text: "1 Week",
+                                        value: "1"
+                                    },
                                     {
                                         text: "2 Weeks",
                                         value: "2"
@@ -123,8 +180,8 @@ class ScheduleForm extends React.Component {
                                         name="client"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value=""
-                                        onChange={() => {}}
+                                        value={this.state.schedule.client}
+                                        onChange={this.onUpdate}
                                         options={[
 
                                         ]}
@@ -135,8 +192,8 @@ class ScheduleForm extends React.Component {
                                         name="project"
                                         label="Project"
                                         defaultOption="-choose-"
-                                        value=""
-                                        onChange={() => {}}
+                                        value={this.state.schedule.project}
+                                        onChange={this.onUpdate}
                                         options={[
 
                                         ]}
@@ -150,10 +207,13 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        defaultOption="Beaverton"
-                                        value="beaverton"
-                                        onChange={() => {}}
+                                        value={this.state.schedule.office}
+                                        onChange={this.onUpdate}
                                         options={[
+                                            {
+                                                text: 'Beaverton',
+                                                value: 'beaverton'
+                                            },
                                             {
                                                 text: "Baltimore",
                                                 value: "baltimore"
@@ -165,10 +225,13 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="role"
                                         label="Role"
-                                        defaultOption="Engagement Manager"
-                                        value="EM"
-                                        onChange={() => {}}
+                                        value={this.state.schedule.role}
+                                        onChange={this.onUpdate}
                                         options={[
+                                            {
+                                                text: 'Engagement Manager',
+                                                value: 'EM'
+                                            },
                                             {
                                                 text: "Tech Lead",
                                                 value: "TL"

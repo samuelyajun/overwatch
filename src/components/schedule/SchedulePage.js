@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../common/Header';
-import ScheduleForm from "./scheduleForm.jsx";
+import ScheduleForm from "./ScheduleForm.jsx";
 
 const scheduleOuterDivStyle = {
     marginTop: '75px'

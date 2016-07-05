@@ -1,5 +1,5 @@
 import React from 'react';
-import ScheduleForm from './scheduleForm.jsx';
+import ScheduleForm from './ScheduleForm.jsx';
 import {connect} from 'react-redux';
 
 class CreateSchedule extends React.Component {
