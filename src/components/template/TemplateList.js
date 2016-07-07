@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import QuestionListRow from './QuestionListRow';
+import TemplateListRow from './TemplateListRow';
 
-const TemplatePage = ({template}) => {
+const TemplateList = ({templates}) => {
     return (
         <table className="table">
             <thead>
@@ -10,20 +10,21 @@ const TemplatePage = ({template}) => {
                 <th>Name</th>
                 <th>Type</th>
                 <th>Description</th>
-
+                <th>Created on</th>
+                <th>Version</th>
             </tr>
             </thead>
             <tbody>
-            {questions.map(template =>
-                <QuestionsListRow key={template.question.id} question={question} />
+            {templates.map(template =>
+                <TemplateListRow key={template.id} course={template} />
             )}
             </tbody>
         </table>
     );
 };
 
-TemplatePage.propTypes = {
-    questions: PropTypes.array.isRequired
+TemplateList.propTypes = {
+    templates: PropTypes.array.isRequired
 };
 
-export default TemplatePage;
+export default TemplateList;

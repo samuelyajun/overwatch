@@ -10,6 +10,7 @@ const QuestionList = ({questions}) => {
                 <th>Name</th>
                 <th>Type</th>
                 <th>Description</th>
+                <th>Response Type</th>
             </tr>
             </thead>
             <tbody>

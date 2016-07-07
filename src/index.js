@@ -13,8 +13,9 @@ import App from './container/App';
 import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
 import ReportPage from './components/report/ReportPage';
-import SurveyPage from './components/survey/SurveyPage';
-import ManageSurveyPage from './components/survey/ManageSurveyPage';
+import TemplatesPage from './components/template/TemplatesPage';
+import SurveyResponsePage from './components/survey/SurveyResponsePage';
+
 
 
 const store = configureStore();
@@ -26,9 +27,9 @@ render(
                     <IndexRoute component={HomePage} />
                     <Route path="schedule" component={SchedulePage} />
                     <Route path="report" component={ReportPage} />
-                    <Route path="survey" component={ManageSurveyPage} />
+                    <Route path="templates" component={TemplatesPage} />
                 </Route>
-                <Route path="/survey/:id" component={SurveyPage} />
+                <Route path="/survey/:id" component={SurveyResponsePage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

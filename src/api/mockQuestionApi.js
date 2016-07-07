@@ -1,3 +1,5 @@
+import delay from './delay';
+
 const questions =  [
         {
             "id": 1,
