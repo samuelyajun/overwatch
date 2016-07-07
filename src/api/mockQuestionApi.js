@@ -1,5 +1,4 @@
 import delay from './delay';
-
 const questions =  [
         {
             "id": 1,
@@ -381,7 +380,7 @@ const questions =  [
                 }
             }
         }
-    ]
+    ];
 
 function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
@@ -402,11 +401,11 @@ class QuestionApi {
     }
 
     static saveQuestion(question) {
-        course = Object.assign({}, question); // to avoid manipulating object passed in.
+        question = Object.assign({}, question); // to avoid manipulating object passed in.
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 // Simulate server-side validation
-                const minCourseNameLength = 1;
+                const minQuestionNameLength = 1;
                 if (question.name.length < minQuestionNameLength) {
                     reject(`Name must be at least ${minQuestionNameLength} characters.`);
                 }
@@ -414,7 +413,7 @@ class QuestionApi {
                 if (question.id) {
                     const existingQuestionIndex = questions.findIndex(a => a.id == question.id);
                    // questions.splice(existingCourseIndex, 1, course);
-                    return error;
+                    return "Error Finding Question";
                 } else {
                     //Just simulating creation here.
                     //The server would generate ids and watchHref's for new courses in a real app.

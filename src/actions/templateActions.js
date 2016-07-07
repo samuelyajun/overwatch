@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import templateApi from '../api/mockTemplateApi';
-import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
+import {initiateAjaxRequest, ajaxRequestError} from './ajaxStatusActions';
 
 export function loadTemplatesSuccess(templates) {
     return { type: types.LOAD_TEMPLATES_SUCCESS, templates};
@@ -16,9 +16,9 @@ export function updateTemplateSuccess(template) {
 
 export function loadTemplates() {
     return function(dispatch) {
-        dispatch(beginAjaxCall());
+        dispatch(initiateAjaxRequest());
         return templateApi.getAllTemplates().then(templates => {
-            dispatch(loadTemplateSuccess(templates));
+            dispatch(loadTemplatesSuccess(templates));
         }).catch(error => {
             throw(error);
         });
@@ -27,12 +27,12 @@ export function loadTemplates() {
 
 export function saveTemplate(template) {
     return function(dispatch, getState) {
-        dispatch(beginAjaxCall());
+        dispatch(initiateAjaxRequest());
         return templateApi.saveTemplate(template).then(savedTemplate => {
             template.id ? dispatch(updateTemplateSuccess(savedTemplate)) :
                 dispatch(createTemplateSuccess(savedTemplate));
         }).catch(error => {
-            dispatch(ajaxCallError(error));
+            dispatch(ajaxRequestError(error));
             throw(error);
         });
     };

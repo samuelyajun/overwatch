@@ -1,3 +1,4 @@
+/*
 const tags = [
     {
         "id": 1,
@@ -157,4 +158,53 @@ const tags = [
     }
 ];
 
-export default TagApi;
+class TagApi {
+    static getAllTags() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(Object.assign([], templates));
+            }, delay);
+        });
+    }
+
+    static saveTemplate(template) {
+        template = Object.assign({}, template); // to avoid manipulating object passed in.
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Simulate server-side validation
+                const minTemplateNameLength = 1;
+                if (template.name.length < minTemplateNameLength) {
+                    reject(`Name must be at least ${minTemplateNameLength} characters.`);
+                }
+
+                if (template.id) {
+                    const existingTemplateIndex = templates.findIndex(a => a.id == template.id);
+                    templates.splice(existingTemplateIndex, 1, template);
+                } else {
+                    //Just simulating creation here.
+                    //The server would generate ids and watchHref's for new courses in a real app.
+                    //Cloning so copy returned is passed by value rather than by reference.
+                    template.id = generateId(template);
+                    template.watchHref = `http://www.pluralsight.com/courses/${template.id}`;
+                    template.push(template);
+                }
+
+                resolve(template);
+            }, delay);
+        });
+    }
+
+    /!*static deleteTemplate(templateId) {
+     return new Promise((resolve, reject) => {
+     setTimeout(() => {
+     const indexOfTemplateToDelete = templates.findIndex(template => {
+     template.templateId == templateId;
+     });
+     templates.splice(indexOfTemplateToDelete, 1);
+     resolve();
+     }, delay);
+     });
+     }*!/
+}
+
+export default TagApi;*/

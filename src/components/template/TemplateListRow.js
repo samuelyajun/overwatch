@@ -14,7 +14,7 @@ const TemplateListRow = ({template}) => {
     );
 };
 
-CourseListRow.propTypes = {
+TemplateListRow.propTypes = {
     template: PropTypes.object.isRequired
 };
 

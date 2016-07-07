@@ -1,7 +1,8 @@
+/*
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as surveyActions from '../../actions/surveyActions';
+/!*import * as surveyActions from '../../actions/surveyActions';*!/
 import {browserHistory} from 'react-router';
 
 const surveyPageOuterDiv = {
@@ -42,11 +43,11 @@ SurveyPage.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+/!*function mapStateToProps(state, ownProps) {
     return{
-        surveyss: state.surveys
+        surveys: state.surveys
     };
-}
+}*!/
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -54,4 +55,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(SurveyPage);
+export default connect (mapStateToProps, mapDispatchToProps)(SurveyPage);*/

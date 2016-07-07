@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as templateActions from '../../actions/templateActions';
+import toastr from 'toastr';
 
 const templateOuterDivStyle = {
     marginTop: '75px'
@@ -52,12 +56,46 @@ class ManageTemplatePage extends React.Component {
     render() {
         return (
             <div style={templateOuterDivStyle}>
-                <h1>ManageTemplate Page</h1>
-                <p>ManageTemplate Page</p>
+                <TemplateForm
+                    onChange={this.updateTemplateState}
+                    onSave={this.saveTemplate}
+                    course={this.state.template}
+                    errors={this.state.errors}
+                    saving={this.state.saving}
+                />
             </div>
         );
     }
 
 }
 
-export default ManageTemplatePage;
+ManageTemplatePage.propTypes = {
+    template: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+};
+
+ManageTemplatePage.contextTypes = {
+    router: PropTypes.object
+};
+
+function mapStateToProps(state, ownProps){
+    const templateId = ownProps.params.id;
+    let template = {id: '', watchHref: '', name: '', type: '', description: '', createDate: '', version: ''};
+
+    /*if(templateId && state.templates.length > 0) {
+        template = getTemplateById(state.templates, templateId);
+    }*/
+
+    return {
+        template: template
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(templateActions, dispatch)
+    };
+}
+
+
+export default  connect(mapStateToProps, mapDispatchToProps)(ManageTemplatePage);
