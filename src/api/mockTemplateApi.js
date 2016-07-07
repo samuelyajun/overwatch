@@ -1,3 +1,4 @@
+import delay from './delay';
 const templates = [
     {
         "id": 1,

@@ -5,7 +5,7 @@ import * as templateActions from '../../actions/templateActions';
 import TemplateList from './TemplateList';
 import {browserHistory} from 'react-router';
 
-const TemplatesPage extends React.Component {
+class TemplatesPage extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -36,8 +36,7 @@ const TemplatesPage extends React.Component {
 }
 
 TemplatesPage.propTypes = {
-    templates: PropTypes.array.isRequired,
-    questions: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -52,4 +51,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default (mapStateToProps, mapDispatchToProps)(TemplatesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TemplatesPage);
