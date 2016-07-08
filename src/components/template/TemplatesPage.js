@@ -17,7 +17,7 @@ class TemplatesPage extends React.Component {
     }
 
     redirectToAddTemplatePage() {
-        browserHistory.push('/manageTemplatePage');
+        browserHistory.push('/template');
     }
 
     render() {
@@ -36,7 +36,8 @@ class TemplatesPage extends React.Component {
 }
 
 TemplatesPage.propTypes = {
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

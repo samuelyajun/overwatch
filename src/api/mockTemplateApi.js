@@ -9,13 +9,13 @@ const templates = [
         "version": "v1.0",
         "_links": {
             "self": {
-                "href": "http://localhost:8090/templates/1"
+                "href": "http://localhost:3000/templates/1"
             },
             "template": {
-                "href": "http://localhost:8090/templates/1"
+                "href": "http://localhost:3000/templates/1"
             },
             "questions": {
-                "href": "http://localhost:8090/templates/1/questions"
+                "href": "http://localhost:3000/templates/1/questions"
             }
         }
     },
@@ -28,13 +28,13 @@ const templates = [
             "version": "v1.0",
             "_links": {
                 "self": {
-                    "href": "http://localhost:8090/templates/2"
+                    "href": "http://localhost:3000/templates/2"
                 },
                 "template": {
-                    "href": "http://localhost:8090/templates/2"
+                    "href": "http://localhost:3000/templates/2"
                 },
                 "questions": {
-                    "href": "http://localhost:8090/templates/2/questions"
+                    "href": "http://localhost:3000/templates/2/questions"
                 }
             }
         },
@@ -47,13 +47,13 @@ const templates = [
             "version": "v1.0",
             "_links": {
                 "self": {
-                    "href": "http://localhost:8090/templates/3"
+                    "href": "http://localhost:3000/templates/3"
                 },
                 "template": {
-                    "href": "http://localhost:8090/templates/3"
+                    "href": "http://localhost:3000/templates/3"
                 },
                 "questions": {
-                    "href": "http://localhost:8090/templates/3/questions"
+                    "href": "http://localhost:3000/templates/3/questions"
                 }
             }
         },
@@ -66,13 +66,13 @@ const templates = [
             "version": "v1.0",
             "_links": {
                 "self": {
-                    "href": "http://localhost:8090/templates/4"
+                    "href": "http://localhost:3000/templates/4"
                 },
                 "template": {
-                    "href": "http://localhost:8090/templates/4"
+                    "href": "http://localhost:3000/templates/4"
                 },
                 "questions": {
-                    "href": "http://localhost:8090/templates/4/questions"
+                    "href": "http://localhost:3000/templates/4/questions"
                 }
             }
         },
@@ -85,13 +85,13 @@ const templates = [
             "version": "v1.0",
             "_links": {
                 "self": {
-                    "href": "http://localhost:8090/templates/5"
+                    "href": "http://localhost:3000/templates/5"
                 },
                 "template": {
-                    "href": "http://localhost:8090/templates/5"
+                    "href": "http://localhost:3000/templates/5"
                 },
                 "questions": {
-                    "href": "http://localhost:8090/templates/5/questions"
+                    "href": "http://localhost:3000/templates/5/questions"
                 }
             }
         }

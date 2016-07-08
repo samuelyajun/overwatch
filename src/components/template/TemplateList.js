@@ -16,7 +16,7 @@ const TemplateList = ({templates}) => {
             </thead>
             <tbody>
             {templates.map(template =>
-                <TemplateListRow key={template.id} course={template} />
+                <TemplateListRow key={template.id} template={template} />
             )}
             </tbody>
         </table>
