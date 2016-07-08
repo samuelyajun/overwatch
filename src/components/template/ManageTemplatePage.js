@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as templateActions from '../../actions/templateActions';
+import TemplateForm from './TemplateForm';
 import toastr from 'toastr';
 
 const templateOuterDivStyle = {
@@ -56,13 +57,7 @@ class ManageTemplatePage extends React.Component {
     render() {
         return (
             <div style={templateOuterDivStyle}>
-                <TemplateForm
-                    onChange={this.updateTemplateState}
-                    onSave={this.saveTemplate}
-                    course={this.state.template}
-                    errors={this.state.errors}
-                    saving={this.state.saving}
-                />
+
             </div>
         );
     }

@@ -17,7 +17,7 @@ class TemplatesPage extends React.Component {
     }
 
     redirectToAddTemplatePage() {
-        browserHistory.push('/template');
+        browserHistory.push('/manageTemplatePage');
     }
 
     render() {

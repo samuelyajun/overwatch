@@ -20,6 +20,7 @@ class Header extends React.Component {
                             <li><Link to="/schedule" activeclassNameName="active">Schedule</Link></li>
                             <li><Link to="/survey" activeclassNameName="active">Survey</Link></li>
                             <li><Link to="/report" activeclassNameName="active">Report</Link></li>
+                            <li><Link to="/templates" activeclassNameName="active">Templates</Link></li>
                         </ul>
                     </div>
                 </div>

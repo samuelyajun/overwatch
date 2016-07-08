@@ -23,6 +23,7 @@ const QuestionList = ({questions}) => {
 };
 
 QuestionList.propTypes = {
+    template: PropTypes.array.isRequired,
     questions: PropTypes.array.isRequired
 };
 
