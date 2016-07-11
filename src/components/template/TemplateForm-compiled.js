@@ -8,64 +8,74 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _TextInput = require('../common/TextInput');
+var _QuestionListRow = require('../question/QuestionListRow');
 
-var _TextInput2 = _interopRequireDefault(_TextInput);
-
-var _SelectInput = require('../common/SelectInput');
-
-var _SelectInput2 = _interopRequireDefault(_SelectInput);
+var _QuestionListRow2 = _interopRequireDefault(_QuestionListRow);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TemplateForm = function TemplateForm(_ref) {
     var template = _ref.template;
-    var onSave = _ref.onSave;
-    var onChange = _ref.onChange;
-    var saving = _ref.saving;
-    var errors = _ref.errors;
 
+    console.log(template);
     return _react2.default.createElement(
-        'form',
+        'div',
         null,
         _react2.default.createElement(
             'h1',
             null,
             ' Manage Template'
         ),
-        _react2.default.createElement(_TextInput2.default, {
-            name: 'name',
-            label: 'Name',
-            value: template.name,
-            onChange: onChange,
-            error: errors.name }),
-        _react2.default.createElement(_TextInput2.default, {
-            name: 'type',
-            label: 'Type',
-            value: template.type,
-            onChange: onChange,
-            error: errors.type }),
-        _react2.default.createElement(_TextInput2.default, {
-            name: 'description',
-            label: 'Description',
-            value: template.description,
-            onChange: onChange,
-            error: errors.description }),
-        _react2.default.createElement('input', {
-            type: 'submit',
-            disabled: saving,
-            value: saving ? 'Saving...' : 'Save',
-            className: 'btn btn-primary',
-            onClick: onSave })
+        _react2.default.createElement(
+            'h4',
+            null,
+            template.name
+        ),
+        _react2.default.createElement(
+            'h4',
+            null,
+            template.type
+        ),
+        _react2.default.createElement(
+            'p',
+            null,
+            template.description
+        ),
+        _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+                'thead',
+                null,
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    'ID'
+                ),
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    'Text'
+                ),
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    'Response Type'
+                )
+            ),
+            _react2.default.createElement(
+                'tbody',
+                null,
+                template.questions.map(function (question) {
+                    return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
+                })
+            )
+        )
     );
 };
 
 TemplateForm.propTypes = {
-    template: _react2.default.PropTypes.object.isRequired,
-    onSave: _react2.default.PropTypes.func.isRequired,
-    onChange: _react2.default.PropTypes.func.isRequired,
-    saving: _react2.default.PropTypes.bool,
-    errors: _react2.default.PropTypes.object
+    template: _react2.default.PropTypes.object.isRequired
 };
 
 exports.default = TemplateForm;

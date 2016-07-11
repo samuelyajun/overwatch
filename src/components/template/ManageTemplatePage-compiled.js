@@ -75,7 +75,8 @@ function _wrapComponent(id) {
 }
 
 var templateOuterDivStyle = {
-    marginTop: '75px'
+    marginTop: '75px',
+    marginLeft: '75px'
 };
 
 var ManageTemplatePage = _wrapComponent('ManageTemplatePage')(function (_React$Component) {

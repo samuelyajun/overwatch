@@ -6,7 +6,8 @@ import TemplateForm from './TemplateForm';
 import toastr from 'toastr';
 
 const templateOuterDivStyle = {
-    marginTop: '75px'
+    marginTop: '75px',
+    marginLeft: '75px'
 };
 
 class ManageTemplatePage extends React.Component {
