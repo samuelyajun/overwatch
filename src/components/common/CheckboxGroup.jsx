@@ -7,7 +7,8 @@ class CheckboxGroup extends React.Component {
         super(props, context);
     }
 
-    render() {
+    render() {    console.log(this.props.error);
+
         return(
             <div className="form-group">
                    {
@@ -19,6 +20,7 @@ class CheckboxGroup extends React.Component {
                             );
                         })
                     }
+                    {this.props.error && <div className="alert alert-danger">{this.props.error}</div>}
             </div>
         );
     }
@@ -26,7 +28,8 @@ class CheckboxGroup extends React.Component {
 
 CheckboxGroup.propTypes = {
     list: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    error: PropTypes.string
 };
 
 export default CheckboxGroup;

@@ -8,6 +8,12 @@ class ScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
+        const errorSurveyRequired = 'Survey is required';
+        const errorUsernameRequired = 'Username is required';
+        const errorStartDateRequired = 'Start date is required';
+        const errorEndDatePreviousToStartDate = 'End date must occur after start date';
+        const errorDaysRequired = 'A day is required';
+
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         this.days = daysOfTheWeek;
 
@@ -37,7 +43,7 @@ class ScheduleForm extends React.Component {
                 required: ''
               },
               survey: {
-                required: 'Survey is required'
+                required: ''
               },
               startDate: {
                 required: ''
@@ -46,14 +52,17 @@ class ScheduleForm extends React.Component {
                 afterStart: ''
               },
               days: {
-                required: 'bad'
+                required: ''
               }
             }
         };
     }
 
     onClickSubmit() {
-        console.log(this.state.schedule);
+
+        this.validateStartDate();
+        this.validateEndDate();
+        this.validateDays();
 
     }
 
@@ -61,9 +70,11 @@ class ScheduleForm extends React.Component {
         const property = event.target.name;
         let val = event.target.value;
         let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
+
         schedule[property] = event.target.value;
-        console.log(property);
-        console.log(val);
+
+        this.setState({errors: errors});
         return this.setState({schedule});
     }
 
@@ -86,15 +97,43 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
-
-
-
-    validateStartDate(event){
-      console.log("validate start date");
-        //return (value ? true : false)
+    validateStartDate(){
+        let errors = Object.assign({},this.state.errors);
+        if(this.state.schedule.startDate === ''){
+            errors.startDate.required = 'Start date is required';
+        }
+        else{
+            errors.startDate.required = '';
+        }
+        this.setState({errors});
     }
 
+    validateEndDate(){
+        let errors = Object.assign({},this.state.errors);
+        let startDate = this.state.schedule.startDate;
+        let endDate = this.state.schedule.endDate;
 
+        if(startDate !== '' && endDate !== '' && startDate > endDate){
+            errors.endDate.afterStart = 'End date must occur after the start date';
+        }
+        else{
+            errors.endDate.afterStart = '';
+        }
+        this.setState({errors});
+    }
+
+    validateDays(){
+        let errors = Object.assign({},this.state.errors);
+        let days = this.state.schedule.days;
+        if (days.length === 0){
+            errors.days.required = 'Please choose at least one day';
+        }
+        else {
+            errors.days.required = '';
+        }
+        this.setState({errors});
+        console.log("days error");
+    }
 
     render() {
         return(
@@ -106,7 +145,7 @@ class ScheduleForm extends React.Component {
                                 name="usernameInput"
                                 label="Username"
                                 placeholder="Enter username"
-                                onChange={this.onClickSubmit}
+                                onChange={this.onUpdate}
                                 error={this.state.errors.username.required}
                             />
                         </div>
@@ -151,6 +190,7 @@ class ScheduleForm extends React.Component {
                                 value={this.state.schedule.startDate}
                                 validate={this.validateStartDate}
                                 onChange={this.onUpdate}
+                                error={this.state.errors.startDate.required}
                             />
                         </div>
                         <div className="col-md-2">
@@ -159,9 +199,9 @@ class ScheduleForm extends React.Component {
                                 label="End Date"
                                 type="date"
                                 value={this.state.schedule.endDate}
+                                validate={this.validateEndDate}
                                 onChange={this.onUpdate}
-                                errorMessage="End date must occur after the start date"
-                                required
+                                error={this.state.errors.endDate.afterStart}
                             />
                         </div>
                     </div>
@@ -173,6 +213,7 @@ class ScheduleForm extends React.Component {
                                 <CheckboxGroup
                                     list={this.days}
                                     onClick={this.updateDays}
+                                    error={this.state.errors.days.required}
                                 />
                             </fieldset>
                         </div>
