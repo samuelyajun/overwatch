@@ -7,8 +7,7 @@ class CheckboxGroup extends React.Component {
         super(props, context);
     }
 
-    render() {    console.log(this.props.error);
-
+    render() {
         return(
             <div className="form-group">
                    {

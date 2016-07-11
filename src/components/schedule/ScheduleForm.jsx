@@ -132,7 +132,6 @@ class ScheduleForm extends React.Component {
             errors.days.required = '';
         }
         this.setState({errors});
-        console.log("days error");
     }
 
     render() {
@@ -225,6 +224,8 @@ class ScheduleForm extends React.Component {
                                 name="frequency"
                                 label="Frequency"
                                 value={this.state.schedule.frequency}
+                                defaultOptionLabel = "One Time"
+                                defaultOptionValue = "4"
                                 onChange={this.onUpdate}
                                 options={[
                                     {
