@@ -16,8 +16,10 @@ import ReportPage from './components/report/ReportPage';
 import SurveyPage from './components/survey/SurveyPage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
 
+import {loadUsers} from './actions/userActions';
 
 const store = configureStore();
+store.dispatch(loadUsers());
 
 render(
     <Provider store = {store}>

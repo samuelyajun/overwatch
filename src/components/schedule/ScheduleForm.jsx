@@ -262,4 +262,20 @@ class ScheduleForm extends React.Component {
     }
 }
 
+SheduleForm.propTypes = {
+    users: PropTypes.array.isRequired
+}
+
+function mapStateToProps(state, ownProps) {
+    return {
+        users: state.users
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    };
+}
+
 export default ScheduleForm;
