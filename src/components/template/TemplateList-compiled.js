@@ -14,12 +14,16 @@ var _TemplateListRow2 = _interopRequireDefault(_TemplateListRow);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var tableStyle = {
+    class: "table table-hover table-bordered"
+};
+
 var TemplateList = function TemplateList(_ref) {
     var templates = _ref.templates;
 
     return _react2.default.createElement(
         'table',
-        { className: 'table' },
+        { style: tableStyle, className: 'table' },
         _react2.default.createElement(
             'thead',
             null,

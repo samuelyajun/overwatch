@@ -1,21 +1,30 @@
 import React, {PropTypes} from 'react';
 import QuestionListRow from '../question/QuestionListRow';
 
+const templateOuterDivStyle = {
+    margin: '25px'
+};
+
+let tableStyle = {
+    class: "table table-hover table-bordered table-striped"
+};
+
 const TemplateForm = ({template}) => {
-    console.log(template);
     return (
-        <div>
-                <h1> Manage Template</h1>
+        <div style={templateOuterDivStyle}>
+                <h1>Template Details</h1>
                 <h4>{template.name}</h4>
                 <h4>{template.type}</h4>
                 <p>{template.description}</p>
-                <table>
+            <table style={tableStyle} className="table">
                     <thead>
-                        <tr>ID</tr>
-                        <tr>Text</tr>
-                        <tr>Response Type</tr>
+                        <tr>
+                            <td>Text</td>
+                            <td>Response Type</td>
+                        </tr>
                     </thead>
                     <tbody>
+
                     {template.questions.map(question =>
                         <QuestionListRow key={question.id} question={question} />
                     )}

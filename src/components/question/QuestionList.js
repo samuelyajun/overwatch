@@ -1,9 +1,13 @@
 import React, {PropTypes} from 'react';
 import QuestionListRow from './QuestionListRow';
 
+let tableStyle = {
+    class: "table table-hover table-bordered"
+};
+
 const QuestionList = ({questions}) => {
     return (
-        <table className="table">
+        <table style={tableStyle} className="table">
             <thead>
             <tr>
                 <th>$nbsp;</th>
@@ -13,7 +17,7 @@ const QuestionList = ({questions}) => {
                 <th>Response Type</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table table-striped table-bordered">
             {questions.map(question =>
                 <QuestionListRow key={question.id} question={question} />
             )}

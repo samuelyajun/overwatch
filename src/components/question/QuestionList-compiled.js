@@ -14,12 +14,16 @@ var _QuestionListRow2 = _interopRequireDefault(_QuestionListRow);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var tableStyle = {
+    class: "table table-hover table-bordered"
+};
+
 var QuestionList = function QuestionList(_ref) {
     var questions = _ref.questions;
 
     return _react2.default.createElement(
         'table',
-        { className: 'table' },
+        { style: tableStyle, className: 'table' },
         _react2.default.createElement(
             'thead',
             null,
@@ -55,7 +59,7 @@ var QuestionList = function QuestionList(_ref) {
         ),
         _react2.default.createElement(
             'tbody',
-            null,
+            { 'class': 'table table-striped table-bordered' },
             questions.map(function (question) {
                 return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
             })

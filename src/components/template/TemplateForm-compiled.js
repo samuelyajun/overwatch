@@ -14,17 +14,24 @@ var _QuestionListRow2 = _interopRequireDefault(_QuestionListRow);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var templateOuterDivStyle = {
+    margin: '25px'
+};
+
+var tableStyle = {
+    class: "table table-hover table-bordered table-striped"
+};
+
 var TemplateForm = function TemplateForm(_ref) {
     var template = _ref.template;
 
-    console.log(template);
     return _react2.default.createElement(
         'div',
-        null,
+        { style: templateOuterDivStyle },
         _react2.default.createElement(
             'h1',
             null,
-            ' Manage Template'
+            'Template Details'
         ),
         _react2.default.createElement(
             'h4',
@@ -43,24 +50,23 @@ var TemplateForm = function TemplateForm(_ref) {
         ),
         _react2.default.createElement(
             'table',
-            null,
+            { style: tableStyle, className: 'table' },
             _react2.default.createElement(
                 'thead',
                 null,
                 _react2.default.createElement(
                     'tr',
                     null,
-                    'ID'
-                ),
-                _react2.default.createElement(
-                    'tr',
-                    null,
-                    'Text'
-                ),
-                _react2.default.createElement(
-                    'tr',
-                    null,
-                    'Response Type'
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        'Text'
+                    ),
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        'Response Type'
+                    )
                 )
             ),
             _react2.default.createElement(
