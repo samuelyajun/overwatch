@@ -26,6 +26,7 @@ const TemplateForm = ({template, onSave, onChange, saving, errors}) => {
                 value={template.description}
                 onChange={onChange}
                 error={errors.description}/>
+
         </form>
     );
 };

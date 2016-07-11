@@ -15,6 +15,7 @@ import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
 import ReportPage from './components/report/ReportPage';
 import TemplatesPage from './components/template/TemplatesPage';
+import ManageTemplatePage from './components/template/ManageTemplatePage';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
 
@@ -32,6 +33,7 @@ render(
                     <Route path="templates" component={TemplatesPage} />
                 </Route>
                 <Route path="/survey/:id" component={SurveyResponsePage} />
+            <Route path="template/:id" component={ManageTemplatePage} />
         </Router>
     </Provider>, document.getElementById('app')
 );
