@@ -7,7 +7,7 @@ exports.default = templateReducer;
 
 var _actionTypes = require('../actions/actionTypes');
 
-var actionTypes = _interopRequireWildcard(_actionTypes);
+var types = _interopRequireWildcard(_actionTypes);
 
 var _initialState = require('./initialState');
 
@@ -25,17 +25,16 @@ function templateReducer() {
 
     switch (action.type) {
 
-        case actionTypes.LOAD_TEMPLATES_SUCCESS:
+        case types.LOAD_TEMPLATES_SUCCESS:
             return action.templates;
 
-        case actionTypes.CREATE_TEMPLATE_SUCCESS:
+        case types.CREATE_TEMPLATE_SUCCESS:
             return [].concat(_toConsumableArray(state), [Object.assign({}, action.template)]);
 
-        /*case types.UPDATE_TEMPLATE_SUCCESS:
-            return [
-                ...state.filter(template => template.id !== action.template.id),
-                Object.assign({}, action.template)
-            ];*/
+        case types.UPDATE_TEMPLATE_SUCCESS:
+            return [].concat(_toConsumableArray(state.filter(function (template) {
+                return template.id !== action.template.id;
+            })), [Object.assign({}, action.template)]);
 
         default:
             return state;

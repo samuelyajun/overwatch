@@ -50,7 +50,13 @@ var TemplateForm = function TemplateForm(_ref) {
             label: 'Description',
             value: template.description,
             onChange: onChange,
-            error: errors.description })
+            error: errors.description }),
+        _react2.default.createElement('input', {
+            type: 'submit',
+            disabled: saving,
+            value: saving ? 'Saving...' : 'Save',
+            className: 'btn btn-primary',
+            onClick: onSave })
     );
 };
 

@@ -27,6 +27,13 @@ const TemplateForm = ({template, onSave, onChange, saving, errors}) => {
                 onChange={onChange}
                 error={errors.description}/>
 
+            <input
+                type="submit"
+                disabled={saving}
+                value={saving ? 'Saving...' : 'Save'}
+                className="btn btn-primary"
+                onClick={onSave}/>
+
         </form>
     );
 };
