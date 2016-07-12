@@ -2,6 +2,11 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
+import UserCheckboxGroup from './UserCheckboxGroup.jsx';
+//redux imports
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as userActions from '../../actions/userActions';
 
 class ScheduleForm extends React.Component {
 
@@ -14,6 +19,7 @@ class ScheduleForm extends React.Component {
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.updateDays = this.updateDays.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
 
         this.state = {
             schedule: {
@@ -45,6 +51,11 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
+    updateUsers(event) {
+        console.log(event.target.value);
+        console.log(event.target.name);
+    }
+
     updateDays(event) {
         let isChecked = event.target.checked;
         let schedule = Object.assign({}, this.state.schedule);
@@ -70,11 +81,9 @@ class ScheduleForm extends React.Component {
                 <form className name="myForm" noValidate>
                     <div className="row">
                         <div className="col-md-2">
-                            <TextInput
-                                name="usernameInput"
-                                label="Username"
-                                placeholder="Enter username"
-                                onChange={this.onClickSubmit}
+                            <UserCheckboxGroup
+                                users={this.props.users}
+                                onClick={this.updateUsers}
                             />
                         </div>
                         <div className="col-md-2">
@@ -262,9 +271,9 @@ class ScheduleForm extends React.Component {
     }
 }
 
-SheduleForm.propTypes = {
+ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired
-}
+};
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -274,8 +283,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(actions, dispatch)
+        actions: bindActionCreators(userActions, dispatch)
     };
 }
 
-export default ScheduleForm;
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleForm);
