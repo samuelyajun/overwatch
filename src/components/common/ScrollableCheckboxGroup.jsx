@@ -3,8 +3,9 @@ import Checkbox from './Checkbox.jsx';
 
 const scrollStyle = {
     height: '200px',
-    border: '2px solid #ccc'
-}
+    border: '2px solid #ccc',
+    overflowY: 'scroll'
+};
 
 const ScrollableCheckboxGroup = ({options, onClick}) => {
     console.log(options);
