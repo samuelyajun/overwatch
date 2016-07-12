@@ -164,7 +164,7 @@ class TeamLeadQuantitativeSurvey extends React.Component {
             <div style={surveyPageOuterDiv}>
                 <div className="container-fluid">
                     <h1>Tech Lead</h1>
-                    <h2>End of Sprint Survey</h2>
+                    <h2>Project Survey</h2>
                     {
                         <SurveyQuantityQuestionList key = {surveys[0].id} survey = {surveys[0]} />
                     }
