@@ -1,5 +1,5 @@
 import React from 'react';
-import SurveyQuestionList from './SurveyQuestionList.jsx'
+import SurveyQuestionList from './SurveyQuestionList.jsx';
 import Button from '../common/Button.jsx';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
