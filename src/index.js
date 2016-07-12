@@ -17,9 +17,11 @@ import ReportPage from './components/report/ReportPage';
 import SurveyPage from './components/survey/SurveyPage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
 
+import {loadSchedules} from './actions/scheduleActions';
+
 
 const store = configureStore();
-store.displatch(loadSchedules());
+store.dispatch(loadSchedules());
 
 render(
     <Provider store = {store}>

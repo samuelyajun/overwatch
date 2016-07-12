@@ -29,14 +29,27 @@ class ScheduleForm extends React.Component {
             schedule: {
                 username: '',
                 survey: '',
-                client: '',
-                project: '',
                 frequency: '',
-                role: '',
                 startDate: '',
                 endDate: '',
-                office: '',
-                days: []
+                days: [],
+                respondents: [
+                     {
+                       "allowedAttributes": [
+                         {
+                           "value": "",
+                           "attributeTypes": {
+                           "name": ""
+                           }
+                         }
+                       ],
+                       "user": {
+                         "email": "",
+                         "firstName": "",
+                         "lastName": ""
+                       }
+                     }
+                   ],
             },
 
             isFormValid: 'true',
