@@ -10,6 +10,7 @@ class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        
 
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
