@@ -2,11 +2,18 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
+import toastr from 'toastr';
 
 class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+
+        const errorSurveyRequired = 'Survey is required';
+        const errorUsernameRequired = 'Username is required';
+        const errorStartDateRequired = 'Start date is required';
+        const errorEndDatePreviousToStartDate = 'End date must occur after start date';
+        const errorDaysRequired = 'A day is required';
 
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         this.days = daysOfTheWeek;
@@ -14,10 +21,11 @@ class ScheduleForm extends React.Component {
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.updateDays = this.updateDays.bind(this);
+        this.validateStartDate = this.validateStartDate.bind(this);
 
         this.state = {
             schedule: {
-                username: 'test',
+                username: '',
                 survey: '',
                 client: '',
                 project: '',
@@ -27,21 +35,58 @@ class ScheduleForm extends React.Component {
                 endDate: '',
                 office: '',
                 days: []
+            },
+
+            isFormValid: 'true',
+
+            errors: {
+              username: {
+                required: ''
+              },
+              survey: {
+                required: ''
+              },
+              startDate: {
+                required: ''
+              },
+              endDate: {
+                afterStart: ''
+              },
+              days: {
+                required: ''
+              }
             }
         };
     }
 
     onClickSubmit() {
-        console.log(this.state.schedule);
+
+        let startDateIsValid = this.validateStartDate();
+        let endDateIsValid = this.validateEndDate();
+        let daysAreValid = this.validateDays();
+
+        if( startDateIsValid &&
+            endDateIsValid &&
+            daysAreValid
+        ){
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.success('Schedule submitted!');
+        }
+        else{
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.error('Validation errors');
+        }
     }
 
     onUpdate(event) {
         const property = event.target.name;
         let val = event.target.value;
         let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
+
         schedule[property] = event.target.value;
-        console.log(property);
-        console.log(val);
+
+        this.setState({errors: errors});
         return this.setState({schedule});
     }
 
@@ -59,9 +104,63 @@ class ScheduleForm extends React.Component {
                 days.splice(dayIndex, 1);
             }
         }
-        console.log(days);
+
         schedule['days'] = days;
         return this.setState({schedule});
+    }
+
+    validateStartDate(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+
+        if(this.state.schedule.startDate === ''){
+            errors.startDate.required = 'Start date is required';
+            isValid = false;
+        }
+        else{
+            errors.startDate.required = '';
+            isValid = true;
+        }
+
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateEndDate(){
+        let errors = Object.assign({},this.state.errors);
+        let startDate = this.state.schedule.startDate;
+        let endDate = this.state.schedule.endDate;
+        let isValid = true;
+
+        if(startDate !== '' && endDate !== '' && startDate > endDate){
+            errors.endDate.afterStart = 'End date must occur after the start date';
+            isValid = false;
+        }
+        else{
+            errors.endDate.afterStart = '';
+            isValid = true;
+        }
+
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateDays(){
+        let errors = Object.assign({},this.state.errors);
+        let days = this.state.schedule.days;
+        let isValid = true;
+
+        if (days.length === 0){
+            errors.days.required = 'Please choose at least one day';
+            isValid = false;
+        }
+        else {
+            errors.days.required = '';
+            isValid = true;
+        }
+
+        this.setState({errors});
+        return isValid;
     }
 
     render() {
@@ -74,7 +173,8 @@ class ScheduleForm extends React.Component {
                                 name="usernameInput"
                                 label="Username"
                                 placeholder="Enter username"
-                                onChange={this.onClickSubmit}
+                                onChange={this.onUpdate}
+                                error={this.state.errors.username.required}
                             />
                         </div>
                         <div className="col-md-2">
@@ -105,6 +205,7 @@ class ScheduleForm extends React.Component {
                                         value: "TLQ"
                                     }
                                 ]}
+                                error={this.state.errors.survey.required}
                             />
                         </div>
                     </div>
@@ -115,7 +216,9 @@ class ScheduleForm extends React.Component {
                                 label="Start Date"
                                 type="date"
                                 value={this.state.schedule.startDate}
+                                validate={this.validateStartDate}
                                 onChange={this.onUpdate}
+                                error={this.state.errors.startDate.required}
                             />
                         </div>
                         <div className="col-md-2">
@@ -124,7 +227,9 @@ class ScheduleForm extends React.Component {
                                 label="End Date"
                                 type="date"
                                 value={this.state.schedule.endDate}
+                                validate={this.validateEndDate}
                                 onChange={this.onUpdate}
+                                error={this.state.errors.endDate.afterStart}
                             />
                         </div>
                     </div>
@@ -136,6 +241,7 @@ class ScheduleForm extends React.Component {
                                 <CheckboxGroup
                                     list={this.days}
                                     onClick={this.updateDays}
+                                    error={this.state.errors.days.required}
                                 />
                             </fieldset>
                         </div>
@@ -147,6 +253,8 @@ class ScheduleForm extends React.Component {
                                 name="frequency"
                                 label="Frequency"
                                 value={this.state.schedule.frequency}
+                                defaultOptionLabel = "One Time"
+                                defaultOptionValue = "4"
                                 onChange={this.onUpdate}
                                 options={[
                                     {
@@ -160,6 +268,10 @@ class ScheduleForm extends React.Component {
                                     {
                                         text: "3 Weeks",
                                         value: "3"
+                                    },
+                                    {
+                                        text: "4 Weeks",
+                                        value: "4"
                                     }
                                 ]}
                             />
