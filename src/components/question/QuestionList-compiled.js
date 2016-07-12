@@ -20,56 +20,59 @@ var tableStyle = {
 
 var QuestionList = function QuestionList(_ref) {
     var questions = _ref.questions;
+    var template = _ref.template;
 
     return _react2.default.createElement(
-        'table',
-        { style: tableStyle, className: 'table' },
+        'tr',
+        null,
         _react2.default.createElement(
-            'thead',
+            'td',
             null,
             _react2.default.createElement(
-                'tr',
+                'div',
                 null,
                 _react2.default.createElement(
-                    'th',
-                    null,
-                    '$nbsp;'
-                ),
-                _react2.default.createElement(
-                    'th',
-                    null,
-                    'Name'
-                ),
-                _react2.default.createElement(
-                    'th',
-                    null,
-                    'Type'
-                ),
-                _react2.default.createElement(
-                    'th',
-                    null,
-                    'Description'
-                ),
-                _react2.default.createElement(
-                    'th',
-                    null,
-                    'Response Type'
+                    'table',
+                    { style: tableStyle, className: 'table' },
+                    _react2.default.createElement(
+                        'thead',
+                        null,
+                        _react2.default.createElement(
+                            'tr',
+                            null,
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                '#'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Question'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'Response Type'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        questions.map(function (question) {
+                            return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
+                        })
+                    )
                 )
             )
-        ),
-        _react2.default.createElement(
-            'tbody',
-            { style: tableStyle },
-            questions.map(function (question) {
-                return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
-            })
         )
     );
 };
 
 QuestionList.propTypes = {
-    template: _react.PropTypes.array.isRequired,
-    questions: _react.PropTypes.array.isRequired
+    questions: _react.PropTypes.array,
+    selectedValue: _react.PropTypes.string
 };
 
 exports.default = QuestionList;

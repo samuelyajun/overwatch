@@ -118,6 +118,7 @@ var ManageTemplatePage = _wrapComponent('ManageTemplatePage')(function (_React$C
         value: function saveTemplate(event) {
             var _this2 = this;
 
+            console.log(event);
             event.preventDefault();
             this.setState({ saving: true });
             this.props.actions.saveTemplate(this.state.template).then(function () {
@@ -132,7 +133,7 @@ var ManageTemplatePage = _wrapComponent('ManageTemplatePage')(function (_React$C
         value: function redirect() {
             this.setState({ saving: false });
             _toastr2.default.success('Template Saved!');
-            this.context.router.push('/templates');
+            this.context.router.push('/surveyConfirmationPage');
         }
     }, {
         key: 'render',

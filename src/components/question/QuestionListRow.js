@@ -4,28 +4,25 @@ import RadioInput from '../common/RadioInput';
 
 
 
-const QuestionListRow = ({question, value}) => {
+const QuestionListRow = ({question, onChange, selectedValue}) => {
 
     return (
         <tr>
+            <td>{question.id}</td>
             <td>{question.questionText}</td>
-            <td>{question.responseType}</td>
-            <td>
-                <RadioGroup name = {"test"}>
-                    <RadioInput value="0"/>
-                    <RadioInput value="1"/>
-                    <RadioInput value="2"/>
-                    <RadioInput value="3"/>
-                    <RadioInput value="4"/>
-                </RadioGroup>
-            </td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
         </tr>
     );
 };
 
 QuestionListRow.propTypes = {
     question: PropTypes.object.isRequired,
-    value: PropTypes.number
+    onChange: PropTypes.func,
+    selectedValue: PropTypes.string
 };
 
 export default QuestionListRow;

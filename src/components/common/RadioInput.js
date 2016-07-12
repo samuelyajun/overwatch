@@ -1,17 +1,20 @@
 import React, {PropTypes} from 'react';
 
 
-const RadioInput = ({value}) => {
+const RadioInput = ({name, value}) => {
     return (
-        <input
+        <input className = "radioSelection"
                type="radio"
+               name = {name}
                value = {value}
+               required
         />
     );
 };
 
 RadioInput.propTypes = {
-    value: PropTypes.string.isRequired
+    name: PropTypes.number.isRequired,
+    value: PropTypes.number
 };
 
 export default RadioInput;

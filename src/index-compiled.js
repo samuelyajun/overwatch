@@ -52,10 +52,16 @@ var _SurveyResponsePage = require('./components/survey/SurveyResponsePage');
 
 var _SurveyResponsePage2 = _interopRequireDefault(_SurveyResponsePage);
 
+var _SurveyConfirmationPage = require('./components/survey/SurveyConfirmationPage');
+
+var _SurveyConfirmationPage2 = _interopRequireDefault(_SurveyConfirmationPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _configureStore2.default)(); /*eslint-disable import/default */
+/*eslint-disable import/default */
 
+
+var store = (0, _configureStore2.default)();
 store.dispatch((0, _templateActions.loadTemplates)());
 
 (0, _reactDom.render)(_react2.default.createElement(
@@ -73,7 +79,8 @@ store.dispatch((0, _templateActions.loadTemplates)());
             _react2.default.createElement(_reactRouter.Route, { path: 'templates', component: _TemplatesPage2.default })
         ),
         _react2.default.createElement(_reactRouter.Route, { path: '/survey/:id', component: _SurveyResponsePage2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'template/:id', component: _ManageTemplatePage2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'template/:id', component: _ManageTemplatePage2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'surveyConfirmationPage', component: _SurveyConfirmationPage2.default })
     )
 ), document.getElementById('app'));
 

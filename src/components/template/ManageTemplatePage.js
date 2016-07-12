@@ -39,6 +39,7 @@ class ManageTemplatePage extends React.Component {
     }
 
     saveTemplate(event) {
+        console.log(event);
         event.preventDefault();
         this.setState({saving: true});
         this.props.actions.saveTemplate(this.state.template)
@@ -52,7 +53,7 @@ class ManageTemplatePage extends React.Component {
     redirect() {
         this.setState({saving: false});
         toastr.success('Template Saved!');
-        this.context.router.push('/templates');
+        this.context.router.push('/surveyConfirmationPage');
     }
 
     render() {

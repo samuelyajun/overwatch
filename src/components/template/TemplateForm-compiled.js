@@ -8,9 +8,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _QuestionListRow = require('../question/QuestionListRow');
+var _QuestionList = require('../question/QuestionList');
 
-var _QuestionListRow2 = _interopRequireDefault(_QuestionListRow);
+var _QuestionList2 = _interopRequireDefault(_QuestionList);
+
+var _RadioGroup = require('../common/RadioGroup');
+
+var _RadioGroup2 = _interopRequireDefault(_RadioGroup);
+
+var _RadioInput = require('../common/RadioInput');
+
+var _RadioInput2 = _interopRequireDefault(_RadioInput);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60,27 +68,12 @@ var TemplateForm = function TemplateForm(_ref) {
                 _react2.default.createElement(
                     'thead',
                     null,
-                    _react2.default.createElement(
-                        'tr',
-                        null,
-                        _react2.default.createElement(
-                            'td',
-                            null,
-                            'Text'
-                        ),
-                        _react2.default.createElement(
-                            'td',
-                            null,
-                            'Response Type'
-                        )
-                    )
+                    _react2.default.createElement('tr', null)
                 ),
                 _react2.default.createElement(
                     'tbody',
                     null,
-                    template.questions.map(function (question) {
-                        return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
-                    })
+                    _react2.default.createElement(_QuestionList2.default, { questions: template.questions })
                 )
             ),
             _react2.default.createElement('input', {

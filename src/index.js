@@ -17,6 +17,7 @@ import ReportPage from './components/report/ReportPage';
 import TemplatesPage from './components/template/TemplatesPage';
 import ManageTemplatePage from './components/template/ManageTemplatePage';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
+import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage';
 
 
 
@@ -34,6 +35,7 @@ render(
                 </Route>
                 <Route path="/survey/:id" component={SurveyResponsePage} />
             <Route path="template/:id" component={ManageTemplatePage} />
+            <Route path="surveyConfirmationPage" component={SurveyConfirmationPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

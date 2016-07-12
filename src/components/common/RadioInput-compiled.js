@@ -11,16 +11,20 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RadioInput = function RadioInput(_ref) {
+    var name = _ref.name;
     var value = _ref.value;
 
-    return _react2.default.createElement("input", {
+    return _react2.default.createElement("input", { className: "radioSelection",
         type: "radio",
-        value: value
+        name: name,
+        value: value,
+        required: true
     });
 };
 
 RadioInput.propTypes = {
-    value: _react.PropTypes.string.isRequired
+    name: _react.PropTypes.number.isRequired,
+    value: _react.PropTypes.number
 };
 
 exports.default = RadioInput;

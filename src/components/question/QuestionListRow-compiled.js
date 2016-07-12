@@ -20,7 +20,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var QuestionListRow = function QuestionListRow(_ref) {
     var question = _ref.question;
-    var value = _ref.value;
+    var onChange = _ref.onChange;
+    var selectedValue = _ref.selectedValue;
 
 
     return _react2.default.createElement(
@@ -29,32 +30,45 @@ var QuestionListRow = function QuestionListRow(_ref) {
         _react2.default.createElement(
             'td',
             null,
+            question.id
+        ),
+        _react2.default.createElement(
+            'td',
+            null,
             question.questionText
         ),
         _react2.default.createElement(
             'td',
             null,
-            question.responseType
+            _react2.default.createElement(_RadioInput2.default, { value: question.responseValue, name: question.id })
         ),
         _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement(
-                _RadioGroup2.default,
-                { name: "test" },
-                _react2.default.createElement(_RadioInput2.default, { value: '0' }),
-                _react2.default.createElement(_RadioInput2.default, { value: '1' }),
-                _react2.default.createElement(_RadioInput2.default, { value: '2' }),
-                _react2.default.createElement(_RadioInput2.default, { value: '3' }),
-                _react2.default.createElement(_RadioInput2.default, { value: '4' })
-            )
+            _react2.default.createElement(_RadioInput2.default, { value: question.responseValue, name: question.id })
+        ),
+        _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_RadioInput2.default, { value: question.responseValue, name: question.id })
+        ),
+        _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_RadioInput2.default, { value: question.responseValue, name: question.id })
+        ),
+        _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(_RadioInput2.default, { value: question.responseValue, name: question.id })
         )
     );
 };
 
 QuestionListRow.propTypes = {
     question: _react.PropTypes.object.isRequired,
-    value: _react.PropTypes.number
+    onChange: _react.PropTypes.func,
+    selectedValue: _react.PropTypes.string
 };
 
 exports.default = QuestionListRow;

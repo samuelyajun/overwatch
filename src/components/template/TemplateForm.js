@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
-import QuestionListRow from '../question/QuestionListRow';
+import QuestionList from '../question/QuestionList';
+import RadioGroup from '../common/RadioGroup';
+import RadioInput from '../common/RadioInput';
 
 
 const templateOuterDivStyle = {
@@ -21,14 +23,12 @@ const TemplateForm = ({template, onSave, saving, onChange}) => {
                 <table style={tableStyle} className="table">
                     <thead>
                         <tr>
-                            <td>Text</td>
-                            <td>Response Type</td>
+
                         </tr>
                     </thead>
                     <tbody>
-                    {template.questions.map(question =>
-                        <QuestionListRow key={question.id} question={question} />
-                    )}
+                        <QuestionList questions={template.questions} />
+
                     </tbody>
                 </table>
                 <input
