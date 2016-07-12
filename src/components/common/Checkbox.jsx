@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 const Checkbox = (props) => {
     return(
-        <span>
+        <label>
             <input
                 type="checkbox"
                 checked={props.checked}
@@ -10,7 +10,7 @@ const Checkbox = (props) => {
                 name={props.name}
                 onClick={props.onClick}
             /> {props.name}
-        </span>
+        </label>
     );
 };
 

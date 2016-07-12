@@ -3,14 +3,14 @@ import Checkbox from './Checkbox.jsx';
 
 const scrollStyle = {
     height: '200px',
+    width: 'auto',
     border: '2px solid #ccc',
     overflowY: 'scroll'
 };
 
 const ScrollableCheckboxGroup = ({options, onClick}) => {
-    console.log(options);
     return(
-        <div style={scrollStyle}>
+        <div className="container" style={scrollStyle}>
             {
                 options.map((option) => {
                     return(
