@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
+import toastr from 'toastr';
 
 class ScheduleForm extends React.Component {
 
@@ -24,7 +25,7 @@ class ScheduleForm extends React.Component {
 
         this.state = {
             schedule: {
-                username: 'test',
+                username: '',
                 survey: '',
                 client: '',
                 project: '',
@@ -60,10 +61,21 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
 
-        this.validateStartDate();
-        this.validateEndDate();
-        this.validateDays();
+        let startDateIsValid = this.validateStartDate();
+        let endDateIsValid = this.validateEndDate();
+        let daysAreValid = this.validateDays();
 
+        if( startDateIsValid &&
+            endDateIsValid &&
+            daysAreValid
+        ){
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.success('Schedule submitted!');
+        }
+        else{
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.error('Validation errors');
+        }
     }
 
     onUpdate(event) {
@@ -92,46 +104,63 @@ class ScheduleForm extends React.Component {
                 days.splice(dayIndex, 1);
             }
         }
-        console.log(days);
+
         schedule['days'] = days;
         return this.setState({schedule});
     }
 
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+
         if(this.state.schedule.startDate === ''){
             errors.startDate.required = 'Start date is required';
+            isValid = false;
         }
         else{
             errors.startDate.required = '';
+            isValid = true;
         }
+
         this.setState({errors});
+        return isValid;
     }
 
     validateEndDate(){
         let errors = Object.assign({},this.state.errors);
         let startDate = this.state.schedule.startDate;
         let endDate = this.state.schedule.endDate;
+        let isValid = true;
 
         if(startDate !== '' && endDate !== '' && startDate > endDate){
             errors.endDate.afterStart = 'End date must occur after the start date';
+            isValid = false;
         }
         else{
             errors.endDate.afterStart = '';
+            isValid = true;
         }
+
         this.setState({errors});
+        return isValid;
     }
 
     validateDays(){
         let errors = Object.assign({},this.state.errors);
         let days = this.state.schedule.days;
+        let isValid = true;
+
         if (days.length === 0){
             errors.days.required = 'Please choose at least one day';
+            isValid = false;
         }
         else {
             errors.days.required = '';
+            isValid = true;
         }
+
         this.setState({errors});
+        return isValid;
     }
 
     render() {
@@ -239,6 +268,10 @@ class ScheduleForm extends React.Component {
                                     {
                                         text: "3 Weeks",
                                         value: "3"
+                                    },
+                                    {
+                                        text: "4 Weeks",
+                                        value: "4"
                                     }
                                 ]}
                             />
