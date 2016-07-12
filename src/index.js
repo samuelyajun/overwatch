@@ -18,6 +18,7 @@ import ManageSurveyPage from './components/survey/ManageSurveyPage';
 
 
 const store = configureStore();
+store.displatch(loadSchedules());
 
 render(
     <Provider store = {store}>
