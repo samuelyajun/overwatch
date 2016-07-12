@@ -10,7 +10,7 @@ class HomePage extends React.Component {
     render() {
         return (
             <div className={jumbotronClassWrapper} style = {jumbotronStyle}>
-                <h1>DEMO</h1>
+                <h1>Project Overwatch</h1>
                 <p>Ultra responsive web apps</p>
             </div>
         );
