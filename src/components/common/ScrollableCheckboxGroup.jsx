@@ -2,21 +2,23 @@ import React, {PropTypes} from 'react';
 import Checkbox from './Checkbox.jsx';
 
 const scrollStyle = {
-    width: '300px',
-    height: '100px',
+    height: '200px',
     border: '2px solid #ccc'
 }
 
 const ScrollableCheckboxGroup = ({options, onClick}) => {
+    console.log(options);
     return(
         <div style={scrollStyle}>
             {
-                options.map((option, index) => {
-                    <Checkbox
-                        key={option.id}
-                        value={option.id}
-                        name={option.name}
-                        onClick={onClick} />
+                options.map((option) => {
+                    return(
+                        <Checkbox
+                            key={option.id}
+                            value={option.id}
+                            name={option.name}
+                            onClick={onClick} />
+                    );
                 })
             }
         </div>

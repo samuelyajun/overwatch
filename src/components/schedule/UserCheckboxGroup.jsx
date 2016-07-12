@@ -14,7 +14,7 @@ const UserCheckboxGroup = ({users, onClick}) => {
             onClick={onClick}
         />
     );
-}
+};
 
 UserCheckboxGroup.propTypes = {
     users: PropTypes.array.isRequired,
