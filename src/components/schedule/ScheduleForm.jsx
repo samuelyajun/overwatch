@@ -3,6 +3,8 @@ import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import toastr from 'toastr';
+import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
+
 
 class ScheduleForm extends React.Component {
 
@@ -74,11 +76,15 @@ class ScheduleForm extends React.Component {
         ){
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
+            setTimeout(function() {
+                browserHistory.push("/schedules/manage");
+            }, 1000);
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
+
     }
 
     onUpdate(event) {
