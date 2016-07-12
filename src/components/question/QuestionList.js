@@ -17,7 +17,7 @@ const QuestionList = ({questions}) => {
                 <th>Response Type</th>
             </tr>
             </thead>
-            <tbody class="table table-striped table-bordered">
+            <tbody style={tableStyle}>
             {questions.map(question =>
                 <QuestionListRow key={question.id} question={question} />
             )}

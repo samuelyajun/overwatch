@@ -24,6 +24,9 @@ var tableStyle = {
 
 var TemplateForm = function TemplateForm(_ref) {
     var template = _ref.template;
+    var onSave = _ref.onSave;
+    var saving = _ref.saving;
+    var onChange = _ref.onChange;
 
     return _react2.default.createElement(
         'div',
@@ -49,39 +52,52 @@ var TemplateForm = function TemplateForm(_ref) {
             template.description
         ),
         _react2.default.createElement(
-            'table',
-            { style: tableStyle, className: 'table' },
+            'form',
+            null,
             _react2.default.createElement(
-                'thead',
-                null,
+                'table',
+                { style: tableStyle, className: 'table' },
                 _react2.default.createElement(
-                    'tr',
+                    'thead',
                     null,
                     _react2.default.createElement(
-                        'td',
+                        'tr',
                         null,
-                        'Text'
-                    ),
-                    _react2.default.createElement(
-                        'td',
-                        null,
-                        'Response Type'
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            'Text'
+                        ),
+                        _react2.default.createElement(
+                            'td',
+                            null,
+                            'Response Type'
+                        )
                     )
+                ),
+                _react2.default.createElement(
+                    'tbody',
+                    null,
+                    template.questions.map(function (question) {
+                        return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
+                    })
                 )
             ),
-            _react2.default.createElement(
-                'tbody',
-                null,
-                template.questions.map(function (question) {
-                    return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
-                })
-            )
+            _react2.default.createElement('input', {
+                type: 'submit',
+                disabled: saving,
+                value: saving ? 'Saving...' : 'Save',
+                className: 'btn btn-primary',
+                onClick: onSave })
         )
     );
 };
 
 TemplateForm.propTypes = {
-    template: _react2.default.PropTypes.object.isRequired
+    template: _react2.default.PropTypes.object.isRequired,
+    onSave: _react2.default.PropTypes.func.isRequired,
+    saving: _react2.default.PropTypes.bool,
+    onChange: _react2.default.PropTypes.func.isRequired
 };
 
 exports.default = TemplateForm;

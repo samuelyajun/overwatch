@@ -11,7 +11,7 @@ const RadioInput = ({value}) => {
 };
 
 RadioInput.propTypes = {
-    value: PropTypes.number.isRequired
+    value: PropTypes.string.isRequired
 };
 
 export default RadioInput;

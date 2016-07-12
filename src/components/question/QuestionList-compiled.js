@@ -59,7 +59,7 @@ var QuestionList = function QuestionList(_ref) {
         ),
         _react2.default.createElement(
             'tbody',
-            { 'class': 'table table-striped table-bordered' },
+            { style: tableStyle },
             questions.map(function (question) {
                 return _react2.default.createElement(_QuestionListRow2.default, { key: question.id, question: question });
             })
