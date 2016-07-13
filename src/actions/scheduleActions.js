@@ -1,6 +1,9 @@
 import * as types from './actionTypes';
 import ScheduleApi from '../api/mockScheduleApi';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 export function loadSchedulesSuccess(schedules) {
     return {type: types.LOAD_SCHEDULES_SUCCESS, schedules};
 }

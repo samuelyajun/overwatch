@@ -93,6 +93,14 @@ const schedules = [
        ]
   }];
 
+  function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+  }
+
+  //This would be performed on the server in a real app. Just stubbing in.
+  const generateId = (schedule) => {
+  return replaceAll(schedule.title, ' ', '-');
+  };
 
   class ScheduleApi {
     static getAllSchedules() {
@@ -129,9 +137,8 @@ const schedules = [
           //Just simulating creation here.
           //The server would generate ids and watchHref's for new schedules in a real app.
           //Cloning so copy returned is passed by value rather than by reference.
-          //schedule.id = generateId(schedule);
-          schedulue.id = 100;
-          //schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
+          schedule.id = generateId(schedule);
+          schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
           schedules.push(schedule);
         }
 

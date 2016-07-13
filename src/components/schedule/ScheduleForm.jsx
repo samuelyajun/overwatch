@@ -5,6 +5,10 @@ import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as scheduleActions from '../../actions/scheduleActions';
+
 
 class ScheduleForm extends React.Component {
 
@@ -86,6 +90,7 @@ class ScheduleForm extends React.Component {
         ){
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
+            console.log(this.state.schedule);
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");
             }, 1000);
@@ -183,6 +188,8 @@ class ScheduleForm extends React.Component {
     }
 
     render() {
+        const {schedules} = this.props;
+
         return(
             <div className="container">
                 <form className name="myForm" noValidate>
@@ -393,4 +400,20 @@ class ScheduleForm extends React.Component {
     }
 }
 
-export default ScheduleForm;
+ScheduleForm.propTypes = {
+    schedules: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+    return {
+        schedules: state.schedules
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(scheduleActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleForm);
