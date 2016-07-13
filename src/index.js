@@ -13,11 +13,14 @@ import '../node_modules/toastr/build/toastr.min.css';
 import App from './container/App';
 import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
+import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
-import TemplatesPage from './components/template/TemplatesPage';
-import ManageTemplatePage from './components/template/ManageTemplatePage';
-import SurveyResponsePage from './components/survey/SurveyResponsePage';
-import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage';
+
+import LeadSprintPlanningSurvey from './components/survey/LeadSprintPlanningSurvey.jsx';
+import TeamSprintPlanningSurvey from './components/survey/TeamSprintPlanningSurvey.jsx';
+import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
+import TeamLeadQuantitativeSurvey from './components/survey/TeamLeadQuantitativeSurvey.jsx';
+import EMQuantitativeSurvey from './components/survey/EMQuantitativeSurvey.jsx';
 
 
 
@@ -28,14 +31,16 @@ render(
     <Provider store = {store}>
         <Router history={browserHistory}>
             <Route path="/" component={App}>
-                    <IndexRoute component={HomePage} />
-                    <Route path="schedule" component={SchedulePage} />
-                    <Route path="report" component={ReportPage} />
-                    <Route path="templates" component={TemplatesPage} />
-                </Route>
-                <Route path="/survey/:id" component={SurveyResponsePage} />
-            <Route path="template/:id" component={ManageTemplatePage} />
-            <Route path="surveyConfirmationPage" component={SurveyConfirmationPage} />
+                <IndexRoute component={HomePage} />
+                <Route path="schedules" component={SchedulePage} />
+                <Route path="schedules/manage" component={ManageSchedulePage} />
+                <Route path="report" component={ReportPage} />
+            </Route>
+            <Route path="/survey/qualitative/spd-team" component={TeamSprintPlanningSurvey} />
+            <Route path="/survey/qualitative/lead" component={LeadSprintPlanningSurvey} />
+            <Route path="/survey/quantitative/lead" component={TeamLeadQuantitativeSurvey} />
+            <Route path="/survey/quantitative/em" component={EMQuantitativeSurvey} />
+            <Route path="/confirmation" component={SurveyConfirmationPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

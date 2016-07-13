@@ -36,25 +36,33 @@ var _SchedulePage = require('./components/schedule/SchedulePage');
 
 var _SchedulePage2 = _interopRequireDefault(_SchedulePage);
 
+var _ManageSchedulePage = require('./components/schedule/ManageSchedulePage.jsx');
+
+var _ManageSchedulePage2 = _interopRequireDefault(_ManageSchedulePage);
+
 var _ReportPage = require('./components/report/ReportPage');
 
 var _ReportPage2 = _interopRequireDefault(_ReportPage);
 
-var _TemplatesPage = require('./components/template/TemplatesPage');
+var _LeadSprintPlanningSurvey = require('./components/survey/LeadSprintPlanningSurvey.jsx');
 
-var _TemplatesPage2 = _interopRequireDefault(_TemplatesPage);
+var _LeadSprintPlanningSurvey2 = _interopRequireDefault(_LeadSprintPlanningSurvey);
 
-var _ManageTemplatePage = require('./components/template/ManageTemplatePage');
+var _TeamSprintPlanningSurvey = require('./components/survey/TeamSprintPlanningSurvey.jsx');
 
-var _ManageTemplatePage2 = _interopRequireDefault(_ManageTemplatePage);
+var _TeamSprintPlanningSurvey2 = _interopRequireDefault(_TeamSprintPlanningSurvey);
 
-var _SurveyResponsePage = require('./components/survey/SurveyResponsePage');
-
-var _SurveyResponsePage2 = _interopRequireDefault(_SurveyResponsePage);
-
-var _SurveyConfirmationPage = require('./components/survey/SurveyConfirmationPage');
+var _SurveyConfirmationPage = require('./components/survey/SurveyConfirmationPage.jsx');
 
 var _SurveyConfirmationPage2 = _interopRequireDefault(_SurveyConfirmationPage);
+
+var _TeamLeadQuantitativeSurvey = require('./components/survey/TeamLeadQuantitativeSurvey.jsx');
+
+var _TeamLeadQuantitativeSurvey2 = _interopRequireDefault(_TeamLeadQuantitativeSurvey);
+
+var _EMQuantitativeSurvey = require('./components/survey/EMQuantitativeSurvey.jsx');
+
+var _EMQuantitativeSurvey2 = _interopRequireDefault(_EMQuantitativeSurvey);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -74,13 +82,15 @@ store.dispatch((0, _templateActions.loadTemplates)());
             _reactRouter.Route,
             { path: '/', component: _App2.default },
             _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomePage2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: 'schedule', component: _SchedulePage2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: 'report', component: _ReportPage2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: 'templates', component: _TemplatesPage2.default })
+            _react2.default.createElement(_reactRouter.Route, { path: 'schedules', component: _SchedulePage2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: 'schedules/manage', component: _ManageSchedulePage2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: 'report', component: _ReportPage2.default })
         ),
-        _react2.default.createElement(_reactRouter.Route, { path: '/survey/:id', component: _SurveyResponsePage2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'template/:id', component: _ManageTemplatePage2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'surveyConfirmationPage', component: _SurveyConfirmationPage2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: '/survey/qualitative/spd-team', component: _TeamSprintPlanningSurvey2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/survey/qualitative/lead', component: _LeadSprintPlanningSurvey2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/survey/quantitative/lead', component: _TeamLeadQuantitativeSurvey2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/survey/quantitative/em', component: _EMQuantitativeSurvey2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/confirmation', component: _SurveyConfirmationPage2.default })
     )
 ), document.getElementById('app'));
 

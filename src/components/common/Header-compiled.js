@@ -112,7 +112,7 @@ var Header = _wrapComponent('Header')(function (_React$Component) {
                                 null,
                                 _react3.default.createElement(
                                     _reactRouter.Link,
-                                    { to: '/schedule', activeclassNameName: 'active' },
+                                    { to: '/schedules', activeclassNameName: 'active' },
                                     'Schedule'
                                 )
                             ),

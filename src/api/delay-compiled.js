@@ -1,0 +1,8 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = 1000;
+
+//# sourceMappingURL=delay-compiled.js.map
