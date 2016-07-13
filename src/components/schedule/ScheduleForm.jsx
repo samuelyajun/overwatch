@@ -25,6 +25,7 @@ class ScheduleForm extends React.Component {
         this.onUpdate = this.onUpdate.bind(this);
         this.updateDays = this.updateDays.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
+        this.validateSeven = this.validateSeven.bind(this);
 
         this.state = {
             schedule: {
@@ -44,7 +45,8 @@ class ScheduleForm extends React.Component {
 
             errors: {
               username: {
-                required: ''
+                required: '',
+                length: ''
               },
               survey: {
                 required: ''
@@ -53,7 +55,8 @@ class ScheduleForm extends React.Component {
                 required: ''
               },
               endDate: {
-                afterStart: ''
+                afterStart: '',
+                sevenDays: ''
               },
               days: {
                 required: ''
@@ -133,6 +136,20 @@ class ScheduleForm extends React.Component {
         return isValid;
     }
 
+    validateSeven(){
+        let isValid = true;
+        let startDate = new Date(this.state.schedule.startDate);
+        let endDate = new Date(this.state.schedule.endDate);
+        let diff = endDate.getTime() - startDate.getTime();
+        diff = diff / (1000 * 60 * 60 *24);
+
+        if (diff < 7){
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
     validateEndDate(){
         let errors = Object.assign({},this.state.errors);
         let startDate = this.state.schedule.startDate;
@@ -143,11 +160,14 @@ class ScheduleForm extends React.Component {
             errors.endDate.afterStart = 'End date must occur after the start date';
             isValid = false;
         }
+        else if(!this.validateSeven()) {
+            errors.endDate.afterStart = 'End date must occur at least 7 days after the start date';
+            isValid = false;
+        }
         else{
             errors.endDate.afterStart = '';
             isValid = true;
         }
-
         this.setState({errors});
         return isValid;
     }
