@@ -4,6 +4,8 @@ import ScheduleApi from '../api/mockScheduleApi';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import {initiateAjaxRequest, ajaxRequestError} from './ajaxStatusActions';
+
 export function loadSchedulesSuccess(schedules) {
     return {type: types.LOAD_SCHEDULES_SUCCESS, schedules};
 }
@@ -28,12 +30,12 @@ export function loadSchedules() {
 
 export function saveSchedule(schedule) {
   return function (dispatch, getState) {
-    dispatch(beginAjaxCall());
+    dispatch(initiateAjaxRequest());
     return ScheduleApi.saveSchedule(schedule).then(schedule => {
       schedule.id ? dispatch(updateScheduleSuccess(schedule)) :
         dispatch(createScheduleSuccess(schedule));
     }).catch(error => {
-      dispatch(ajaxCallError(error));
+      dispatch(ajaxRequestError(error));
       throw(error);
     });
   };

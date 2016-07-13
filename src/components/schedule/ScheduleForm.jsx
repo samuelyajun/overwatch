@@ -53,7 +53,7 @@ class ScheduleForm extends React.Component {
                          "lastName": ""
                        }
                      }
-                   ],
+                   ]
             },
 
             isFormValid: 'true',
@@ -90,7 +90,7 @@ class ScheduleForm extends React.Component {
         ){
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            console.log(this.state.schedule);
+            //console.log(this.state.schedule);
             //setTimeout(function() {
           //      browserHistory.push("/schedules/manage");
           //  }, 1000);
