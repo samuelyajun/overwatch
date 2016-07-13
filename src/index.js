@@ -21,7 +21,7 @@ import {loadSchedules} from './actions/scheduleActions';
 
 
 const store = configureStore();
-//store.dispatch(loadSchedules());
+store.dispatch(loadSchedules());
 
 render(
     <Provider store = {store}>

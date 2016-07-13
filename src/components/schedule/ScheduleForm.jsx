@@ -91,15 +91,19 @@ class ScheduleForm extends React.Component {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             console.log(this.state.schedule);
-            setTimeout(function() {
-                browserHistory.push("/schedules/manage");
-            }, 1000);
+            //setTimeout(function() {
+          //      browserHistory.push("/schedules/manage");
+          //  }, 1000);
+          this.redirectToManageSchedulePage();
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
+    }
 
+    redirectToManageSchedulePage() {
+      browserHistory.push("/schedules/manage");
     }
 
     onUpdate(event) {

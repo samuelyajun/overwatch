@@ -4,7 +4,7 @@ import initialState from './initialState';
 export default function scheduleReducer(state = initialState.schedules, action) {
   switch (action.type) {
   case types.LOAD_SCHEDULES_SUCCESS:
-    return action.schedule;
+    return action.schedules;
 
   case types.CREATE_SCHEDULE_SUCCESS:
     return [

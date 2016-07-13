@@ -140,6 +140,7 @@ const schedules = [
           schedule.id = generateId(schedule);
           schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
           schedules.push(schedule);
+          console.log('schedules: ' + schedules);
         }
 
         resolve(Object.assign({}, schedule));

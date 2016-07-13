@@ -10,6 +10,7 @@ class ManageSchedulePage extends React.Component {
         return (
             <div style={scheduleOuterDiv}>
                 <h1>List of Schedules</h1>
+                <span>{this.props.schedules}</span>
             </div>
         );
     }
