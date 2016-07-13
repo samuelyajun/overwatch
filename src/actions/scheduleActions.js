@@ -10,7 +10,7 @@ export function createScheduleSuccess(schedule) {
 }
 
 export function updateScheduleSuccess(schedule) {
-    return {type: types.LOAD_SCHEDULE_SUCCESS, schedule};
+    return {type: types.UPDATE_SCHEDULE_SUCCESS, schedule};
 }
 
 export function loadSchedules() {

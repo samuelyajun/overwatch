@@ -1,4 +1,4 @@
-//import delay from './delay';
+import delay from './delay';
 
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
@@ -46,7 +46,7 @@ const schedules = [
              "lastName": "User1"
            }
          }
-       ],
+       ]
   },
   {
     id: "2",
@@ -90,7 +90,7 @@ const schedules = [
              "lastName": "User2"
            }
          }
-       ],
+       ]
   }];
 
 
@@ -131,7 +131,7 @@ const schedules = [
           //Cloning so copy returned is passed by value rather than by reference.
           //schedule.id = generateId(schedule);
           schedulue.id = 100;
-          schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
+          //schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
           schedules.push(schedule);
         }
 
