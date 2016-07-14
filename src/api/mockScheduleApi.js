@@ -104,6 +104,7 @@ const schedules = [
 
   class ScheduleApi {
     static getAllSchedules() {
+        console.log('in getAllSchedules in mockScheduleApi');
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(Object.assign([], schedules));
@@ -128,7 +129,8 @@ const schedules = [
     }
 
     static saveSchedule(schedule) {
-    return new Promise((resolve, reject) => {
+      console.log('In saveSchedule in mockScheduleApi');
+      return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (schedule.id) {
           const existingScheduleIndex = schedules.findIndex(a => a.id == schedule.id);
@@ -137,10 +139,10 @@ const schedules = [
           //Just simulating creation here.
           //The server would generate ids and watchHref's for new schedules in a real app.
           //Cloning so copy returned is passed by value rather than by reference.
-          schedule.id = generateId(schedule);
-          schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
+          //schedule.id = generateId(schedule);
+          //schedule.watchHref = `http://www.pluralsight.com/courses/${schedule.id}`;
           schedules.push(schedule);
-          //console.log('schedules: ' + schedules);
+          console.log('Schedules in mockScheduleApi: ' + schedules);
         }
 
         resolve(Object.assign({}, schedule));

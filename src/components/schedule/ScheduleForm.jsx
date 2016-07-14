@@ -22,6 +22,7 @@ class ScheduleForm extends React.Component {
         const errorDaysRequired = 'A day is required';
 
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
         this.days = daysOfTheWeek;
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
@@ -88,13 +89,16 @@ class ScheduleForm extends React.Component {
             endDateIsValid &&
             daysAreValid
         ){
+            scheduleActions.saveSchedule(this.state.schedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            //console.log(this.state.schedule);
-            //setTimeout(function() {
-          //      browserHistory.push("/schedules/manage");
-          //  }, 1000);
-          this.redirectToManageSchedulePage();
+
+            console.log('Submitted Schedules ' , this.props.schedules);
+
+            setTimeout(function() {
+                browserHistory.push("/schedules/manage");
+            }, 1000);
+
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
@@ -102,9 +106,7 @@ class ScheduleForm extends React.Component {
         }
     }
 
-    redirectToManageSchedulePage() {
-      browserHistory.push("/schedules/manage");
-    }
+
 
     onUpdate(event) {
         const property = event.target.name;
@@ -405,7 +407,8 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
-    schedules: PropTypes.array.isRequired
+    schedules: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
