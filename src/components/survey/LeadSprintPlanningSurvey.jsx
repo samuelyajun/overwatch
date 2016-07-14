@@ -322,7 +322,8 @@ class LeadSprintPlanningSurvey extends React.Component {
                                         "optionChoiceName": "Strongly Disagree"
                                     }
                                 ]
-                            },{
+                            },
+                            {
                                 "id": 9,
                                 "quid": "Q123487",
                                 "questionLabel": "Team Sprint Day Question",
@@ -356,7 +357,8 @@ class LeadSprintPlanningSurvey extends React.Component {
                                         "optionChoiceName": "Strongly Disagree"
                                     }
                                 ]
-                            },{
+                            },
+                            {
                                 "id": 10,
                                 "quid": "Q123487",
                                 "questionLabel": "Team Sprint Day Question",

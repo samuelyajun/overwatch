@@ -34,9 +34,9 @@ render(
                 <Route path="schedules" component={SchedulePage} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="report" component={ReportPage} />
-                <Route path="survey" component={ManageSurveyPage} />
+                <Route path="/survey/:id" component={SurveyPage} />
+                <Route path="surveys" component={ManageSurveyPage} />
             </Route>
-            <Route path="/survey/:id" component={SurveyPage} />
             <Route path="/survey/qualitative/spd-team" component={TeamSprintPlanningSurvey} />
             <Route path="/survey/qualitative/lead" component={LeadSprintPlanningSurvey} />
             <Route path="/survey/quantitative/lead" component={TeamLeadQuantitativeSurvey} />
