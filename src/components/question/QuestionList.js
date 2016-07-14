@@ -5,7 +5,7 @@ let tableStyle = {
     class: "table table-hover table-bordered"
 };
 
-const QuestionList = ({questions, template}) => {
+const QuestionList = ({questions}) => {
     return (
         <tr>
             <td>

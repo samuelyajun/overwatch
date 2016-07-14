@@ -39,7 +39,6 @@ class ManageTemplatePage extends React.Component {
     }
 
     saveTemplate(event) {
-        console.log(event);
         event.preventDefault();
         this.setState({saving: true});
         this.props.actions.saveTemplate(this.state.template)

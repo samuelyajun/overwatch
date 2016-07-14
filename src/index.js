@@ -15,6 +15,7 @@ import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
+import TemplatesPage from './components/template/TemplatesPage';
 
 import LeadSprintPlanningSurvey from './components/survey/LeadSprintPlanningSurvey.jsx';
 import TeamSprintPlanningSurvey from './components/survey/TeamSprintPlanningSurvey.jsx';
@@ -41,6 +42,7 @@ render(
             <Route path="/survey/quantitative/lead" component={TeamLeadQuantitativeSurvey} />
             <Route path="/survey/quantitative/em" component={EMQuantitativeSurvey} />
             <Route path="/confirmation" component={SurveyConfirmationPage} />
+            <Route path="/templates" component={TemplatesPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );
