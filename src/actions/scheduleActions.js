@@ -3,7 +3,6 @@ import ScheduleApi from '../api/mockScheduleApi';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
 import { initiateAjaxRequest, ajaxRequestError } from './ajaxStatusActions';
 
 export function loadSchedulesSuccess(schedules) {
@@ -11,7 +10,6 @@ export function loadSchedulesSuccess(schedules) {
 }
 
 export function createScheduleSuccess(schedule) {
-   console.log('In createScheduleSuccess');
     return {type: types.CREATE_SCHEDULE_SUCCESS, schedule};
 }
 
@@ -21,7 +19,6 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
-        console.log('In loadSchedules() in scheduleActions');
         return ScheduleApi.getAllSchedules().then((schedules) => {
             dispatch(loadSchedulesSuccess(schedules));
         }).catch((error) => {
@@ -31,7 +28,6 @@ export function loadSchedules() {
 }
 
 export function saveSchedule(schedule) {
-  console.log('In scheduleActions');
   return function (dispatch, getState) {
     dispatch(initiateAjaxRequest());
     return ScheduleApi.saveSchedule(schedule).then(schedule => {
@@ -43,14 +39,3 @@ export function saveSchedule(schedule) {
     });
   };
 }
-
-/*export function loadSchedules() {
-    return dispatch => {
-        dispatch(initiateAjaxRequest());
-        return ScheduleApi.getAllSchedules().then(schedules => {
-            dispatch(loadSchedulesSuccess(schedules));
-        }).catch(error => {
-            throw (error);
-        });
-    };
-}*/

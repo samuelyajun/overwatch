@@ -9,7 +9,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 
-
 class ScheduleForm extends React.Component {
 
     constructor(props, context) {
@@ -89,7 +88,8 @@ class ScheduleForm extends React.Component {
             endDateIsValid &&
             daysAreValid
         ){
-            scheduleActions.saveSchedule(this.state.schedule);
+            this.props.actions.saveSchedule(this.state.schedule);
+
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
 
@@ -98,7 +98,6 @@ class ScheduleForm extends React.Component {
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");
             }, 1000);
-
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
