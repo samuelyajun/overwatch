@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import ScheduleForm from './ScheduleForm.jsx';
 import {connect} from 'react-redux';
 
@@ -22,4 +22,4 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export default CreateSchedule;//connect(mapStateToProps, mapDispatchToProps)(CreateSchedule);
+export default CreateSchedule;//connect(mapStateToProps, mapDispatchToProps)(CreateSchedule);*/
