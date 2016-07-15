@@ -16,6 +16,8 @@ const compiler = webpack(config);
     if you're hitting an endpoint on someone elses computer just user their
     IP address instead of localhost
 */
+
+/*
 const scheduleProxyOptions = {
     target: 'http://localhost:8090',
     changeOrigin: true,
@@ -23,6 +25,7 @@ const scheduleProxyOptions = {
         '^/schedule': '/' //remove /api from url before making request
     }
 };
+*/
 
 /*
 const surveyProxyOptions = {
@@ -32,7 +35,9 @@ const surveyProxyOptions = {
         '^/survey': '/' //remove /api from url before making request
     }
 };
+*/
 
+/*
 const reportProxyOptions = {
     target: 'http://localhost:8090',
     changeOrigin: true,
@@ -43,7 +48,7 @@ const reportProxyOptions = {
 */
 
 //uncomment others as needed, don't forget to uncomment the optiosn for them too
-app.use('/schedule', proxy(scheduleProxyOptions));
+//app.use('/schedule', proxy(scheduleProxyOptions));
 //app.use('/survey', proxy(surveyProxyOptions));
 //app.use('/report', proxy(reportProxyOptions));
 
