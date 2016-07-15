@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as types from './actionTypes';
 import ScheduleApi from '../api/mockScheduleApi';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,8 +18,11 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
-        return ScheduleApi.getAllSchedules().then((schedules) => {
-            dispatch(loadSchedulesSuccess(schedules));
+        //return ScheduleApi.getAllSchedules().then((schedules) => {
+        return fetch(`/schedule/schedules`, (response) => {
+            console.log(reponse);
+            dispatch(loadSchedulesSuccess(response));
+
         }).catch((error) => {
             throw(error);
         });

@@ -18,7 +18,7 @@ const ScheduleListRow = ({schedule}) => {
     return (
         <tr>
             <td style = {updateButtonStyle} >
-                <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type='button'/>
+                <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type="button" />
             </td>
             <td style = {alignMiddleStyle}>{schedule.survey}</td>
             <td style = {alignMiddleStyle}>{schedule.client}</td>

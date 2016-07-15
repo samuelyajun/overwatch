@@ -18,40 +18,7 @@ class ManageSchedulePage extends React.Component {
     }
 
     render() {
-        //const {schedules} = this.props;
-
-        const schedules = [
-            {
-                id: '1',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Overwatch',
-                frequency: 'One Week',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['MONDAY', 'THURSDAY']
-            },
-            {
-                id: '2',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Talent Review',
-                frequency: 'Three Weeks',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['SUNDAY']
-            },
-            {
-                id: '3',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Android Tri-Met',
-                frequency: 'One Time',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['WEDNESDAY']
-            }
-        ];
+        const {schedules} = this.props;
 
         let alignCenterStyle = {
             textAlign: 'center'
