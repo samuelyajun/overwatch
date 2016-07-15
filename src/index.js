@@ -16,6 +16,12 @@ import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
 import SurveyPage from './components/survey/SurveyPage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
+import LeadSprintPlanningSurvey from './components/survey/LeadSprintPlanningSurvey.jsx';
+import TeamSprintPlanningSurvey from './components/survey/TeamSprintPlanningSurvey.jsx';
+import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
+import TeamLeadQuantitativeSurvey from './components/survey/TeamLeadQuantitativeSurvey.jsx';
+import EMQuantitativeSurvey from './components/survey/EMQuantitativeSurvey.jsx';
+
 
 
 const store = configureStore();
@@ -31,6 +37,11 @@ render(
                 <Route path="survey" component={ManageSurveyPage} />
             </Route>
             <Route path="/survey/:id" component={SurveyPage} />
+            <Route path="/survey/qualitative/spd-team" component={TeamSprintPlanningSurvey} />
+            <Route path="/survey/qualitative/lead" component={LeadSprintPlanningSurvey} />
+            <Route path="/survey/quantitative/lead" component={TeamLeadQuantitativeSurvey} />
+            <Route path="/survey/quantitative/em" component={EMQuantitativeSurvey} />
+            <Route path="/confirmation" component={SurveyConfirmationPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );
