@@ -11,14 +11,41 @@ const port = 3000;
 const app = express();
 const compiler = webpack(config);
 
-//for now this is just for scheduling
-const options = {
+/*
+    Make sure to change ports for the proxies if running multiple on localhost,
+    if you're hitting an endpoint on someone elses computer just user their
+    IP address instead of localhost
+*/
+const scheduleProxyOptions = {
     target: 'http://localhost:8090',
     changeOrigin: true,
     pathRewrite: {
         '^/schedule': '/' //remove /api from url before making request
     }
 };
+
+/*
+const surveyProxyOptions = {
+    target: 'http://localhost:8090',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/survey': '/' //remove /api from url before making request
+    }
+};
+
+const reportProxyOptions = {
+    target: 'http://localhost:8090',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/report': '/' //remove /api from url before making request
+    }
+};
+*/
+
+//uncomment others as needed, don't forget to uncomment the optiosn for them too
+app.use('/schedule', proxy(scheduleProxyOptions));
+//app.use('/survey', proxy(surveyProxyOptions));
+//app.use('/report', proxy(reportProxyOptions));
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
@@ -27,7 +54,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.use('/schedule', proxy(options));
 
 app.get('*', function(req, res) {
     res.sendFile(path.join( __dirname, '../src/index.html'));
