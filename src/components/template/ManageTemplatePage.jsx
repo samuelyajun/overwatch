@@ -2,10 +2,12 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as templateActions from '../../actions/templateActions';
+import TemplateForm from './TemplateForm';
 import toastr from 'toastr';
 
 const templateOuterDivStyle = {
-    marginTop: '75px'
+    marginTop: '75px',
+    marginLeft: '75px'
 };
 
 class ManageTemplatePage extends React.Component {
@@ -50,20 +52,18 @@ class ManageTemplatePage extends React.Component {
     redirect() {
         this.setState({saving: false});
         toastr.success('Template Saved!');
-        this.context.router.push('/templates');
+        this.context.router.push('/surveyConfirmationPage');
     }
 
     render() {
         return (
-            <div style={templateOuterDivStyle}>
-                <TemplateForm
-                    onChange={this.updateTemplateState}
-                    onSave={this.saveTemplate}
-                    course={this.state.template}
-                    errors={this.state.errors}
-                    saving={this.state.saving}
-                />
-            </div>
+            <TemplateForm
+                onChange={this.updateTemplateState}
+                onSave={this.saveTemplate}
+                template={this.state.template}
+                errors={this.state.errors}
+                saving={this.state.saving}
+            />
         );
     }
 
@@ -78,13 +78,19 @@ ManageTemplatePage.contextTypes = {
     router: PropTypes.object
 };
 
+function getTemplateById(templates, id) {
+    const template = templates.filter(template => template.id == id);
+    if(template.length) return template[0];
+    return null;
+}
+
 function mapStateToProps(state, ownProps){
     const templateId = ownProps.params.id;
     let template = {id: '', watchHref: '', name: '', type: '', description: '', createDate: '', version: ''};
 
-    /*if(templateId && state.templates.length > 0) {
+    if(templateId && state.templates.length > 0) {
         template = getTemplateById(state.templates, templateId);
-    }*/
+    }
 
     return {
         template: template
