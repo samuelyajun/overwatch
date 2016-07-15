@@ -6,8 +6,8 @@ const ScheduleList = ({schedules}) => {
         <table className = "table table-hover">
             <thead>
             <tr>
-                <th>Edit</th>
-                <th>Survey</th>
+                <th></th>
+                <th>Survey Type</th>
                 <th>Client</th>
                 <th>Project</th>
                 <th>Frequency</th>

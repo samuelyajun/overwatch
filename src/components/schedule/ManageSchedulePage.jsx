@@ -53,9 +53,13 @@ class ManageSchedulePage extends React.Component {
             }
         ];
 
+        let alignCenterStyle = {
+            textAlign: 'center'
+
+        };
         return (
             <div style={scheduleOuterDiv}>
-                <h1>List of Schedules</h1>
+                <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}/>
             </div>
         );

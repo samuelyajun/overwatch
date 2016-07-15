@@ -7,19 +7,25 @@ const ScheduleListRow = ({schedule}) => {
     let submitButtonClass = 'btn btn-default';
     let submitButtonType = 'Update';
 
+    let updateButtonStyle = {
+        textAlign: 'center'
+    };
 
+    let alignMiddleStyle = {
+        verticalAlign: 'middle'
+    };
 
     return (
         <tr>
-            <td>
-                <Button type = {submitButtonType} buttonClassName = {submitButtonClass}/>
+            <td style = {updateButtonStyle} >
+                <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type='button'/>
             </td>
-            <td>{schedule.survey}</td>
-            <td>{schedule.client}</td>
-            <td>{schedule.project}</td>
-            <td>{schedule.frequency}</td>
-            <td>{schedule.startDate}</td>
-            <td>{schedule.endDate}</td>
+            <td style = {alignMiddleStyle}>{schedule.survey}</td>
+            <td style = {alignMiddleStyle}>{schedule.client}</td>
+            <td style = {alignMiddleStyle}>{schedule.project}</td>
+            <td style = {alignMiddleStyle}>{schedule.frequency}</td>
+            <td style = {alignMiddleStyle}>{schedule.startDate}</td>
+            <td style = {alignMiddleStyle}>{schedule.endDate}</td>
         </tr>
     );
 };
