@@ -1281,9 +1281,9 @@ class SurveyResponsePage extends React.Component {
             ];
 
             if (surveys[i].surveyTemplate.questions.questionType === "qualitative" ) {
-                surveyTemplate = <QualitativeSurvey/>
+                surveyTemplate = <QualitativeSurvey/>;
             } else {
-                surveyTemplate = <QuantitativeSurvey/>
+                surveyTemplate = <QuantitativeSurvey/>;
             }
 
         return (

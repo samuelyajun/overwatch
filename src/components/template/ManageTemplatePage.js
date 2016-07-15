@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
+import TemplateForm from './TemplateForm';
 
 const templateOuterDivStyle = {
     marginTop: '75px'
