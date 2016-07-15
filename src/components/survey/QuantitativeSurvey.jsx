@@ -22,7 +22,7 @@ class QuantitativeSurvey extends React.Component {
         }, 1000);
     }
     render() {
-        let i = 3;
+        let i = 2;
         const surveys =
             [
                 {

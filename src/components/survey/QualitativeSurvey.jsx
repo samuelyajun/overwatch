@@ -1295,6 +1295,7 @@ class QualitativeSurvey extends React.Component {
 
         let submitButtonType = 'submit';
         let cancelButtonType = 'reset';
+        let buttonButtonType = 'button';
         let submitButtonClass = 'btn btn-primary';
         let cancelButtonClass = 'btn btn-default';
 
@@ -1308,8 +1309,8 @@ class QualitativeSurvey extends React.Component {
                         {
                             <SurveyQuestionList key={surveys[i].id} survey={surveys[i]}/>
                         }
-                        <Button type={submitButtonType} buttonClassName={submitButtonClass}/>
-                        <Button type={cancelButtonType} buttonClassName={cancelButtonClass}/>
+                        <Button type={buttonButtonType} buttonClassName={submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
+                        <Button type={buttonButtonType} buttonClassName={cancelButtonClass}/>
                     </form>
                 </div>
             </div>

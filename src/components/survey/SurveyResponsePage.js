@@ -6,10 +6,11 @@ const surveyPageOuterDiv = {
     marginTop: '75px'
 };
 
-class SurveyPage extends React.Component {
+class SurveyResponsePage extends React.Component {
     render() {
         let i = 2;
         let surveyTemplate;
+
         const surveys =
             [
                 {
@@ -1293,4 +1294,4 @@ class SurveyPage extends React.Component {
     }
 }
 
-export default SurveyPage;
+export default SurveyResponsePage;
