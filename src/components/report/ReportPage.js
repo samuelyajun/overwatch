@@ -6,7 +6,7 @@ const reportOuterDivStyle = {
     marginTop: '75px'
 };
 //const reportsLink='http://172.17.70.87:8080/getReport/csv';
-const reportsLink='http://localhost:8040/getSurveys';
+const reportsLink='http://172.17.70.38:8080/report/get_available_reports';
 
 class ReportPage extends React.Component {
 
