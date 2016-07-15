@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { initiateAjaxRequest, ajaxRequestError } from './ajaxStatusActions';
 
+
 export function loadSchedulesSuccess(schedules) {
     return {type: types.LOAD_SCHEDULES_SUCCESS, schedules};
 }
@@ -19,13 +20,17 @@ export function updateScheduleSuccess(schedule) {
 export function loadSchedules() {
     return function(dispatch) {
         //return ScheduleApi.getAllSchedules().then((schedules) => {
-        return fetch(`/schedule/schedules`, (response) => {
-            console.log(reponse);
-            dispatch(loadSchedulesSuccess(response));
+        return fetch(`/schedule/schedules`).then((response) => {
+            //console.log(response.json());
+            response.json().then(json => {
+                //process response stuff here
+            dispatch(loadSchedulesSuccess(json));
+            })
+
 
         }).catch((error) => {
             throw(error);
-        });
+        })
     };
 }
 
