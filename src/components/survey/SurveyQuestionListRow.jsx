@@ -7,23 +7,25 @@ const rowStyle = {
     textAlign : 'center'
 };
 
-const SurveyListRow = ({ question }) => {
+const SurveyListRow = ({ question, onChange, selectedValue }) => {
     return (
         <tr>
             <td style={rowStyle}>{question.id}.</td>
             <td>{question.questionText}</td>
             <td>&nbsp;</td>
-            <td style={rowStyle}><RadioInput value = {question.optionChoices[0].id} name = {question.id}/></td>
-            <td style={rowStyle}><RadioInput value = {question.optionChoices[1].id} name = {question.id}/></td>
-            <td style={rowStyle}><RadioInput value = {question.optionChoices[2].id} name = {question.id}/></td>
-            <td style={rowStyle}><RadioInput value = {question.optionChoices[3].id} name = {question.id}/></td>
-            <td style={rowStyle}><RadioInput value = {question.optionChoices[4].id} name = {question.id}/></td>
+            <td style={rowStyle}><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td style={rowStyle}><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td style={rowStyle}><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td style={rowStyle}><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td style={rowStyle}><RadioInput value = {question.responseValue} name = {question.id}/></td>
         </tr>
     );
 };
 
 SurveyListRow.propTypes = {
-    question : PropTypes.object.isRequired
+    question : PropTypes.object.isRequired,
+    onChange: PropTypes.func,
+    selectedValue: PropTypes.string
 };
 
 export default SurveyListRow;

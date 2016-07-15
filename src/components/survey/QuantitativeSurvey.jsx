@@ -1306,8 +1306,8 @@ class QuantitativeSurvey extends React.Component {
                         {
                             <SurveyQuantityQuestionList key = {surveys[i].id} survey = {surveys[i]} />
                         }
-                        <Button type = {submitButtonType} buttonClassName = {submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
-                        <Button type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
+                        <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
+                        <Button labe = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
                     </form>
                 </div>
             </div>

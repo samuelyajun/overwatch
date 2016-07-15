@@ -6,9 +6,13 @@ const listStyle = {
     textAlign : 'center'
 };
 
-const SurveyQuestionList = ({survey}) => {
+let tableStyle = {
+    class: "table table-hover table-bordered table-striped"
+};
+
+const SurveyQuestionList = ({questions}) => {
     return (
-        <table className="table">
+        <table className="table" style={tableStyle}>
             <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -23,7 +27,7 @@ const SurveyQuestionList = ({survey}) => {
             </thead>
             <tbody>
             {
-                survey.surveyTemplate.questions.map((question) =>
+                questions.surveyTemplate.questions.map(question =>
                     <SurveyQuestionListRow key = {question.id} question = {question}/>
                 )
             }
@@ -33,7 +37,8 @@ const SurveyQuestionList = ({survey}) => {
 };
 
 SurveyQuestionList.propTypes = {
-    survey: PropTypes.object.isRequired
+    questions: PropTypes.array,
+    selectedValue: PropTypes.string
 };
 
 export default SurveyQuestionList;
