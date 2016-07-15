@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import SurveyQuestionListRow from './SurveyQuestionLisRow.jsx';
+import SurveyQuestionListRow from './SurveyQuestionListRow.jsx';
 
 
 const listStyle = {

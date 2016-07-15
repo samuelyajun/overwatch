@@ -1,5 +1,5 @@
 import React from 'react';
-import SurveyQuestionList from './SurveyQuestionList.jsx';
+import SurveyQuantityQuestionList from './SurveyQuantityQuestionList.jsx';
 import Button from '../common/Button.jsx';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
@@ -8,7 +8,7 @@ const surveyPageOuterDiv = {
     marginTop: '75px'
 };
 
-class QualitativeSurvey extends React.Component {
+class QuantitativeSurvey extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -17,11 +17,10 @@ class QualitativeSurvey extends React.Component {
     redirectToAddSurveyPage() {
         toastr.options.positionClass = 'toast-top-full-width';
         toastr.success('Survey Submitted!');
-        setTimeout(function () {
+        setTimeout(function() {
             browserHistory.push('/confirmation');
         }, 1000);
     }
-
     render() {
         let i = 2;
         const surveys =
@@ -1295,22 +1294,20 @@ class QualitativeSurvey extends React.Component {
 
         let submitButtonType = 'submit';
         let cancelButtonType = 'reset';
-        let buttonButtonType = 'button';
         let submitButtonClass = 'btn btn-primary';
         let cancelButtonClass = 'btn btn-default';
-
 
         return (
             <div style={surveyPageOuterDiv} className="row">
                 <div className="col-xs-12">
-                    <h1>{surveys[i].surveyTemplate.templateName + " Survey"}</h1>
+                    <h1>{surveys[i].surveyTemplate.templateName}</h1>
                     <h2>{surveys[i].surveyTemplate.templateDescription}</h2>
                     <form name="surveyForm" noValidate>
                         {
-                            <SurveyQuestionList key={surveys[i].id} survey={surveys[i]}/>
+                            <SurveyQuantityQuestionList key = {surveys[i].id} survey = {surveys[i]} />
                         }
-                        <Button type={buttonButtonType} buttonClassName={submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
-                        <Button type={buttonButtonType} buttonClassName={cancelButtonClass}/>
+                        <Button type = {submitButtonType} buttonClassName = {submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
+                        <Button type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
                     </form>
                 </div>
             </div>
@@ -1318,5 +1315,4 @@ class QualitativeSurvey extends React.Component {
     }
 }
 
-
-export default QualitativeSurvey;
+export default QuantitativeSurvey;
