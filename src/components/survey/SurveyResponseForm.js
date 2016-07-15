@@ -26,7 +26,9 @@ const SurveyResponseForm = ({template, onSave, saving, onChange}) => {
             <h1>{template.name}</h1>
             <h2>{template.description}</h2>
             <form name="surveyForm" noValidate>
-                <SurveyQuestionList questions={template.questions} />
+                {
+                    <SurveyQuestionList key={template[0].id} template = {template[0]} />
+                }
                 <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
                 <Button labe = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
             </form>

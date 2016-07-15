@@ -1,6 +1,6 @@
 import delay from './delay';
 const templates = [
-    {
+        {
         "id": 1,
         "name": "Team - 4 Days until end of Sprint",
         "type": "Qualitative",

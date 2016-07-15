@@ -10,7 +10,7 @@ let tableStyle = {
     class: "table table-hover table-bordered table-striped"
 };
 
-const SurveyQuantityQuestionList = ({questions}) => {
+const SurveyQuantityQuestionList = ({template}) => {
     return (
         <table className="table" style={tableStyle}>
             <thead>
@@ -21,7 +21,7 @@ const SurveyQuantityQuestionList = ({questions}) => {
             </thead>
             <tbody>
             {
-                questions.surveyTemplate.questions.map(question =>
+                template.questions.map(question =>
                     <SurveyQuantityQuestionListRow key = {question.id} question = {question}/>
                 )
             }
@@ -31,7 +31,7 @@ const SurveyQuantityQuestionList = ({questions}) => {
 };
 
 SurveyQuantityQuestionList.propTypes = {
-    questions: PropTypes.array,
+    template: PropTypes.object.isRequired,
     selectedValue: PropTypes.string
 };
 

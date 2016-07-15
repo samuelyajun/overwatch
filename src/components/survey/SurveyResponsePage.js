@@ -59,6 +59,7 @@ class SurveyResponsePage extends React.Component {
             <div className="container">
                 <SurveyResponseForm
                     template={this.state.template}
+
                 />
             </div>
         );
