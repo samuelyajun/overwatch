@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export function initiateAjaxRequest() {
-  console.log('In initiateAjaxRequest in ajaxStatusActions');
+export function initiateAjaxRequest() {  
     return {
         type: actionTypes.INITIATE_AJAX_REQUEST
     };
