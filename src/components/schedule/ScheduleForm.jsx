@@ -91,9 +91,7 @@ class ScheduleForm extends React.Component {
             this.props.actions.saveSchedule(this.state.schedule);
 
             toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
-
-            console.log('Submitted Schedules ' , this.props.schedules);
+            toastr.success('Schedule submitted!');            
 
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");

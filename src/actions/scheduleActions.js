@@ -28,7 +28,7 @@ export function loadSchedules() {
 }
 
 export function saveSchedule(schedule) {
-  return function (dispatch, getState) {
+  return function (dispatch) {
     dispatch(initiateAjaxRequest());
     return ScheduleApi.saveSchedule(schedule).then(schedule => {
       schedule.id ? dispatch(updateScheduleSuccess(schedule)) :
