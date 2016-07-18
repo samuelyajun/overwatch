@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+
 import Header from '../common/Header';
 import Button from '../common/Button';
-
+import ReportList from './ReportList';
 const reportOuterDivStyle = {
     marginTop: '75px'
 };
@@ -19,29 +21,9 @@ class ReportPage extends React.Component {
                 <h1>Report Page</h1>
                 <a href={reportsLink} className="btn btn-info" role="button">Generate New Report</a>
                 </div>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Report Generated Date</th>
-                            <th>Survey Name</th>
-                            <th>Group</th>
-                            <th>Report</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>sd</td>
-                            <td>sd</td>
-                            <td>
-                                <Button className={"btn btn-info"} type={"button"} label={"Generate Excel"}/>
-                            </td>
-                            <td>
-                                <Button className={"btn btn-info"} type={"button"} label={"Generate CSV"}/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                {
+                    <ReportList key = {Reports[0].id} report = {Reports[0]} />
+                }
             </div>
         );
     }
