@@ -36,7 +36,7 @@ class ScheduleForm extends React.Component {
 
         this.state = {
             schedule: {
-                users: [],
+                username: '',
                 survey: '',
                 frequency: '',
                 startDate: '',
@@ -219,10 +219,6 @@ class ScheduleForm extends React.Component {
         return isValid;
     }
 
-    addUser(event) {
-        
-    }
-
     render() {
         const {schedules} = this.props;
 
@@ -230,6 +226,12 @@ class ScheduleForm extends React.Component {
             <div className="container">
                 <form className name="myForm" noValidate>
                     <div className="row">
+                        <div className="col-md-2">
+                            <UserCheckboxGroup
+                                users={this.props.users}
+                                onClick={this.updateUsers}
+                            />
+                        </div>
                         <div className="col-md-2">
                             <SelectInput
                                 name="survey"
@@ -259,14 +261,6 @@ class ScheduleForm extends React.Component {
                                     }
                                 ]}
                                 error={this.state.errors.survey.required}
-                            />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2">
-                            <UserCheckboxGroup
-                                users={this.props.users}
-                                onClick={this.updateUsers}
                             />
                         </div>
                     </div>
@@ -395,7 +389,30 @@ class ScheduleForm extends React.Component {
                                         />
                                 </li>
                                 <li className="list-group-item">
-
+                                    <SelectInput
+                                        name="role"
+                                        label="Role"
+                                        value={this.state.schedule.role}
+                                        onChange={this.onUpdate}
+                                        options={[
+                                            {
+                                                text: 'Engagement Manager',
+                                                value: 'EM'
+                                            },
+                                            {
+                                                text: "Tech Lead",
+                                                value: "TL"
+                                            },
+                                            {
+                                                text: "Business Analyst",
+                                                value: "BA"
+                                            },
+                                            {
+                                                text: "Developer",
+                                                value: "DEV"
+                                            }
+                                        ]}
+                                        />
                                 </li>
                             </ul>
                         </div>
@@ -413,14 +430,14 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
-    users: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired
     schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
     return {
-        users: state.users,
+        users: state.users
         schedules: state.schedules
     };
 }
