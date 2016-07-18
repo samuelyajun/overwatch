@@ -17,7 +17,7 @@ export function updateScheduleSuccess(schedule) {
     return {type: types.UPDATE_SCHEDULE_SUCCESS, schedule};
 }
 
-export function loadSchedules() {
+/*export function loadSchedules() {
     return function(dispatch) {
         //return ScheduleApi.getAllSchedules().then((schedules) => {
         return fetch(`/schedule/schedules`).then((response) => {
@@ -32,9 +32,21 @@ export function loadSchedules() {
             throw(error);
         })
     };
+}*/
+
+export function loadSchedules() {
+    return function(dispatch) {
+        dispatch(initiateAjaxRequest());
+        return ScheduleApi.getAllSchedules().then((schedules) => {
+            dispatch(loadSchedulesSuccess(schedules));
+        }).catch((error) => {
+            throw(error);
+        });
+    };
 }
 
 export function saveSchedule(schedule) {
+  console.log('Schedule in saveSchedule() in scheduleActions ', schedule);
   return function (dispatch) {
     dispatch(initiateAjaxRequest());
     return ScheduleApi.saveSchedule(schedule).then(schedule => {

@@ -36,6 +36,7 @@ render(
                 <IndexRoute component={HomePage} />
                 <Route path="schedules" component={SchedulePage} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
+                <Route path="schedules/:id" component={SchedulePage} />
                 <Route path="report" component={ReportPage} />
                 <Route path="survey" component={ManageSurveyPage} />
             </Route>

@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
-const ScheduleList = ({schedules}) => {
+const ScheduleList = ({schedules, onUpdate}) => {
     return (
         <table className = "table table-hover">
             <thead>
@@ -18,7 +18,7 @@ const ScheduleList = ({schedules}) => {
             <tbody>
                 {
                     schedules.map(schedule =>
-                        <ScheduleListRow key = {schedule.id} schedule={schedule}/>
+                        <ScheduleListRow key = {schedule.id} schedule={schedule} onUpdate={onUpdate}/>
                     )
                 }
             </tbody>
@@ -27,7 +27,7 @@ const ScheduleList = ({schedules}) => {
 };
 
 ScheduleList.propTypes = {
-    schedules: PropTypes.array.isRequired
+    //schedules: PropTypes.array.isRequired
 };
 
 export default ScheduleList;

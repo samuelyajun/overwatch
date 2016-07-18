@@ -13,7 +13,12 @@ class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        
+
+        /*this.state = {
+        schedule: Object.assign({}, props.schedule),
+        errors: {},
+        saving: false
+        };*/
 
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
@@ -58,6 +63,8 @@ class ScheduleForm extends React.Component {
                    ]
             },
 
+            //schedule: Object.assign({}, props.schedule),
+
             isFormValid: 'true',
 
             errors: {
@@ -82,6 +89,13 @@ class ScheduleForm extends React.Component {
         };
     }
 
+    /*componentWillReceiveProps(nextProps) {
+       if (this.props.schedule.id != nextProps.schedule.id) {
+         // Necessary to populate form when existing course is loaded directly.
+         this.setState({schedule: Object.assign({}, nextProps.schedule)});
+       }
+    }*/
+
     onClickSubmit() {
 
         let startDateIsValid = this.validateStartDate();
@@ -95,7 +109,7 @@ class ScheduleForm extends React.Component {
             this.props.actions.saveSchedule(this.state.schedule);
 
             toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');            
+            toastr.success('Schedule submitted!');
 
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");
@@ -425,7 +439,7 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
-    schedules: PropTypes.array.isRequired,
+    //schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
@@ -434,6 +448,64 @@ function mapStateToProps(state, ownProps) {
         schedules: state.schedules
     };
 }
+
+//Pull in the React Router context so router is available on this.context.router.
+/*ScheduleForm.contextTypes = {
+  router: PropTypes.object
+};*/
+
+/*function getScheduleById(schedules, id) {
+  const schedule = schedules.filter(schedule => schedule.id == id);
+  if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
+  return null;
+}
+
+function mapStateToProps(state, ownProps) {
+  console.log('ownprops is ' , ownProps);
+  var scheduleId = '';
+  if(ownProps.params != undefined) {
+   scheduleId = ownProps.params.id; // from the path `/schedules/:id`
+  }
+
+  let schedule = {
+      id: '',
+      username: '',
+      survey: '',
+      frequency: '',
+      startDate: '',
+      endDate: '',
+      days: [],
+      respondents: [
+           {
+             "allowedAttributes": [
+               {
+                 "value": "",
+                 "attributeTypes": {
+                 "name": ""
+                 }
+               }
+             ],
+             "user": {
+               "email": "",
+               "firstName": "",
+               "lastName": ""
+             }
+           }
+         ]
+  };
+
+  if (scheduleId && state.schedules.length > 0) {
+    schedule = getScheduleById(state.schedules, scheduleId);
+  }
+
+  return {
+    schedule: schedule
+  };
+
+/*  return{
+    schedules: state.schedules
+  };*/
+//}
 
 function mapDispatchToProps(dispatch) {
     return {
