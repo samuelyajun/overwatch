@@ -1287,7 +1287,7 @@ class SurveyResponsePage extends React.Component {
             }
 
         return (
-            <div style={surveyPageOuterDiv} class="container">
+            <div style={surveyPageOuterDiv} className="container">
                 {surveyTemplate}
             </div>
         );
