@@ -18,9 +18,9 @@ const ScheduleListRow = ({schedule, onUpdate}) => {
 
     return (
         <tr>
-          <td style = {updateButtonStyle} >
-              <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type="button" onClick={onUpdate} value={schedule}/>
-          </td>
+            <td style = {updateButtonStyle} >
+                <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type="button"  onClick={onUpdate} value={schedule}/>
+            </td>
             <td style = {alignMiddleStyle}>{schedule.survey}</td>
             <td style = {alignMiddleStyle}>{schedule.client}</td>
             <td style = {alignMiddleStyle}>{schedule.project}</td>

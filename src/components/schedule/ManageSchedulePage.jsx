@@ -5,6 +5,7 @@ import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
+
 const scheduleOuterDiv = {
     marginTop: '75px'
 };
@@ -57,7 +58,7 @@ class ManageSchedulePage extends React.Component {
     }
 
     render() {
-        const {schedules} = this.props;
+        const schedules = this.props.schedules;
 
         let alignCenterStyle = {
             textAlign: 'center'
@@ -65,10 +66,10 @@ class ManageSchedulePage extends React.Component {
         };
         return (
             <div style={scheduleOuterDiv}>
+
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}
-                              onUpdate={this.onClickUpdate}/>
-
+                              onUpdate={this.onClickUpdate}/>                
             </div>
         );
     }
