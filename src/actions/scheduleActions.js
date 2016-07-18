@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { initiateAjaxRequest, ajaxRequestError } from './ajaxStatusActions';
 
-
 export function loadSchedulesSuccess(schedules) {
     return {type: types.LOAD_SCHEDULES_SUCCESS, schedules};
 }

@@ -1,3 +1,4 @@
+
 import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,6 +23,7 @@ class ManageSchedulePage extends React.Component {
         };
         return (
             <div style={scheduleOuterDiv}>
+
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}/>
             </div>
