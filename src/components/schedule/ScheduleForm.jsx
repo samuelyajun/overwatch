@@ -430,14 +430,14 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
-    users: PropTypes.array.isRequired
+    users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
     return {
-        users: state.users
+        users: state.users,
         schedules: state.schedules
     };
 }
