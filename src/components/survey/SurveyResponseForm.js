@@ -7,44 +7,48 @@ const surveyPageOuterDiv = {
     marginTop: '75px'
 };
 
-let i = 1;
-let surveyTemplate;
 let submitButtonType = 'submit';
 let cancelButtonType = 'reset';
 let submitButtonClass = 'btn btn-primary';
 let cancelButtonClass = 'btn btn-default';
 
-if (template.type === "qualitative" ) {
-    surveyTemplate = <SurveyQuestionList questions={template.questions}/>
-} else {
-    surveyTemplate = <SurveyQuantityQuestionList questions = {template.questions} />
-}
 
-const SurveyResponseForm = ({template, onSave, saving, onChange}) => {
+const SurveyResponseForm = ({ surveys, onSave, saving, onChange}) => {
+    let i = 0;
+    //let surveyTemplateType;
+    //if (surveys[0].surveyTemplate.questions.questionType === "qualitative" ) {
+    //    surveyTemplateType = <SurveyQuestionList
+    //        key = {surveys[i].id}
+    //        survey = {surveys[i]}
+    //    />;
+    //} else {
+    //    surveyTemplateType = <SurveyQuantityQuestionList
+    //        key = {surveys[i].id}
+    //        survey = {surveys[i]}
+    //    />;
+    //}
     return (
         <div style={surveyPageOuterDiv}>
-            <h1>{template.name}</h1>
-            <h2>{template.description}</h2>
             <form name="surveyForm" noValidate>
-                {
-                    <SurveyQuestionList key={template[0].id} template = {template[0]} />
-                }
-                <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass} onClick={this.redirectToAddSurveyPage}/>
-                <Button labe = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
+                <SurveyQuestionList
+                    survey = {surveys}
+                />
+                <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass}/>
+                <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
             </form>
         </div>
     );
 };
-//{
-//    surveyTemplate
-//}
+
 
 
 SurveyResponseForm.propTypes = {
-    template: React.PropTypes.object.isRequired,
-    onSave: React.PropTypes.func,
-    saving: React.PropTypes.bool,
-    onChange: React.PropTypes.func
+    surveys: PropTypes.array.isRequired,
+    onSave: PropTypes.func,
+    saving: PropTypes.bool,
+    onChange: PropTypes.func
 };
+
+
 
 export default SurveyResponseForm;

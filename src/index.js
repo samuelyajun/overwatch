@@ -6,6 +6,7 @@ import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {loadTemplates} from './actions/templateActions';
+import {loadSurveys} from './actions/surveyActions';
 import '../node_modules/bootstrap/dist/js/bootstrap.min';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
@@ -24,6 +25,7 @@ import TemplatesPage from './components/template/TemplatesPage';
 
 const store = configureStore();
 store.dispatch(loadTemplates());
+store.dispatch(loadSurveys());
 
 render(
     <Provider store = {store}>
@@ -33,11 +35,10 @@ render(
                 <Route path="schedules" component={SchedulePage} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="report" component={ReportPage} />
-                <Route path="survey" component={ManageSurveyPage} />
+                <Route path="surveys/manage" component={ManageSurveyPage} />
             </Route>
-            <Route path="/survey/:id" component={SurveyResponsePage} />
+            <Route path="surveys" component={SurveyResponsePage} />
             <Route path="confirmation" component={SurveyConfirmationPage} />
-            <Route path="/templates" component={TemplatesPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

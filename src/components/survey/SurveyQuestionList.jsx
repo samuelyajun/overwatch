@@ -10,7 +10,9 @@ let tableStyle = {
     class: "table table-hover table-bordered table-striped"
 };
 
-const SurveyQuestionList = ({template}) => {
+const SurveyQuestionList = ({survey}) => {
+
+    console.log(survey);
     return (
         <table className="table" style={tableStyle}>
             <thead>
@@ -27,7 +29,7 @@ const SurveyQuestionList = ({template}) => {
             </thead>
             <tbody>
             {
-                template.questions.map(question =>
+                survey.surveyTemplate.questions.map(question =>
                     <SurveyQuestionListRow key = {question.id} question = {question}/>
                 )
             }
@@ -37,8 +39,7 @@ const SurveyQuestionList = ({template}) => {
 };
 
 SurveyQuestionList.propTypes = {
-    template: PropTypes.object.isRequired,
-    selectedValue: PropTypes.string
+    survey: PropTypes.array.isRequired
 };
 
 export default SurveyQuestionList;
