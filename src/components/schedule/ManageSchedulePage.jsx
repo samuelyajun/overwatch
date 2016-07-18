@@ -13,49 +13,16 @@ class ManageSchedulePage extends React.Component {
         super(props, context);
     }
 
-    scheduleRow(schedule, index){
-        return (<div> key={index}>{schedule.survey}</div>);
-    }
-
     render() {
-        //const {schedules} = this.props;
+        const schedules = this.props.schedules;
 
-        const schedules = [
-            {
-                id: '1',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Overwatch',
-                frequency: 'One Week',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['MONDAY', 'THURSDAY']
-            },
-            {
-                id: '2',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Talent Review',
-                frequency: 'Three Weeks',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['SUNDAY']
-            },
-            {
-                id: '3',
-                survey: 'End of Sprint',
-                client: 'Catalyst',
-                project: 'Android Tri-Met',
-                frequency: 'One Time',
-                startDate: '01/01/2016',
-                endDate: '',
-                days: ['WEDNESDAY']
-            }
-        ];
+        let alignCenterStyle = {
+            textAlign: 'center'
 
+        };
         return (
             <div style={scheduleOuterDiv}>
-                <h1>List of Schedules</h1>
+                <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}/>
             </div>
         );

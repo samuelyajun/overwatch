@@ -5,6 +5,9 @@ import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as scheduleActions from '../../actions/scheduleActions';
 
 class ScheduleForm extends React.Component {
 
@@ -19,6 +22,7 @@ class ScheduleForm extends React.Component {
         const errorDaysRequired = 'A day is required';
 
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
         this.days = daysOfTheWeek;
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
@@ -31,14 +35,27 @@ class ScheduleForm extends React.Component {
             schedule: {
                 username: '',
                 survey: '',
-                client: '',
-                project: '',
                 frequency: '',
-                role: '',
                 startDate: '',
                 endDate: '',
-                office: '',
-                days: []
+                days: [],
+                respondents: [
+                     {
+                       "allowedAttributes": [
+                         {
+                           "value": "",
+                           "attributeTypes": {
+                           "name": ""
+                           }
+                         }
+                       ],
+                       "user": {
+                         "email": "",
+                         "firstName": "",
+                         "lastName": ""
+                       }
+                     }
+                   ]
             },
 
             isFormValid: 'true',
@@ -75,8 +92,11 @@ class ScheduleForm extends React.Component {
             endDateIsValid &&
             daysAreValid
         ){
+            this.props.actions.saveSchedule(this.state.schedule);
+
             toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
+            toastr.success('Schedule submitted!');            
+
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");
             }, 1000);
@@ -85,8 +105,9 @@ class ScheduleForm extends React.Component {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
-
     }
+
+
 
     onUpdate(event) {
         const property = event.target.name;
@@ -191,6 +212,8 @@ class ScheduleForm extends React.Component {
     }
 
     render() {
+        const {schedules} = this.props;
+
         return(
             <div className="container">
                 <form className name="myForm" noValidate>
@@ -401,4 +424,21 @@ class ScheduleForm extends React.Component {
     }
 }
 
-export default ScheduleForm;
+ScheduleForm.propTypes = {
+    schedules: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+    return {
+        schedules: state.schedules
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(scheduleActions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleForm);

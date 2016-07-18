@@ -23,8 +23,11 @@ import TeamLeadQuantitativeSurvey from './components/survey/TeamLeadQuantitative
 import EMQuantitativeSurvey from './components/survey/EMQuantitativeSurvey.jsx';
 
 
+import {loadSchedules} from './actions/scheduleActions';
+
 
 const store = configureStore();
+store.dispatch(loadSchedules());
 
 render(
     <Provider store = {store}>

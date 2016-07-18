@@ -6,8 +6,8 @@ const ScheduleList = ({schedules}) => {
         <table className = "table table-hover">
             <thead>
             <tr>
-                <th>Edit</th>
-                <th>Survey</th>
+                <th></th>
+                <th>Survey Type</th>
                 <th>Client</th>
                 <th>Project</th>
                 <th>Frequency</th>
@@ -17,14 +17,24 @@ const ScheduleList = ({schedules}) => {
             </thead>
             <tbody>
                 {
-                    schedules.map(schedule =>
-                        <ScheduleListRow key = {schedule.id} schedule={schedule}/>
-                    )
+                    schedules.map(schedule => {
+                        return (
+                            <ScheduleListRow key={schedule.id} schedule={cleanSchedules(schedule)}/>
+                        );
+                    })
                 }
             </tbody>
         </table>
     );
 };
+
+function cleanSchedules(schedule){
+    let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
+    //regex changes the first letter of each word to upper case
+    newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+    schedule.frequency = newScheduleFrequency;
+    return schedule;
+}
 
 ScheduleList.propTypes = {
     schedules: PropTypes.array.isRequired
