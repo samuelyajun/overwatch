@@ -17,7 +17,6 @@ const compiler = webpack(config);
     IP address instead of localhost
 */
 
-
 const scheduleProxyOptions = {
     target: 'http://localhost:8090',
     changeOrigin: true,
@@ -25,7 +24,6 @@ const scheduleProxyOptions = {
         '^/schedule': '/' //remove /schedule from url before making request
     }
 };
-
 
 /*
 const surveyProxyOptions = {
@@ -58,7 +56,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
-
 
 app.get('*', function(req, res) {
     res.sendFile(path.join( __dirname, '../src/index.html'));
