@@ -443,29 +443,39 @@ ScheduleForm.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+/*function mapStateToProps(state, ownProps) {
     return {
         schedules: state.schedules
     };
-}
+}*/
 
 //Pull in the React Router context so router is available on this.context.router.
-/*ScheduleForm.contextTypes = {
+ScheduleForm.contextTypes = {
   router: PropTypes.object
-};*/
+};
 
-/*function getScheduleById(schedules, id) {
+function getScheduleById(schedules, id) {
   const schedule = schedules.filter(schedule => schedule.id == id);
   if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
   return null;
 }
 
+
 function mapStateToProps(state, ownProps) {
+  debugger;
+  console.log('State.schedules' , state.schedules.length);
+
   console.log('ownprops is ' , ownProps);
-  var scheduleId = '';
-  if(ownProps.params != undefined) {
-   scheduleId = ownProps.params.id; // from the path `/schedules/:id`
+  debugger;
+  //const scheduleId = 2;
+  if(ownProps.params != null) {
+   scheduleId = ownProps.params.id;
+  console.log('scheduleId is ', ownProps.params.id);
   }
+  /*if(ownProps.params != null) {
+   scheduleId = ownProps.params.id; // from the path `/schedules/:id`
+   console.log('scheduleId is ', scheduleId);
+  }*/
 
   let schedule = {
       id: '',
@@ -495,12 +505,15 @@ function mapStateToProps(state, ownProps) {
   };
 
   if (scheduleId && state.schedules.length > 0) {
+    console.log('hi');
     schedule = getScheduleById(state.schedules, scheduleId);
   }
 
   return {
-    schedule: schedule
+    schedule: schedule,
+    schedules: state.schedules
   };
+}
 
 /*  return{
     schedules: state.schedules

@@ -19,6 +19,7 @@ class ManageSchedulePage extends React.Component {
         };
 
         this.onClickUpdate = this.onClickUpdate.bind(this);
+        //this.updateScheduleState = this.updateScheduleState.bind(this);
     }
 
   /*componentWillReceiveProps(nextProps) {
@@ -28,20 +29,44 @@ class ManageSchedulePage extends React.Component {
    }
  }*/
 
-  updatescheduleState(event) {
+
+
+  /*updateScheduleState(event) {
     const field = event.target.name;
     let schedule = this.state.schedule;
     schedule[field] = event.target.value;
     return this.setState({schedule: schedule});
-  }
+  }*/
 
   onClickUpdate(event) {
+    event.persist();
     console.log('event.target.name');
-    console.log(event.target.label);
+    console.log(event.currentTarget);
+    console.log(event.currentTarget.value);
+
+    browserHistory.push('/schedules/' + event.currentTarget.value.id);  
+  }
+  /*  let schedule = event.target.value;
+    this.setState( { schedule: schedule }, function () {
+          browserHistory.push('/schedules/' + event.target.value.schedule.id);
+        });
+    //browserHistory.push('/schedules/' + event.target.value.schedule.id);
+  }
+    //console.log('event.target.name');
+    //console.log(event.target.value);
     //const scheduleId = event.target.attributes.getNamedItem('id');
     //const scheduleId = event.target.value;
-    console.log(event.target.value.schedule.id);
-    browserHistory.push('/schedules/' + event.target.value.schedule.id);
+    //console.log(event.target.value.schedule.id);
+  /*  const field = event.target.name;
+    let schedule = this.state.schedule;
+    schedule[field] = event.target.value;
+    this.setState( { schedule: schedule }, function () {
+          browserHistory.push('/schedules/' + event.target.value.schedule.id);
+        });
+    //return this.setState({schedule: schedule});
+    //browserHistory.push('/schedules/' + event.target.value.schedule.id);
+
+    //browserHistory.push('/schedules/' + text.id);
   }
     /*this.props.actions.onClickUpdate(this.state.schedule)
         .then(() => browserHistory.push('/schedules'))
@@ -69,7 +94,7 @@ class ManageSchedulePage extends React.Component {
 
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}
-                              onUpdate={this.onClickUpdate}/>                
+                              onUpdate={this.onClickUpdate}/>
             </div>
         );
     }
@@ -85,13 +110,13 @@ ManageSchedulePage.propTypes = {
     router: PropTypes.object.isRequired
 };*/
 
-/*function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps){
     return {
         schedules: state.schedules
     };
-}*/
+}
 
-function getScheduleById(schedules, id) {
+/*function getScheduleById(schedules, id) {
   const schedule = schedules.filter(schedule => schedule.id == id);
   if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
   return null;
@@ -137,7 +162,7 @@ function mapStateToProps(state, ownProps) {
       schedules: state.schedules
     };
 
-}
+}*/
 
 
 function mapDispatchToProps(dispatch){
