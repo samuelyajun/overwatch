@@ -6,6 +6,13 @@ export function loadSurveysSuccess(surveys) {
     return { type: types.LOAD_SURVEYS_SUCCESS, surveys};
 }
 
+export function createSurveySuccess(survey) {
+    return {
+        type: types.CREATE_SURVEY_SUCCESS,
+        survey
+    };
+}
+
 export function loadSurveys() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());

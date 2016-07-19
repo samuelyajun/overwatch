@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import * as surveyActions from '../../actions/surveyActions';
+import {bindActionCreators} from 'redux';
 import SurveyResponseForm from './SurveyResponseForm';
+import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
 const surveyPageOuterDiv = {
@@ -17,11 +18,10 @@ class SurveyResponsePage extends React.Component {
 
     render() {
         const {surveys} = this.props;
+        console.log(surveys);
         return (
             <div className="container">
-                    <SurveyResponseForm
-                        surveys = {surveys}
-                    />
+                {surveys.length > 0 ? <SurveyResponseForm surveys={surveys}/> : null}
             </div>
         );
     }
@@ -33,7 +33,7 @@ SurveyResponsePage.propTypes = {
 };
 
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps) {
     return {
         surveys: state.surveys
     };

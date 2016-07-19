@@ -31,7 +31,7 @@ const SurveyResponseForm = ({ surveys, onSave, saving, onChange}) => {
         <div style={surveyPageOuterDiv}>
             <form name="surveyForm" noValidate>
                 <SurveyQuestionList
-                    survey = {surveys}
+                    surveys = {surveys}
                 />
                 <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass}/>
                 <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>

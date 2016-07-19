@@ -3,16 +3,14 @@ import SurveyQuestionListRow from './SurveyQuestionListRow.jsx';
 
 
 const listStyle = {
-    textAlign : 'center'
+    textAlign: 'center'
 };
 
 let tableStyle = {
     class: "table table-hover table-bordered table-striped"
 };
 
-const SurveyQuestionList = ({survey}) => {
-
-    console.log(survey);
+const SurveyQuestionList = ({surveys}) => {
     return (
         <table className="table" style={tableStyle}>
             <thead>
@@ -29,8 +27,9 @@ const SurveyQuestionList = ({survey}) => {
             </thead>
             <tbody>
             {
-                survey.surveyTemplate.questions.map(question =>
-                    <SurveyQuestionListRow key = {question.id} question = {question}/>
+                surveys[0].surveyTemplate.questions.map(question => {
+                        return <SurveyQuestionListRow key={question.id} question={question}/>
+                    }
                 )
             }
             </tbody>
@@ -39,7 +38,7 @@ const SurveyQuestionList = ({survey}) => {
 };
 
 SurveyQuestionList.propTypes = {
-    survey: PropTypes.array.isRequired
+    surveys: PropTypes.array.isRequired
 };
 
 export default SurveyQuestionList;
