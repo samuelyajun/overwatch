@@ -13,26 +13,20 @@ let submitButtonClass = 'btn btn-primary';
 let cancelButtonClass = 'btn btn-default';
 
 
-const SurveyResponseForm = ({ surveys, onSave, saving, onChange}) => {
-    let i = 0;
+const SurveyResponseForm = ({ survey }) => {
     //let surveyTemplateType;
-    //if (surveys[0].surveyTemplate.questions.questionType === "qualitative" ) {
-    //    surveyTemplateType = <SurveyQuestionList
-    //        key = {surveys[i].id}
-    //        survey = {surveys[i]}
-    //    />;
+    //if (survey.surveyTemplate.questions.questionType === "qualitative" ) {
+    //    surveyTemplateType = <SurveyQuestionList survey = {survey} />;
     //} else {
-    //    surveyTemplateType = <SurveyQuantityQuestionList
-    //        key = {surveys[i].id}
-    //        survey = {surveys[i]}
-    //    />;
+    //    surveyTemplateType = <SurveyQuantityQuestionList survey = {survey} />;
     //}
     return (
         <div style={surveyPageOuterDiv}>
             <form name="surveyForm" noValidate>
-                <SurveyQuestionList
-                    surveys = {surveys}
-                />
+                {survey.surveyTemplate.templateName === "SPD" ?
+                    <SurveyQuestionList survey={survey} /> :
+                    <SurveyQuantityQuestionList survey = {survey} />
+                }
                 <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass}/>
                 <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
             </form>
@@ -40,14 +34,19 @@ const SurveyResponseForm = ({ surveys, onSave, saving, onChange}) => {
     );
 };
 
-
-
 SurveyResponseForm.propTypes = {
-    surveys: PropTypes.array.isRequired,
+    survey: PropTypes.object.isRequired,
     onSave: PropTypes.func,
     saving: PropTypes.bool,
     onChange: PropTypes.func
 };
+
+
+
+
+//<SurveyQuestionList
+//    survey = {survey}
+///>
 
 
 

@@ -12,7 +12,6 @@ const SurveyListRow = ({ question }) => {
         <tr>
             <td style={rowStyle}>{question.id}</td>
             <td>{question.questionText}</td>
-            <td>&nbsp;</td>
             <td style={rowStyle}><RadioInput value = {question.optionChoices[0].id} name = {question.id}/></td>
             <td style={rowStyle}><RadioInput value = {question.optionChoices[1].id} name = {question.id}/></td>
             <td style={rowStyle}><RadioInput value = {question.optionChoices[2].id} name = {question.id}/></td>

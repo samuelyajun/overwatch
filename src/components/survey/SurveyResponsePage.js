@@ -17,11 +17,11 @@ class SurveyResponsePage extends React.Component {
     }
 
     render() {
+        let i = 3;
         const {surveys} = this.props;
-        console.log(surveys);
         return (
             <div className="container">
-                {surveys.length > 0 ? <SurveyResponseForm surveys={surveys}/> : null}
+                {surveys.length > 0 ? <SurveyResponseForm survey={surveys[i]}/> : null}
             </div>
         );
     }
