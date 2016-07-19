@@ -37,7 +37,8 @@ class ScheduleForm extends React.Component {
         this.validateSeven = this.validateSeven.bind(this);
 
         this.state = {
-            schedule: {
+            /*schedule: {
+               id: '',
                 username: '',
                 survey: '',
                 frequency: '',
@@ -61,9 +62,9 @@ class ScheduleForm extends React.Component {
                        }
                      }
                    ]
-            },
+            },*/
 
-            //schedule: Object.assign({}, props.schedule),
+            schedule: Object.assign({}, props.schedule),
 
             isFormValid: 'true',
 
@@ -89,12 +90,12 @@ class ScheduleForm extends React.Component {
         };
     }
 
-    /*componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
        if (this.props.schedule.id != nextProps.schedule.id) {
          // Necessary to populate form when existing course is loaded directly.
          this.setState({schedule: Object.assign({}, nextProps.schedule)});
        }
-    }*/
+    }
 
     onClickSubmit() {
 
@@ -456,26 +457,23 @@ ScheduleForm.contextTypes = {
 
 function getScheduleById(schedules, id) {
   const schedule = schedules.filter(schedule => schedule.id == id);
+  console.log('schedule.length is ' , schedule.length);
+  console.log('schedule[0]' , schedule[0]);
   if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
   return null;
 }
 
 
 function mapStateToProps(state, ownProps) {
-  debugger;
-  console.log('State.schedules' , state.schedules.length);
 
+  console.log('State.schedules length' , state.schedules.length);
   console.log('ownprops is ' , ownProps);
-  debugger;
-  //const scheduleId = 2;
+  //debugger;
+  var scheduleId = '';
   if(ownProps.params != null) {
-   scheduleId = ownProps.params.id;
-  console.log('scheduleId is ', ownProps.params.id);
+    scheduleId = ownProps.params.id;   // from the path `/schedules/:id`
+    console.log('scheduleId is ', ownProps.params.id);
   }
-  /*if(ownProps.params != null) {
-   scheduleId = ownProps.params.id; // from the path `/schedules/:id`
-   console.log('scheduleId is ', scheduleId);
-  }*/
 
   let schedule = {
       id: '',
@@ -505,7 +503,6 @@ function mapStateToProps(state, ownProps) {
   };
 
   if (scheduleId && state.schedules.length > 0) {
-    console.log('hi');
     schedule = getScheduleById(state.schedules, scheduleId);
   }
 
@@ -514,11 +511,6 @@ function mapStateToProps(state, ownProps) {
     schedules: state.schedules
   };
 }
-
-/*  return{
-    schedules: state.schedules
-  };*/
-//}
 
 function mapDispatchToProps(dispatch) {
     return {

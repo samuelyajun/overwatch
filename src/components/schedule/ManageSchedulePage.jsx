@@ -19,7 +19,7 @@ class ManageSchedulePage extends React.Component {
         };
 
         this.onClickUpdate = this.onClickUpdate.bind(this);
-        //this.updateScheduleState = this.updateScheduleState.bind(this);
+        this.updateScheduleState = this.updateScheduleState.bind(this);
     }
 
   /*componentWillReceiveProps(nextProps) {
@@ -31,12 +31,12 @@ class ManageSchedulePage extends React.Component {
 
 
 
-  /*updateScheduleState(event) {
+  updateScheduleState(event) {
     const field = event.target.name;
     let schedule = this.state.schedule;
     schedule[field] = event.target.value;
     return this.setState({schedule: schedule});
-  }*/
+  }
 
   onClickUpdate(event) {
     event.persist();
@@ -44,43 +44,13 @@ class ManageSchedulePage extends React.Component {
     console.log(event.currentTarget);
     console.log(event.currentTarget.value);
 
-    browserHistory.push('/schedules/' + event.currentTarget.value.id);  
+    browserHistory.push('/schedules/' + event.currentTarget.value.id);
   }
-  /*  let schedule = event.target.value;
-    this.setState( { schedule: schedule }, function () {
-          browserHistory.push('/schedules/' + event.target.value.schedule.id);
-        });
-    //browserHistory.push('/schedules/' + event.target.value.schedule.id);
+
+
+  scheduleRow(schedule, index){
+      return (<div> key={index}>{schedule.survey}</div>);
   }
-    //console.log('event.target.name');
-    //console.log(event.target.value);
-    //const scheduleId = event.target.attributes.getNamedItem('id');
-    //const scheduleId = event.target.value;
-    //console.log(event.target.value.schedule.id);
-  /*  const field = event.target.name;
-    let schedule = this.state.schedule;
-    schedule[field] = event.target.value;
-    this.setState( { schedule: schedule }, function () {
-          browserHistory.push('/schedules/' + event.target.value.schedule.id);
-        });
-    //return this.setState({schedule: schedule});
-    //browserHistory.push('/schedules/' + event.target.value.schedule.id);
-
-    //browserHistory.push('/schedules/' + text.id);
-  }
-    /*this.props.actions.onClickUpdate(this.state.schedule)
-        .then(() => browserHistory.push('/schedules'))
-        .catch(error => {
-          throw(error);
-        });
-
-    }*/
-    //browserHistory.push('/schedules/' + schedule.id)
-
-
-    scheduleRow(schedule, index){
-        return (<div> key={index}>{schedule.survey}</div>);
-    }
 
     render() {
         const schedules = this.props.schedules;
@@ -106,9 +76,9 @@ ManageSchedulePage.propTypes = {
 };
 
 //Pulling in the React Router context, so router is available via this.context.router
-/*ManageSchedulePage.contextTypes = {
+ManageSchedulePage.contextTypes = {
     router: PropTypes.object.isRequired
-};*/
+};
 
 function mapStateToProps(state, ownProps){
     return {
