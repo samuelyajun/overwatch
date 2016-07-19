@@ -14,17 +14,14 @@ let cancelButtonClass = 'btn btn-default';
 
 
 const SurveyResponseForm = ({ survey }) => {
-    //let surveyTemplateType;
-    //if (survey.surveyTemplate.questions.questionType === "qualitative" ) {
-    //    surveyTemplateType = <SurveyQuestionList survey = {survey} />;
-    //} else {
-    //    surveyTemplateType = <SurveyQuantityQuestionList survey = {survey} />;
-    //}
     return (
         <div style={surveyPageOuterDiv}>
+            <div className="row">
+                <p>{survey.surveyTemplate.templateInstruction}</p>
+            </div>
             <form name="surveyForm" noValidate>
                 {survey.surveyTemplate.templateName === "SPD" ?
-                    <SurveyQuestionList survey={survey} /> :
+                    <SurveyQuestionList survey = {survey} /> :
                     <SurveyQuantityQuestionList survey = {survey} />
                 }
                 <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass}/>

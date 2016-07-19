@@ -32,7 +32,7 @@ const NumberInput = ({name, label, onChange, placeholder, value, error, type, mi
 NumberInput.propTypes = {
     name: PropTypes.string.isRequired,
     label: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     placeholder: PropTypes.number,
     value: PropTypes.number,
     error: PropTypes.string,

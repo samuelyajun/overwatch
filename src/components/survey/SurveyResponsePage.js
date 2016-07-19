@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as surveyActions from '../../actions/surveyActions';
 import {bindActionCreators} from 'redux';
+import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx'
 import SurveyResponseForm from './SurveyResponseForm';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
@@ -17,11 +18,18 @@ class SurveyResponsePage extends React.Component {
     }
 
     render() {
-        let i = 3;
+        let i = 0;
         const {surveys} = this.props;
         return (
             <div className="container">
-                {surveys.length > 0 ? <SurveyResponseForm survey={surveys[i]}/> : null}
+                {surveys.length > 0 ?
+                    <div>
+                        <SurveyResponsePageHeader survey={surveys[i]}/>
+                        <SurveyResponseForm survey={surveys[i]}/>
+                    </div>
+                    : null
+                }
+
             </div>
         );
     }
