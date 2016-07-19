@@ -17,9 +17,15 @@ class Header extends React.Component {
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li><IndexLink to="/" activeclassNameName="active">Home</IndexLink></li>
-                            <li><Link to="/schedules" activeclassNameName="active">Schedule</Link></li>
-                            <li><Link to="/surveys" activeclassNameName="active">Surveys</Link></li>
-                            <li><Link to="/report" activeclassNameName="active">Reports</Link></li>
+                            <li className="dropdown">
+                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Schedules &nbsp;<span className="caret"></span></a>
+                                <ul className="dropdown-menu">
+                                   <li><Link to="/schedules" activeclassNameName="active">Create</Link></li>
+                                   <li><Link to="/schedules/manage" activeclassNameName="active">View</Link></li>
+                               </ul>
+                            </li>
+                            <li><Link to="/survey" activeclassNameName="active">Survey</Link></li>
+                            <li><Link to="/report" activeclassNameName="active">Report</Link></li>
                         </ul>
                     </div>
                 </div>

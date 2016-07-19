@@ -18,8 +18,11 @@ import SurveyResponsePage from './components/survey/SurveyResponsePage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
 import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
 
+import {loadSchedules} from './actions/scheduleActions';
+
 
 const store = configureStore();
+store.dispatch(loadSchedules());
 
 render(
     <Provider store = {store}>
