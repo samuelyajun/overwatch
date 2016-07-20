@@ -18,10 +18,10 @@ class SurveyResponsePage extends React.Component {
     }
 
     render() {
-        let i = 0;
+        let i = 2;
         const {surveys} = this.props;
         return (
-            <div className="container">
+            <div className="container-fluid">
                 {surveys.length > 0 ?
                     <div>
                         <SurveyResponsePageHeader survey={surveys[i]}/>

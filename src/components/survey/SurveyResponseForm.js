@@ -15,7 +15,7 @@ let cancelButtonClass = 'btn btn-default';
 
 const SurveyResponseForm = ({ survey }) => {
     return (
-        <div style={surveyPageOuterDiv}>
+        <div style={surveyPageOuterDiv} className="container">
             <div className="row">
                 <p>{survey.surveyTemplate.templateInstruction}</p>
             </div>
