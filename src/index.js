@@ -23,6 +23,8 @@ import {loadSchedules} from './actions/scheduleActions';
 
 const store = configureStore();
 store.dispatch(loadSchedules());
+//store.dispatch(loadReports());
+
 
 render(
     <Provider store = {store}>
