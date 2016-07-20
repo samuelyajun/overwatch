@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import SelectInput from '../common/SelectInput.jsx';
 
-const UserListRow = (user) => {
+const RespondentListRow = ({respondent, onClick}) => {
     return (
         <div>
-            <span>{`${user.firstName} ${user.lastName}`}</span>
+            <span>{`${respondent.user.firstName} ${respondent.user.lastName}`}</span>
             <SelectInput
                 name="role"
                 label="Role"
-                value={user.role}
-                onChange={this.onUpdate}
+                value={respondent.role}
+                onChange={onClick}
                 options={[
                     {
                         text: 'Engagement Manager',
@@ -31,3 +32,9 @@ const UserListRow = (user) => {
         </div>
     );
 }
+
+RespondentListRow.propTypes = {
+    respondent: PropTypes.object.isRequired
+}
+
+export default RespondentListRow;
