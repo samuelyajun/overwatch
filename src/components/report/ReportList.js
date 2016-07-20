@@ -34,7 +34,6 @@ const reportss = [
 ];
 
 const ReportList = ({reports}) => {
-    console.log(reportss);
     return (
         <table className="table">
             <thead>
