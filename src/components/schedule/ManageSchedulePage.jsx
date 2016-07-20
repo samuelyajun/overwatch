@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
+import UpdateSchedule from './UpdateSchedule.jsx'
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
 
@@ -44,7 +45,7 @@ class ManageSchedulePage extends React.Component {
     console.log(event.currentTarget);
     console.log(event.currentTarget.value);
 
-    browserHistory.push('/schedules/' + event.currentTarget.value.id);
+    browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
   }
 
 

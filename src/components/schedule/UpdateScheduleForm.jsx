@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 
-class ScheduleForm extends React.Component {
+class UpdateScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -35,10 +35,13 @@ class ScheduleForm extends React.Component {
         this.updateDays = this.updateDays.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
+        this.getFrequencyValue = this.getFrequencyValue.bind(this);
 
         this.state = {
-            //schedule: Object.assign({}, props.schedule),
-            schedule: {
+            schedule: Object.assign({}, props.schedule),
+
+
+            /*schedule: {
                id: '',
                 username: '',
                 survey: '',
@@ -63,7 +66,7 @@ class ScheduleForm extends React.Component {
                        }
                      }
                    ]
-          },
+          },*/
 
             isFormValid: 'true',
 
@@ -87,6 +90,15 @@ class ScheduleForm extends React.Component {
               }
             }
         };
+
+        this.state.schedule.frequency = this.getFrequencyValue;
+        console.log('Frequency value ', this.state.schedule.frequency);
+
+        console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
+        console.log('Test to see survey name ' , this.state.schedule.survey);
+        console.log('Test to see frequency ' , this.state.schedule.frequency);
+        console.log('Frequency value' , this.getFrequencyValue);
+
     }
 
     /*componentWillReceiveProps(nextProps) {
@@ -225,6 +237,41 @@ class ScheduleForm extends React.Component {
         return isValid;
     }
 
+    //let frequencyValue = getFrequencyValue();
+    //console.log('Frequency value ' + frequencyValue);
+
+    getFrequencyValue() {
+      console.log('In getFrequencyValue');
+
+      //let frequency = this.state.schedule.frequency;
+      /*console.log('Original frequency ', frequency);
+
+      switch(frequency) {
+
+          case "ONE TIME":
+          return "0";
+
+          case "ONE WEEK":
+          return "1";
+
+          case "TWO WEEKS":
+          return "2";
+
+          case "THREE WEEKS":
+          return "3";
+
+          case "FOUR WEEKS":
+          return "4";
+
+          default:
+          return "0";
+      }*/
+      /*if(frequency == "ONE WEEK") {
+        return "1";
+      }*/
+      return "1";
+    }
+
     render() {
         const {schedules} = this.props;
 
@@ -237,6 +284,7 @@ class ScheduleForm extends React.Component {
                                 name="usernameInput"
                                 label="Username"
                                 placeholder="Enter username"
+                                value={this.state.schedule.respondents[0].user.email}
                                 onChange={this.onUpdate}
                                 error={this.state.errors.username.required}
                             />
@@ -250,7 +298,7 @@ class ScheduleForm extends React.Component {
                                 options={[
                                     {
                                         text: 'Sprint Checkup',
-                                        value: 'SC'
+                                        value: "SC"
                                     },
                                     {
                                         text: "SPD Team",
@@ -318,7 +366,7 @@ class ScheduleForm extends React.Component {
                                 label="Frequency"
                                 value={this.state.schedule.frequency}
                                 defaultOptionLabel = "One Time"
-                                defaultOptionValue = "4"
+                                defaultOptionValue = "0"
                                 onChange={this.onUpdate}
                                 options={[
                                     {
@@ -383,7 +431,7 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        value={this.state.schedule.office}
+                                        value={this.state.schedule.respondents[0].allowedAttributes[0].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
@@ -401,7 +449,7 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="role"
                                         label="Role"
-                                        value={this.state.schedule.role}
+                                        value={this.state.schedule.respondents[0].allowedAttributes[2].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
@@ -438,7 +486,7 @@ class ScheduleForm extends React.Component {
     }
 }
 
-ScheduleForm.propTypes = {
+UpdateScheduleForm.propTypes = {
     schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
@@ -470,6 +518,7 @@ function mapStateToProps(state, ownProps) {
            }
          ]
   };*/
+
     return {
         //schedule: schedule,
         schedules: state.schedules
@@ -544,4 +593,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScheduleForm);
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateScheduleForm);

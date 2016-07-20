@@ -1,13 +1,110 @@
 import React from 'react';
-import {Link} from 'react-router';
+import Header from '../common/Header';
+import UpdateScheduleForm from "./UpdateScheduleForm.jsx";
+import * as scheduleActions from '../../actions/scheduleActions';
+import { bindActionCreators } from 'redux';
+import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
+
+import {connect} from 'react-redux';
+
+const scheduleOuterDivStyle = {
+    marginTop: '75px'
+};
 
 class UpdateSchedule extends React.Component {
 
+  constructor(props, context) {
+      super(props, context);
+
+      this.state = {
+        schedule: Object.assign({}, props.schedule)
+      };
+    }
+
+    /*componentWillReceiveProps(nextProps) {
+     if (this.props.schedule.id != nextProps.schedule.id) {
+       // Necessary to populate form when existing schedule is loaded directly.
+       this.setState({schedule: Object.assign({}, nextProps.schedule)});
+     }
+   }*/
+
+
+
+  /*  updateScheduleState(event) {
+      const field = event.target.name;
+      let schedule = this.state.schedule;
+      schedule[field] = event.target.value;
+      return this.setState({schedule: schedule});
+    }*/
+
+
     render() {
-        return(
-            <h2>Update schedule</h2>
+        return (
+            <div style={scheduleOuterDivStyle}>
+                <h1>Update schedule</h1>
+                <UpdateScheduleForm schedule={this.state.schedule}/>
+            </div>
         );
     }
-}
+  }
 
-export default UpdateSchedule;
+    function getScheduleById(schedules, id) {
+      const schedule = schedules.filter(schedule => schedule.id == id);
+      console.log('schedule.length is ' , schedule.length);
+      console.log('Updating Schedule ...' , schedule[0]);
+      if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
+      return null;
+    }
+
+
+    function mapStateToProps(state, ownProps) {
+
+      console.log('State.schedules length' , state.schedules.length);
+      console.log('ownprops is ' , ownProps);
+      const scheduleId = ownProps.params.id;   // from the path `/schedules/:id`
+      console.log('scheduleId is ', ownProps.params.id);
+
+      let schedule = {
+          id: '',
+          username: '',
+          survey: '',
+          frequency: '',
+          startDate: '',
+          endDate: '',
+          days: [],
+          respondents: [
+               {
+                 "allowedAttributes": [
+                   {
+                     "value": "",
+                     "attributeTypes": {
+                     "name": ""
+                     }
+                   }
+                 ],
+                 "user": {
+                   "email": "",
+                   "firstName": "",
+                   "lastName": ""
+                 }
+               }
+             ]
+      };
+
+      if (scheduleId && state.schedules.length > 0) {
+        schedule = getScheduleById(state.schedules, scheduleId);
+      }
+
+      return {
+        schedule: schedule,
+        schedules: state.schedules
+      };
+    }
+
+    function mapDispatchToProps(dispatch) {
+        return {
+            actions: bindActionCreators(scheduleActions, dispatch)
+        };
+    }
+
+    export default connect(mapStateToProps, mapDispatchToProps)(UpdateSchedule);
