@@ -3,14 +3,16 @@ import RadioInput from './RadioInput';
 
 
 
-const RadioGroup = ({name, onChange, selectedValue, question}) => {
+const RadioGroup = ({ onChange, selectedValue, question}) => {
     return (
         <div className="form-group" selectedValue={selectedValue} value={this.state.value} name={question} onChange={onChange}>
-            <RadioInput name={question} value="0"/>
-            <RadioInput name={question} value="1"/>
-            <RadioInput name={question} value="2"/>
-            <RadioInput name={question} value="3"/>
-            <RadioInput name={question} value="4"/>
+            {
+                question.optionChoices.map((option) => {
+                    return (
+                        <RadioInput name={option.optionChoiceName} value={option.id}/>
+                    );
+                })
+            }
         </div>
     );
 };
@@ -22,5 +24,10 @@ RadioGroup.propTypes = {
     question: PropTypes.object,
     value: PropTypes.number
 };
+
+//<RadioInput name={question} value="1"/>
+//<RadioInput name={question} value="2"/>
+//<RadioInput name={question} value="3"/>
+//<RadioInput name={question} value="4"/>
 
 export default RadioGroup;

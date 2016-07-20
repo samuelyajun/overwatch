@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-const SurveyResponsePageHeader  = ({ survey }) => {
+const SurveyResponsePageHeader  = ({ headerTitle, subHeader }) => {
     return (
 
         <div className="jumbotron">
@@ -9,8 +9,8 @@ const SurveyResponsePageHeader  = ({ survey }) => {
                     <div className="logo"></div>
                 </div>
                 <div className="surveyHeaderContainer">
-                    <h1>{survey.surveyTemplate.templateName} Survey</h1>
-                    <small>{survey.surveyTemplate.templateDescription}</small>
+                    <h1>{headerTitle}</h1>
+                    <small>{subHeader}</small>
                 </div>
             </div>
         </div>
@@ -18,7 +18,8 @@ const SurveyResponsePageHeader  = ({ survey }) => {
 };
 
 SurveyResponsePageHeader.propTypes = {
-    survey: PropTypes.object.isRequired
+    headerTitle: PropTypes.string,
+    subHeader: PropTypes.string
 };
 
 export default SurveyResponsePageHeader;
