@@ -115,20 +115,29 @@ class ScheduleForm extends React.Component {
     }
 
     updateUsers(event) {
+        const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
-        const user = this.props.users.find((user) => {
-            return user.id === userId;
-        });
-
-        let respondent = Object.assign({}, this.state.attributes);
-        respondent.user = user;
-
         let schedule = Object.assign({}, this.state.schedule)
-        console.log(schedule.respondents);
-        const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
-        console.log(newRespondents);
-        schedule.respondents = newRespondents;
 
+        if (isChecked) {
+            const user = this.props.users.find((user) => {
+                return user.id === userId;
+            });
+
+            let respondent = Object.assign({}, this.state.attributes);
+            respondent.user = user;
+
+            const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
+            schedule.respondents = newRespondents;
+        } else {
+            const newRespondents = [
+                ...schedule.respondents.filter((respondent) => {
+                    console.log(respondent);
+                    return respondent.user.id !== userId;
+                })
+            ]
+            schedule.respondents = newRespondents;
+        }
         console.log(schedule.respondents);
         return this.setState({schedule});
     }

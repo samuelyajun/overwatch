@@ -16,7 +16,7 @@ const RespondentList = ({respondents, onClick}) => {
 }
 
 RespondentList.propTypes = {
-    respondent: PropTypes.array.isRequired
+    respondents: PropTypes.array.isRequired
 }
 
 export default RespondentList;
