@@ -11,12 +11,13 @@ let tableStyle = {
 };
 
 const SurveyQuantityQuestionList = ({survey}) => {
+    console.log(survey.template.questions);
     return (
         <table className="table" style={tableStyle}>
             <tbody>
             {
-                survey.surveyTemplate.questions.map(question => {
-                        return <SurveyQuantityQuestionListRow key={question.id} question={question}/>
+                survey.template.questions.map(question => {
+                       return  <SurveyQuantityQuestionListRow key={question.id} question={question}/>;
                     }
                 )
             }

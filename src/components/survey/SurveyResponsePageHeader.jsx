@@ -9,8 +9,8 @@ const SurveyResponsePageHeader  = ({ survey }) => {
                     <div className="logo"></div>
                 </div>
                 <div className="surveyHeaderContainer">
-                    <h1>{survey.surveyTemplate.templateName} Survey</h1>
-                    <small>{survey.surveyTemplate.templateDescription}</small>
+                    <h1>{survey.surveyName}</h1>
+                    <small>{survey.template.description}</small>
                 </div>
             </div>
         </div>

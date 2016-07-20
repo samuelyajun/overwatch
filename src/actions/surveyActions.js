@@ -1,24 +1,33 @@
 import * as types from './actionTypes';
-import surveyApi from '../api/mockSurveyApi';
 import {initiateAjaxRequest, ajaxRequestError} from './ajaxStatusActions';
 
 export function loadSurveysSuccess(surveys) {
     return { type: types.LOAD_SURVEYS_SUCCESS, surveys};
 }
 
+/*export function createSurveysSuccess(survey) {
+    return { type: types.CREATE_SURVEY_SUCCESS, survey};
+}*/
+
+/*
 export function createSurveySuccess(survey) {
     return {
         type: types.CREATE_SURVEY_SUCCESS,
         survey
     };
 }
+*/
 
 export function loadSurveys() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        return surveyApi.getAllSurveys().then(surveys => {
-            dispatch(loadSurveysSuccess(surveys));
-        }).catch(error => {
+        return fetch(`survey/surveys?projection=inlineSurveyDetail`).then((response) => {
+            response.json().then(surveyResponseJson => {
+                console.log(surveyResponseJson);
+                let surveyArray = Object.assign([], surveyResponseJson._embedded.surveys);
+                dispatch(loadSurveysSuccess(surveyArray));
+            });
+        }).catch((error) => {
             throw(error);
         });
     };

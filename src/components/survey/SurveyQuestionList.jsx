@@ -24,7 +24,7 @@ const SurveyQuestionList = ({survey}) => {
                 </thead>
                 <tbody>
                 {
-                    survey.surveyTemplate.questions.map(question => {
+                    survey.template.questions.map(question => {
                             return <SurveyQuestionListRow key={question.id} question={question}/>
                         }
                     )

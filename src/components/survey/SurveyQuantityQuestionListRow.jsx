@@ -13,7 +13,7 @@ const SurveyQuantityListRow = ({ question }) => {
             <td style={rowStyle}>{question.id}.</td>
             <td>
                 {question.questionText}
-                <NumberInput name = {question.questionLabel} type="number" min="0"/>
+                <NumberInput name = {question._links.self.href} type="number" min="0"/>
             </td>
         </tr>
     );

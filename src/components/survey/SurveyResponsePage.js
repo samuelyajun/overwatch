@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as surveyActions from '../../actions/surveyActions';
 import {bindActionCreators} from 'redux';
-import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx'
+import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
@@ -18,7 +18,9 @@ class SurveyResponsePage extends React.Component {
     }
 
     render() {
-        let i = 2;
+        const {query} = this.props.location;
+        console.log(query);
+        let i = query.surveyId;
         const {surveys} = this.props;
         return (
             <div className="container-fluid">

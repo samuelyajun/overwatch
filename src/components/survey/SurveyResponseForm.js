@@ -16,11 +16,8 @@ let cancelButtonClass = 'btn btn-default';
 const SurveyResponseForm = ({ survey }) => {
     return (
         <div style={surveyPageOuterDiv} className="container">
-            <div className="row">
-                <p>{survey.surveyTemplate.templateInstruction}</p>
-            </div>
             <form name="surveyForm" noValidate>
-                {survey.surveyTemplate.templateName === "SPD" ?
+                {survey.template.name === "SPD" ?
                     <SurveyQuestionList survey = {survey} /> :
                     <SurveyQuantityQuestionList survey = {survey} />
                 }
@@ -37,9 +34,6 @@ SurveyResponseForm.propTypes = {
     saving: PropTypes.bool,
     onChange: PropTypes.func
 };
-
-
-
 
 //<SurveyQuestionList
 //    survey = {survey}
