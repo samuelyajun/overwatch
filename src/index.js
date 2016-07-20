@@ -5,8 +5,6 @@ import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
-import {loadTemplates} from './actions/templateActions';
-import {loadSurveys} from './actions/surveyActions';
 import '../node_modules/bootstrap/dist/js/bootstrap.min';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
@@ -16,14 +14,16 @@ import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
-import SurveyResponsePage from './components/survey/SurveyResponsePage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
 import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
-import TemplatesPage from './components/template/TemplatesPage';
 
+
+
+import {loadSchedules} from './actions/scheduleActions';
 
 
 const store = configureStore();
+store.dispatch(loadSchedules());
 store.dispatch(loadTemplates());
 store.dispatch(loadSurveys());
 
