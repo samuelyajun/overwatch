@@ -15,7 +15,7 @@ class SurveyConfirmationPage extends React.Component {
         let i = 0;
         const {surveys} = this.props;
         return (
-            <div className="container-fluid">
+            <div>
                     <SurveyResponsePageHeader headerTitle={surveys[i].surveyTemplate.templateName + ' Survey'}/>
                     <div className="container">
                         <h1>Survey Submitted!</h1>

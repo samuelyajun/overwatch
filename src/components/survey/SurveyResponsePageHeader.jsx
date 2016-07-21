@@ -12,7 +12,7 @@ const jumbotronStyles = {
 
 const imgLogoStyle = {
     position: 'absolute',
-    top: '-10px'
+    top: '-24px'
 };
 
 
