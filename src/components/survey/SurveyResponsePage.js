@@ -49,7 +49,7 @@ class SurveyResponsePage extends React.Component {
                 {surveys.length > 0 ?
                     <div>
                         <SurveyResponsePageHeader
-                            headerTitle={surveys[i].surveyTemplate.templateName + ' Survey'}
+                            headerTitle={surveys[i].template.name + ' Survey'}
                         />
                         <SurveyResponseForm survey={surveys[i]} onSubmit={this.onSubmit}/>
                     </div>

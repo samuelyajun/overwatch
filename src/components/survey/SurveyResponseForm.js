@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
-import SurveyQuestionList from './SurveyQuestionList.jsx';
-import SurveyQuantityQuestionList from './SurveyQuantityQuestionList.jsx';
+import LikertQuestion from '../question/LikertQuestion.jsx';
+import NumericQuestion from '../question/NumericQuestion.jsx';
 import Button from '../common/Button.jsx';
 
 const surveyPageOuterDiv = {
@@ -18,10 +18,12 @@ const SurveyResponseForm = ({ survey, onSubmit }) => {
     return (
         <div style={surveyPageOuterDiv} className="container">
             <form name="surveyForm" noValidate>
-                {survey.template.name === "SPD" ?
-                    <SurveyQuestionList survey = {survey} /> :
-                    <SurveyQuantityQuestionList survey = {survey} />
-                }
+                    <div className="table-responsive">
+                        {survey.template.type === "Qualitative" ?
+                            <LikertQuestion survey = {survey} /> :
+                            <NumericQuestion survey = {survey} />
+                        }
+                    </div>
                 <Button label = {submitButtonType} type = {'button'} buttonClassName = {submitButtonClass} onClick={onSubmit}/>
                 <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
             </form>
