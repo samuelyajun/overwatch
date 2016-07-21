@@ -2,9 +2,12 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import {RadioGroup, Radio} from 'react-radio-group';
 
+const rowStyles = {
+    verticalAlign: 'middle'
+};
 
-const rowStyle = {
-    textAlign : 'center'
+const questionStyling = {
+    textAlign: 'left'
 };
 
 const radioGroupStyle = {
@@ -25,8 +28,8 @@ const radioStyle = {
 const SurveyListRow = ({ question }) => {
 
     return (
-        <tr>
-            <td style={rowStyle}>{question.id}</td>
+        <tr style={rowStyles}>
+            <td style={questionStyling}>{question.id}</td>
             <td>{question.questionText}</td>
             <td colSpan={question.optionChoices.length}>
                 <RadioGroup name = {question.id}>
@@ -52,15 +55,5 @@ SurveyListRow.propTypes = {
     question : PropTypes.object.isRequired
 };
 
-//<li style={radioStyle}><Radio value = {question.optionChoices[0].id}/></li>
-//<li style={radioStyle}><Radio value = {question.optionChoices[1].id}/></li>
-//<li style={radioStyle}><Radio value = {question.optionChoices[2].id}/></li>
-//<li style={radioStyle}><Radio value = {question.optionChoices[3].id}/></li>
-//<li style={radioStyle}><Radio value = {question.optionChoices[4].id}/></li>
 
-
-//<td style={rowStyle}><RadioInput value = {question.optionChoices[1].id} name = {question.id}/></td>
-//<td style={rowStyle}><RadioInput value = {question.optionChoices[2].id} name = {question.id}/></td>
-//<td style={rowStyle}><RadioInput value = {question.optionChoices[3].id} name = {question.id}/></td>
-//<td style={rowStyle}><RadioInput value = {question.optionChoices[4].id} name = {question.id}/></td>
 export default SurveyListRow;

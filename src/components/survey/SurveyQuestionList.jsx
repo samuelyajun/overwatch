@@ -15,11 +15,11 @@ const SurveyQuestionList = ({survey}) => {
                 <tr>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
-                    <th style={listStyle}>Strongly Disagree</th>
+                    <th style={listStyle}>Strongly <br/> Disagree</th>
                     <th style={listStyle}>Disagree</th>
                     <th style={listStyle}>Neutral</th>
                     <th style={listStyle}>Agree</th>
-                    <th style={listStyle}>Strongly Agree</th>
+                    <th style={listStyle}>Strongly <br/>Agree</th>
                 </tr>
                 </thead>
                 <tbody>

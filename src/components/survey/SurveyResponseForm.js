@@ -7,15 +7,8 @@ const surveyPageOuterDiv = {
     marginTop: '75px'
 };
 
-//const errorSurveyRequired = 'Survey is required';
-//const errorUsernameRequired = 'Username is required';
-//
-//this.onClickSubmit = this.onClickSubmit.bind(this);
-//this.updateDays = this.updateDays.bind(this);
-//this.onUpdate = this.onUpdate.bind(this);
 
-
-const SurveyResponseForm = ({ survey, onSubmit, onReset }) => {
+const SurveyResponseForm = ({ survey, onSubmit }) => {
 
     let submitButtonType = 'submit';
     let cancelButtonType = 'reset';

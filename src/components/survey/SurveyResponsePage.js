@@ -43,7 +43,7 @@ class SurveyResponsePage extends React.Component {
         let i = 1;
         const {surveys} = this.props;
         return (
-            <div className="container-fluid">
+            <div>
                 {surveys.length > 0 ?
                     <div>
                         <SurveyResponsePageHeader

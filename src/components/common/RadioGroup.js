@@ -9,7 +9,7 @@ const RadioGroup = ({ onChange, selectedValue, question}) => {
             {
                 question.optionChoices.map((option) => {
                     return (
-                        <RadioInput name={option.optionChoiceName} value={option.id}/>
+                        <RadioInput key = {option.id} name={option.optionChoiceName} value={option.id}/>
                     );
                 })
             }
