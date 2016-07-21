@@ -12,9 +12,12 @@ export function generateReportSuccess(report) {
 
 export function loadReports() {
     return function(dispatch) {
-        return fetch(`/report/reports`).then((response) => {
+        //return fetch(`/report/reports`).then((response) =>
+        return fetch(`/report/report/get_available_reports`).then((response) =>
+
+        {
             response.json().then(json => {
-                let reportArray = Object.assign([], json._embedded.reports);
+                let reportArray = Object.assign([], json);
                 dispatch(loadReportsSuccess(reportArray));
             });
         }).catch((error) => {

@@ -6,8 +6,8 @@ import ReportListRow from './ReportListRow.js';
 
 
 
-//const reportss = ReportApi.getAllReports();
-const reportss = [
+
+/*const reportss = [
     {
         surveyName:"Questions for entire team - EoS minus 4days",
         linkCSV:"https://s3-us-west-2.amazonaws.com/echelondemo/overwatch+text3.csv",
@@ -31,7 +31,7 @@ const reportss = [
         creationDate:"2016-06-27T10:32:22.272",
         projectName:"Overwatch"
     }
-];
+];*/
 
 const ReportList = ({reports}) => {
     return (
@@ -49,7 +49,7 @@ const ReportList = ({reports}) => {
             </thead>
             <tbody>
             {
-                reportss.map(report =>{
+                reports.map(report =>{
                     return (
                     <ReportListRow key = {report.creationDate} report = {report}/>
                 );

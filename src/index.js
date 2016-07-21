@@ -19,11 +19,11 @@ import ManageSurveyPage from './components/survey/ManageSurveyPage';
 import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
 
 import {loadSchedules} from './actions/scheduleActions';
-
+import {loadReports} from './actions/reportActions';
 
 const store = configureStore();
 store.dispatch(loadSchedules());
-//store.dispatch(loadReports());
+store.dispatch(loadReports());
 
 
 render(
