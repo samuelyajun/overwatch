@@ -35,9 +35,9 @@ export function loadSchedules() {
 }
 
 export function getScheduleById(id) {
-   console.log('In getScheduleById()');
    console.log('id in getScheduleById() is ', id);
     return function(dispatch) {
+       console.log('between 2 returns');
         return fetch(`/schedule/schedules/${id}`).then((response) => {
             console.log('Returned response is ' , response);
             response.json().then(json => {
@@ -50,6 +50,7 @@ export function getScheduleById(id) {
             throw(error);
         });
     };
+  }
 
    /*debugger;
    return dispatch => {
@@ -87,7 +88,7 @@ export function getScheduleById(id) {
             }
          })
      };*/
-}
+
 
 
 export function saveSchedule(schedule) {

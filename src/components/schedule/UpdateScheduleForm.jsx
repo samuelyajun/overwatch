@@ -14,21 +14,16 @@ class UpdateScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        /*this.state = {
-        schedule: Object.assign({}, props.schedule),
-        errors: {},
-        saving: false
-        };*/
-
+        console.log('In the UpdateScheduleForm constructor');
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
-        const errorDaysRequired = 'A day is required';
+        /*const errorDaysRequired = 'A day is required';
 
         const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-        this.days = daysOfTheWeek;
+        this.days = daysOfTheWeek;*/
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
@@ -36,37 +31,13 @@ class UpdateScheduleForm extends React.Component {
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
         this.getFrequencyValue = this.getFrequencyValue.bind(this);
+        this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
+        this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
+
+        console.log('props.schedule in the constructor on UpdateScheduleForm ', props.schedule);
 
         this.state = {
             schedule: Object.assign({}, props.schedule),
-
-
-            /*schedule: {
-               id: '',
-                username: '',
-                survey: '',
-                frequency: '',
-                startDate: '',
-                endDate: '',
-                days: [],
-                respondents: [
-                     {
-                       "allowedAttributes": [
-                         {
-                           "value": "",
-                           "attributeTypes": {
-                           "name": ""
-                           }
-                         }
-                       ],
-                       "user": {
-                         "email": "",
-                         "firstName": "",
-                         "lastName": ""
-                       }
-                     }
-                   ]
-          },*/
 
             isFormValid: 'true',
 
@@ -92,31 +63,23 @@ class UpdateScheduleForm extends React.Component {
         };
 
         //this.state.schedule.frequency = this.getFrequencyValue();
-        console.log('Frequency value ', this.state.schedule.frequency);
+      /*  console.log('Frequency value ', this.state.schedule.frequency);
 
         console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
         console.log('Test to see survey name ' , this.state.schedule.survey);
-        console.log('Test to see frequency ' , this.state.schedule.frequency);
-        console.log('Frequency value' , this.getFrequencyValue);
+        console.log('Test to see frequency ' , this.state.schedule.frequency);*/
 
     }
-
-    /*componentWillReceiveProps(nextProps) {
-       if (this.props.schedule.id != nextProps.schedule.id) {
-         // Necessary to populate form when existing course is loaded directly.
-         this.setState({schedule: Object.assign({}, nextProps.schedule)});
-       }
-    }*/
 
     onClickSubmit() {
 
         let startDateIsValid = this.validateStartDate();
         let endDateIsValid = this.validateEndDate();
-        let daysAreValid = this.validateDays();
+        //let daysAreValid = this.validateDays();
 
         if( startDateIsValid &&
-            endDateIsValid &&
-            daysAreValid
+            endDateIsValid
+            //daysAreValid
         ){
             this.props.actions.saveSchedule(this.state.schedule);
 
@@ -219,27 +182,6 @@ class UpdateScheduleForm extends React.Component {
         return isValid;
     }
 
-    validateDays(){
-        let errors = Object.assign({},this.state.errors);
-        let days = this.state.schedule.days;
-        let isValid = true;
-
-        if (days.length === 0){
-            errors.days.required = 'Please choose at least one day';
-            isValid = false;
-        }
-        else {
-            errors.days.required = '';
-            isValid = true;
-        }
-
-        this.setState({errors});
-        return isValid;
-    }
-
-    //let frequencyValue = getFrequencyValue();
-    //console.log('Frequency value ' + frequencyValue);
-
     getFrequencyValue() {
       console.log('In getFrequencyValue');
 
@@ -266,8 +208,31 @@ class UpdateScheduleForm extends React.Component {
           default:
           return "0";
       }
+    }
 
+    getRoleAttributeValue() {
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getRoleAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i <= allowedAttributesArray.length; i++) {
+        if(allowedAttributesArray[i].attributeTypes.name == "Role") {
+          console.log('Inside the Role loop');
+          console.log('Role is ', allowedAttributesArray[i].attributeValue);
+          return allowedAttributesArray[i].attributeValue;
+        }
+      }
+    }
 
+    getLocationAttributeValue() {
+
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i <= allowedAttributesArray.length; i++) {
+        if(allowedAttributesArray[i].attributeTypes.name == "Office") {
+          console.log('Inside the location loop');
+          console.log('Location is ', allowedAttributesArray[i].attributeValue)
+          return allowedAttributesArray[i].attributeValue;
+        }
+      }
     }
 
     render() {
@@ -351,7 +316,7 @@ class UpdateScheduleForm extends React.Component {
                                 <CheckboxGroup
                                     list={this.days}
                                     onClick={this.updateDays}
-                                    error={this.state.errors.days.required}
+
                                 />
                             </fieldset>
                         </div>
@@ -362,26 +327,26 @@ class UpdateScheduleForm extends React.Component {
                             <SelectInput
                                 name="frequency"
                                 label="Frequency"
-                                value={this.getFrequencyValue()}
+                                value={this.state.schedule.frequency}
                                 defaultOptionLabel = "One Time"
-                                defaultOptionValue = "0"
+                                defaultOptionValue = "ONE_TIME"
                                 onChange={this.onUpdate}
                                 options={[
                                     {
                                         text: "1 Week",
-                                        value: "1"
+                                        value: "ONE_WEEK"
                                     },
                                     {
                                         text: "2 Weeks",
-                                        value: "2"
+                                        value: "TWO_WEEKS"
                                     },
                                     {
                                         text: "3 Weeks",
-                                        value: "3"
+                                        value: "THREE_WEEKS"
                                     },
                                     {
                                         text: "4 Weeks",
-                                        value: "4"
+                                        value: "FOUR_WEEKS"
                                     }
                                 ]}
                             />
@@ -429,16 +394,16 @@ class UpdateScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        value={this.state.schedule.respondents[0].allowedAttributes[0].attributeValue}
+                                        value={this.getLocationAttributeValue()}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
                                                 text: 'Beaverton',
-                                                value: 'beaverton'
+                                                value: 'Beaverton'
                                             },
                                             {
                                                 text: "Baltimore",
-                                                value: "baltimore"
+                                                value: "Baltimore"
                                             }
                                         ]}
                                         />
@@ -447,24 +412,24 @@ class UpdateScheduleForm extends React.Component {
                                     <SelectInput
                                         name="role"
                                         label="Role"
-                                        value={this.state.schedule.respondents[0].allowedAttributes[2].attributeValue}
+                                        value={this.getRoleAttributeValue()}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
                                                 text: 'Engagement Manager',
-                                                value: 'EM'
+                                                value: 'Engagement Manager'
                                             },
                                             {
                                                 text: "Tech Lead",
-                                                value: "TL"
+                                                value: "Tech Lead"
                                             },
                                             {
                                                 text: "Business Analyst",
-                                                value: "BA"
+                                                value: "Business Analyst"
                                             },
                                             {
                                                 text: "Developer",
-                                                value: "DEV"
+                                                value: "Developer"
                                             }
                                         ]}
                                         />
@@ -485,105 +450,17 @@ class UpdateScheduleForm extends React.Component {
 }
 
 UpdateScheduleForm.propTypes = {
-    schedules: PropTypes.array.isRequired,
+    //schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  /*let schedule = {
-      id: '',
-      username: '',
-      survey: '',
-      frequency: '',
-      startDate: '',
-      endDate: '',
-      days: [],
-      respondents: [
-           {
-             "allowedAttributes": [
-               {
-                 "value": "",
-                 "attributeTypes": {
-                 "name": ""
-                 }
-               }
-             ],
-             "user": {
-               "email": "",
-               "firstName": "",
-               "lastName": ""
-             }
-           }
-         ]
-  };*/
 
+function mapStateToProps(state, ownProps) {
     return {
-        //schedule: schedule,
         schedules: state.schedules
     };
 }
 
-//Pull in the React Router context so router is available on this.context.router.
-/*ScheduleForm.contextTypes = {
-  router: PropTypes.object
-};*/
-
-/*function getScheduleById(schedules, id) {
-  const schedule = schedules.filter(schedule => schedule.id == id);
-  console.log('schedule.length is ' , schedule.length);
-  console.log('schedule[0]' , schedule[0]);
-  if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
-  return null;
-}
-
-
-function mapStateToProps(state, ownProps) {
-
-  console.log('State.schedules length' , state.schedules.length);
-  console.log('ownprops is ' , ownProps);
-  //debugger;
-  var scheduleId = '';
-  if(ownProps.params != null) {
-    scheduleId = ownProps.params.id;   // from the path `/schedules/:id`
-    console.log('scheduleId is ', ownProps.params.id);
-  }
-
-  let schedule = {
-      id: '',
-      username: '',
-      survey: '',
-      frequency: '',
-      startDate: '',
-      endDate: '',
-      days: [],
-      respondents: [
-           {
-             "allowedAttributes": [
-               {
-                 "value": "",
-                 "attributeTypes": {
-                 "name": ""
-                 }
-               }
-             ],
-             "user": {
-               "email": "",
-               "firstName": "",
-               "lastName": ""
-             }
-           }
-         ]
-  };
-
-  if (scheduleId && state.schedules.length > 0) {
-    schedule = getScheduleById(state.schedules, scheduleId);
-  }
-
-  return {
-    schedule: schedule,
-    schedules: state.schedules
-  };
-} */
 
 function mapDispatchToProps(dispatch) {
     return {

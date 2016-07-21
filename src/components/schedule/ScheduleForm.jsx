@@ -89,8 +89,8 @@ class ScheduleForm extends React.Component {
         let daysAreValid = this.validateDays();
 
         if( startDateIsValid &&
-            endDateIsValid &&
-            daysAreValid
+            endDateIsValid
+            // && daysAreValid
         ){
             this.props.actions.saveSchedule(this.state.schedule);
 
@@ -304,25 +304,25 @@ class ScheduleForm extends React.Component {
                                 label="Frequency"
                                 value={this.state.schedule.frequency}
                                 defaultOptionLabel = "One Time"
-                                defaultOptionValue = "4"
+                                defaultOptionValue = "ONE_TIME"
                                 onChange={this.onUpdate}
                                 options={[
-                                    {
-                                        text: "1 Week",
-                                        value: "1"
-                                    },
-                                    {
-                                        text: "2 Weeks",
-                                        value: "2"
-                                    },
-                                    {
-                                        text: "3 Weeks",
-                                        value: "3"
-                                    },
-                                    {
-                                        text: "4 Weeks",
-                                        value: "4"
-                                    }
+                                  {
+                                      text: "1 Week",
+                                      value: "ONE_WEEK"
+                                  },
+                                  {
+                                      text: "2 Weeks",
+                                      value: "TWO_WEEKS"
+                                  },
+                                  {
+                                      text: "3 Weeks",
+                                      value: "THREE_WEEKS"
+                                  },
+                                  {
+                                      text: "4 Weeks",
+                                      value: "FOUR_WEEKS"
+                                  }
                                 ]}
                             />
                         </div>
@@ -374,11 +374,11 @@ class ScheduleForm extends React.Component {
                                         options={[
                                             {
                                                 text: 'Beaverton',
-                                                value: 'beaverton'
+                                                value: 'Beaverton'
                                             },
                                             {
                                                 text: "Baltimore",
-                                                value: "baltimore"
+                                                value: "Baltimore"
                                             }
                                         ]}
                                         />
@@ -392,19 +392,19 @@ class ScheduleForm extends React.Component {
                                         options={[
                                             {
                                                 text: 'Engagement Manager',
-                                                value: 'EM'
+                                                value: 'Engagement Manager'
                                             },
                                             {
                                                 text: "Tech Lead",
-                                                value: "TL"
+                                                value: "Tech Lead"
                                             },
                                             {
                                                 text: "Business Analyst",
-                                                value: "BA"
+                                                value: "Business Analyst"
                                             },
                                             {
                                                 text: "Developer",
-                                                value: "DEV"
+                                                value: "Developer"
                                             }
                                         ]}
                                         />
