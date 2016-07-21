@@ -248,19 +248,19 @@ class UpdateScheduleForm extends React.Component {
 
       switch(frequency) {
 
-          case "ONE TIME":
+          case "ONE_TIME":
           return "0";
 
-          case "ONE WEEK":
+          case "ONE_WEEK":
           return "1";
 
-          case "TWO WEEKS":
+          case "TWO_WEEKS":
           return "2";
 
-          case "THREE WEEKS":
+          case "THREE_WEEKS":
           return "3";
 
-          case "FOUR WEEKS":
+          case "FOUR_WEEKS":
           return "4";
 
           default:
