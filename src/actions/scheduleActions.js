@@ -1,8 +1,7 @@
 import * as types from './actionTypes';
 import ScheduleApi from '../api/mockScheduleApi';
-
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { initiateAjaxRequest, ajaxRequestError } from './ajaxStatusActions';
 
 export function loadSchedulesSuccess(schedules) {
@@ -19,8 +18,11 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
-        return ScheduleApi.getAllSchedules().then((schedules) => {
-            dispatch(loadSchedulesSuccess(schedules));
+        return fetch(`/schedule/schedules`).then((response) => {
+            response.json().then(json => {
+                let scheduleArray = Object.assign([], json._embedded.schedules);
+                dispatch(loadSchedulesSuccess(scheduleArray));
+            });
         }).catch((error) => {
             throw(error);
         });
