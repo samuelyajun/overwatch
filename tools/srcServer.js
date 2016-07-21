@@ -38,7 +38,7 @@ const surveyProxyOptions = {
 */
 
 const reportProxyOptions = {
-    target: 'http://172.17.70.106:8080',
+    target: 'http://localhost:8084',
     changeOrigin: true,
     pathRewrite: {
         '^/report': '/' //remove /report from url before making request
