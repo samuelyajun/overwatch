@@ -68,6 +68,7 @@ class UpdateScheduleForm extends React.Component {
         console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
         console.log('Test to see survey name ' , this.state.schedule.survey);
         console.log('Test to see frequency ' , this.state.schedule.frequency);*/
+        console.log('UpdateScheduleForm state.schedule ' , this.state.schedule);
 
     }
 
