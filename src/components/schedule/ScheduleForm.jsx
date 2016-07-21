@@ -14,12 +14,6 @@ class ScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        /*this.state = {
-        schedule: Object.assign({}, props.schedule),
-        errors: {},
-        saving: false
-        };*/
-
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
@@ -37,7 +31,6 @@ class ScheduleForm extends React.Component {
         this.validateSeven = this.validateSeven.bind(this);
 
         this.state = {
-            //schedule: Object.assign({}, props.schedule),
             schedule: {
                id: '',
                 username: '',
@@ -88,13 +81,6 @@ class ScheduleForm extends React.Component {
             }
         };
     }
-
-    /*componentWillReceiveProps(nextProps) {
-       if (this.props.schedule.id != nextProps.schedule.id) {
-         // Necessary to populate form when existing course is loaded directly.
-         this.setState({schedule: Object.assign({}, nextProps.schedule)});
-       }
-    }*/
 
     onClickSubmit() {
 
@@ -444,99 +430,10 @@ ScheduleForm.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  /*let schedule = {
-      id: '',
-      username: '',
-      survey: '',
-      frequency: '',
-      startDate: '',
-      endDate: '',
-      days: [],
-      respondents: [
-           {
-             "allowedAttributes": [
-               {
-                 "value": "",
-                 "attributeTypes": {
-                 "name": ""
-                 }
-               }
-             ],
-             "user": {
-               "email": "",
-               "firstName": "",
-               "lastName": ""
-             }
-           }
-         ]
-  };*/
     return {
-        //schedule: schedule,
         schedules: state.schedules
     };
 }
-
-//Pull in the React Router context so router is available on this.context.router.
-/*ScheduleForm.contextTypes = {
-  router: PropTypes.object
-};*/
-
-/*function getScheduleById(schedules, id) {
-  const schedule = schedules.filter(schedule => schedule.id == id);
-  console.log('schedule.length is ' , schedule.length);
-  console.log('schedule[0]' , schedule[0]);
-  if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
-  return null;
-}
-
-
-function mapStateToProps(state, ownProps) {
-
-  console.log('State.schedules length' , state.schedules.length);
-  console.log('ownprops is ' , ownProps);
-  //debugger;
-  var scheduleId = '';
-  if(ownProps.params != null) {
-    scheduleId = ownProps.params.id;   // from the path `/schedules/:id`
-    console.log('scheduleId is ', ownProps.params.id);
-  }
-
-  let schedule = {
-      id: '',
-      username: '',
-      survey: '',
-      frequency: '',
-      startDate: '',
-      endDate: '',
-      days: [],
-      respondents: [
-           {
-             "allowedAttributes": [
-               {
-                 "value": "",
-                 "attributeTypes": {
-                 "name": ""
-                 }
-               }
-             ],
-             "user": {
-               "email": "",
-               "firstName": "",
-               "lastName": ""
-             }
-           }
-         ]
-  };
-
-  if (scheduleId && state.schedules.length > 0) {
-    schedule = getScheduleById(state.schedules, scheduleId);
-  }
-
-  return {
-    schedule: schedule,
-    schedules: state.schedules
-  };
-} */
 
 function mapDispatchToProps(dispatch) {
     return {

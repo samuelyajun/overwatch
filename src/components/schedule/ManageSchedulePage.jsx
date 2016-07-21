@@ -23,15 +23,6 @@ class ManageSchedulePage extends React.Component {
         this.updateScheduleState = this.updateScheduleState.bind(this);
     }
 
-  /*componentWillReceiveProps(nextProps) {
-   if (this.props.schedule.id != nextProps.schedule.id) {
-     // Necessary to populate form when existing schedule is loaded directly.
-     this.setState({schedule: Object.assign({}, nextProps.schedule)});
-   }
- }*/
-
-
-
   updateScheduleState(event) {
     const field = event.target.name;
     let schedule = this.state.schedule;
@@ -86,55 +77,6 @@ function mapStateToProps(state, ownProps){
         schedules: state.schedules
     };
 }
-
-/*function getScheduleById(schedules, id) {
-  const schedule = schedules.filter(schedule => schedule.id == id);
-  if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
-  return null;
-}
-
-function mapStateToProps(state, ownProps) {
-    console.log('ownProps is' , ownProps.params.id);
-    const scheduleId = ownProps.params.id;
-
-    let schedule = {
-        id: '',
-        username: '',
-        survey: '',
-        frequency: '',
-        startDate: '',
-        endDate: '',
-        days: [],
-        respondents: [
-             {
-               "allowedAttributes": [
-                 {
-                   "value": "",
-                   "attributeTypes": {
-                   "name": ""
-                   }
-                 }
-               ],
-               "user": {
-                 "email": "",
-                 "firstName": "",
-                 "lastName": ""
-               }
-             }
-           ]
-    };
-
-    if (scheduleId && state.schedules.length > 0) {
-      schedule = getScheduleById(state.schedules, scheduleId);
-    }
-
-    return {
-      schedule: schedule,
-      schedules: state.schedules
-    };
-
-}*/
-
 
 function mapDispatchToProps(dispatch){
     return {

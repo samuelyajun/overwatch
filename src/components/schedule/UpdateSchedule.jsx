@@ -19,24 +19,7 @@ class UpdateSchedule extends React.Component {
       this.state = {
         schedule: Object.assign({}, props.schedule)
       };
-    }
-
-    /*componentWillReceiveProps(nextProps) {
-     if (this.props.schedule.id != nextProps.schedule.id) {
-       // Necessary to populate form when existing schedule is loaded directly.
-       this.setState({schedule: Object.assign({}, nextProps.schedule)});
-     }
-   }*/
-
-
-
-  /*  updateScheduleState(event) {
-      const field = event.target.name;
-      let schedule = this.state.schedule;
-      schedule[field] = event.target.value;
-      return this.setState({schedule: schedule});
-    }*/
-
+    }    
 
     render() {
         return (

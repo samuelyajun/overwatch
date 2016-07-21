@@ -91,7 +91,7 @@ class UpdateScheduleForm extends React.Component {
             }
         };
 
-        this.state.schedule.frequency = this.getFrequencyValue;
+        //this.state.schedule.frequency = this.getFrequencyValue();
         console.log('Frequency value ', this.state.schedule.frequency);
 
         console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
@@ -243,15 +243,15 @@ class UpdateScheduleForm extends React.Component {
     getFrequencyValue() {
       console.log('In getFrequencyValue');
 
-      //let frequency = this.state.schedule.frequency;
-      /*console.log('Original frequency ', frequency);
+      let frequency = this.state.schedule.frequency;
+      console.log('Original frequency ', frequency);
 
       switch(frequency) {
 
           case "ONE TIME":
           return "0";
 
-          case "ONE WEEK":
+          case "ONE WEEK":                     
           return "1";
 
           case "TWO WEEKS":
@@ -265,11 +265,9 @@ class UpdateScheduleForm extends React.Component {
 
           default:
           return "0";
-      }*/
-      /*if(frequency == "ONE WEEK") {
-        return "1";
-      }*/
-      return "1";
+      }
+
+
     }
 
     render() {
@@ -364,7 +362,7 @@ class UpdateScheduleForm extends React.Component {
                             <SelectInput
                                 name="frequency"
                                 label="Frequency"
-                                value={this.state.schedule.frequency}
+                                value={this.getFrequencyValue()}
                                 defaultOptionLabel = "One Time"
                                 defaultOptionValue = "0"
                                 onChange={this.onUpdate}
