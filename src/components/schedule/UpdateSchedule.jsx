@@ -17,9 +17,9 @@ class UpdateSchedule extends React.Component {
       super(props, context);
 
       this.state = {
-        schedule: Object.assign({}, props.schedule)
+        schedule: Object.assign({}, this.props.schedule)
       };
-    }    
+    }
 
     render() {
         return (
@@ -31,13 +31,13 @@ class UpdateSchedule extends React.Component {
     }
   }
 
-    function getScheduleById(schedules, id) {
+    /*function getScheduleById(schedules, id) {
       const schedule = schedules.filter(schedule => schedule.id == id);
       console.log('schedule.length is ' , schedule.length);
       console.log('Updating Schedule ...' , schedule[0]);
       if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
       return null;
-    }
+    }*/
 
 
     function mapStateToProps(state, ownProps) {
@@ -74,9 +74,13 @@ class UpdateSchedule extends React.Component {
              ]
       };
 
-      if (scheduleId && state.schedules.length > 0) {
+      schedule = scheduleActions.getScheduleById(scheduleId);
+
+      /*if (scheduleId && state.schedules.length > 0) {
         schedule = getScheduleById(state.schedules, scheduleId);
-      }
+      }*/
+
+
 
       return {
         schedule: schedule,

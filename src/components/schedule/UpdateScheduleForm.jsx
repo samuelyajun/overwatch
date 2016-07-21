@@ -251,7 +251,7 @@ class UpdateScheduleForm extends React.Component {
           case "ONE TIME":
           return "0";
 
-          case "ONE WEEK":                     
+          case "ONE WEEK":
           return "1";
 
           case "TWO WEEKS":

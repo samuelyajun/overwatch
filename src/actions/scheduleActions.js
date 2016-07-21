@@ -9,6 +9,10 @@ export function loadSchedulesSuccess(schedules) {
     return {type: types.LOAD_SCHEDULES_SUCCESS, schedules};
 }
 
+export function getScheduleByIdSuccess(schedule) {
+    return {type: types.GET_SCHEDULE_BY_ID_SUCCESS, schedule};
+}
+
 export function createScheduleSuccess(schedule) {
     return {type: types.CREATE_SCHEDULE_SUCCESS, schedule};
 }
@@ -28,6 +32,61 @@ export function loadSchedules() {
             throw(error);
         });
     };
+}
+
+export function getScheduleById(id) {
+   console.log('In getScheduleById()');
+   console.log('id in getScheduleById() is ', id);
+    return function(dispatch) {
+        return fetch(`/schedule/schedules/${id}`).then((response) => {
+            console.log('Returned response is ' , response);
+            response.json().then(json => {
+                let schedule = Object.assign({}, json);
+                console.log('Retrieved schedule ', schedule);
+                dispatch(getScheduleByIdSuccess(schedule));
+            });
+        }).catch((error) => {
+            console.log('getScheduleById() error is ', error);
+            throw(error);
+        });
+    };
+
+   /*debugger;
+   return dispatch => {
+   fetch(`/schedule/schedules`, (response) => {
+     if(response.status == 200){
+       dispatch(getScheduleByIdSuccess(response.json)); // Use a normal function to set the received state
+     }else {
+       console.log('Error occured');
+     }
+   })
+ }*/
+
+
+
+    /*return function(dispatch) {
+        return fetch(`/schedule/schedules/${id}`).then((response) => {
+            console.log('Returned response is ' , response);
+            //response.json().then(json => {
+            //    let schedule = Object.assign({}, json);
+            //    console.log('Retrieved schedule ', schedule);
+            //    dispatch(getScheduleByIdSuccess(schedule));
+            });
+        }).catch((error) => {
+            console.log('getScheduleById() error is ', error);
+            throw(error);
+        });
+    };*/
+
+
+    /*return function(dispatch) {
+        return fetch(`/schedule/schedules/${id}`, (response) => {
+            console.log('Returned response is ' , response);
+            if(response.status == 200){
+              dispatch(getScheduleByIdSuccess(response.json)); // Use a normal function to set the received state
+            }
+         })
+     };*/
 }
 
 

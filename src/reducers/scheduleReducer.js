@@ -7,6 +7,9 @@ export default function scheduleReducer(state = initialState.schedules, action) 
         case types.LOAD_SCHEDULES_SUCCESS:
         return action.schedules;
 
+        case types.GET_SCHEDULE_BY_ID_SUCCESS:
+        return action.schedule;
+
         case types.CREATE_SCHEDULE_SUCCESS:
         return [
           ...state,
