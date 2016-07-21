@@ -1,16 +1,34 @@
 import React, {PropTypes} from 'react';
 
-const SurveyResponsePageHeader  = ({ survey }) => {
+const jumbotronStyles = {
+    backgroundColor: '#03A9F4',
+    borderBottomColor: '#0288D1',
+    borderBottomStyle: 'solid',
+    borderBottomWidth: '15px',
+    borderRadius: '0px',
+    color: '#ffffff',
+    padding: '15px'
+};
+
+const imgLogoStyle = {
+    position: 'absolute',
+    top: '-24px'
+};
+
+
+const SurveyResponsePageHeader  = ({ headerTitle, subHeader }) => {
     return (
 
-        <div className="jumbotron">
-            <div className="container">
-                <div className="logoContainer">
-                    <div className="logo"></div>
+        <div style={jumbotronStyles} className="jumbotron">
+            <div>
+                <div className="logoContainer col-xs-2">
+                    <img src={'https://s3-us-west-2.amazonaws.com/overwatch-assets/overwatch-logo.png'} className="img-responsive" style={imgLogoStyle}/>
                 </div>
-                <div className="surveyHeaderContainer">
-                    <h1>{survey.surveyName}</h1>
-                    <small>{survey.template.description}</small>
+                <div className="container">
+                    <div className="surveyHeaderContainer col-xs-10">
+                        <h1>{headerTitle}</h1>
+                        <small>{subHeader}</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,7 +36,8 @@ const SurveyResponsePageHeader  = ({ survey }) => {
 };
 
 SurveyResponsePageHeader.propTypes = {
-    survey: PropTypes.object.isRequired
+    headerTitle: PropTypes.string,
+    subHeader: PropTypes.string
 };
 
 export default SurveyResponsePageHeader;

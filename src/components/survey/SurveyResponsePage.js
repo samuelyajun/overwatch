@@ -7,14 +7,36 @@ import SurveyResponseForm from './SurveyResponseForm';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
-const surveyPageOuterDiv = {
-    marginTop: '75px'
-};
 
 class SurveyResponsePage extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+    }
+
+    onSubmit() {
+        setTimeout(function() {
+            browserHistory.push("/confirmation");
+        }, 1000);
+        toastr.options.positionClass = 'toast-top-full-width';
+        toastr.success('Schedule submitted!');
+    }
+
+    validateForm(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+
+        if(this.state.schedule.startDate === ''){
+            errors.startDate.required = 'Start date is required';
+            isValid = false;
+        }
+        else{
+            errors.startDate.required = '';
+            isValid = true;
+        }
+
+        this.setState({errors});
+        return isValid;
     }
 
     render() {
@@ -23,15 +45,16 @@ class SurveyResponsePage extends React.Component {
         let i = query.surveyId;
         const {surveys} = this.props;
         return (
-            <div className="container-fluid">
+            <div>
                 {surveys.length > 0 ?
                     <div>
-                        <SurveyResponsePageHeader survey={surveys[i]}/>
-                        <SurveyResponseForm survey={surveys[i]}/>
+                        <SurveyResponsePageHeader
+                            headerTitle={surveys[i].surveyTemplate.templateName + ' Survey'}
+                        />
+                        <SurveyResponseForm survey={surveys[i]} onSubmit={this.onSubmit}/>
                     </div>
                     : null
                 }
-
             </div>
         );
     }

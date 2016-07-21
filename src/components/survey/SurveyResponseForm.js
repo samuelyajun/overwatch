@@ -7,13 +7,14 @@ const surveyPageOuterDiv = {
     marginTop: '75px'
 };
 
-let submitButtonType = 'submit';
-let cancelButtonType = 'reset';
-let submitButtonClass = 'btn btn-primary';
-let cancelButtonClass = 'btn btn-default';
 
+const SurveyResponseForm = ({ survey, onSubmit }) => {
 
-const SurveyResponseForm = ({ survey }) => {
+    let submitButtonType = 'submit';
+    let cancelButtonType = 'reset';
+    let submitButtonClass = 'btn btn-primary';
+    let cancelButtonClass = 'btn btn-default';
+
     return (
         <div style={surveyPageOuterDiv} className="container">
             <form name="surveyForm" noValidate>
@@ -21,7 +22,7 @@ const SurveyResponseForm = ({ survey }) => {
                     <SurveyQuestionList survey = {survey} /> :
                     <SurveyQuantityQuestionList survey = {survey} />
                 }
-                <Button label = {submitButtonType} type = {submitButtonType} buttonClassName = {submitButtonClass}/>
+                <Button label = {submitButtonType} type = {'button'} buttonClassName = {submitButtonClass} onClick={onSubmit}/>
                 <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
             </form>
         </div>
@@ -30,14 +31,9 @@ const SurveyResponseForm = ({ survey }) => {
 
 SurveyResponseForm.propTypes = {
     survey: PropTypes.object.isRequired,
-    onSave: PropTypes.func,
-    saving: PropTypes.bool,
-    onChange: PropTypes.func
+    onSubmit: PropTypes.func.isRequired,
+    onReset: PropTypes.func
 };
-
-//<SurveyQuestionList
-//    survey = {survey}
-///>
 
 
 
