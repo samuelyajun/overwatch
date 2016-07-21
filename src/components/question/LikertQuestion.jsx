@@ -49,9 +49,9 @@ const LikertQuestionList = ({survey}) => {
                 { 
                     survey.template.questions.map(question => {
                         return (
-                            <tr style={rowStyles}>
-                                <td style={questionStyling}>{question.id}</td>
-                                <td>{question.questionText}</td>
+                            <tr>
+                                <td style={rowStyles}><b>{question.id}.</b></td>
+                                <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
                                     <RadioGroup name = {question.id}>
                                         <ul style={radioGroupStyle}>

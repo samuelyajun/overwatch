@@ -15,7 +15,6 @@ import SchedulePage from './components/schedule/SchedulePage';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
 import ManageSurveyPage from './components/survey/ManageSurveyPage';
-import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
 
@@ -39,7 +38,6 @@ render(
                 <Route path="surveys/manage" component={ManageSurveyPage} />
             </Route>
             <Route path="surveys" component={SurveyResponsePage} />
-            <Route path="confirmation" component={SurveyConfirmationPage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

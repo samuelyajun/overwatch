@@ -14,7 +14,7 @@ const NumberInput = ({name, label, onChange, placeholder, value, error, type, mi
     return (
         <div className={wrapperClass}>
             <label htmlFor={name}>{label}</label>
-            <div className="field col-xs-2" style={topMargin}>
+            <div className="field col-xs-3" style={topMargin}>
                 <input type={type}
                        name = {name}
                        className="form-control"

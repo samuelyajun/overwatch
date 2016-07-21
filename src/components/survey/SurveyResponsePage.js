@@ -4,22 +4,28 @@ import * as surveyActions from '../../actions/surveyActions';
 import {bindActionCreators} from 'redux';
 import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
+import MessageComponent from '../common/MessageComponent.jsx';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
+
+const surveyContainer = {
+    marginBottom: '75px'
+}
 
 class SurveyResponsePage extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            surveySubmitted: false,
+            showSurveyForm: true
+        };
     }
 
     onSubmit() {
-        setTimeout(function() {
-            browserHistory.push("/confirmation");
-        }, 1000);
-        toastr.options.positionClass = 'toast-top-full-width';
-        toastr.success('Schedule submitted!');
+        this.setState({surveySubmitted: true});
+        this.setState({showSurveyForm: false});
     }
 
     validateForm(){
@@ -45,7 +51,7 @@ class SurveyResponsePage extends React.Component {
         let i = query.surveyId;
         const {surveys} = this.props;
         return (
-            <div>
+            <div style={surveyContainer}>
                 {surveys.length > 0 ?
                     <div>
                         <SurveyResponsePageHeader
@@ -53,8 +59,9 @@ class SurveyResponsePage extends React.Component {
                         />
                         <SurveyResponseForm survey={surveys[i]} onSubmit={this.onSubmit}/>
                     </div>
-                    : null
+                    : <MessageComponent title={'Survey Not Found'}/>
                 }
+                <MessageComponent title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
             </div>
         );
     }

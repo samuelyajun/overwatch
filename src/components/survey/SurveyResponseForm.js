@@ -4,7 +4,8 @@ import NumericQuestion from '../question/NumericQuestion.jsx';
 import Button from '../common/Button.jsx';
 
 const surveyPageOuterDiv = {
-    marginTop: '75px'
+    marginTop: '25px',
+    marginBottom: '75px'
 };
 
 
