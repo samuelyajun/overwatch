@@ -1,13 +1,13 @@
 import React, {PropTypes} from 'react';
 import RespondentListRow from './RespondentListRow.jsx';
 
-const RespondentList = ({respondents, onClick}) => {
+const RespondentList = ({respondents, onChange}) => {
     return (
         <div>
             {
-                respondents.map((respondent) => {
+                respondents.map((respondent, index) => {
                     return (
-                        <RespondentListRow key={respondent.user.id} respondent={respondent} onClick={onClick} />
+                        <RespondentListRow index={index} key={respondent.user.id} respondent={respondent} onChange={onChange} />
                     );
                 })
             }
@@ -16,7 +16,8 @@ const RespondentList = ({respondents, onClick}) => {
 }
 
 RespondentList.propTypes = {
-    respondents: PropTypes.array.isRequired
+    respondents: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 export default RespondentList;

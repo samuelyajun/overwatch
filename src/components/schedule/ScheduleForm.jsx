@@ -32,8 +32,10 @@ class ScheduleForm extends React.Component {
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
         this.updateDays = this.updateDays.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
+        this.updateRole = this.updateRole.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
 
@@ -109,9 +111,19 @@ class ScheduleForm extends React.Component {
         let errors = Object.assign({},this.state.errors);
 
         schedule[property] = event.target.value;
-
         this.setState({errors: errors});
         return this.setState({schedule});
+    }
+
+    onUpdateAttribute(event) {
+        const property = event.target.name;
+        let val = event.target.value;
+        let attributes = Object.assign({}, this.state.attributes);
+        let errors = Object.assign({},this.state.errors);
+
+        attributes[property] = event.target.value;
+        this.setState({errors: errors});
+        return this.setState({attributes});
     }
 
     updateUsers(event) {
@@ -125,7 +137,9 @@ class ScheduleForm extends React.Component {
             });
 
             let respondent = Object.assign({}, this.state.attributes);
+            console.log(this.state.attributes);
             respondent.user = user;
+            respondent.role = "";
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
             schedule.respondents = newRespondents;
@@ -140,6 +154,15 @@ class ScheduleForm extends React.Component {
         }
         console.log(schedule.respondents);
         return this.setState({schedule});
+    }
+
+    updateRole(event) {
+        const index = parseInt(event.target.name);
+        const role = event.target.value;
+        console.log(this.state.schedule.respondents);
+        const schedule = Object.assign({}, this.state.schedule);
+        schedule.respondents[index].role = role;
+        return this.setState({schedule})
     }
 
     updateDays(event) {
@@ -282,7 +305,7 @@ class ScheduleForm extends React.Component {
                         <div className="col-md-2">
                             <RespondentList
                                 respondents={this.state.schedule.respondents}
-                                onClick={this.updateUsers}
+                                onChange={this.updateRole}
                             />
                         </div>
 
@@ -399,7 +422,7 @@ class ScheduleForm extends React.Component {
                                         name="office"
                                         label="Office"
                                         value={this.state.attributes.office}
-                                        onChange={this.onUpdate}
+                                        onChange={this.onUpdateAttribute}
                                         options={[
                                             {
                                                 text: 'Beaverton',

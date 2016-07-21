@@ -1,15 +1,15 @@
 import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 
-const RespondentListRow = ({respondent, onClick}) => {
+const RespondentListRow = ({respondent, onChange, index}) => {
     return (
         <div>
             <span>{`${respondent.user.firstName} ${respondent.user.lastName}`}</span>
             <SelectInput
-                name="role"
+                name={`${index}`}
                 label="Role"
                 value={respondent.role}
-                onChange={onClick}
+                onChange={onChange}
                 options={[
                     {
                         text: 'Engagement Manager',
@@ -34,7 +34,8 @@ const RespondentListRow = ({respondent, onClick}) => {
 }
 
 RespondentListRow.propTypes = {
-    respondent: PropTypes.object.isRequired
+    respondent: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 export default RespondentListRow;
