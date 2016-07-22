@@ -8,6 +8,11 @@ import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
+import UserCheckboxGroup from './UserCheckboxGroup.jsx';
+//redux imports
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as userActions from '../../actions/userActions';
 
 class ScheduleForm extends React.Component {
 
@@ -29,6 +34,7 @@ class ScheduleForm extends React.Component {
         this.updateDays = this.updateDays.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
 
         this.state = {
             schedule: {
@@ -108,7 +114,6 @@ class ScheduleForm extends React.Component {
     }
 
 
-
     onUpdate(event) {
         const property = event.target.name;
         let val = event.target.value;
@@ -119,6 +124,11 @@ class ScheduleForm extends React.Component {
 
         this.setState({errors: errors});
         return this.setState({schedule});
+    }
+
+    updateUsers(event) {
+        console.log(event.target.value);
+        console.log(event.target.name);
     }
 
     updateDays(event) {
@@ -225,6 +235,9 @@ class ScheduleForm extends React.Component {
                                 placeholder="Enter username"
                                 onChange={this.onUpdate}
                                 error={this.state.errors.username.required}
+                            <UserCheckboxGroup
+                                users={this.props.users}
+                                onClick={this.updateUsers}
                             />
                         </div>
                         <div className="col-md-2">
@@ -425,19 +438,23 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
+
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
     return {
         schedules: state.schedules
+        users: state.users
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(scheduleActions, dispatch)
+        actions: bindActionCreators(userActions, dispatch)
     };
 }
 

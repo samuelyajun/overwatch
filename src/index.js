@@ -26,9 +26,14 @@ import EMQuantitativeSurvey from './components/survey/EMQuantitativeSurvey.jsx';
 
 import {loadSchedules} from './actions/scheduleActions';
 
+import {loadUsers} from './actions/userActions';
 
 const store = configureStore();
+<<<<<<< HEAD
 store.dispatch(loadSchedules());
+=======
+store.dispatch(loadUsers());
+>>>>>>> origin/PO-96
 
 render(
     <Provider store = {store}>
