@@ -29,11 +29,23 @@ const ScheduleList = ({schedules}) => {
 };
 
 function cleanSchedules(schedule){
-    console.log(schedule);
+    let clientAttribute = "";
+    let projectAttribute = "";
+    let projectAttributes = schedule.respondents[0].allowedAttributes;
+    for (let attribute of projectAttributes) {
+        if(attribute.attributeTypes.name === "Client"){
+            clientAttribute = attribute.attributeValue;
+        }
+        if(attribute.attributeTypes.name === "Project"){
+            projectAttribute = attribute.attributeValue;
+        }
+    }
     let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
     //regex changes the first letter of each word to upper case
     newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
     schedule.frequency = newScheduleFrequency;
+    schedule.client = clientAttribute;
+    schedule.project = projectAttribute;
     return schedule;
 }
 

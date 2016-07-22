@@ -79,12 +79,9 @@ class ScheduleForm extends React.Component {
         if( startDateIsValid &&
             endDateIsValid
         ){
-            console.log(this.state.schedule);
             this.props.actions.saveSchedule(this.state.schedule);
-
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-
             setTimeout(function() {
                 browserHistory.push("/schedules/manage");
             }, 1000);
@@ -94,8 +91,6 @@ class ScheduleForm extends React.Component {
             toastr.error('Validation errors');
         }
     }
-
-
 
     onUpdate(event) {
         const property = event.target.name;
