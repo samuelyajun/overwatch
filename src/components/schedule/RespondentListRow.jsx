@@ -8,7 +8,7 @@ const RespondentListRow = ({respondent, onChange, index}) => {
             <SelectInput
                 name={`${index}`}
                 label="Role"
-                value={respondent.role}
+                value={respondent.allowedAttributes.role.value}
                 onChange={onChange}
                 options={[
                     {
