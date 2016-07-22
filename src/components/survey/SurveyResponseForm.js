@@ -9,7 +9,7 @@ const surveyPageOuterDiv = {
 };
 
 
-const SurveyResponseForm = ({ survey, onSubmit }) => {
+const SurveyResponseForm = ({ survey, onSubmit, className }) => {
 
     let submitButtonType = 'submit';
     let cancelButtonType = 'reset';
@@ -17,7 +17,7 @@ const SurveyResponseForm = ({ survey, onSubmit }) => {
     let cancelButtonClass = 'btn btn-default';
 
     return (
-        <div style={surveyPageOuterDiv} className="container">
+        <div style={surveyPageOuterDiv} className={className + " container"}>
             <form name="surveyForm" noValidate>
                     <div className="table-responsive">
                         {survey.template.type === "Qualitative" ?
