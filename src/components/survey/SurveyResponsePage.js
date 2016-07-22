@@ -22,11 +22,12 @@ class SurveyResponsePage extends React.Component {
             showConfirmation: false,
             showSurveyForm: true
         };
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit() {
-        this.setState({showConfirmation: true});
-        this.setState({showSurveyForm: false});
+        this.setState({showConfirmation: !this.state.showConfirmation});
+        this.setState({showSurveyForm: !this.state.showSurveyForm});
     }
 
     validateForm(){
