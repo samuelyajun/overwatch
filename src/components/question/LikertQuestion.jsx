@@ -74,7 +74,7 @@ const LikertQuestionList = ({survey}) => {
                                     </RadioGroup>
                                 </td>
                             </tr>
-                        )
+                        );
                     })
                 }
             </tbody>

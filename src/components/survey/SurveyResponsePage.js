@@ -11,7 +11,7 @@ import toastr from 'toastr';
 
 const surveyContainer = {
     marginBottom: '75px'
-}
+};
 
 class SurveyResponsePage extends React.Component {
 
@@ -47,7 +47,6 @@ class SurveyResponsePage extends React.Component {
 
     render() {
         const {query} = this.props.location;
-        console.log(query);
         let i = query.surveyId;
         const {surveys} = this.props;
         return (

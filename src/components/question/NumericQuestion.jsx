@@ -36,7 +36,7 @@ const NumericQuestionList = ({survey}) => {
                                     </p>
                                 </td>
                             </tr>
-                            )
+                            );
                         }
                     )
                 }

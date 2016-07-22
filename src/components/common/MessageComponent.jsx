@@ -12,7 +12,7 @@ const MessageComponent = ({title, text}) => {
                 <p>{text}</p>
             </div>  
          );
-}
+};
 
 MessageComponent.propTypes = {
     title: PropTypes.string,
