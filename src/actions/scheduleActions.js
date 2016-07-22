@@ -23,6 +23,7 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
+      dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules`).then((response) => {
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
@@ -38,6 +39,7 @@ export function getScheduleById(id) {
    console.log('id in getScheduleById() is ', id);
     return function(dispatch) {
        console.log('between 2 returns');
+       dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules/${id}`).then((response) => {
             console.log('Returned response is ' , response);
             response.json().then(json => {

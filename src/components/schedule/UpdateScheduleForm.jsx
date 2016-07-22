@@ -15,6 +15,8 @@ class UpdateScheduleForm extends React.Component {
         super(props, context);
 
         console.log('In the UpdateScheduleForm constructor');
+        console.log('In the UpdateScheduleForm constructor, props', this.props);
+
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
@@ -34,10 +36,13 @@ class UpdateScheduleForm extends React.Component {
         this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
 
-        console.log('props.schedule in the constructor on UpdateScheduleForm ', props.schedule);
+        // console.log('props.schedule in the constructor on UpdateScheduleForm ', this.props.schedule);
 
         this.state = {
-            schedule: Object.assign({}, props.schedule),
+            schedule: Object.assign({}, this.props.schedule),
+
+            officeIndex: '',
+            roleIndex: '',
 
             isFormValid: 'true',
 
@@ -68,9 +73,13 @@ class UpdateScheduleForm extends React.Component {
         console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
         console.log('Test to see survey name ' , this.state.schedule.survey);
         console.log('Test to see frequency ' , this.state.schedule.frequency);*/
-        console.log('UpdateScheduleForm state.schedule ' , this.state.schedule);
+        // console.log('UpdateScheduleForm state.schedule ' , this.state.schedule);
+        this.state.schedule.frequency = this.getFrequencyValue();
+         //this.state.schedule.frequency = Object.assign({}, this.state.schedule.frequency);
+         this.getLocationAttributeValue();
+         this.getRoleAttributeValue();
 
-    }
+      }
 
     onClickSubmit() {
 
@@ -189,29 +198,36 @@ class UpdateScheduleForm extends React.Component {
       let frequency = this.state.schedule.frequency;
       console.log('Original frequency ', frequency);
 
+      /*let newScheduleFrequency = frequency.toLowerCase().replace(" ", "_");
+      console.log('newScheduleFrequency before regex change ', newScheduleFrequency);
+      //regex changes the first letter of each word to upper case
+      newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+      console.log('newScheduleFrequency after regex change ', newScheduleFrequency);*/
+
       switch(frequency) {
 
-          case "ONE_TIME":
-          return "0";
+          case "One Time":
+          return "ONE_TIME";
 
-          case "ONE_WEEK":
-          return "1";
+          case "One Week":
+          return "ONE_WEEK";
 
-          case "TWO_WEEKS":
-          return "2";
+          case "Two Weeks":
+          return "TWO_WEEKS";
 
-          case "THREE_WEEKS":
-          return "3";
+          case "Three Weeks":
+          return "THREE_WEEKS";
 
-          case "FOUR_WEEKS":
-          return "4";
+          case "Four Weeks":
+          return "FOUR_WEEKS";
 
           default:
-          return "0";
+          return "ONE_TIME";
       }
     }
 
-    getRoleAttributeValue() {
+
+    /*getRoleAttributeValue() {
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
       console.log('In getRoleAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i <= allowedAttributesArray.length; i++) {
@@ -221,9 +237,23 @@ class UpdateScheduleForm extends React.Component {
           return allowedAttributesArray[i].attributeValue;
         }
       }
+    }*/
+
+    getRoleAttributeValue() {
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getRoleAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i < allowedAttributesArray.length; i++) {
+        if(allowedAttributesArray[i].attributeTypes.name == "Role") {
+          console.log('Inside the Role loop');
+          console.log('Role is ', allowedAttributesArray[i].attributeValue);
+          this.state.roleIndex = i;
+          //this.state.schedule.respondents[0].allowedAttributes[i].attributeValue = allowedAttributesArray[i].attributeValue;
+          //return allowedAttributesArray[i].attributeValue;
+        }
+      }
     }
 
-    getLocationAttributeValue() {
+    /*getLocationAttributeValue() {
 
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
       console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
@@ -231,13 +261,34 @@ class UpdateScheduleForm extends React.Component {
         if(allowedAttributesArray[i].attributeTypes.name == "Office") {
           console.log('Inside the location loop');
           console.log('Location is ', allowedAttributesArray[i].attributeValue)
+          this.state.schedule.respondents[0].allowedAttributes[i].attributeValue = allowedAttributesArray[i].attributeValue;
           return allowedAttributesArray[i].attributeValue;
+        }
+      }
+    }*/
+
+    getLocationAttributeValue() {
+
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i < allowedAttributesArray.length; i++) {
+        //debugger;
+        if(allowedAttributesArray[i].attributeTypes.name == "Office") {
+          console.log('Inside the location loop');
+          console.log('Location is ', allowedAttributesArray[i].attributeValue)
+          this.state.officeIndex = i;
+          //this.state.schedule.respondents[0].allowedAttributes[i].attributeValue = allowedAttributesArray[i].attributeValue;
+          //return allowedAttributesArray[i].attributeValue;
         }
       }
     }
 
     render() {
-        const {schedules} = this.props;
+        //const {schedules} = this.props;
+        console.log("Props inside update schedule form", this.props)
+        const {schedule} = this.props;
+        console.log("State inside render()", this.state);
+
 
         return(
             <div className="container">
@@ -310,18 +361,7 @@ class UpdateScheduleForm extends React.Component {
                         </div>
                     </div>
 
-                   <div className="row">
-                        <div className="col-md-8">
-                            <fieldset className="form-group">
-                                <label>Choose at least one day:</label>
-                                <CheckboxGroup
-                                    list={this.days}
-                                    onClick={this.updateDays}
 
-                                />
-                            </fieldset>
-                        </div>
-                    </div>
 
                     <div className="row">
                         <div className="col-md-2">
@@ -395,7 +435,7 @@ class UpdateScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        value={this.getLocationAttributeValue()}
+                                        value={this.state.schedule.respondents[0].allowedAttributes[this.state.officeIndex].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
@@ -413,7 +453,7 @@ class UpdateScheduleForm extends React.Component {
                                     <SelectInput
                                         name="role"
                                         label="Role"
-                                        value={this.getRoleAttributeValue()}
+                                        value={this.state.schedule.respondents[0].allowedAttributes[this.state.roleIndex].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
                                             {
@@ -458,7 +498,7 @@ UpdateScheduleForm.propTypes = {
 
 function mapStateToProps(state, ownProps) {
     return {
-        schedules: state.schedules
+        //schedules: state.schedules
     };
 }
 
@@ -470,3 +510,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateScheduleForm);
+//
+// <div className="row">
+//      <div className="col-md-8">
+//          <fieldset className="form-group">
+//              <label>Choose at least one day:</label>
+//              <CheckboxGroup
+//                  list={this.days}
+//                  onClick={this.updateDays}
+//
+//              />
+//          </fieldset>
+//      </div>
+//  </div>

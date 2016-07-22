@@ -8,7 +8,8 @@ export default function scheduleReducer(state = initialState.schedules, action) 
         return action.schedules;
 
         case types.GET_SCHEDULE_BY_ID_SUCCESS:
-        console.log('In GET_SCHEDULE_BY_ID_SUCCESS in scheduleReducer()');
+        console.log('In GET_SCHEDULE_BY_ID_SUCCESS in scheduleReducer()', action.schedule);
+
         return action.schedule;
 
         case types.CREATE_SCHEDULE_SUCCESS:

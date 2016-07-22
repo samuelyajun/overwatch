@@ -5,6 +5,7 @@ import * as scheduleActions from '../../actions/scheduleActions';
 import { bindActionCreators } from 'redux';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
+
 import {connect} from 'react-redux';
 
 const scheduleOuterDivStyle = {
@@ -15,21 +16,19 @@ class UpdateSchedule extends React.Component {
 
   constructor(props, context) {
       super(props, context);
-
-      this.state = {
-        //schedule: Object.assign({}, this.props.schedule)
-        schedule: Object.assign({}, this.props.actions.getScheduleById(this.props.scheduleId))
-      };
-
-    }
+  }
 
     render() {
-        return (
-            <div style={scheduleOuterDivStyle}>
-                <h1>Update schedule</h1>
-                <UpdateScheduleForm schedule={this.state.schedule}/>
+            const {schedule} = this.props;
+            console.log("schedule in parent update schedule", schedule);
+            return (
+              <div>
+                   <div style={scheduleOuterDivStyle}>
+                       <h1>Update schedule</h1>
+                       <UpdateScheduleForm schedule={schedule}/>
+                   </div>
             </div>
-        );
+          );
     }
   }
 
@@ -44,14 +43,10 @@ class UpdateSchedule extends React.Component {
 
     function mapStateToProps(state, ownProps) {
 
-      console.log('State.schedules length' , state.schedules.length);
-      console.log('ownprops is ' , ownProps);
-      const scheduleId = ownProps.params.id;   // from the path `/schedules/:id`
-      console.log('scheduleId is ', ownProps.params.id);
+      const scheduleId = ownProps.params.id;   // from the path `/schedules/:id
 
-
-      let schedule = {
-          id: '',
+    let schedule: {
+         id: '',
           username: '',
           survey: '',
           frequency: '',
@@ -75,11 +70,14 @@ class UpdateSchedule extends React.Component {
                  }
                }
              ]
-      };      
+      }
+
+      if(scheduleId && state.schedules.length > 0) {
+             schedule = getScheduleById(state.schedules, scheduleId);
+         }
 
       return {
         schedule: schedule,
-        scheduleId: scheduleId,
         schedules: state.schedules
       };
     }
