@@ -27,13 +27,11 @@ const NumericQuestionList = ({survey}) => {
                 {
                     survey.template.questions.map(question => {
                            return (
-                            <tr>
+                            <tr key={question.id}>
                                 <td style={rowStyles}><b>{question.id}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
-                                    <p>
-                                        <NumberInput name = {question._links.self.href} type="number" min="0"/>
-                                    </p>
+                                        <NumberInput name = {question._links.self.href} type="number" min="0" max="99"/>
                                 </td>
                             </tr>
                             );

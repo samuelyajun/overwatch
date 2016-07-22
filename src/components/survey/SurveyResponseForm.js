@@ -35,7 +35,8 @@ const SurveyResponseForm = ({ survey, onSubmit, className }) => {
 SurveyResponseForm.propTypes = {
     survey: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onReset: PropTypes.func
+    onReset: PropTypes.func,
+    className: PropTypes.string
 };
 
 
