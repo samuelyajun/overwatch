@@ -13,6 +13,7 @@ import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
+import ScheduleUtils from '../../utils/scheduleUtils';
 
 class ScheduleForm extends React.Component {
 
@@ -48,26 +49,26 @@ class ScheduleForm extends React.Component {
                 days: [],
                 respondents: []
             },
-            allowedAttributes: {
-                project: {
-                    value: "",
+            allowedAttributes: [
+                {
+                    value: 'Overwatch', //hardcoded for now
                     attributeTypes: {
-                        name: "PROJECT"
+                        name: 'PROJECT'
                     }
                 },
-                client: {
-                    value: "",
+                {
+                    value: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
-                        name: "CLIENT"
+                        name: 'CLIENT'
                     }
                 },
-                office: {
-                    value: "",
+                {
+                    value: '',
                     attributeTypes: {
-                        name: "OFFICE"
+                        name: 'OFFICE'
                     }
                 }
-            },
+            ],
 
             isFormValid: 'true',
             errors: {
@@ -96,20 +97,22 @@ class ScheduleForm extends React.Component {
 
         if (this.isFormValid()) {
 
-            let schedule = this.state.schedule;
-            const attributes = this.state.allowedAttributes;
-            console.log(schedule);
-            schedule.respondents.forEach((respondent) => {
-                respondent.allowedAttributes = Object.assign(respondent.allowedAttributes, attributes);
-            });
-            console.log(schedule);
-            //this.props.actions.saveSchedule(this.state.schedule);
+            let schedule = Object.assign({}, this.state.schedule);
+            let attributes = Object.assign([], this.state.allowedAttributes);
+            let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
+            formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+            // schedule.respondents.forEach((respondent) => {
+            //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
+            //     respondent.allowedAttributes = allowedAttributes;
+            //     respondent.user = HateoasUtils.getObjectLink(respondent.user);
+            // });
+            console.log(formattedSchedule);
+            this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-
-            // setTimeout(function() {
-            //     browserHistory.push("/schedules/manage");
-            // }, 1000);
+            setTimeout(function() {
+                browserHistory.push("/schedules/manage");
+            }, 1000);
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
@@ -131,12 +134,15 @@ class ScheduleForm extends React.Component {
     }
 
     onUpdateAttribute(event) {
-        const property = event.target.name;
+        const type = event.target.name;
         let val = event.target.value;
-        let attributes = Object.assign({}, this.state.allowedAttributes);
+        let attributes = Object.assign([], this.state.allowedAttributes);
         let errors = Object.assign({},this.state.errors);
 
-        attributes[property].value = event.target.value;
+        let attribute = attributes.find((attr) => {
+            return attr.attributeTypes.name === type;
+        });
+        attribute.value = event.target.value;
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -144,45 +150,42 @@ class ScheduleForm extends React.Component {
     updateUsers(event) {
         const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
-        let schedule = Object.assign({}, this.state.schedule)
+        let schedule = Object.assign({}, this.state.schedule);
 
         if (isChecked) {
             const user = this.props.users.find((user) => {
                 return user.id === userId;
             });
 
-            let respondent = {allowedAttributes: {}}// Object.assign({}, this.state.attributes);
-            console.log(this.state.attributes);
+            let respondent = {allowedAttributes: []};
             respondent.user = user;
-            respondent.allowedAttributes.role = {
-                value: "",
+            respondent.allowedAttributes.push({
+                value: '',
                 attributeTypes: {
-                    name: "ROLE"
+                    name: 'ROLE'
                 }
-            };
+            });
 
-            const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
+            const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
             schedule.respondents = newRespondents;
         } else {
             const newRespondents = [
                 ...schedule.respondents.filter((respondent) => {
-                    console.log(respondent);
                     return respondent.user.id !== userId;
                 })
-            ]
+            ];
             schedule.respondents = newRespondents;
         }
-        console.log(schedule.respondents);
         return this.setState({schedule});
     }
 
     updateRole(event) {
         const index = parseInt(event.target.name);
         const role = event.target.value;
-        console.log(this.state.schedule.respondents);
         const schedule = Object.assign({}, this.state.schedule);
-        schedule.respondents[index].allowedAttributes.role.value = role;
-        return this.setState({schedule})
+        //safe to assume only one attribute since the others get add on save
+        schedule.respondents[index].allowedAttributes[0].value = role;
+        return this.setState({schedule});
     }
 
     updateDays(event) {
@@ -418,10 +421,10 @@ class ScheduleForm extends React.Component {
                             <ul className="list-group">
                                 <li className="list-group-item">
                                     <SelectInput
-                                        name="client"
+                                        name="CLIENT"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value={this.state.allowedAttributes.client.value}
+                                        value={this.state.allowedAttributes[0].value}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -430,10 +433,10 @@ class ScheduleForm extends React.Component {
                                 </li>
                                 <li className="list-group-item">
                                     <SelectInput
-                                        name="project"
+                                        name="PROJECT"
                                         label="Project"
                                         defaultOption="-choose-"
-                                        value={this.state.allowedAttributes.project.value}
+                                        value={this.state.allowedAttributes[1].value}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -446,9 +449,9 @@ class ScheduleForm extends React.Component {
                             <ul className="list-group">
                                 <li className="list-group-item">
                                     <SelectInput
-                                        name="office"
+                                        name="OFFICE"
                                         label="Office"
-                                        value={this.state.allowedAttributes.office.value}
+                                        value={this.state.allowedAttributes[2].value}
                                         onChange={this.onUpdateAttribute}
                                         options={[
                                             {

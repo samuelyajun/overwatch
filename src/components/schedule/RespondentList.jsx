@@ -13,11 +13,11 @@ const RespondentList = ({respondents, onChange}) => {
             }
         </div>
     );
-}
+};
 
 RespondentList.propTypes = {
     respondents: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired
-}
+};
 
 export default RespondentList;
