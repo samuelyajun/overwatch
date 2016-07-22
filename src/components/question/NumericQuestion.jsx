@@ -20,7 +20,6 @@ let tableStyle = "table table-hover table-striped";
 
 
 const NumericQuestionList = ({survey}) => {
-    console.log(survey.template.questions);
     return (
          <table className={tableStyle}> 
             <tbody>
@@ -31,7 +30,7 @@ const NumericQuestionList = ({survey}) => {
                                 <td style={rowStyles}><b>{question.id}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
-                                        <NumberInput name = {question._links.self.href} type="number" min="0" max="99"/>
+                                        <NumberInput name = {question._links.self.href} type="number" min={0} max={99} placeholder={0}/>
                                 </td>
                             </tr>
                             );
