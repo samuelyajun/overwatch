@@ -1,18 +1,18 @@
 import React, {PropTypes} from 'react';
-import SelectInput from '../common/SelectInput';
+import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
+import UserCheckboxGroup from './UserCheckboxGroup.jsx';
+import RespondentList from './RespondentList.jsx';
+//redux imports
+import * as userActions from '../../actions/userActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
-
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
-import UserCheckboxGroup from './UserCheckboxGroup.jsx';
-//redux imports
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as userActions from '../../actions/userActions';
+
+import HateoasUtils from '../../utils/hateoasUtils';
 
 class ScheduleForm extends React.Component {
 
@@ -31,41 +31,30 @@ class ScheduleForm extends React.Component {
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
         this.updateDays = this.updateDays.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
+        this.updateRole = this.updateRole.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
-        this.updateUsers = this.updateUsers.bind(this);
 
         this.state = {
             schedule: {
-               id: '',
-                username: '',
+                id: '',
                 survey: '',
                 frequency: '',
                 startDate: '',
                 endDate: '',
                 days: [],
-                respondents: [
-                     {
-                       "allowedAttributes": [
-                         {
-                           "value": "",
-                           "attributeTypes": {
-                           "name": ""
-                           }
-                         }
-                       ],
-                       "user": {
-                         "email": "",
-                         "firstName": "",
-                         "lastName": ""
-                       }
-                     }
-                   ]
-          },
+                respondents: []
+            },
+            attributes: {
+                project: "",
+                client: "",
+                office: ""
+            },
 
             isFormValid: 'true',
-
             errors: {
               username: {
                 required: '',
@@ -121,14 +110,58 @@ class ScheduleForm extends React.Component {
         let errors = Object.assign({},this.state.errors);
 
         schedule[property] = event.target.value;
-
         this.setState({errors: errors});
         return this.setState({schedule});
     }
 
+    onUpdateAttribute(event) {
+        const property = event.target.name;
+        let val = event.target.value;
+        let attributes = Object.assign({}, this.state.attributes);
+        let errors = Object.assign({},this.state.errors);
+
+        attributes[property] = event.target.value;
+        this.setState({errors: errors});
+        return this.setState({attributes});
+    }
+
     updateUsers(event) {
-        console.log(event.target.value);
-        console.log(event.target.name);
+        const isChecked = event.target.checked;
+        const userId = parseInt(event.target.value);
+        let schedule = Object.assign({}, this.state.schedule)
+
+        if (isChecked) {
+            const user = this.props.users.find((user) => {
+                return user.id === userId;
+            });
+
+            let respondent = Object.assign({}, this.state.attributes);
+            console.log(this.state.attributes);
+            respondent.user = user;
+            respondent.role = "";
+
+            const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
+            schedule.respondents = newRespondents;
+        } else {
+            const newRespondents = [
+                ...schedule.respondents.filter((respondent) => {
+                    console.log(respondent);
+                    return respondent.user.id !== userId;
+                })
+            ]
+            schedule.respondents = newRespondents;
+        }
+        console.log(schedule.respondents);
+        return this.setState({schedule});
+    }
+
+    updateRole(event) {
+        const index = parseInt(event.target.name);
+        const role = event.target.value;
+        console.log(this.state.schedule.respondents);
+        const schedule = Object.assign({}, this.state.schedule);
+        schedule.respondents[index].role = role;
+        return this.setState({schedule})
     }
 
     updateDays(event) {
@@ -229,18 +262,6 @@ class ScheduleForm extends React.Component {
                 <form className name="myForm" noValidate>
                     <div className="row">
                         <div className="col-md-2">
-                            <TextInput
-                                name="usernameInput"
-                                label="Username"
-                                placeholder="Enter username"
-                                onChange={this.onUpdate}
-                                error={this.state.errors.username.required}
-                            <UserCheckboxGroup
-                                users={this.props.users}
-                                onClick={this.updateUsers}
-                            />
-                        </div>
-                        <div className="col-md-2">
                             <SelectInput
                                 name="survey"
                                 label="Select a Survey"
@@ -271,6 +292,23 @@ class ScheduleForm extends React.Component {
                                 error={this.state.errors.survey.required}
                             />
                         </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-2">
+                            <UserCheckboxGroup
+                                users={this.props.users}
+                                onClick={this.updateUsers}
+                            />
+                        </div>
+
+                        <div className="col-md-2">
+                            <RespondentList
+                                respondents={this.state.schedule.respondents}
+                                onChange={this.updateRole}
+                            />
+                        </div>
+
+
                     </div>
                     <div className="row">
                         <div className="col-md-2">
@@ -355,7 +393,7 @@ class ScheduleForm extends React.Component {
                                         name="client"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value={this.state.schedule.client}
+                                        value={this.state.attributes.client}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -367,7 +405,7 @@ class ScheduleForm extends React.Component {
                                         name="project"
                                         label="Project"
                                         defaultOption="-choose-"
-                                        value={this.state.schedule.project}
+                                        value={this.state.attributes.project}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -382,8 +420,8 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        value={this.state.schedule.office}
-                                        onChange={this.onUpdate}
+                                        value={this.state.attributes.office}
+                                        onChange={this.onUpdateAttribute}
                                         options={[
                                             {
                                                 text: 'Beaverton',
@@ -438,23 +476,23 @@ class ScheduleForm extends React.Component {
 }
 
 ScheduleForm.propTypes = {
-
+    users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired
+    actions: PropTypes.object.isRequired
 };
+
+
 
 function mapStateToProps(state, ownProps) {
     return {
+        users: state.users,
         schedules: state.schedules
-        users: state.users
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(scheduleActions, dispatch)
-        actions: bindActionCreators(userActions, dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions), dispatch)
     };
 }
 

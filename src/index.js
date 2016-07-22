@@ -29,11 +29,8 @@ import {loadSchedules} from './actions/scheduleActions';
 import {loadUsers} from './actions/userActions';
 
 const store = configureStore();
-<<<<<<< HEAD
-store.dispatch(loadSchedules());
-=======
 store.dispatch(loadUsers());
->>>>>>> origin/PO-96
+store.dispatch(loadSchedules());
 
 render(
     <Provider store = {store}>
