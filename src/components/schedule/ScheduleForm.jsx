@@ -48,10 +48,25 @@ class ScheduleForm extends React.Component {
                 days: [],
                 respondents: []
             },
-            attributes: {
-                project: "",
-                client: "",
-                office: ""
+            allowedAttributes: {
+                project: {
+                    value: "",
+                    attributeTypes: {
+                        name: "PROJECT"
+                    }
+                },
+                client: {
+                    value: "",
+                    attributeTypes: {
+                        name: "CLIENT"
+                    }
+                },
+                office: {
+                    value: "",
+                    attributeTypes: {
+                        name: "OFFICE"
+                    }
+                }
             },
 
             isFormValid: 'true',
@@ -79,22 +94,22 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
 
-        let startDateIsValid = this.validateStartDate();
-        let endDateIsValid = this.validateEndDate();
-        let daysAreValid = this.validateDays();
+        if (this.isFormValid()) {
 
-        if( startDateIsValid &&
-            endDateIsValid &&
-            daysAreValid
-        ){
-            this.props.actions.saveSchedule(this.state.schedule);
-
+            let schedule = this.state.schedule;
+            const attributes = this.state.allowedAttributes;
+            console.log(schedule);
+            schedule.respondents.forEach((respondent) => {
+                respondent.allowedAttributes = Object.assign(respondent.allowedAttributes, attributes);
+            });
+            console.log(schedule);
+            //this.props.actions.saveSchedule(this.state.schedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
 
-            setTimeout(function() {
-                browserHistory.push("/schedules/manage");
-            }, 1000);
+            // setTimeout(function() {
+            //     browserHistory.push("/schedules/manage");
+            // }, 1000);
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
@@ -118,10 +133,10 @@ class ScheduleForm extends React.Component {
     onUpdateAttribute(event) {
         const property = event.target.name;
         let val = event.target.value;
-        let attributes = Object.assign({}, this.state.attributes);
+        let attributes = Object.assign({}, this.state.allowedAttributes);
         let errors = Object.assign({},this.state.errors);
 
-        attributes[property] = event.target.value;
+        attributes[property].value = event.target.value;
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -136,10 +151,15 @@ class ScheduleForm extends React.Component {
                 return user.id === userId;
             });
 
-            let respondent = Object.assign({}, this.state.attributes);
+            let respondent = {allowedAttributes: {}}// Object.assign({}, this.state.attributes);
             console.log(this.state.attributes);
             respondent.user = user;
-            respondent.role = "";
+            respondent.allowedAttributes.role = {
+                value: "",
+                attributeTypes: {
+                    name: "ROLE"
+                }
+            };
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)]
             schedule.respondents = newRespondents;
@@ -161,7 +181,7 @@ class ScheduleForm extends React.Component {
         const role = event.target.value;
         console.log(this.state.schedule.respondents);
         const schedule = Object.assign({}, this.state.schedule);
-        schedule.respondents[index].role = role;
+        schedule.respondents[index].allowedAttributes.role.value = role;
         return this.setState({schedule})
     }
 
@@ -182,6 +202,13 @@ class ScheduleForm extends React.Component {
 
         schedule['days'] = days;
         return this.setState({schedule});
+    }
+
+    isFormValid() {
+        return this.validateStartDate() &&
+                this.validateEndDate() &&
+                this.validateDays() &&
+                this.validateSeven();
     }
 
     validateStartDate(){
@@ -394,7 +421,7 @@ class ScheduleForm extends React.Component {
                                         name="client"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value={this.state.attributes.client}
+                                        value={this.state.allowedAttributes.client.value}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -406,7 +433,7 @@ class ScheduleForm extends React.Component {
                                         name="project"
                                         label="Project"
                                         defaultOption="-choose-"
-                                        value={this.state.attributes.project}
+                                        value={this.state.allowedAttributes.project.value}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -421,7 +448,7 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="office"
                                         label="Office"
-                                        value={this.state.attributes.office}
+                                        value={this.state.allowedAttributes.office.value}
                                         onChange={this.onUpdateAttribute}
                                         options={[
                                             {
