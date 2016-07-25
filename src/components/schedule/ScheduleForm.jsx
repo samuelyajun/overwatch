@@ -86,7 +86,6 @@ class ScheduleForm extends React.Component {
 
         if (this.isFormValid()) {
 
-            const schedule = Object.assign({}, this.state.schedule);
             const attributes = Object.assign([], this.state.allowedAttributes);
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
@@ -110,7 +109,6 @@ class ScheduleForm extends React.Component {
         let errors = Object.assign({},this.state.errors);
 
         schedule[property] = event.target.value;
-        console.log(schedule);
         this.setState({errors: errors});
         return this.setState({schedule});
     }
