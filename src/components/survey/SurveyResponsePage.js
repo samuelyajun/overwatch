@@ -70,7 +70,8 @@ class SurveyResponsePage extends React.Component {
 
 SurveyResponsePage.propTypes = {
     surveys: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    location: PropTypes.object
 };
 
 
