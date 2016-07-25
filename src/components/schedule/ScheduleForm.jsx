@@ -19,10 +19,6 @@ class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-<<<<<<< HEAD
-
-=======
->>>>>>> d4bc42a5c83af134785dde262faee4ed12c84681
 
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
@@ -31,13 +27,9 @@ class ScheduleForm extends React.Component {
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
-<<<<<<< HEAD
         this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
-        this.updateDays = this.updateDays.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
         this.updateRole = this.updateRole.bind(this);
-=======
->>>>>>> d4bc42a5c83af134785dde262faee4ed12c84681
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
 
