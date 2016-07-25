@@ -28,7 +28,6 @@ class ScheduleForm extends React.Component {
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
-        this.updateDays = this.updateDays.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
         this.updateRole = this.updateRole.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
@@ -38,23 +37,22 @@ class ScheduleForm extends React.Component {
             schedule: {
                 id: '',
                 survey: '',
-                frequency: '',
+                frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
-                days: [],
                 respondents: []
             },
             allowedAttributes: [
                 {
-                    value: 'Overwatch', //hardcoded for now
-                    attributeTypes: {
-                        name: 'PROJECT'
-                    }
-                },
-                {
                     value: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
+                    }
+                },
+                {
+                    value: 'Overwatch', //hardcoded for now
+                    attributeTypes: {
+                        name: 'PROJECT'
                     }
                 },
                 {
@@ -89,24 +87,22 @@ class ScheduleForm extends React.Component {
 
         if (this.isFormValid()) {
 
-            let schedule = Object.assign({}, this.state.schedule);
-            let attributes = Object.assign([], this.state.allowedAttributes);
-            let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
-            formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+            const attributes = Object.assign([], this.state.allowedAttributes);
+            let formattedSchedule = Object.assign({}, this.state.schedule);
 
-            console.log(formattedSchedule);
+            ScheduleUtils.addAttributes(formattedSchedule, attributes);
+            ScheduleUtils.addUserLink(formattedSchedule);
+
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(function() {
-                browserHistory.push("/schedules/manage");
-            }, 1000);
-        }
-        else{
+            browserHistory.push("/schedules/manage");
+        } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
     }
+
 
 
     onUpdate(event) {
@@ -178,28 +174,9 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
-    updateDays(event) {
-        let isChecked = event.target.checked;
-        let schedule = Object.assign({}, this.state.schedule);
-        let days = schedule['days'];
-        let name = event.target.name;
-
-        if (isChecked) {
-            days.push(name);
-        } else {
-            let dayIndex = days.indexOf(name);
-            if (dayIndex != -1) {
-                days.splice(dayIndex, 1);
-            }
-        }
-
-        schedule['days'] = days;
-        return this.setState({schedule});
-    }
-
     isFormValid() {
         return this.validateStartDate() &&
-                this.validateEndDate() &&                
+                this.validateEndDate() &&
                 this.validateSeven();
     }
 
@@ -348,22 +325,22 @@ class ScheduleForm extends React.Component {
                                 defaultOptionValue = "ONE_TIME"
                                 onChange={this.onUpdate}
                                 options={[
-                                  {
-                                      text: "1 Week",
-                                      value: "ONE_WEEK"
-                                  },
-                                  {
-                                      text: "2 Weeks",
-                                      value: "TWO_WEEKS"
-                                  },
-                                  {
-                                      text: "3 Weeks",
-                                      value: "THREE_WEEKS"
-                                  },
-                                  {
-                                      text: "4 Weeks",
-                                      value: "FOUR_WEEKS"
-                                  }
+                                    {
+                                        text: "1 Week",
+                                        value: "ONE_WEEK"
+                                    },
+                                    {
+                                        text: "2 Weeks",
+                                        value: "TWO_WEEKS"
+                                    },
+                                    {
+                                        text: "3 Weeks",
+                                        value: "THREE_WEEKS"
+                                    },
+                                    {
+                                        text: "4 Weeks",
+                                        value: "MONTHLY"
+                                    }
                                 ]}
                             />
                         </div>
@@ -383,6 +360,8 @@ class ScheduleForm extends React.Component {
                                         name="CLIENT"
                                         label="Client"
                                         defaultOption="-choose-"
+                                        defaultOptionValue="catalyst"
+                                        defaultOptionLabel="Catalyst"
                                         value={this.state.allowedAttributes[0].value}
                                         onChange={this.onUpdate}
                                         options={[
@@ -394,6 +373,8 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="PROJECT"
                                         label="Project"
+                                        defaultOptionValue="overwatch"
+                                        defaultOptionLabel="Overwatch"
                                         defaultOption="-choose-"
                                         value={this.state.allowedAttributes[1].value}
                                         onChange={this.onUpdate}
