@@ -43,7 +43,7 @@ class ScheduleForm extends React.Component {
         this.state = {
             schedule: {
                 survey: '',
-                frequency: '',
+                frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
                 days: [],
@@ -51,15 +51,15 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    value: 'Overwatch', //hardcoded for now
-                    attributeTypes: {
-                        name: 'PROJECT'
-                    }
-                },
-                {
                     value: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
+                    }
+                },
+                {
+                    value: 'Overwatch', //hardcoded for now
+                    attributeTypes: {
+                        name: 'PROJECT'
                     }
                 },
                 {
@@ -97,10 +97,11 @@ class ScheduleForm extends React.Component {
 
         if (this.isFormValid()) {
 
-            let schedule = Object.assign({}, this.state.schedule);
-            let attributes = Object.assign([], this.state.allowedAttributes);
-            let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
-            formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+            const schedule = Object.assign({}, this.state.schedule);
+            const attributes = Object.assign([], this.state.allowedAttributes);
+            let formattedSchedule = Object.assign({}, this.state.schedule);
+            ScheduleUtils.addAttributes(formattedSchedule, attributes);
+            ScheduleUtils.addUserLink(formattedSchedule);
             // schedule.respondents.forEach((respondent) => {
             //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
             //     respondent.allowedAttributes = allowedAttributes;
@@ -110,9 +111,7 @@ class ScheduleForm extends React.Component {
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(function() {
-                browserHistory.push("/schedules/manage");
-            }, 1000);
+            browserHistory.push("/schedules/manage");
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';
@@ -129,6 +128,7 @@ class ScheduleForm extends React.Component {
         let errors = Object.assign({},this.state.errors);
 
         schedule[property] = event.target.value;
+        console.log(schedule);
         this.setState({errors: errors});
         return this.setState({schedule});
     }
@@ -386,24 +386,24 @@ class ScheduleForm extends React.Component {
                                 label="Frequency"
                                 value={this.state.schedule.frequency}
                                 defaultOptionLabel = "One Time"
-                                defaultOptionValue = "4"
+                                defaultOptionValue = "ONE_TIME"
                                 onChange={this.onUpdate}
                                 options={[
                                     {
                                         text: "1 Week",
-                                        value: "1"
+                                        value: "ONE_WEEK"
                                     },
                                     {
                                         text: "2 Weeks",
-                                        value: "2"
+                                        value: "TWO_WEEKS"
                                     },
                                     {
                                         text: "3 Weeks",
-                                        value: "3"
+                                        value: "THREE_WEEKS"
                                     },
                                     {
                                         text: "4 Weeks",
-                                        value: "4"
+                                        value: "MONTHLY"
                                     }
                                 ]}
                             />

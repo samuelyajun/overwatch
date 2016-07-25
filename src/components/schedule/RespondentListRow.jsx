@@ -36,7 +36,7 @@ const RespondentListRow = ({respondent, onChange, index}) => {
 RespondentListRow.propTypes = {
     respondent: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
-    index: PropTypes.integer
+    index: PropTypes.number
 };
 
 export default RespondentListRow;

@@ -42,8 +42,10 @@ export function createSchedule(schedule) {
 
     return function (dispatch) {
         dispatch(initiateAjaxRequest());
-        return fetch(Urls.BASE_SCHEDULE_URL, request).then((schedule) => {
-            dispatch(createScheduleSuccess(schedule));
+        return fetch(Urls.BASE_SCHEDULE_URL, request).then((response) => {
+            response.json().then((schedule) => {
+                dispatch(createScheduleSuccess(schedule));
+            });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));
             throw(error);
