@@ -45,7 +45,7 @@ class UpdateSchedule extends React.Component {
 
       const scheduleId = ownProps.params.id;   // from the path `/schedules/:id
 
-    let schedule: {
+    let schedule = {
          id: '',
           username: '',
           survey: '',

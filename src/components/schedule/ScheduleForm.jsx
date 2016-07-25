@@ -94,7 +94,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
 
-        let startDateIsValid = this.validateStartDate();
+        /*let startDateIsValid = this.validateStartDate();
         let endDateIsValid = this.validateEndDate();
         let daysAreValid = this.validateDays();
 
@@ -102,7 +102,7 @@ class ScheduleForm extends React.Component {
             endDateIsValid
             // && daysAreValid
         ){
-            //this.props.actions.saveSchedule(this.state.schedule);
+            //this.props.actions.saveSchedule(this.state.schedule);*/
 
         if (this.isFormValid()) {
 
@@ -117,9 +117,9 @@ class ScheduleForm extends React.Component {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
 
-            // setTimeout(function() {
-            //     browserHistory.push("/schedules/manage");
-            // }, 1000);
+             setTimeout(function() {
+                 browserHistory.push("/schedules/manage");
+             }, 1000);
         }
         else{
             toastr.options.positionClass = 'toast-top-full-width';

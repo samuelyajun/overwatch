@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import SelectInput from '../common/SelectInput';
+import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import toastr from 'toastr';
