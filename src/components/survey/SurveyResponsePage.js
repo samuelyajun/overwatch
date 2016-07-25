@@ -34,15 +34,6 @@ class SurveyResponsePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
 
-        if(this.state.schedule.startDate === ''){
-            errors.startDate.required = 'Start date is required';
-            isValid = false;
-        }
-        else{
-            errors.startDate.required = '';
-            isValid = true;
-        }
-
         this.setState({errors});
         return isValid;
     }
