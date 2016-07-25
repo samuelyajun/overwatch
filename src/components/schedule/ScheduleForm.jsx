@@ -19,24 +19,25 @@ class ScheduleForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+<<<<<<< HEAD
 
+=======
+>>>>>>> d4bc42a5c83af134785dde262faee4ed12c84681
 
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
-        const errorDaysRequired = 'A day is required';
-
-        const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-        this.days = daysOfTheWeek;
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+<<<<<<< HEAD
         this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
         this.updateDays = this.updateDays.bind(this);
         this.updateUsers = this.updateUsers.bind(this);
         this.updateRole = this.updateRole.bind(this);
+=======
+>>>>>>> d4bc42a5c83af134785dde262faee4ed12c84681
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
 
@@ -46,7 +47,6 @@ class ScheduleForm extends React.Component {
                 frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
-                days: [],
                 respondents: []
             },
             allowedAttributes: [
@@ -85,9 +85,6 @@ class ScheduleForm extends React.Component {
               endDate: {
                 afterStart: '',
                 sevenDays: ''
-              },
-              days: {
-                required: ''
               }
             }
         };
@@ -100,26 +97,19 @@ class ScheduleForm extends React.Component {
             const schedule = Object.assign({}, this.state.schedule);
             const attributes = Object.assign([], this.state.allowedAttributes);
             let formattedSchedule = Object.assign({}, this.state.schedule);
+
             ScheduleUtils.addAttributes(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
-            // schedule.respondents.forEach((respondent) => {
-            //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
-            //     respondent.allowedAttributes = allowedAttributes;
-            //     respondent.user = HateoasUtils.getObjectLink(respondent.user);
-            // });
-            console.log(formattedSchedule);
+
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
-        }
-        else{
+        } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
     }
-
-
 
     onUpdate(event) {
         const property = event.target.name;
@@ -188,29 +178,9 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
-    updateDays(event) {
-        let isChecked = event.target.checked;
-        let schedule = Object.assign({}, this.state.schedule);
-        let days = schedule['days'];
-        let name = event.target.name;
-
-        if (isChecked) {
-            days.push(name);
-        } else {
-            let dayIndex = days.indexOf(name);
-            if (dayIndex != -1) {
-                days.splice(dayIndex, 1);
-            }
-        }
-
-        schedule['days'] = days;
-        return this.setState({schedule});
-    }
-
     isFormValid() {
         return this.validateStartDate() &&
                 this.validateEndDate() &&
-                this.validateDays() &&
                 this.validateSeven();
     }
 
@@ -263,24 +233,6 @@ class ScheduleForm extends React.Component {
             errors.endDate.afterStart = '';
             isValid = true;
         }
-        this.setState({errors});
-        return isValid;
-    }
-
-    validateDays(){
-        let errors = Object.assign({},this.state.errors);
-        let days = this.state.schedule.days;
-        let isValid = true;
-
-        if (days.length === 0){
-            errors.days.required = 'Please choose at least one day';
-            isValid = false;
-        }
-        else {
-            errors.days.required = '';
-            isValid = true;
-        }
-
         this.setState({errors});
         return isValid;
     }
@@ -366,20 +318,7 @@ class ScheduleForm extends React.Component {
                         </div>
                     </div>
 
-                   <div className="row">
-                        <div className="col-md-8">
-                            <fieldset className="form-group">
-                                <label>Choose at least one day:</label>
-                                <CheckboxGroup
-                                    list={this.days}
-                                    onClick={this.updateDays}
-                                    error={this.state.errors.days.required}
-                                />
-                            </fieldset>
-                        </div>
-                    </div>
-
-                    <div className="row">
+                  <div className="row">
                         <div className="col-md-2">
                             <SelectInput
                                 name="frequency"
@@ -424,23 +363,23 @@ class ScheduleForm extends React.Component {
                                         name="CLIENT"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value={this.state.allowedAttributes[0].value}
+                                        defaultOptionValue="catalyst"
+                                        defaultOptionLabel="Catalyst"
+                                        value={this.state.schedule.client}
                                         onChange={this.onUpdate}
-                                        options={[
-
-                                        ]}
+                                        options={[]}
                                     />
                                 </li>
                                 <li className="list-group-item">
                                     <SelectInput
                                         name="PROJECT"
                                         label="Project"
+                                        defaultOptionValue="overwatch"
+                                        defaultOptionLabel="Overwatch"
                                         defaultOption="-choose-"
                                         value={this.state.allowedAttributes[1].value}
                                         onChange={this.onUpdate}
-                                        options={[
-
-                                        ]}
+                                        options={[]}
                                     />
                                 </li>
                             </ul>
