@@ -47,29 +47,12 @@ class UpdateSchedule extends React.Component {
 
     let schedule = {
          id: '',
-          username: '',
-          survey: '',
-          frequency: '',
-          startDate: '',
-          endDate: '',
-          days: [],
-          respondents: [
-               {
-                 "allowedAttributes": [
-                   {
-                     "value": "",
-                     "attributeTypes": {
-                     "name": ""
-                     }
-                   }
-                 ],
-                 "user": {
-                   "email": "",
-                   "firstName": "",
-                   "lastName": ""
-                 }
-               }
-             ]
+         survey: '',
+         frequency: '',
+         startDate: '',
+         endDate: '',
+         days: [],
+         respondents: []
       }
 
       if(scheduleId && state.schedules.length > 0) {

@@ -13,6 +13,7 @@ import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
+import ScheduleUtils from '../../utils/scheduleUtils';
 
 class ScheduleForm extends React.Component {
 
@@ -92,7 +93,7 @@ class ScheduleForm extends React.Component {
             let attributes = Object.assign([], this.state.allowedAttributes);
             let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
             formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
-            
+
             console.log(formattedSchedule);
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
@@ -198,8 +199,7 @@ class ScheduleForm extends React.Component {
 
     isFormValid() {
         return this.validateStartDate() &&
-                this.validateEndDate() &&
-                this.validateDays() &&
+                this.validateEndDate() &&                
                 this.validateSeven();
     }
 

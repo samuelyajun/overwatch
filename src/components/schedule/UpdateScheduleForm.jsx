@@ -41,6 +41,27 @@ class UpdateScheduleForm extends React.Component {
         this.state = {
             schedule: Object.assign({}, this.props.schedule),
 
+            allowedAttributes: [
+                {
+                    value: 'Overwatch', //hardcoded for now
+                    attributeTypes: {
+                        name: 'PROJECT'
+                    }
+                },
+                {
+                    value: 'Catalyst DevWorks', //hardcoded for now
+                    attributeTypes: {
+                        name: 'CLIENT'
+                    }
+                },
+                {
+                    value: '',
+                    attributeTypes: {
+                        name: 'OFFICE'
+                    }
+                }
+            ],
+
             officeIndex: '',
             roleIndex: '',
 
@@ -81,42 +102,98 @@ class UpdateScheduleForm extends React.Component {
 
       }
 
-    onClickSubmit() {
+      onClickSubmit() {
 
-        let startDateIsValid = this.validateStartDate();
-        let endDateIsValid = this.validateEndDate();
-        //let daysAreValid = this.validateDays();
+          if (this.isFormValid()) {
 
-        if( startDateIsValid &&
-            endDateIsValid
-            //daysAreValid
-        ){
-            this.props.actions.saveSchedule(this.state.schedule);
+              let schedule = Object.assign({}, this.state.schedule);
+              let attributes = Object.assign([], this.state.allowedAttributes);
+              let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
+              formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+              // schedule.respondents.forEach((respondent) => {
+              //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
+              //     respondent.allowedAttributes = allowedAttributes;
+              //     respondent.user = HateoasUtils.getObjectLink(respondent.user);
+              // });
+              console.log(formattedSchedule);
+              this.props.actions.createSchedule(formattedSchedule);
+              toastr.options.positionClass = 'toast-top-full-width';
+              toastr.success('Schedule submitted!');
+              setTimeout(function() {
+                  browserHistory.push("/schedules/manage");
+              }, 1000);
+          }
+          else{
+              toastr.options.positionClass = 'toast-top-full-width';
+              toastr.error('Validation errors');
+          }
+      }
 
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
-
-            setTimeout(function() {
-                browserHistory.push("/schedules/manage");
-            }, 1000);
-        }
-        else{
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.error('Validation errors');
-        }
-    }
 
 
+      onUpdate(event) {
+          const property = event.target.name;
+          let val = event.target.value;
+          let schedule = Object.assign({}, this.state.schedule);
+          let errors = Object.assign({},this.state.errors);
 
-    onUpdate(event) {
-        const property = event.target.name;
+          schedule[property] = event.target.value;
+          this.setState({errors: errors});
+          return this.setState({schedule});
+      }
+
+      onUpdateAttribute(event) {
+        const type = event.target.name;
         let val = event.target.value;
-        let schedule = Object.assign({}, this.state.schedule);
+        let attributes = Object.assign([], this.state.allowedAttributes);
         let errors = Object.assign({},this.state.errors);
 
-        schedule[property] = event.target.value;
-
+        let attribute = attributes.find((attr) => {
+            return attr.attributeTypes.name === type;
+        });
+        attribute.value = event.target.value;
         this.setState({errors: errors});
+        return this.setState({attributes});
+    }
+
+    updateUsers(event) {
+        const isChecked = event.target.checked;
+        const userId = parseInt(event.target.value);
+        let schedule = Object.assign({}, this.state.schedule);
+
+        if (isChecked) {
+            const user = this.props.users.find((user) => {
+                return user.id === userId;
+            });
+
+            let respondent = {allowedAttributes: []};
+            respondent.user = user;
+            respondent.allowedAttributes.push({
+                value: '',
+                attributeTypes: {
+                    name: 'ROLE'
+                }
+            });
+
+            const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
+            schedule.respondents = newRespondents;
+        } else {
+            const newRespondents = [
+                ...schedule.respondents.filter((respondent) => {
+                    return respondent.user.id !== userId;
+                })
+            ];
+            schedule.respondents = newRespondents;
+        }
+        return this.setState({schedule});
+    }
+
+    updateRole(event) {
+        const index = parseInt(event.target.name);
+        const role = event.target.value;
+        const schedule = Object.assign({}, this.state.schedule);
+        //safe to assume only one attribute since the others get add on save
+        schedule.respondents[index].allowedAttributes[0].value = role;
         return this.setState({schedule});
     }
 
@@ -191,6 +268,13 @@ class UpdateScheduleForm extends React.Component {
         this.setState({errors});
         return isValid;
     }
+
+    isFormValid() {
+        return this.validateStartDate() &&
+                this.validateEndDate() &&
+                this.validateSeven();
+    }
+
 
     getFrequencyValue() {
       console.log('In getFrequencyValue');
@@ -295,16 +379,6 @@ class UpdateScheduleForm extends React.Component {
                 <form className name="myForm" noValidate>
                     <div className="row">
                         <div className="col-md-2">
-                            <TextInput
-                                name="usernameInput"
-                                label="Username"
-                                placeholder="Enter username"
-                                value={this.state.schedule.respondents[0].user.email}
-                                onChange={this.onUpdate}
-                                error={this.state.errors.username.required}
-                            />
-                        </div>
-                        <div className="col-md-2">
                             <SelectInput
                                 name="survey"
                                 label="Select a Survey"
@@ -333,6 +407,21 @@ class UpdateScheduleForm extends React.Component {
                                     }
                                 ]}
                                 error={this.state.errors.survey.required}
+                            />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-2">
+                            <UserCheckboxGroup
+                                users={this.props.users}
+                                onClick={this.updateUsers}
+                            />
+                        </div>
+
+                        <div className="col-md-2">
+                            <RespondentList
+                                respondents={this.state.schedule.respondents}
+                                onChange={this.updateRole}
                             />
                         </div>
                     </div>
@@ -448,33 +537,7 @@ class UpdateScheduleForm extends React.Component {
                                             }
                                         ]}
                                         />
-                                </li>
-                                <li className="list-group-item">
-                                    <SelectInput
-                                        name="role"
-                                        label="Role"
-                                        value={this.state.schedule.respondents[0].allowedAttributes[this.state.roleIndex].attributeValue}
-                                        onChange={this.onUpdate}
-                                        options={[
-                                            {
-                                                text: 'Engagement Manager',
-                                                value: 'Engagement Manager'
-                                            },
-                                            {
-                                                text: "Tech Lead",
-                                                value: "Tech Lead"
-                                            },
-                                            {
-                                                text: "Business Analyst",
-                                                value: "Business Analyst"
-                                            },
-                                            {
-                                                text: "Developer",
-                                                value: "Developer"
-                                            }
-                                        ]}
-                                        />
-                                </li>
+                                </li>                                
                             </ul>
                         </div>
                     </div>
