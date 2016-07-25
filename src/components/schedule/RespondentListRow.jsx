@@ -8,7 +8,7 @@ const RespondentListRow = ({respondent, onChange, index}) => {
             <SelectInput
                 name={`${index}`}
                 label="Role"
-                value={respondent.allowedAttributes.role.value}
+                value={respondent.allowedAttributes[0].value}
                 onChange={onChange}
                 options={[
                     {
@@ -31,11 +31,12 @@ const RespondentListRow = ({respondent, onChange, index}) => {
             />
         </div>
     );
-}
+};
 
 RespondentListRow.propTypes = {
     respondent: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
-}
+    onChange: PropTypes.func.isRequired,
+    index: PropTypes.integer
+};
 
 export default RespondentListRow;
