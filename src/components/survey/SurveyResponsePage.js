@@ -18,14 +18,16 @@ class SurveyResponsePage extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            surveySubmitted: false,
+            showError: false,
+            showConfirmation: false,
             showSurveyForm: true
         };
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onSubmit() {
-        this.setState({surveySubmitted: true});
-        this.setState({showSurveyForm: false});
+        this.setState({showConfirmation: !this.state.showConfirmation});
+        this.setState({showSurveyForm: !this.state.showSurveyForm});
     }
 
     validateForm(){
@@ -53,14 +55,14 @@ class SurveyResponsePage extends React.Component {
             <div style={surveyContainer}>
                 {surveys.length > 0 ?
                     <div>
-                        <SurveyResponsePageHeader
+                        <SurveyResponsePageHeader 
                             headerTitle={surveys[i].template.name + ' Survey'}
                         />
-                        <SurveyResponseForm survey={surveys[i]} onSubmit={this.onSubmit}/>
+                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={surveys[i]} onSubmit={this.onSubmit}/>
                     </div>
-                    : <MessageComponent title={'Survey Not Found'}/>
+                    :  null
                 }
-                <MessageComponent title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
+                <MessageComponent className={this.state.showConfirmation ? '' : 'hidden'} title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
             </div>
         );
     }

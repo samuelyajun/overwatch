@@ -10,7 +10,6 @@ export function loadSurveys() {
         dispatch(initiateAjaxRequest());
         return fetch(`survey/surveys?projection=inlineSurveyDetail`).then((response) => {
             response.json().then(surveyResponseJson => {
-                console.log(surveyResponseJson);
                 let surveyArray = Object.assign([], surveyResponseJson._embedded.surveys);
                 dispatch(loadSurveysSuccess(surveyArray));
             });

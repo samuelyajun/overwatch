@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const NumberInput = ({name, label, onChange, placeholder, value, error, type, min}) => {
+const NumberInput = ({name, label, onChange, placeholder, value, error, type, min, max}) => {
     let wrapperClass = 'form-group';
 
     const topMargin = {
@@ -17,11 +17,12 @@ const NumberInput = ({name, label, onChange, placeholder, value, error, type, mi
             <div className="field col-xs-3" style={topMargin}>
                 <input type={type}
                        name = {name}
+                       placeholder = {placeholder}
                        className="form-control"
-                       placeholder={placeholder}
                        value={value}
                        onChange = {onChange}
                        min = {min}
+                       max = {max}
                 />
                 {error && <div className="alert alert-danger">{error}</div>}
             </div>
@@ -37,7 +38,8 @@ NumberInput.propTypes = {
     value: PropTypes.number,
     error: PropTypes.string,
     type: PropTypes.string,
-    min : PropTypes.string
+    min : PropTypes.number,
+    max : PropTypes.number
 
 };
 

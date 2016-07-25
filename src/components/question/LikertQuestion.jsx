@@ -49,7 +49,7 @@ const LikertQuestionList = ({survey}) => {
                 { 
                     survey.template.questions.map(question => {
                         return (
-                            <tr>
+                            <tr key={question.id}>
                                 <td style={rowStyles}><b>{question.id}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">

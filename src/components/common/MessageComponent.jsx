@@ -5,9 +5,9 @@ import {bindActionCreators} from 'redux';
 import { browserHistory } from 'react-router';
 
 
-const MessageComponent = ({title, text}) => {
+const MessageComponent = ({title, text, className}) => {
     return (
-            <div className="container col-xs-6 col-xs-offset-3">
+            <div className={className + " container col-xs-6 col-xs-offset-3"}>
                 <h1>{title}</h1>
                 <p>{text}</p>
             </div>  
@@ -16,7 +16,8 @@ const MessageComponent = ({title, text}) => {
 
 MessageComponent.propTypes = {
     title: PropTypes.string,
-    text: PropTypes.string
+    text: PropTypes.string,
+    className: PropTypes.string
 };
 
 
