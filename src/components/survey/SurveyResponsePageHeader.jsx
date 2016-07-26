@@ -12,7 +12,8 @@ const jumbotronStyles = {
 
 const imgLogoStyle = {
     position: 'absolute',
-    top: '-24px'
+    top: '-24px',
+    right: '0px'
 };
 
 
@@ -27,7 +28,7 @@ const SurveyResponsePageHeader  = ({ headerTitle, subHeader }) => {
                 <div className="container">
                     <div className="surveyHeaderContainer col-xs-10">
                         <h1>{headerTitle}</h1>
-                        <small>{subHeader}</small>
+                        <h3>{subHeader}</h3>
                     </div>
                 </div>
             </div>

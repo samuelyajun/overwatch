@@ -21,11 +21,13 @@ import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
 import {loadSchedules} from './actions/scheduleActions';
 import {loadSurveys} from './actions/surveyActions';
+import {loadReports} from './actions/reportActions';
 
 
 const store = configureStore();
 store.dispatch(loadSchedules());
 store.dispatch(loadSurveys());
+store.dispatch(loadReports());
 
 render(
     <Provider store = {store}>
