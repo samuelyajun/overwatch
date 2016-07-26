@@ -33,7 +33,6 @@ class SurveyResponsePage extends React.Component {
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
-
         this.setState({errors});
         return isValid;
     }
