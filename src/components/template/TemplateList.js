@@ -1,9 +1,14 @@
 import React, {PropTypes} from 'react';
 import TemplateListRow from './TemplateListRow';
 
+let tableStyle = {
+    class: "table table-hover table-bordered"
+};
+
+
 const TemplateList = ({templates}) => {
     return (
-        <table className="table">
+        <table style={tableStyle} className="table">
             <thead>
             <tr>
                 <th>$nbsp;</th>
@@ -16,7 +21,7 @@ const TemplateList = ({templates}) => {
             </thead>
             <tbody>
             {templates.map(template =>
-                <TemplateListRow key={template.id} course={template} />
+                <TemplateListRow key={template.id} template={template} />
             )}
             </tbody>
         </table>

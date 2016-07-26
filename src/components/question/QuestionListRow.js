@@ -1,21 +1,28 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import RadioGroup from '../common/RadioGroup';
+import RadioInput from '../common/RadioInput';
 
-const QuestionListRow = ({question}) => {
+
+
+const QuestionListRow = ({question, onChange, selectedValue}) => {
+
     return (
         <tr>
-            <td><a href={question.watchHref} target="_blank">Watch</a></td>
-            <td><Link to={'/question/' + question.id}>{question.name}</Link></td>
+            <td>{question.id}</td>
             <td>{question.questionText}</td>
-            <td>{question.responseType}</td>
-            <td>{question.tags}</td>
-
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
         </tr>
     );
 };
 
 QuestionListRow.propTypes = {
-    question: PropTypes.object.isRequired
+    question: PropTypes.object.isRequired,
+    onChange: PropTypes.func,
+    selectedValue: PropTypes.string
 };
 
 export default QuestionListRow;

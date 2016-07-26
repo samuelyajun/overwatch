@@ -5,6 +5,10 @@ import * as templateActions from '../../actions/templateActions';
 import TemplateList from './TemplateList';
 import {browserHistory} from 'react-router';
 
+const templateOuterDivStyle = {
+    marginTop: '75px'
+};
+
 class TemplatesPage extends React.Component {
 
     constructor(props, context) {
@@ -23,7 +27,7 @@ class TemplatesPage extends React.Component {
     render() {
         const {templates} = this.props;
         return (
-            <div>
+            <div style={templateOuterDivStyle}>
                 <h1>Templates</h1>
                 <input type="submit"
                        value="Add Template"
@@ -36,7 +40,8 @@ class TemplatesPage extends React.Component {
 }
 
 TemplatesPage.propTypes = {
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

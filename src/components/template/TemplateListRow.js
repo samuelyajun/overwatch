@@ -4,7 +4,6 @@ import {Link} from 'react-router';
 const TemplateListRow = ({template}) => {
     return (
         <tr>
-            <td><a href={template.watchHref} target="_blank">Watch</a></td>
             <td><Link to={'/template/' + template.id}>{template.name}</Link></td>
             <td>{template.type}</td>
             <td>{template.description}</td>
