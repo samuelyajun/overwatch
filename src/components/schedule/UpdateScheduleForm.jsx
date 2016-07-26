@@ -39,6 +39,8 @@ class UpdateScheduleForm extends React.Component {
         this.getFrequencyValue = this.getFrequencyValue.bind(this);
         //this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
+        this.getClientAttributeValue = this.getClientAttributeValue.bind(this);
+        this.getProjectAttributeValue = this.getProjectAttributeValue.bind(this);
 
         // console.log('props.schedule in the constructor on UpdateScheduleForm ', this.props.schedule);
 
@@ -47,19 +49,19 @@ class UpdateScheduleForm extends React.Component {
 
             allowedAttributes: [
                 {
-                    value: 'Overwatch', //hardcoded for now
+                    attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    value: 'Catalyst DevWorks', //hardcoded for now
+                    attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    value: '',
+                    attributeValue: '',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -67,7 +69,8 @@ class UpdateScheduleForm extends React.Component {
             ],
 
             officeIndex: '',
-            roleIndex: '',
+            clientIndex: '',
+            projectIndex: '',
 
             isFormValid: 'true',
 
@@ -101,8 +104,9 @@ class UpdateScheduleForm extends React.Component {
         console.log('Test to see frequency ' , this.state.schedule.frequency);*/
         // console.log('UpdateScheduleForm state.schedule ' , this.state.schedule);
         this.state.schedule.frequency = this.getFrequencyValue();
-         //this.state.schedule.frequency = Object.assign({}, this.state.schedule.frequency);
          this.getLocationAttributeValue();
+         this.getClientAttributeValue();
+         this.getClientAttributeValue();
          //this.getRoleAttributeValue();
 
       }
@@ -364,10 +368,36 @@ class UpdateScheduleForm extends React.Component {
         //debugger;
         if(allowedAttributesArray[i].attributeTypes.name == "Office") {
           console.log('Inside the location loop');
-          console.log('Location is ', allowedAttributesArray[i].attributeValue)
+          console.log('Location is ', allowedAttributesArray[i].attributeValue);
           this.state.officeIndex = i;
-          //this.state.schedule.respondents[0].allowedAttributes[i].attributeValue = allowedAttributesArray[i].attributeValue;
-          //return allowedAttributesArray[i].attributeValue;
+        }
+      }
+    }
+
+    getClientAttributeValue() {
+
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i < allowedAttributesArray.length; i++) {
+        //debugger;
+        if(allowedAttributesArray[i].attributeTypes.name == "Client") {
+          console.log('Inside the location loop');
+          console.log('Location is ', allowedAttributesArray[i].attributeValue);
+          this.state.clientIndex = i;
+        }
+      }
+    }
+
+    getProjectAttributeValue() {
+
+      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
+      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+      for(var i = 0; i < allowedAttributesArray.length; i++) {
+        //debugger;
+        if(allowedAttributesArray[i].attributeTypes.name == "Project") {
+          console.log('Inside the location loop');
+          console.log('Location is ', allowedAttributesArray[i].attributeValue)
+          this.state.projectIndex = i;
         }
       }
     }
@@ -422,9 +452,11 @@ class UpdateScheduleForm extends React.Component {
                                 onClick={this.updateUsers}
                             />
                         </div>
-
                         <div className="col-md-2">
-
+                          <RespondentList
+                              respondents={this.state.schedule.respondents}
+                              onChange={this.updateRole}
+                          />
                         </div>
                     </div>
                     <div className="row">
@@ -499,7 +531,9 @@ class UpdateScheduleForm extends React.Component {
                                         name="client"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        value={this.state.schedule.client}
+                                        defaultOptionValue="catalyst"
+                                        defaultOptionLabel="Catalyst"
+                                        value="catalyst"
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -511,7 +545,9 @@ class UpdateScheduleForm extends React.Component {
                                         name="project"
                                         label="Project"
                                         defaultOption="-choose-"
-                                        value={this.state.schedule.project}
+                                        defaultOptionValue="overwatch"
+                                        defaultOptionLabel="Overwatch"
+                                        value="overwatch"
                                         onChange={this.onUpdate}
                                         options={[
 

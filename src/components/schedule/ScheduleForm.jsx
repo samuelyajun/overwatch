@@ -44,29 +44,24 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    value: 'Catalyst DevWorks', //hardcoded for now
+                    attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    value: 'Overwatch', //hardcoded for now
+                    attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    value: '',
+                    attributeValue: '',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
                 }
             ],
-            /*user: {
-              email: '',
-              firstName: '',
-              lastName: ''
-            },*/
 
             isFormValid: 'true',
             errors: {
@@ -346,7 +341,7 @@ class ScheduleForm extends React.Component {
                                     },
                                     {
                                         text: "4 Weeks",
-                                        value: "MONTHLY"
+                                        value: "FOUR_WEEKS"
                                     }
                                 ]}
                             />
@@ -369,7 +364,7 @@ class ScheduleForm extends React.Component {
                                         defaultOption="-choose-"
                                         defaultOptionValue="catalyst"
                                         defaultOptionLabel="Catalyst"
-                                        value={this.state.allowedAttributes[0].value}
+                                        value={this.state.allowedAttributes[0].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -383,7 +378,7 @@ class ScheduleForm extends React.Component {
                                         defaultOptionValue="overwatch"
                                         defaultOptionLabel="Overwatch"
                                         defaultOption="-choose-"
-                                        value={this.state.allowedAttributes[1].value}
+                                        value={this.state.allowedAttributes[1].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[
 
@@ -398,7 +393,7 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="OFFICE"
                                         label="Office"
-                                        value={this.state.allowedAttributes[2].value}
+                                        value={this.state.allowedAttributes[2].attributeValue}
                                         onChange={this.onUpdateAttribute}
                                         options={[
                                             {
