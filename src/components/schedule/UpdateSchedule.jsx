@@ -62,6 +62,9 @@ class UpdateSchedule extends React.Component {
       if(scheduleId && state.schedules.length > 0) {
              schedule = getScheduleById(state.schedules, scheduleId);
              console.log('Looked up schedule by scheduleId ', schedule);
+             /*for(var i = 0; i < schedule.respondents.length; i++) {
+               schedule.respondents.user = "/schedule/schedules/${scheduleId}?projection=scheduleDetails"
+             }*/             
          }
 
       return {

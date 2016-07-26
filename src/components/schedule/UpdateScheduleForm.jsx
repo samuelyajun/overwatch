@@ -42,8 +42,6 @@ class UpdateScheduleForm extends React.Component {
         this.getClientAttributeValue = this.getClientAttributeValue.bind(this);
         this.getProjectAttributeValue = this.getProjectAttributeValue.bind(this);
 
-        // console.log('props.schedule in the constructor on UpdateScheduleForm ', this.props.schedule);
-
         this.state = {
             schedule: Object.assign({}, this.props.schedule),
 
@@ -118,7 +116,7 @@ class UpdateScheduleForm extends React.Component {
               let schedule = Object.assign({}, this.state.schedule);
               let attributes = Object.assign([], this.state.allowedAttributes);
               let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
-              formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+              //formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
               // schedule.respondents.forEach((respondent) => {
               //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
               //     respondent.allowedAttributes = allowedAttributes;
@@ -178,7 +176,7 @@ class UpdateScheduleForm extends React.Component {
             let respondent = {allowedAttributes: []};
             respondent.user = user;
             respondent.allowedAttributes.push({
-                value: '',
+                attributeValue: '',
                 attributeTypes: {
                     name: 'ROLE'
                 }
@@ -202,7 +200,7 @@ class UpdateScheduleForm extends React.Component {
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         //safe to assume only one attribute since the others get add on save
-        schedule.respondents[index].allowedAttributes[0].value = role;
+        schedule.respondents[index].allowedAttributes[0].attributeValue = role;
         return this.setState({schedule});
     }
 
@@ -366,7 +364,7 @@ class UpdateScheduleForm extends React.Component {
       console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i < allowedAttributesArray.length; i++) {
         //debugger;
-        if(allowedAttributesArray[i].attributeTypes.name == "Office") {
+        if(allowedAttributesArray[i].attributeTypes.name == "OFFICE") {
           console.log('Inside the location loop');
           console.log('Location is ', allowedAttributesArray[i].attributeValue);
           this.state.officeIndex = i;
@@ -456,7 +454,7 @@ class UpdateScheduleForm extends React.Component {
                           <RespondentList
                               respondents={this.state.schedule.respondents}
                               onChange={this.updateRole}
-                          />
+                          />                                                   
                         </div>
                     </div>
                     <div className="row">

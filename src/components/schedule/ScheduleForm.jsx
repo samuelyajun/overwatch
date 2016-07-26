@@ -398,11 +398,11 @@ class ScheduleForm extends React.Component {
                                         options={[
                                             {
                                                 text: 'Beaverton',
-                                                value: 'beaverton'
+                                                value: 'Beaverton'
                                             },
                                             {
                                                 text: "Baltimore",
-                                                value: "baltimore"
+                                                value: "Baltimore"
                                             }
                                         ]}
                                         />
