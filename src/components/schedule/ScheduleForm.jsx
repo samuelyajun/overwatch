@@ -62,6 +62,11 @@ class ScheduleForm extends React.Component {
                     }
                 }
             ],
+            /*user: {
+              email: '',
+              firstName: '',
+              lastName: ''
+            },*/
 
             isFormValid: 'true',
             errors: {
@@ -92,6 +97,8 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addAttributes(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
+
+            console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
 
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';

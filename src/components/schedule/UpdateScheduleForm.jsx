@@ -2,12 +2,16 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
+import UserCheckboxGroup from './UserCheckboxGroup.jsx';
+import RespondentList from './RespondentList.jsx';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
+
+import ScheduleUtils from '../../utils/scheduleUtils';
 
 class UpdateScheduleForm extends React.Component {
 
@@ -33,7 +37,7 @@ class UpdateScheduleForm extends React.Component {
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
         this.getFrequencyValue = this.getFrequencyValue.bind(this);
-        this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
+        //this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
 
         // console.log('props.schedule in the constructor on UpdateScheduleForm ', this.props.schedule);
@@ -88,6 +92,7 @@ class UpdateScheduleForm extends React.Component {
             }
         };
 
+        console.log('***Schedule in UpdateScheduleForm*** ', this.state.schedule);
         //this.state.schedule.frequency = this.getFrequencyValue();
       /*  console.log('Frequency value ', this.state.schedule.frequency);
 
@@ -98,7 +103,7 @@ class UpdateScheduleForm extends React.Component {
         this.state.schedule.frequency = this.getFrequencyValue();
          //this.state.schedule.frequency = Object.assign({}, this.state.schedule.frequency);
          this.getLocationAttributeValue();
-         this.getRoleAttributeValue();
+         //this.getRoleAttributeValue();
 
       }
 
@@ -323,7 +328,7 @@ class UpdateScheduleForm extends React.Component {
       }
     }*/
 
-    getRoleAttributeValue() {
+    /*getRoleAttributeValue() {
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
       console.log('In getRoleAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i < allowedAttributesArray.length; i++) {
@@ -335,7 +340,7 @@ class UpdateScheduleForm extends React.Component {
           //return allowedAttributesArray[i].attributeValue;
         }
       }
-    }
+    }*/
 
     /*getLocationAttributeValue() {
 
@@ -419,10 +424,7 @@ class UpdateScheduleForm extends React.Component {
                         </div>
 
                         <div className="col-md-2">
-                            <RespondentList
-                                respondents={this.state.schedule.respondents}
-                                onChange={this.updateRole}
-                            />
+
                         </div>
                     </div>
                     <div className="row">
@@ -537,7 +539,7 @@ class UpdateScheduleForm extends React.Component {
                                             }
                                         ]}
                                         />
-                                </li>                                
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -562,6 +564,7 @@ UpdateScheduleForm.propTypes = {
 function mapStateToProps(state, ownProps) {
     return {
         //schedules: state.schedules
+        users: state.users
     };
 }
 

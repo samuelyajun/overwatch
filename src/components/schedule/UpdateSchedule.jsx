@@ -5,6 +5,9 @@ import * as scheduleActions from '../../actions/scheduleActions';
 import { bindActionCreators } from 'redux';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
+import HateoasUtils from '../../utils/hateoasUtils';
+import ScheduleUtils from '../../utils/scheduleUtils';
+
 
 import {connect} from 'react-redux';
 
@@ -20,7 +23,8 @@ class UpdateSchedule extends React.Component {
 
     render() {
             const {schedule} = this.props;
-            console.log("schedule in parent update schedule", schedule);
+            console.log("schedule in UpdateSchedule", schedule);
+            console.log("schedule.user ", schedule.user);
             return (
               <div>
                    <div style={scheduleOuterDivStyle}>
@@ -57,6 +61,7 @@ class UpdateSchedule extends React.Component {
 
       if(scheduleId && state.schedules.length > 0) {
              schedule = getScheduleById(state.schedules, scheduleId);
+             console.log('Looked up schedule by scheduleId ', schedule);
          }
 
       return {
