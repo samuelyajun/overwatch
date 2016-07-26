@@ -127,7 +127,7 @@ class ScheduleForm extends React.Component {
         let attribute = attributes.find((attr) => {
             return attr.attributeTypes.name === type;
         });
-        attribute.value = event.target.value;
+        attribute.attributeValue = event.target.value;
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -146,7 +146,7 @@ class ScheduleForm extends React.Component {
             let respondent = {allowedAttributes: []};
             respondent.user = user;
             respondent.allowedAttributes.push({
-                value: '',
+                attributeValue: '',
                 attributeTypes: {
                     name: 'ROLE'
                 }
