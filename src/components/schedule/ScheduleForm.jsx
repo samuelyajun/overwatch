@@ -43,19 +43,19 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    value: 'Catalyst DevWorks', //hardcoded for now
+                    attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    value: 'Overwatch', //hardcoded for now
+                    attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    value: '',
+                    attributeValue: '',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -122,7 +122,7 @@ class ScheduleForm extends React.Component {
         let attribute = attributes.find((attr) => {
             return attr.attributeTypes.name === type;
         });
-        attribute.value = event.target.value;
+        attribute.attributeValue = event.target.value;
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -140,7 +140,7 @@ class ScheduleForm extends React.Component {
             let respondent = {allowedAttributes: []};
             respondent.user = user;
             respondent.allowedAttributes.push({
-                value: '',
+                attributeValue: '',
                 attributeTypes: {
                     name: 'ROLE'
                 }
@@ -355,7 +355,7 @@ class ScheduleForm extends React.Component {
                                         defaultOption="-choose-"
                                         defaultOptionValue="catalyst"
                                         defaultOptionLabel="Catalyst"
-                                        value={this.state.schedule.client}
+                                        value={this.state.allowedAttributes[0].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[]}
                                     />
@@ -367,7 +367,7 @@ class ScheduleForm extends React.Component {
                                         defaultOptionValue="overwatch"
                                         defaultOptionLabel="Overwatch"
                                         defaultOption="-choose-"
-                                        value={this.state.allowedAttributes[1].value}
+                                        value={this.state.allowedAttributes[1].attributeValue}
                                         onChange={this.onUpdate}
                                         options={[]}
                                     />
@@ -380,7 +380,7 @@ class ScheduleForm extends React.Component {
                                     <SelectInput
                                         name="OFFICE"
                                         label="Office"
-                                        value={this.state.allowedAttributes[2].value}
+                                        value={this.state.allowedAttributes[2].attributeValue}
                                         onChange={this.onUpdateAttribute}
                                         options={[
                                             {
