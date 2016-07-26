@@ -31,7 +31,8 @@ const radioStyle = {
 
 let tableStyle = "table table-hover table-striped";
 
-const LikertQuestionList = ({survey}) => {
+const LikertQuestionList = ({survey, handleChange}) => {
+
     return (
         <table className={tableStyle}>
             <thead>
@@ -47,28 +48,28 @@ const LikertQuestionList = ({survey}) => {
             </thead>
             <tbody>
                 { 
-                    survey.template.questions.map(question => {
+                    survey.template.questions.map((question, index) => {
                         return (
-                            <tr key={question.id}>
-                                <td style={rowStyles}><b>{question.id}.</b></td>
+                            <tr key={index}>
+                                <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
-                                    <RadioGroup name = {question.id}>
+                                    <RadioGroup name={index} selectedValue={question.selectedValue} onChange={handleChange}>
                                         <ul style={radioGroupStyle}>
                                             <li style={radioStyle}>
-                                                <Radio value = "1"/>
+                                                <Radio value = {1} />
                                             </li>
                                             <li style={radioStyle}>
-                                                <Radio value = "2"/>
+                                                <Radio value = {2}/>
                                             </li>
                                             <li style={radioStyle}>
-                                                <Radio value = "3"/>
+                                                <Radio value = {3}/>
                                             </li>
                                             <li style={radioStyle}>
-                                                <Radio value = "4"/>
+                                                <Radio value = {4}/>
                                             </li>
                                             <li style={radioStyle}>
-                                                <Radio value = "5"/>
+                                                <Radio value = {5}/>
                                             </li>
                                         </ul>
                                     </RadioGroup>
@@ -83,7 +84,8 @@ const LikertQuestionList = ({survey}) => {
 };
 
 LikertQuestionList.propTypes = {
-    survey: PropTypes.object.isRequired
+    survey: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired
 };
 
 export default LikertQuestionList;
