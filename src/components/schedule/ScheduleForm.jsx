@@ -172,7 +172,7 @@ class ScheduleForm extends React.Component {
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         //safe to assume only one attribute since the others get add on save
-        schedule.respondents[index].allowedAttributes[0].value = role;
+        schedule.respondents[index].allowedAttributes[0].attributeValue = role;
         return this.setState({schedule});
     }
 
@@ -349,7 +349,7 @@ class ScheduleForm extends React.Component {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-3">schedule
                             <h4>Attributes:</h4>
                         </div>
                     </div>
