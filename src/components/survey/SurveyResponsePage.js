@@ -122,7 +122,7 @@ class SurveyResponsePage extends React.Component {
                 <MessageComponent
                     className={this.state.showConfirmation ? '' : 'hidden'}
                     title={'Survey Submitted!'}
-                    text={'Thank you for Completing the Survey'}
+                    text={'Thanks for submitting your survey!'}
                 />
             </div>
         );
