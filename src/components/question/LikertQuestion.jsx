@@ -54,7 +54,10 @@ const LikertQuestionList = ({survey, handleChange}) => {
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
-                                    <RadioGroup name={index} selectedValue={question.selectedValue} onChange={handleChange}>
+                                    <RadioGroup
+                                        name={index}
+                                        selectedValue={question.selectedValue}
+                                        onChange={handleChange}>
                                         <ul style={radioGroupStyle}>
                                             <li style={radioStyle}>
                                                 <Radio value = {1} />

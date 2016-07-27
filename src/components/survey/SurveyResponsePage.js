@@ -24,6 +24,7 @@ class SurveyResponsePage extends React.Component {
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleNumericChange = this.handleNumericChange.bind(this);
     }
 
     onSubmit(event) {
@@ -39,6 +40,7 @@ class SurveyResponsePage extends React.Component {
 
     }
 
+    //Validates that all questions have responses
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
@@ -49,7 +51,8 @@ class SurveyResponsePage extends React.Component {
 
         surveys[i].template.questions.forEach(
             (question) => {
-                if(question.selectedValue === undefined){
+                console.log(question.value);
+                if(question.value === undefined && question.selectedValue === undefined){
                     isValid = false;
                     return;
                 }
@@ -59,15 +62,30 @@ class SurveyResponsePage extends React.Component {
         this.setState({errors});
         return isValid;
     }
-
+    // Handles likert question Responses
     handleChange(value, event) {
         const {query} = this.props.location;
         let i = query.surveyId;
         const {surveys} = this.props;
         const index = event.target.name;
 
+        console.log("handle Change reached");
         let surveysCopy = Object.assign ({}, surveys);
         surveysCopy[i].template.questions[index].selectedValue = value;
+        this.setState({surveys});
+    }
+
+    //Handles numeric question responses
+    handleNumericChange(event) {
+        console.log("HandleNumericChange: event.target.value: " + event.target.value);
+        const {query} = this.props.location;
+        let i = query.surveyId;
+        const {surveys} = this.props;
+        const index = event.target.name;
+
+        console.log("handle Numeric Change reached");
+        let surveysCopy = Object.assign ({}, surveys);
+        surveysCopy[i].template.questions[index].value = event.target.value;
         this.setState({surveys});
     }
 
@@ -82,11 +100,20 @@ class SurveyResponsePage extends React.Component {
                         <SurveyResponsePageHeader 
                             headerTitle={surveys[i].template.name + ' Survey'}
                         />
-                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={surveys[i]} onSubmit={this.onSubmit} handleChange={this.handleChange}/>
+                        <SurveyResponseForm
+                            className={this.state.showSurveyForm ? '' : 'hidden'}
+                            survey={surveys[i]} onSubmit={this.onSubmit}
+                            handleChange={this.handleChange}
+                            handleNumericChange={this.handleNumericChange}
+                        />
                     </div>
                     :  null
                 }
-                <MessageComponent className={this.state.showConfirmation ? '' : 'hidden'} title={'Survey Submitted!'} text={'Thank you for Completing the Survey'} />
+                <MessageComponent
+                    className={this.state.showConfirmation ? '' : 'hidden'}
+                    title={'Survey Submitted!'}
+                    text={'Thank you for Completing the Survey'}
+                />
             </div>
         );
     }

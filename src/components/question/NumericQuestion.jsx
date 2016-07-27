@@ -18,18 +18,24 @@ const questionStyling = {
 let tableStyle = "table table-hover table-striped";
 
 
-const NumericQuestionList = ({survey}) => {
+const NumericQuestionList = ({survey, handleNumericChange}) => {
     return (
          <table className={tableStyle}> 
             <tbody>
                 {
                     survey.template.questions.map((question, index) => {
                            return (
-                            <tr key={index++}>
+                            <tr key={index+1}>
                                 <td style={rowStyles}><b>{index}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
-                                        <NumberInput name = {question._links.self.href} type="number" min={0} max={99} placeholder={0}/>
+                                    <NumberInput
+                                        name={index}
+                                        type="number"
+                                        min={question.responseType.minRange}
+                                        max={question.responseType.maxRange}
+                                        onChange={handleNumericChange}
+                                    />
                                 </td>
                             </tr>
                             );
