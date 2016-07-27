@@ -25,18 +25,13 @@ class UpdateScheduleForm extends React.Component {
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
-        /*const errorDaysRequired = 'A day is required';
-
-        const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-        this.days = daysOfTheWeek;*/
 
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.updateDays = this.updateDays.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
-        this.getFrequencyValue = this.getFrequencyValue.bind(this);
+        //this.getFrequencyValue = this.getFrequencyValue.bind(this);
         //this.getRoleAttributeValue = this.getRoleAttributeValue.bind(this);
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
         this.getClientAttributeValue = this.getClientAttributeValue.bind(this);
@@ -95,13 +90,7 @@ class UpdateScheduleForm extends React.Component {
 
         console.log('***Schedule in UpdateScheduleForm*** ', this.state.schedule);
         //this.state.schedule.frequency = this.getFrequencyValue();
-      /*  console.log('Frequency value ', this.state.schedule.frequency);
 
-        console.log('Test to see attribute value ', this.state.schedule.respondents[0].allowedAttributes[2].attributeValue);
-        console.log('Test to see survey name ' , this.state.schedule.survey);
-        console.log('Test to see frequency ' , this.state.schedule.frequency);*/
-        // console.log('UpdateScheduleForm state.schedule ' , this.state.schedule);
-        this.state.schedule.frequency = this.getFrequencyValue();
          this.getLocationAttributeValue();
          this.getClientAttributeValue();
          this.getClientAttributeValue();
@@ -283,7 +272,7 @@ class UpdateScheduleForm extends React.Component {
     }
 
 
-    getFrequencyValue() {
+    /*getFrequencyValue() {
       console.log('In getFrequencyValue');
 
       let frequency = this.state.schedule.frequency;
@@ -295,7 +284,7 @@ class UpdateScheduleForm extends React.Component {
       newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
       console.log('newScheduleFrequency after regex change ', newScheduleFrequency);*/
 
-      switch(frequency) {
+      /*switch(frequency) {
 
           case "One Time":
           return "ONE_TIME";
@@ -315,7 +304,7 @@ class UpdateScheduleForm extends React.Component {
           default:
           return "ONE_TIME";
       }
-    }
+    }*/
 
 
     /*getRoleAttributeValue() {
@@ -454,7 +443,7 @@ class UpdateScheduleForm extends React.Component {
                           <RespondentList
                               respondents={this.state.schedule.respondents}
                               onChange={this.updateRole}
-                          />                                                   
+                          />
                         </div>
                     </div>
                     <div className="row">
@@ -610,16 +599,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateScheduleForm);
-//
-// <div className="row">
-//      <div className="col-md-8">
-//          <fieldset className="form-group">
-//              <label>Choose at least one day:</label>
-//              <CheckboxGroup
-//                  list={this.days}
-//                  onClick={this.updateDays}
-//
-//              />
-//          </fieldset>
-//      </div>
-//  </div>

@@ -432,6 +432,7 @@ ScheduleForm.propTypes = {
 
 
 function mapStateToProps(state, ownProps) {
+   console.log('in mapStateToProps() in scheduleForm ');
     return {
         users: state.users,
         schedules: state.schedules

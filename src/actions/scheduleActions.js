@@ -11,6 +11,7 @@ export function loadSchedulesSuccess(schedules) {
 }
 
 export function getScheduleByIdSuccess(schedule) {
+
     return {type: types.GET_SCHEDULE_BY_ID_SUCCESS, schedule};
 }
 
@@ -35,15 +36,15 @@ export function loadSchedules() {
     };
 }
 
-export function getScheduleById(id) {
-   console.log('id in getScheduleById() is ', id);
+export function getScheduleById(scheduleId) {
+   console.log('id in getScheduleById() is ', scheduleId);
     return function(dispatch) {
-       console.log('between 2 returns');
-       dispatch(initiateAjaxRequest());
-        return fetch(`/schedule/schedules/${id}`).then((response) => {
+       //dispatch(initiateAjaxRequest());
+        return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
             console.log('Returned response is ' , response);
             response.json().then(json => {
                 let schedule = Object.assign({}, json);
+                //debugger;
                 console.log('Retrieved schedule ', schedule);
                 dispatch(getScheduleByIdSuccess(schedule));
             });
@@ -53,6 +54,25 @@ export function getScheduleById(id) {
         });
     };
   }
+
+  /*export function getScheduleById(id) {
+     console.log('id in getScheduleById() is ', id);
+      return function(dispatch) {
+         console.log('between 2 returns');
+         dispatch(initiateAjaxRequest());
+          return fetch(`/schedule/schedules/${id}`).then((response) => {
+              console.log('Returned response is ' , response);
+              response.json().then(json => {
+                  let schedule = Object.assign({}, json);
+                  console.log('Retrieved schedule ', schedule);
+                  dispatch(getScheduleByIdSuccess(schedule));
+              });
+          }).catch((error) => {
+              console.log('getScheduleById() error is ', error);
+              throw(error);
+          });
+      };
+    }*/
 
    /*debugger;
    return dispatch => {
