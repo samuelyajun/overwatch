@@ -1,7 +1,8 @@
 export default {
     schedules: [],
     reports: [],
-    surveys: [],
     templates: [],
+    surveys: [],
+    questions: [],
     numAjaxRequestsInProgress : 0
 };

@@ -1,10 +1,17 @@
-import * as actionTypes from '../actions/actionTypes';
 import initialState from './initialState';
+import * as actionTypes from '../actions/actionTypes';
 
-export default function authorReducer(state = initialState.surveys, action) {
+export default function surveyReducer(state = initialState.surveys, action) {
     switch(action.type) {
+
         case actionTypes.LOAD_SURVEYS_SUCCESS:
             return action.surveys;
+
+        case actionTypes.CREATE_SURVEY_SUCCESS:
+            return [
+                ...state,
+                Object.assign({}, action.survey)
+            ];
         default:
             return state;
     }

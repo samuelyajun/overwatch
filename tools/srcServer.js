@@ -33,11 +33,9 @@ const surveyProxyOptions = {
         '^/survey': '/' //remove /survey from url before making request
     }
 };
-*/
 
-/*
 const reportProxyOptions = {
-    target: 'http://localhost:8090',
+    target: 'http://localhost:8084',
     changeOrigin: true,
     pathRewrite: {
         '^/report': '/' //remove /report from url before making request
@@ -56,7 +54,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
-
 
 app.get('*', function(req, res) {
     res.sendFile(path.join( __dirname, '../src/index.html'));
