@@ -39,19 +39,28 @@ class SurveyResponsePage extends React.Component {
 
     render() {
         const {query} = this.props.location;
-        let i = query.surveyId;
-        const {surveys} = this.props;
+        let i = query.suid;
+        console.log(i);
+        const {surveys, numAjaxRequestsInProgress} = this.props;
+        let survey = {};
+
+        surveys.map(surveyResponse => {
+            console.log(surveyResponse);
+            if(surveyResponse.suid === i) {
+                survey = Object.assign(survey, surveyResponse);
+            }
+        });
+
         return (
             <div style={surveyContainer}>
-                {surveys.length > 0 ?
-                    <div>
-                        <SurveyResponsePageHeader 
-                            headerTitle={surveys[i].template.name}
-                            subHeader={surveys[i].surveyName}
+                {
+                    (numAjaxRequestsInProgress > 0 && surveys.length >0)? <div>
+                        <SurveyResponsePageHeader
+                            headerTitle={survey.template.name}
+                            subHeader={survey.surveyName}
                         />
-                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={surveys[i]} onSubmit={this.onSubmit}/>
-                    </div>
-                    :  null
+                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={survey} onSubmit={this.onSubmit}/>
+                    </div>:null
                 }
                 <MessageComponent className={this.state.showConfirmation ? '' : 'hidden'} title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
             </div>
