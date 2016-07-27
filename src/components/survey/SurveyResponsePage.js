@@ -35,7 +35,7 @@ class SurveyResponsePage extends React.Component {
         }
     }
 
-    //Validates that all questions have responses
+    // Validation that all questions have responses
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
@@ -47,7 +47,6 @@ class SurveyResponsePage extends React.Component {
         surveys[i].template.questions.map(
             (question, index) => {
                 if(question.value === undefined && question.selectedValue === undefined){
-
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -64,7 +63,7 @@ class SurveyResponsePage extends React.Component {
                         "hideEasing": "linear",
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut"
-                    }
+                    };
                     toastr.error('Question ' + ++index +' is missing a response');
 
                     isValid = false;
@@ -76,7 +75,7 @@ class SurveyResponsePage extends React.Component {
         this.setState({errors});
         return isValid;
     }
-    // Handles likert question Responses
+    // Handles likert question responses
     handleChange(value, event) {
         const {query} = this.props.location;
         let i = query.surveyId;
@@ -88,7 +87,7 @@ class SurveyResponsePage extends React.Component {
         this.setState({surveys});
     }
 
-    //Handles numeric question responses
+    // Handles numeric question responses
     handleNumericChange(event) {
         const {query} = this.props.location;
         let i = query.surveyId;
