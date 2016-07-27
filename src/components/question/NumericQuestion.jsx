@@ -25,8 +25,8 @@ const NumericQuestionList = ({survey, handleNumericChange}) => {
                 {
                     survey.template.questions.map((question, index) => {
                            return (
-                            <tr key={index+1}>
-                                <td style={rowStyles}><b>{index}.</b></td>
+                            <tr key={index}>
+                                <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
                                     <NumberInput
@@ -48,7 +48,8 @@ const NumericQuestionList = ({survey, handleNumericChange}) => {
 };
 
 NumericQuestionList.propTypes = {
-    survey: PropTypes.object.isRequired
+    survey: PropTypes.object.isRequired,
+    handleNumericChange: PropTypes.func
 };
 
 export default NumericQuestionList;

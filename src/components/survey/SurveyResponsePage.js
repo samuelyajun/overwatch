@@ -33,11 +33,6 @@ class SurveyResponsePage extends React.Component {
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
-        else {
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.error('All Questions need responses');
-        }
-
     }
 
     //Validates that all questions have responses
@@ -49,10 +44,29 @@ class SurveyResponsePage extends React.Component {
         let i = query.surveyId;
         const {surveys} = this.props;
 
-        surveys[i].template.questions.forEach(
-            (question) => {
-                console.log(question.value);
+        surveys[i].template.questions.map(
+            (question, index) => {
                 if(question.value === undefined && question.selectedValue === undefined){
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "700",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.error('Question ' + ++index +' is missing a response');
+
                     isValid = false;
                     return;
                 }
@@ -69,7 +83,6 @@ class SurveyResponsePage extends React.Component {
         const {surveys} = this.props;
         const index = event.target.name;
 
-        console.log("handle Change reached");
         let surveysCopy = Object.assign ({}, surveys);
         surveysCopy[i].template.questions[index].selectedValue = value;
         this.setState({surveys});
@@ -77,13 +90,11 @@ class SurveyResponsePage extends React.Component {
 
     //Handles numeric question responses
     handleNumericChange(event) {
-        console.log("HandleNumericChange: event.target.value: " + event.target.value);
         const {query} = this.props.location;
         let i = query.surveyId;
         const {surveys} = this.props;
         const index = event.target.name;
 
-        console.log("handle Numeric Change reached");
         let surveysCopy = Object.assign ({}, surveys);
         surveysCopy[i].template.questions[index].value = event.target.value;
         this.setState({surveys});

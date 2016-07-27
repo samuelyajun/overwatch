@@ -37,7 +37,8 @@ SurveyResponseForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
     onReset: PropTypes.func,
-    className: PropTypes.string
+    className: PropTypes.string.constructor,
+    handleNumericChange: PropTypes.func
 };
 
 
