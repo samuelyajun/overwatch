@@ -23,18 +23,80 @@ class SurveyResponsePage extends React.Component {
             showSurveyForm: true
         };
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleNumericChange = this.handleNumericChange.bind(this);
     }
 
-    onSubmit() {
-        this.setState({showConfirmation: !this.state.showConfirmation});
-        this.setState({showSurveyForm: !this.state.showSurveyForm});
+    onSubmit(event) {
+        event.preventDefault();
+        if(this.validateForm() === true){
+            this.setState({showConfirmation: !this.state.showConfirmation});
+            this.setState({showSurveyForm: !this.state.showSurveyForm});
+        }
     }
 
+    // Validation that all questions have responses
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
+
+        const {query} = this.props.location;
+        let i = query.surveyId;
+        const {surveys} = this.props;
+
+        surveys[i].template.questions.map(
+            (question, index) => {
+                if(question.value === undefined && question.selectedValue === undefined){
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "700",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error('Question ' + ++index +' is missing a response');
+
+                    isValid = false;
+                    return;
+                }
+            }
+        );
+
         this.setState({errors});
         return isValid;
+    }
+    // Handles likert question responses
+    handleChange(value, event) {
+        const {query} = this.props.location;
+        let i = query.surveyId;
+        const {surveys} = this.props;
+        const index = event.target.name;
+
+        let surveysCopy = Object.assign ({}, surveys);
+        surveysCopy[i].template.questions[index].selectedValue = value;
+        this.setState({surveys});
+    }
+
+    // Handles numeric question responses
+    handleNumericChange(event) {
+        const {query} = this.props.location;
+        let i = query.surveyId;
+        const {surveys} = this.props;
+        const index = event.target.name;
+
+        let surveysCopy = Object.assign ({}, surveys);
+        surveysCopy[i].template.questions[index].value = event.target.value;
+        this.setState({surveys});
     }
 
     render() {
@@ -46,14 +108,22 @@ class SurveyResponsePage extends React.Component {
                 {surveys.length > 0 ?
                     <div>
                         <SurveyResponsePageHeader 
-                            headerTitle={surveys[i].template.name}
-                            subHeader={surveys[i].surveyName}
+                            headerTitle={surveys[i].template.name + ' Survey'}
                         />
-                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={surveys[i]} onSubmit={this.onSubmit}/>
+                        <SurveyResponseForm
+                            className={this.state.showSurveyForm ? '' : 'hidden'}
+                            survey={surveys[i]} onSubmit={this.onSubmit}
+                            handleChange={this.handleChange}
+                            handleNumericChange={this.handleNumericChange}
+                        />
                     </div>
                     :  null
                 }
-                <MessageComponent className={this.state.showConfirmation ? '' : 'hidden'} title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
+                <MessageComponent
+                    className={this.state.showConfirmation ? '' : 'hidden'}
+                    title={'Survey Submitted!'}
+                    text={'Thanks for submitting your survey!'}
+                />
             </div>
         );
     }
