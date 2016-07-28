@@ -9,8 +9,10 @@ const ReportListRow = ({ report }) => {
     return (
         <tr>
             <td>{report.creationDate}</td>
-            <td>{report.surveyName}</td>
+            <td>{report.clientName}</td>
             <td>{report.projectName}</td>
+            <td>{report.surveyName}</td>
+
             <td>&nbsp;</td>
             <td>
                 <a href={report.linkXLSX}>
