@@ -5,9 +5,9 @@ export function loadSurveysSuccess(surveys) {
     return { type: types.LOAD_SURVEYS_SUCCESS, surveys};
 }
 
-export function saveSurveysSuccess(survey) {
+/*export function saveSurveysSuccess(survey) {
     return { type: types.SAVE_SURVEY_SUCCESS, survey};
-}
+}*/
 
 export function loadSurveys() {
     return function(dispatch) {
@@ -23,6 +23,7 @@ export function loadSurveys() {
     };
 }
 
+/*
 export function saveSurvey(survey) {
     return (dispatch, getState) => {
         dispatch(initiateAjaxRequest());
@@ -38,4 +39,4 @@ export function saveSurvey(survey) {
             dispatch(saveSurveySuccess(survey));
         }).catch(function(res){ console.log(res)});
     };
-}
+}*/

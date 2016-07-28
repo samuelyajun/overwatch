@@ -45,8 +45,8 @@ const reportProxyOptions = {
 
 //uncomment others as needed, don't forget to uncomment the options for them too
 app.use('/schedule', proxy(scheduleProxyOptions));
-//app.use('/survey', proxy(surveyProxyOptions));
-//app.use('/report', proxy(reportProxyOptions));
+app.use('/survey', proxy(surveyProxyOptions));
+app.use('/report', proxy(reportProxyOptions));
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
