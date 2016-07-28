@@ -17,9 +17,12 @@ export function updateTemplateSuccess(template) {
 export function loadTemplates() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        return templateApi.getAllTemplates().then(templates => {
-            dispatch(loadTemplatesSuccess(templates));
-        }).catch(error => {
+        return fetch(`template/templates?projection=inlineTemplateDetail`).then((response) => {
+            response.json().then(templateResponseJson => {
+                let templateArray = Object.assign([], templateResponseJson._embedded.templates);
+                dispatch(loadTemplatesSuccess(templateArray));
+            });
+        }).catch((error) => {
             throw(error);
         });
     };
