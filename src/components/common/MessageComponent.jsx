@@ -10,7 +10,7 @@ const MessageComponent = ({title, text, className}) => {
             <div className={className + " container col-xs-6 col-xs-offset-3"}>
                 <h1>{title}</h1>
                 <p>{text}</p>
-            </div>  
+            </div>
          );
 };
 
