@@ -41,15 +41,15 @@ export function getScheduleById(scheduleId) {
     return function(dispatch) {
        //dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
-            console.log('Returned response is ' , response);
+            //console.log('Returned response is ' , response);
             response.json().then(json => {
                 let schedule = Object.assign({}, json);
                 //debugger;
-                console.log('Retrieved schedule ', schedule);
+                //console.log('Retrieved schedule ', schedule);
                 dispatch(getScheduleByIdSuccess(schedule));
             });
         }).catch((error) => {
-            console.log('getScheduleById() error is ', error);
+           // console.log('getScheduleById() error is ', error);
             throw(error);
         });
     };

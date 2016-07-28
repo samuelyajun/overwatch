@@ -3,7 +3,6 @@ import initialState from './initialState';
 
 export default function scheduleReducer(state = initialState.schedules, action) {
 
-    console.log('In scheduleReducer');
     switch (action.type) {
 
         case types.LOAD_SCHEDULES_SUCCESS:
