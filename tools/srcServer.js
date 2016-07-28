@@ -25,9 +25,9 @@ const scheduleProxyOptions = {
     }
 };
 
-/*
+
 const surveyProxyOptions = {
-    target: 'http://localhost:8090',
+    target: 'http://localhost:8070',
     changeOrigin: true,
     pathRewrite: {
         '^/survey': '/' //remove /survey from url before making request
@@ -41,7 +41,7 @@ const reportProxyOptions = {
         '^/report': '/' //remove /report from url before making request
     }
 };
-*/
+
 
 //uncomment others as needed, don't forget to uncomment the options for them too
 app.use('/schedule', proxy(scheduleProxyOptions));
