@@ -30,6 +30,7 @@ class SurveyResponsePage extends React.Component {
     onSubmit(event) {
         event.preventDefault();
         if(this.validateForm() === true){
+            saveSurvey(event);
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
