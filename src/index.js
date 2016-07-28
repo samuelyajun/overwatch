@@ -23,8 +23,10 @@ import {loadSchedules} from './actions/scheduleActions';
 import {loadSurveys} from './actions/surveyActions';
 import {loadReports} from './actions/reportActions';
 
+import {loadUsers} from './actions/userActions';
 
 const store = configureStore();
+store.dispatch(loadUsers());
 store.dispatch(loadSchedules());
 store.dispatch(loadSurveys());
 store.dispatch(loadReports());
