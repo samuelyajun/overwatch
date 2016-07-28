@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
 import MessageComponent from '../common/MessageComponent.jsx';
-import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
 
@@ -23,46 +22,103 @@ class SurveyResponsePage extends React.Component {
             showSurveyForm: true
         };
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleNumericChange = this.handleNumericChange.bind(this);
     }
 
-    onSubmit() {
-        this.setState({showConfirmation: !this.state.showConfirmation});
-        this.setState({showSurveyForm: !this.state.showSurveyForm});
+    onSubmit(event) {
+        event.preventDefault();
+        if(this.validateForm() === true){
+            this.setState({showConfirmation: !this.state.showConfirmation});
+            this.setState({showSurveyForm: !this.state.showSurveyForm});
+        }
     }
 
+    // Validation that all questions have responses
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
+        const {survey} = this.props;
+
+        survey.template.questions.map(
+            (question, index) => {
+                if(question.value === undefined && question.selectedValue === undefined){
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "700",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error('Question ' + ++index +' is missing a response');
+
+                    isValid = false;
+                    return;
+                }
+            }
+        );
+
         this.setState({errors});
         return isValid;
     }
+    // Handles likert question responses
+    handleChange(value, event) {
+        const {survey} = this.props;
+        const index = event.target.name;
+
+        let surveyCopy = Object.assign ({}, survey);
+        surveyCopy.template.questions[index].selectedValue = value;
+        this.setState({survey});
+    }
+
+    // Handles numeric question responses
+    handleNumericChange(event) {
+        const {survey} = this.props;
+        const index = event.target.name;
+
+        let surveyCopy = Object.assign ({}, survey);
+        surveyCopy.template.questions[index].value = event.target.value;
+        this.setState({survey});
+    }
 
     render() {
-        const {query} = this.props.location;
-        let i = query.suid;
-        console.log(i);
-        const {surveys, numAjaxRequestsInProgress} = this.props;
-        let survey = {};
-
-        surveys.map(surveyResponse => {
-            console.log(surveyResponse);
-            if(surveyResponse.suid === i) {
-                survey = Object.assign(survey, surveyResponse);
-            }
-        });
-
+        const {survey, numAjaxRequestsInProgress} = this.props;
+        console.log(this.props.location);
+        let surveyObject;
+        if(this.props.location.search === "") {
+            surveyObject = <div>NO SURVEYS</div>
+        } else if (survey && !numAjaxRequestsInProgress >0){
+            console.log(survey);
+            surveyObject =<div>
+                <SurveyResponsePageHeader
+                    headerTitle={survey.template.name + ' Survey'}
+                />
+                <SurveyResponseForm
+                    className={this.state.showSurveyForm ? '' : 'hidden'}
+                    survey={survey} onSubmit={this.onSubmit}
+                    handleChange={this.handleChange}
+                    handleNumericChange={this.handleNumericChange}
+                />
+            </div>
+        }
         return (
             <div style={surveyContainer}>
-                {
-                    (numAjaxRequestsInProgress > 0 && surveys.length >0)? <div>
-                        <SurveyResponsePageHeader
-                            headerTitle={survey.template.name}
-                            subHeader={survey.surveyName}
-                        />
-                        <SurveyResponseForm className={this.state.showSurveyForm ? '' : 'hidden'} survey={survey} onSubmit={this.onSubmit}/>
-                    </div>:null
-                }
-                <MessageComponent className={this.state.showConfirmation ? '' : 'hidden'} title={'Survey Submitted!'} text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fermentum semper mollis. Etiam leo nunc, hendrerit vitae mauris vitae, eleifend suscipit mi. Suspendisse potenti. Quisque vitae maximus enim. '} />
+                {surveyObject}
+                <MessageComponent
+                    className={this.state.showConfirmation ? '' : 'hidden'}
+                    title={'Survey Submitted!'}
+                    text={'Thanks for submitting your survey!'}
+                />
             </div>
         );
     }
@@ -74,10 +130,37 @@ SurveyResponsePage.propTypes = {
     location: PropTypes.object
 };
 
+function getSurveyBySuid(surveys, suid) {
+    const survey = surveys.filter(survey=> survey.suid === suid);
+    if(survey) return survey[0];
+    console.log(survey);
+    return null;
+}
 
 function mapStateToProps(state, ownProps) {
+
+    const {query} =  ownProps.location;
+    const suid = query.suid;
+    console.log(suid);
+
+    let survey = {
+        'id': '',
+        'suid': '',
+        'surveyDisplayLink': '',
+        'surveyName': '',
+        'templat': {}
+    };
+
+    if(suid && state.surveys.length > 0) {
+        survey = getSurveyBySuid(state.surveys, suid);
+    }
+
+    console.log(survey);
     return {
-        surveys: state.surveys
+        survey: survey,
+        surveys: state.surveys,
+        numAjaxRequestsInProgress: state.numAjaxRequestsInProgress
+
     };
 }
 
