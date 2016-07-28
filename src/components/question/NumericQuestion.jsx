@@ -32,8 +32,8 @@ const NumericQuestionList = ({survey, handleNumericChange}) => {
                                     <NumberInput
                                         name={index}
                                         type="number"
-                                        min={question.responseType.minRange}
-                                        max={question.responseType.maxRange}
+                                        min={question.answerType.minRange}
+                                        max={question.answerType.maxRange}
                                         onChange={handleNumericChange}
                                     />
                                 </td>
