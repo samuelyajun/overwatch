@@ -36,7 +36,8 @@ render() {
                  </div>
            </div>
            );
-        } else {
+        } 
+        //else {
           return(
             <div>
               <div style={scheduleOuterDivStyle}>
@@ -45,7 +46,7 @@ render() {
               </div>
             </div>
           )
-        }
+       // }
   }
 
 }

@@ -37,7 +37,7 @@ class ScheduleForm extends React.Component {
             schedule: {
                 id: '',
                 survey: '',
-                frequency: 'ONE_TIME',
+                frequency: 'ONE_TIME',//'ONE_TIME'
                 startDate: '',
                 endDate: '',
                 respondents: []

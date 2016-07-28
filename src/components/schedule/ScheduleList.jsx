@@ -43,9 +43,9 @@ function cleanSchedules(schedule){
     let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
     //regex changes the first letter of each word to upper case
     newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
-    schedule.frequency = newScheduleFrequency;
-    schedule.client = clientAttribute;
-    schedule.project = projectAttribute;
+   // schedule.frequency = newScheduleFrequency;
+    //schedule.client = clientAttribute;
+    //schedule.project = projectAttribute;
     return schedule;
 }
 

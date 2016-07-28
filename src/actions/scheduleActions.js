@@ -37,7 +37,6 @@ export function loadSchedules() {
 }
 
 export function getScheduleById(scheduleId) {
-   console.log('id in getScheduleById() is ', scheduleId);
     return function(dispatch) {
        //dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {

@@ -32,10 +32,6 @@ class ManageSchedulePage extends React.Component {
 
   onClickUpdate(event) {
     event.persist();
-    console.log('event.target.name');
-    console.log(event.currentTarget);
-    console.log(event.currentTarget.value);
-
     browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
   }
 
