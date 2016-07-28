@@ -12,6 +12,10 @@ const surveyContainer = {
     marginBottom: '75px'
 };
 
+const errorHeader = "Oh no!";
+const errorSubHeader = 'Survey not found';
+const errorMsg = 'Please contact your admin';
+
 class SurveyResponsePage extends React.Component {
 
     constructor(props, context) {
@@ -96,8 +100,19 @@ class SurveyResponsePage extends React.Component {
         console.log(this.props.location);
         let surveyObject;
         if(this.props.location.search === "") {
-            surveyObject = <div>NO SURVEYS</div>
-        } else if (survey && !numAjaxRequestsInProgress >0){
+            //surveyObject = <div>NO SURVEYS</div>
+            surveyObject =
+            <div>
+                <SurveyResponsePageHeader
+                    headerTitle={errorHeader}
+                    subHeader={errorSubHeader}
+                />
+                <MessageComponent className={this.state.showError ? 'hidden' : ''}
+                      text={errorMsg}
+                />
+            </div>
+
+        } else if (survey && !numAjaxRequestsInProgress > 0){
             console.log(survey);
             surveyObject =<div>
                 <SurveyResponsePageHeader
@@ -105,7 +120,8 @@ class SurveyResponsePage extends React.Component {
                 />
                 <SurveyResponseForm
                     className={this.state.showSurveyForm ? '' : 'hidden'}
-                    survey={survey} onSubmit={this.onSubmit}
+                    survey={survey}
+                    onSubmit={this.onSubmit}
                     handleChange={this.handleChange}
                     handleNumericChange={this.handleNumericChange}
                 />
@@ -138,17 +154,17 @@ function getSurveyBySuid(surveys, suid) {
 }
 
 function mapStateToProps(state, ownProps) {
-
     const {query} =  ownProps.location;
     const suid = query.suid;
     console.log(suid);
+    console.log("QUERY", query);
 
     let survey = {
         'id': '',
         'suid': '',
         'surveyDisplayLink': '',
         'surveyName': '',
-        'templat': {}
+        'template': {}
     };
 
     if(suid && state.surveys.length > 0) {
