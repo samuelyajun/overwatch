@@ -3,6 +3,7 @@ import schedules from './scheduleReducer';
 import reports from './reportReducer';
 import surveys from './surveyReducer';
 import templates from './templateReducer';
+import users from './userReducer';
 import numAjaxRequestsInProgress from './ajaxStatusReducer';
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     reports,
     surveys,
     templates,
+    users,
     numAjaxRequestsInProgress
 });
 

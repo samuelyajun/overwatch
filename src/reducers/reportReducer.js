@@ -7,9 +7,6 @@ export default function reportReducer(state = initialState.reports, action) {
         case types.LOAD_REPORTS_SUCCESS:
             return action.reports;
 
-        
-       
-
         default:
             return state;
     }

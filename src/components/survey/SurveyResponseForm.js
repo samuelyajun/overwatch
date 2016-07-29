@@ -9,7 +9,7 @@ const surveyPageOuterDiv = {
 };
 
 
-const SurveyResponseForm = ({ survey, onSubmit, className }) => {
+const SurveyResponseForm = ({ survey, onSubmit, className, handleChange, handleNumericChange}) => {
 
     let submitButtonType = 'submit';
     let cancelButtonType = 'reset';
@@ -21,8 +21,8 @@ const SurveyResponseForm = ({ survey, onSubmit, className }) => {
             <form name="surveyForm" noValidate>
                     <div className="table-responsive">
                         {survey.template.type === "Qualitative" ?
-                            <LikertQuestion survey = {survey} /> :
-                            <NumericQuestion survey = {survey} />
+                            <LikertQuestion survey = {survey} handleChange={handleChange}/> :
+                            <NumericQuestion survey = {survey} handleNumericChange={handleNumericChange} />
                         }
                     </div>
                 <Button label = {submitButtonType} type = {'button'} buttonClassName = {submitButtonClass} onClick={onSubmit}/>
@@ -35,8 +35,9 @@ const SurveyResponseForm = ({ survey, onSubmit, className }) => {
 SurveyResponseForm.propTypes = {
     survey: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    onReset: PropTypes.func,
-    className: PropTypes.string
+    handleChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    handleNumericChange: PropTypes.func.isRequired
 };
 
 

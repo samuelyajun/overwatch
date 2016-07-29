@@ -2,7 +2,7 @@
  * Created by jblair on 7/18/2016.
  */
 import React, { PropTypes } from 'react';
-import ReportListRow from './ReportListRow.js';
+import ReportListRow from './ReportListRow';
 
 
 

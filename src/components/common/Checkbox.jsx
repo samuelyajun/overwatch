@@ -2,21 +2,23 @@ import React, {PropTypes} from 'react';
 
 const Checkbox = (props) => {
     return(
-        <span>
+        <label>
             <input
                 type="checkbox"
                 checked={props.checked}
+                value={props.value}
                 name={props.name}
                 onClick={props.onClick}
             /> {props.name}
-        </span>
+        </label>
     );
 };
 
 Checkbox.propTypes = {
     onClick: PropTypes.func.isRequired,
     name: PropTypes.string,
-    checked: PropTypes.bool
+    checked: PropTypes.bool,
+    value: PropTypes.any
 };
 
 export default Checkbox;
