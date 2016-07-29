@@ -7,7 +7,7 @@ import ReportListRow from './ReportListRow';
 
 
 
-const reportss = [
+/*const reportss = [
     {
         surveyName:"Questions for entire team - EoS minus 4days",
         linkCSV:"https://s3-us-west-2.amazonaws.com/echelondemo/overwatch+text3.csv",
@@ -31,7 +31,7 @@ const reportss = [
         projectName:"Overwatch",
         clientName:"Choice"
     }
-];
+];*/
 
 const ReportList = ({reports}) => {
     return (
@@ -52,7 +52,7 @@ const ReportList = ({reports}) => {
             {
                 reports.map(report =>{
                     return (
-                    <ReportListRow key = {report.creationDate} report = {report}/>
+                    <ReportListRow key={report.generationDate} report = {report}/>
                 );
             })
             }
