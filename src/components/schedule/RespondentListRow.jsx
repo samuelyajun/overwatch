@@ -1,13 +1,17 @@
 import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 
+
+const labelStyle = {
+    backgroundColor: '#EFEFEF',
+    display: 'inline-block'
+};
 const RespondentListRow = ({respondent, onChange, index}) => {
     return (
-        <div>
+        <div style={labelStyle}>
             <span>{`${respondent.user.firstName} ${respondent.user.lastName}`}</span>
             <SelectInput
                 name={`${index}`}
-                label="Role"
                 value={respondent.allowedAttributes[0].value}
                 onChange={onChange}
                 options={[

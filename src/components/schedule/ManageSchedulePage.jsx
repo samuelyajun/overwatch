@@ -22,7 +22,7 @@ class ManageSchedulePage extends React.Component {
 
         };
         return (
-            <div style={scheduleOuterDiv}>
+            <div className="container" style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <ScheduleList schedules={schedules}/>
             </div>
