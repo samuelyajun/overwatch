@@ -154,3 +154,28 @@ export function createSchedule(schedule) {
         // });
     };
 }
+
+export function updateSchedule(schedule) {
+    const request = {
+        method: 'put',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(schedule)
+    };
+
+    return function (dispatch) {
+      console.log("http update request:",request);
+        dispatch(initiateAjaxRequest());
+        return fetch('/schedule/schedules/' + schedule.id, request).then((response) => {
+            response.json().then((updatededSchedule) => {
+                dispatch(updateScheduleSuccess(updatededSchedule));
+            });
+        }).catch((error) => {
+            dispatch(ajaxRequestError(error));
+            throw(error);
+        });
+
+    };
+}

@@ -25,14 +25,13 @@ class UpdateSchedule extends React.Component {
 
 render() {
 
-        console.log(this.props.schedule);
         if (this.props.schedule && this.props.schedule.id) {
         //if(1 == 2) {
           return (
             <div>
                  <div style={scheduleOuterDivStyle}>
                      <h1>Update schedule</h1>
-                     <UpdateScheduleForm schedule={this.props.schedule}/>
+                     <UpdateScheduleForm />
                  </div>
            </div>
            );
@@ -53,8 +52,8 @@ render() {
 
 function getScheduleById(schedules, id) {
   const schedule = schedules.filter(schedule => schedule.id == id);
-  console.log('schedule.length is ' , schedule.length);
-  console.log('Updating Schedule ...' , schedule[0]);
+ // console.log('schedule.length is ' , schedule.length);
+  //console.log('Updating Schedule ...' , schedule[0]);
   if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
   return null;
 }

@@ -10,7 +10,7 @@ import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
-
+import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
 
 class UpdateScheduleForm extends React.Component {
@@ -18,9 +18,9 @@ class UpdateScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        console.log('In the UpdateScheduleForm constructor');
-        console.log('In the UpdateScheduleForm constructor, props', this.props);
-
+       // console.log('In the UpdateScheduleForm constructor');
+       // console.log('In the UpdateScheduleForm constructor, props', this.props);
+//schedule is sent as props from UpdateSchedule.jsx
         const errorSurveyRequired = 'Survey is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
@@ -29,6 +29,7 @@ class UpdateScheduleForm extends React.Component {
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.updateDays = this.updateDays.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
         //this.getFrequencyValue = this.getFrequencyValue.bind(this);
@@ -88,31 +89,35 @@ class UpdateScheduleForm extends React.Component {
             }
         };
 
-        console.log('***Schedule in UpdateScheduleForm*** ', this.state.schedule);
+        //console.log('***Schedule in UpdateScheduleForm*** ', this.state.schedule);
         //this.state.schedule.frequency = this.getFrequencyValue();
 
          this.getLocationAttributeValue();
          this.getClientAttributeValue();
-         this.getClientAttributeValue();
-         //this.getRoleAttributeValue();
+        // this.getClientAttributeValue();
+         this.getRoleAttributeValue();
 
       }
 
       onClickSubmit() {
-
+//console.log("schedule In submit:",this.props.schedule);
           if (this.isFormValid()) {
 
               let schedule = Object.assign({}, this.state.schedule);
-              let attributes = Object.assign([], this.state.allowedAttributes);
-              let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
-              //formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
-              // schedule.respondents.forEach((respondent) => {
-              //     const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
-              //     respondent.allowedAttributes = allowedAttributes;
-              //     respondent.user = HateoasUtils.getObjectLink(respondent.user);
+              console.log(schedule.respondents);
+             // let attributes = Object.assign([], this.state.allowedAttributes);
+              //this causes mutation:
+     // let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
+             // formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
+             //  schedule.respondents.forEach((respondent) => {
+               //    const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
+                //   respondent.allowedAttributes = allowedAttributes;
+                //  console.log(respondent.user);
+                  // debugger;
+                  // respondent.user = HateoasUtils.getObjectLink(respondent.user);
               // });
-              console.log(formattedSchedule);
-              this.props.actions.createSchedule(formattedSchedule);
+             // console.log("schedule In submit:",this.props.schedule);
+  // this.props.actions.updateSchedule(this.props.schedule);
               toastr.options.positionClass = 'toast-top-full-width';
               toastr.success('Schedule submitted!');
               setTimeout(function() {
@@ -350,12 +355,12 @@ class UpdateScheduleForm extends React.Component {
     getLocationAttributeValue() {
 
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
-      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+    //  console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i < allowedAttributesArray.length; i++) {
         //debugger;
         if(allowedAttributesArray[i].attributeTypes.name == "OFFICE") {
-          console.log('Inside the location loop');
-          console.log('Location is ', allowedAttributesArray[i].attributeValue);
+         // console.log('Inside the location loop');
+         // console.log('Location is ', allowedAttributesArray[i].attributeValue);
           this.state.officeIndex = i;
         }
       }
@@ -364,12 +369,12 @@ class UpdateScheduleForm extends React.Component {
     getClientAttributeValue() {
 
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
-      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+    //  console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i < allowedAttributesArray.length; i++) {
         //debugger;
         if(allowedAttributesArray[i].attributeTypes.name == "Client") {
-          console.log('Inside the location loop');
-          console.log('Location is ', allowedAttributesArray[i].attributeValue);
+       //   console.log('Inside the location loop');
+        //  console.log('Location is ', allowedAttributesArray[i].attributeValue);
           this.state.clientIndex = i;
         }
       }
@@ -378,12 +383,12 @@ class UpdateScheduleForm extends React.Component {
     getProjectAttributeValue() {
 
       var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
-      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
+    //  console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
       for(var i = 0; i < allowedAttributesArray.length; i++) {
         //debugger;
         if(allowedAttributesArray[i].attributeTypes.name == "Project") {
-          console.log('Inside the location loop');
-          console.log('Location is ', allowedAttributesArray[i].attributeValue)
+        //  console.log('Inside the location loop');
+       //   console.log('Location is ', allowedAttributesArray[i].attributeValue)
           this.state.projectIndex = i;
         }
       }
@@ -391,9 +396,9 @@ class UpdateScheduleForm extends React.Component {
 
     render() {
         //const {schedules} = this.props;
-        console.log("Props inside update schedule form", this.props)
+       // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        console.log("State inside render()", this.state);
+        console.log("State inside render()", this.state.schedule);
 
 
         return(
@@ -579,14 +584,14 @@ class UpdateScheduleForm extends React.Component {
 }
 
 UpdateScheduleForm.propTypes = {
-    //schedules: PropTypes.array.isRequired,
+    schedule: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
 };
 
 
 function mapStateToProps(state, ownProps) {
     return {
-        //schedules: state.schedules
+        schedule: state.scheduleToUpdate,
         users: state.users
     };
 }

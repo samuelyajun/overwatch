@@ -1,4 +1,5 @@
 export default {
+	scheduleToUpdate: {},
     schedules: [],
     reports: [],
     surveys: [],
