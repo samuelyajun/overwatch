@@ -37,7 +37,8 @@ class UpdateScheduleForm extends React.Component {
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
         this.getClientAttributeValue = this.getClientAttributeValue.bind(this);
         this.getProjectAttributeValue = this.getProjectAttributeValue.bind(this);
-
+this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
+this.onUpdateLocation = this.onUpdateLocation.bind(this);
         this.state = {
             schedule: Object.assign({}, this.props.schedule),
 
@@ -132,31 +133,49 @@ class UpdateScheduleForm extends React.Component {
 
 
 
-      onUpdate(event) {
-          const property = event.target.name;
-          let val = event.target.value;
-          let schedule = Object.assign({}, this.state.schedule);
-          let errors = Object.assign({},this.state.errors);
+    onUpdate(event) {
+        const property = event.target.name;
+        let val = event.target.value;
+        let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
 
-          schedule[property] = event.target.value;
-          this.setState({errors: errors});
-          return this.setState({schedule});
-      }
+        schedule[property] = event.target.value;
+        this.setState({errors: errors});
+        console.log("updated attributes?", schedule);
+        return this.setState({schedule});
+    }
 
     onUpdateAttribute(event) {
         const type = event.target.name;
+        console.log("type?", type);
         let val = event.target.value;
+        console.log("val?", val);
         let attributes = Object.assign([], this.state.allowedAttributes);
-        let errors = Object.assign({},this.state.errors);
+       // let errors = Object.assign({},this.state.errors);
 
         let attribute = attributes.find((attr) => {
+          console.log("attributes?", attributes);
             return attr.attributeTypes.name === type;
         });
+        
         attribute.value = event.target.value;
         this.setState({errors: errors});
+        console.log("updated attributes?", attributes);
         return this.setState({attributes});
     }
 
+    onUpdateLocation(event) {
+      const type = event.target.name;
+      let val = event.target.value;
+      let attributes = Object.assign([], this.state.schedule.respondents[0].allowedAttributes);
+      let attribute = attributes.find((attr) => {
+           return attr.attributeTypes.name === "OFFICE";
+       });
+       attribute.attributeValue = val;
+       return this.setState({attributes:attribute});
+    }
+    
+//cannot remove original user
     updateUsers(event) {
         const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
@@ -399,7 +418,7 @@ class UpdateScheduleForm extends React.Component {
         //const {schedules} = this.props;
        // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        console.log("State inside render()", this.state.schedule);
+        console.log("State inside render()", this.state.schedule.respondents[0].allowedAttributes[this.state.officeIndex].attributeValue);
 
 
         return(
@@ -527,7 +546,7 @@ class UpdateScheduleForm extends React.Component {
                                         defaultOptionValue="catalyst"
                                         defaultOptionLabel="Catalyst"
                                         value="catalyst"
-                                        onChange={this.onUpdate}
+                                        onChange={this.onUpdateAttribute}
                                         options={[
 
                                         ]}
@@ -556,7 +575,7 @@ class UpdateScheduleForm extends React.Component {
                                         name="office"
                                         label="Office"
                                         value={this.state.schedule.respondents[0].allowedAttributes[this.state.officeIndex].attributeValue}
-                                        onChange={this.onUpdate}
+                                        onChange={this.onUpdateLocation}
                                         options={[
                                             {
                                                 text: 'Beaverton',
