@@ -15,9 +15,7 @@ const ReportListRow = ({ report }) => {
 
             <td>&nbsp;</td>
             <td>
-                <a href={report.linkXLSX}>
-                    <Button className={"btn btn-info"} type={"button"} label={"Excel"}/>
-                </a>
+               
                 <a href={report.linkCSV}>
                     <Button className={"btn btn-info"} type={"button"} label={"CSV"}/>
                 </a>
