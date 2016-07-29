@@ -7,7 +7,7 @@ import ReportList from './ReportList.js';
 const reportOuterDivStyle = {
     marginTop: '75px'
 };
-const reportsLink='http://172.17.70.38:8080/report/get_available_reports';
+const reportsLink='http://localhost:8040/report/1';
 class ReportPage extends React.Component {
     constructor(props, context){
         super(props, context);
@@ -50,7 +50,7 @@ Show this content if the user is Admin
             <div className="container-fluid" style={reportOuterDivStyle}>
                 <div>
                 <h1>Report Page</h1>
-                <a href={reportsLink}  className="btn btn-info hidden" role="button">Generate New Report</a>
+                <a href={reportsLink}  className="btn btn-info " role="button">Generate New Report</a>
                 </div>
                 {
                     <ReportList reports = {reports} />
