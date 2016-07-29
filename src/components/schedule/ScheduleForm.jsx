@@ -231,23 +231,13 @@ class ScheduleForm extends React.Component {
     render() {
         const {schedules, surveys} = this.props;
         console.log("SURVEYS", surveys);
-        console.log("SCHEDULES", schedules);
         let surveyOptions = [];
         surveys.forEach((survey) => {
           surveyOptions.push(  {
-              text: survey.surveyName,
-              value: survey.suid
+                text: survey.surveyName,
+                value: survey.suid
             })
         })
-
-        let scheduleArray = [];
-        schedules.forEach((schedule) => {
-          scheduleArray.push( {
-              text: schedule.frequency,
-              value: schedule.frequency
-          })
-        })
-        console.log("SCHEDULE ARRAY", scheduleArray);
 
         return(
             <div className="container">
