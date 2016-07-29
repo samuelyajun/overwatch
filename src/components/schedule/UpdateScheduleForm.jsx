@@ -95,7 +95,7 @@ class UpdateScheduleForm extends React.Component {
          this.getLocationAttributeValue();
          this.getClientAttributeValue();
         // this.getClientAttributeValue();
-         this.getRoleAttributeValue();
+         //this.getRoleAttributeValue();
 
       }
 
@@ -143,7 +143,7 @@ class UpdateScheduleForm extends React.Component {
           return this.setState({schedule});
       }
 
-      onUpdateAttribute(event) {
+    onUpdateAttribute(event) {
         const type = event.target.name;
         let val = event.target.value;
         let attributes = Object.assign([], this.state.allowedAttributes);
@@ -178,6 +178,7 @@ class UpdateScheduleForm extends React.Component {
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
             schedule.respondents = newRespondents;
+
         } else {
             const newRespondents = [
                 ...schedule.respondents.filter((respondent) => {
