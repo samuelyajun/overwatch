@@ -11,6 +11,7 @@ import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
+import * as surveyActions from '../../actions/surveyActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
@@ -228,7 +229,25 @@ class ScheduleForm extends React.Component {
     }
 
     render() {
-        const {schedules} = this.props;
+        const {schedules, surveys} = this.props;
+        console.log("SURVEYS", surveys);
+        console.log("SCHEDULES", schedules);
+        let surveyOptions = [];
+        surveys.forEach((survey) => {
+          surveyOptions.push(  {
+              text: survey.surveyName,
+              value: survey.suid
+            })
+        })
+
+        let scheduleArray = [];
+        schedules.forEach((schedule) => {
+          scheduleArray.push( {
+              text: schedule.frequency,
+              value: schedule.frequency
+          })
+        })
+        console.log("SCHEDULE ARRAY", scheduleArray);
 
         return(
             <div className="container">
@@ -240,28 +259,7 @@ class ScheduleForm extends React.Component {
                                 label="Select a Survey"
                                 value={this.state.schedule.survey}
                                 onChange={this.onUpdate}
-                                options={[
-                                    {
-                                        text: 'Sprint Checkup',
-                                        value: 'SC'
-                                    },
-                                    {
-                                        text: "SPD Team",
-                                        value: "ST"
-                                    },
-                                    {
-                                        text: "SPD Leaders",
-                                        value: "SL"
-                                    },
-                                    {
-                                        text: "EM Quantitative",
-                                        value: "EMQ"
-                                    },
-                                    {
-                                        text: "TL Quantitative",
-                                        value: "TLQ"
-                                    }
-                                ]}
+                                options={surveyOptions}
                                 error={this.state.errors.survey.required}
                             />
                         </div>
@@ -412,7 +410,8 @@ class ScheduleForm extends React.Component {
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    surveys: PropTypes.array.isRequired
 };
 
 
@@ -420,13 +419,14 @@ ScheduleForm.propTypes = {
 function mapStateToProps(state, ownProps) {
     return {
         users: state.users,
-        schedules: state.schedules
+        schedules: state.schedules,
+        surveys: state.surveys
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, surveyActions), dispatch)
     };
 }
 
