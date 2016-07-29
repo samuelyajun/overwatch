@@ -20,17 +20,17 @@ let tableStyle = "table table-hover table-striped";
 
 const NumericQuestionList = ({survey, handleNumericChange}) => {
     return (
-         <table className={tableStyle}>
+        <table className={tableStyle}>
             <tbody>
-                {
-                    survey.template.questions.map((question, index) => {
-                           return (
+            {
+                survey.template.questions.map((question, index) => {
+                        return (
                             <tr key={index}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
                                     <NumberInput
-                                        name={String(index)}
+                                        name={index}
                                         type="number"
                                         min={question.answerType.minRange}
                                         max={question.answerType.maxRange}
@@ -38,10 +38,10 @@ const NumericQuestionList = ({survey, handleNumericChange}) => {
                                     />
                                 </td>
                             </tr>
-                            );
-                        }
-                    )
-                }
+                        );
+                    }
+                )
+            }
             </tbody>
         </table>
     );

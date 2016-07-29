@@ -5,9 +5,9 @@ export function loadSurveysSuccess(surveys) {
     return { type: types.LOAD_SURVEYS_SUCCESS, surveys};
 }
 
-/*export function saveSurveysSuccess(survey) {
-    return { type: types.SAVE_SURVEY_SUCCESS, survey};
-}*/
+export function saveSurveyResponseSuccess(survey) {
+    return { type: types.SAVE_SURVEY_RESPONSE_SUCCESS, survey};
+}
 
 export function loadSurveys() {
     return function(dispatch) {
@@ -23,11 +23,11 @@ export function loadSurveys() {
     };
 }
 
-/*
-export function saveSurvey(survey) {
+
+export function saveSurveyResponse(survey) {
     return (dispatch, getState) => {
         dispatch(initiateAjaxRequest());
-        return fetch(saveSurveySuccess, {
+        return fetch(saveSurveyResponseSuccess, {
             headers: {
                 'Accept' : 'application/json',
                 'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ export function saveSurvey(survey) {
             body: JSON.stringify(survey)
         }).then(function(res){
             console.log(res);
-            dispatch(saveSurveySuccess(survey));
+            dispatch(saveSurveyResponseSuccess(survey));
         }).catch(function(res){ console.log(res)});
     };
-}*/
+}

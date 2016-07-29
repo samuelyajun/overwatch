@@ -24,21 +24,33 @@ class SurveyResponsePage extends React.Component {
         this.state = {
             showError: false,
             showConfirmation: false,
-            showSurveyForm: true
+            showSurveyForm: true,
+            survey: Object.assign({}, this.props.survey),
+            errors: {},
+            saving: false
         };
-        const answers = [];
+        let answerList = [];
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleNumericChange = this.handleNumericChange.bind(this);
     }
 
     onSubmit(event) {
+
         console.log("onSubmit reached");
         event.preventDefault();
+        saveSurvey(surveys);
         if(this.validateForm() === true){
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
+    }
+
+    createAnswers(answerValue, questionLink){
+
+        answerList.push(questionLink, answerValue);
+
+
     }
 
     // Validation that all questions have responses
@@ -46,13 +58,13 @@ class SurveyResponsePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
 
-        const answers = [];
-        const {query} = this.props.location;
-        let i = query.surveyId;
         const {surveys} = this.props;
+        const {survey} = this.props;
 
+        let answer = { answerValue, questionLink};
+        let answerList = [];
 
-        surveys[i].template.questions.map(
+        survey.template.questions.map(
             (question, index) => {
                 if(question.value === undefined && question.selectedValue === undefined){
                     toastr.options = {
@@ -78,14 +90,14 @@ class SurveyResponsePage extends React.Component {
 
                 }
                 else {
-                    surveysCopy[i].template.questions[index].value = event.target.value;
-                    let questionId = surveysCopy[i].template.questions[index].id;
-
+                    survey.template.questions[index].value = event.target.value;
+                    let questionId = "/question/" + survey.template.questions[index].id;
                     let answerValue = event.target.value;
-                    let questionLink = "/question/" + questionId;
 
-                    answers.push(questionLink, answerValue);
-                    console.log(answers);
+                   /* createAnswers(questionLink, answerValue);*/
+
+                    console.log("Question Link: " + questionLink + ", AnswerValue: " + answerValue );
+                    /*console.log(answers);*/
                 }
             }
         );
@@ -95,39 +107,37 @@ class SurveyResponsePage extends React.Component {
     }
     // Handles likert question responses
     handleChange(value, event) {
-        const {query} = this.props.location;
-        let i = query.surveyId;
-        console.log("Survey ID: " + i);
-        let questionLink = "/question/"+ i ;
+
         const {surveys} = this.props;
+        const {survey} = this.props;
         const index = event.target.name;
 
-        console.log("Location" + this.props.location);
-        let surveysCopy = Object.assign ({}, surveys);
-        surveysCopy[i].template.questions[index].selectedValue = value;
+        survey.template.questions[index].selectedValue = value;
+
+        let questionLink =  "/questions/" + survey.template.questions[index].id;
         let answerValue = value;
-        console.log("answerValue: " + answerValue);
+
+        console.log("Question Link: " + questionLink + ", AnswerValue: " + answerValue );
         this.setState({surveys});
+
 
     }
 
     // Handles numeric question responses
     handleNumericChange(event) {
 
-        const {query} = this.props.location;
-        let i = query.surveyId;
         const {surveys} = this.props;
+        const {survey} = this.props;
         const index = event.target.name;
-        let surveysCopy = Object.assign ({}, surveys);
 
-        surveysCopy[i].template.questions[index].value = event.target.value;
-        let questionId = surveysCopy[i].template.questions[index].id;
+        survey.template.questions[index].value = event.target.value;
+        let questionId = survey.template.questions[index].id;
 
         let answerValue = event.target.value;
         let questionLink = "/question/" + questionId;
 
-        answers.push(questionLink, answerValue);
-        console.log(answers);
+       /*answers.push(questionLink, answerValue);*/
+       console.log("Question Link: " + questionLink + ", AnswerValue: " + answerValue );
 
         this.setState({surveys});
 
@@ -180,8 +190,10 @@ class SurveyResponsePage extends React.Component {
 
 SurveyResponsePage.propTypes = {
     surveys: PropTypes.array.isRequired,
+    survey: PropTypes.object,
     actions: PropTypes.object.isRequired,
-    location: PropTypes.object
+    location: PropTypes.object,
+    numAjaxRequestsInProgress: PropTypes.func
 };
 
 function getSurveyBySuid(surveys, suid) {
