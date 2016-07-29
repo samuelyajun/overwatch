@@ -47,7 +47,8 @@ const LikertQuestionList = ({survey, handleChange}) => {
             </tr>
             </thead>
             <tbody>
-                { 
+
+                {
                     survey.template.questions.map((question, index) => {
                         return (
                             <tr key={index}>
@@ -55,7 +56,7 @@ const LikertQuestionList = ({survey, handleChange}) => {
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
                                     <RadioGroup
-                                        name={index}
+                                        name={String(index)}
                                         selectedValue={question.selectedValue}
                                         onChange={handleChange}>
                                         <ul style={radioGroupStyle}>

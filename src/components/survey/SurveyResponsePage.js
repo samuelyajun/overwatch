@@ -13,9 +13,11 @@ const surveyContainer = {
     marginBottom: '75px'
 };
 
+const errorHeader = "Oh no!";
+const errorSubHeader = 'Survey not found';
+const errorMsg = 'Please contact your admin';
+
 class SurveyResponsePage extends React.Component {
-
-
 
     constructor(props, context) {
         super(props, context);
@@ -34,7 +36,6 @@ class SurveyResponsePage extends React.Component {
         console.log("onSubmit reached");
         event.preventDefault();
         if(this.validateForm() === true){
-            console.log(event);
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
@@ -92,7 +93,6 @@ class SurveyResponsePage extends React.Component {
         this.setState({errors});
         return isValid;
     }
-
     // Handles likert question responses
     handleChange(value, event) {
         const {query} = this.props.location;
@@ -134,25 +134,40 @@ class SurveyResponsePage extends React.Component {
     }
 
     render() {
-        const {query} = this.props.location;
-        let i = query.surveyId;
-        const {surveys} = this.props;
+        const {survey, numAjaxRequestsInProgress} = this.props;
+        console.log(this.props.location);
+        let surveyObject;
+        if(this.props.location.search === "") {
+            //surveyObject = <div>NO SURVEYS</div>
+            surveyObject =
+            <div>
+                <SurveyResponsePageHeader
+                    headerTitle={errorHeader}
+                    subHeader={errorSubHeader}
+                />
+                <MessageComponent className={this.state.showError ? 'hidden' : ''}
+                      text={errorMsg}
+                />
+            </div>
+
+        } else if (survey && !numAjaxRequestsInProgress > 0){
+            console.log(survey);
+            surveyObject =<div>
+                <SurveyResponsePageHeader
+                    headerTitle={survey.template.name + ' Survey'}
+                />
+                <SurveyResponseForm
+                    className={this.state.showSurveyForm ? '' : 'hidden'}
+                    survey={survey}
+                    onSubmit={this.onSubmit}
+                    handleChange={this.handleChange}
+                    handleNumericChange={this.handleNumericChange}
+                />
+            </div>
+        }
         return (
             <div style={surveyContainer}>
-                {surveys.length > 0 ?
-                    <div>
-                        <SurveyResponsePageHeader 
-                            headerTitle={surveys[i].template.name + ' Survey'}
-                        />
-                        <SurveyResponseForm
-                            className={this.state.showSurveyForm ? '' : 'hidden'}
-                            survey={surveys[i]} onSubmit={this.onSubmit}
-                            handleChange={this.handleChange}
-                            handleNumericChange={this.handleNumericChange}
-                        />
-                    </div>
-                    :  null
-                }
+                {surveyObject}
                 <MessageComponent
                     className={this.state.showConfirmation ? '' : 'hidden'}
                     title={'Survey Submitted!'}
@@ -169,10 +184,37 @@ SurveyResponsePage.propTypes = {
     location: PropTypes.object
 };
 
+function getSurveyBySuid(surveys, suid) {
+    const survey = surveys.filter(survey=> survey.suid === suid);
+    if(survey) return survey[0];
+    console.log(survey);
+    return null;
+}
 
 function mapStateToProps(state, ownProps) {
+    const {query} =  ownProps.location;
+    const suid = query.suid;
+    console.log(suid);
+    console.log("QUERY", query);
+
+    let survey = {
+        'id': '',
+        'suid': '',
+        'surveyDisplayLink': '',
+        'surveyName': '',
+        'template': {}
+    };
+
+    if(suid && state.surveys.length > 0) {
+        survey = getSurveyBySuid(state.surveys, suid);
+    }
+
+    console.log(survey);
     return {
-        surveys: state.surveys
+        survey: survey,
+        surveys: state.surveys,
+        numAjaxRequestsInProgress: state.numAjaxRequestsInProgress
+
     };
 }
 
