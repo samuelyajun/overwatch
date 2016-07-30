@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
 const ScheduleList = ({schedules, onUpdate}) => {
+    console.log(schedules);
     return (
         <table className = "table table-hover">
             <thead>

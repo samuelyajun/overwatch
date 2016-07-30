@@ -39,6 +39,7 @@ class UpdateScheduleForm extends React.Component {
         this.getProjectAttributeValue = this.getProjectAttributeValue.bind(this);
 this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
 this.onUpdateLocation = this.onUpdateLocation.bind(this);
+this.resetState = this.resetState.bind(this);
         this.state = {
             schedule: Object.assign({}, this.props.schedule),
 
@@ -100,30 +101,32 @@ this.onUpdateLocation = this.onUpdateLocation.bind(this);
 
       }
 
+      resetState(){
+        let schedule = Object.assign({}, this.state.schedule);
+              let user = `/users/${schedule.respondents[0].user.id}`;
+              console.log("user:", user);
+              console.log("user id:", schedule.respondents[0].user.id);
+              let respondent = schedule.respondents[0];//.concat( {"user":`users/${schedule.respondents[0].user.id}`} );
+              respondent.user = user;
+              return this.setState({schedule});
+      }
+
       onClickSubmit() {
 //console.log("schedule In submit:",this.props.schedule);
           if (this.isFormValid()) {
 
-              let schedule = Object.assign({}, this.state.schedule);
-              console.log(schedule.respondents);
-             // let attributes = Object.assign([], this.state.allowedAttributes);
+              this.resetState();
               //this causes mutation:
-     // let formattedSchedule = ScheduleUtils.addAttributes(schedule, attributes);
-             // formattedSchedule = ScheduleUtils.addUserLink(formattedSchedule);
-             //  schedule.respondents.forEach((respondent) => {
-               //    const allowedAttributes = Object.assign(attributes, ...respondent.allowedAttributes)
-                //   respondent.allowedAttributes = allowedAttributes;
-                //  console.log(respondent.user);
-                  // debugger;
-                  // respondent.user = HateoasUtils.getObjectLink(respondent.user);
-              // });
-             // console.log("schedule In submit:",this.props.schedule);
-  // this.props.actions.updateSchedule(this.props.schedule);
+     // let formattedSchedule = ScheduleUtils.addAttributes( schedule.respondents[0].user.id,attributes);
+              console.log("schedule In submit:",this.state.schedule);
+   this.props.actions.updateSchedule(this.state.schedule);
               toastr.options.positionClass = 'toast-top-full-width';
               toastr.success('Schedule submitted!');
               setTimeout(function() {
                   browserHistory.push("/schedules/manage");
               }, 1000);
+
+              
           }
           else{
               toastr.options.positionClass = 'toast-top-full-width';
@@ -174,7 +177,7 @@ this.onUpdateLocation = this.onUpdateLocation.bind(this);
        attribute.attributeValue = val;
        return this.setState({attributes:attribute});
     }
-    
+
 //cannot remove original user
     updateUsers(event) {
         const isChecked = event.target.checked;
@@ -418,7 +421,7 @@ this.onUpdateLocation = this.onUpdateLocation.bind(this);
         //const {schedules} = this.props;
        // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        console.log("State inside render()", this.state.schedule.respondents[0].allowedAttributes[this.state.officeIndex].attributeValue);
+        console.log("State inside render()", this.state.schedule);
 
 
         return(

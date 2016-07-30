@@ -156,6 +156,7 @@ export function createSchedule(schedule) {
 }
 
 export function updateSchedule(schedule) {
+   console.log("schedule action update request schedule:",schedule);
     const request = {
         method: 'put',
         headers: {
@@ -166,10 +167,11 @@ export function updateSchedule(schedule) {
     };
 
     return function (dispatch) {
-      console.log("http update request:",request);
+     // console.log("http update request:",request);
         dispatch(initiateAjaxRequest());
         return fetch('/schedule/schedules/' + schedule.id, request).then((response) => {
             response.json().then((updatededSchedule) => {
+              console.log("response from server:",updatededSchedule);
                 dispatch(updateScheduleSuccess(updatededSchedule));
             });
         }).catch((error) => {
