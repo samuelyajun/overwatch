@@ -85,7 +85,6 @@ class ScheduleForm extends React.Component {
     }
 
     onClickSubmit() {
-
         if (this.isFormValid()) {
 
             const attributes = Object.assign([], this.state.allowedAttributes);
@@ -93,8 +92,6 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addAttributes(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
-            console.log("FS", this.state.schedule);
-
 
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
@@ -235,14 +232,11 @@ class ScheduleForm extends React.Component {
       const urlPreSplit = link.split('/');
       const formatUrl = '/' + urlPreSplit[3] + '/' + urlPreSplit[4];
 
-      console.log(formatUrl);
       return formatUrl;
-
     }
 
     render() {
         const {schedules, templates} = this.props;
-        console.log("TEMPLATES", templates);
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
