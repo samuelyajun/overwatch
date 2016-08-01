@@ -27,6 +27,7 @@ store.dispatch(loadUsers());
 store.dispatch(loadSchedules());
 store.dispatch(loadSurveys());
 store.dispatch(loadReports());
+store.dispatch(loadTemplates());
 
 render(
     <Provider store = {store}>

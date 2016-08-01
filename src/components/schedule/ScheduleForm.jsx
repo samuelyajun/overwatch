@@ -6,12 +6,13 @@ import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
+import * as scheduleActions from '../../actions/scheduleActions';
+import * as surveyActions from '../../actions/surveyActions';
+import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as scheduleActions from '../../actions/scheduleActions';
-import * as surveyActions from '../../actions/surveyActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
@@ -229,13 +230,13 @@ class ScheduleForm extends React.Component {
     }
 
     render() {
-        const {schedules, surveys} = this.props;
-        console.log("SURVEYS", surveys);
-        let surveyOptions = [];
-        surveys.forEach((survey) => {
-          surveyOptions.push(  {
-                text: survey.surveyName,
-                value: survey.suid
+        const {schedules, templates} = this.props;
+        console.log("TEMPLATES", templates);
+        let templateOptions = [];
+        templates.forEach((template) => {
+          templateOptions.push(  {
+                text: template.name,
+                value: template.name
             })
         })
 
@@ -249,7 +250,7 @@ class ScheduleForm extends React.Component {
                                 label="Select a Survey"
                                 value={this.state.schedule.survey}
                                 onChange={this.onUpdate}
-                                options={surveyOptions}
+                                options={templateOptions}
                                 error={this.state.errors.survey.required}
                             />
                         </div>
@@ -401,7 +402,8 @@ ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    surveys: PropTypes.array.isRequired
+    surveys: PropTypes.array.isRequired,
+    templates: PropTypes.array.isRequired
 };
 
 
@@ -410,13 +412,14 @@ function mapStateToProps(state, ownProps) {
     return {
         users: state.users,
         schedules: state.schedules,
-        surveys: state.surveys
+        surveys: state.surveys,
+        templates: state.templates
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, surveyActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, surveyActions, templateActions), dispatch)
     };
 }
 
