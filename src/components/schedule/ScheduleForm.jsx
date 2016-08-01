@@ -235,6 +235,10 @@ class ScheduleForm extends React.Component {
             color: '#ffffff'
         }
 
+          const marginTop = {
+            marginTop: '20px'
+        }
+
         return(
             <div className="container">
                 <form className name="myForm" noValidate>
@@ -244,7 +248,7 @@ class ScheduleForm extends React.Component {
                             <div className="panel-body"> 
                                    <div className="col-xs-6">
                                        <div className="row">
-                                           <div className="col-md-6">
+                                           <div className="col-md-6" style={marginTop}>
                                                <SelectInput
                                                    name="survey"
                                                    label="Select a Survey"
@@ -277,33 +281,7 @@ class ScheduleForm extends React.Component {
                                                    error={this.state.errors.survey.required}
                                                />
                                            </div>
-                                       </div>
-                                        <div className="row">
-                                           <div className="col-md-4">
-                                               <TextInput
-                                                   name="startDate"
-                                                   label="Start Date"
-                                                   type="date"
-                                                   value={this.state.schedule.startDate}
-                                                   validate={this.validateStartDate}
-                                                   onChange={this.onUpdate}
-                                                   error={this.state.errors.startDate.required}
-                                                   icon="glyphicon glyphicon-calendar"
-                                               />
-                                           </div>
-                                           <div className="col-md-4">
-                                               <TextInput
-                                                   name="endDate"
-                                                   label="End Date"
-                                                   type="date"
-                                                   value={this.state.schedule.endDate}
-                                                   validate={this.validateEndDate}
-                                                   onChange={this.onUpdate}
-                                                   error={this.state.errors.endDate.afterStart}
-                                                   icon="glyphicon glyphicon-calendar"
-                                               />
-                                           </div>
-                                          <div className="col-md-3">
+                                           <div className="col-md-6"  style={marginTop}>
                                            <SelectInput
                                                name="frequency"
                                                label="Frequency"
@@ -331,6 +309,32 @@ class ScheduleForm extends React.Component {
                                                ]}
                                            />
                                        </div>
+                                       </div>
+                                        <div className="row">
+                                           <div className="col-md-6">
+                                               <TextInput
+                                                   name="startDate"
+                                                   label="Start Date"
+                                                   type="date"
+                                                   value={this.state.schedule.startDate}
+                                                   validate={this.validateStartDate}
+                                                   onChange={this.onUpdate}
+                                                   error={this.state.errors.startDate.required}
+                                                   icon="glyphicon glyphicon-calendar"
+                                               />
+                                           </div>
+                                           <div className="col-md-6">
+                                               <TextInput
+                                                   name="endDate"
+                                                   label="End Date"
+                                                   type="date"
+                                                   value={this.state.schedule.endDate}
+                                                   validate={this.validateEndDate}
+                                                   onChange={this.onUpdate}
+                                                   error={this.state.errors.endDate.afterStart}
+                                                   icon="glyphicon glyphicon-calendar"
+                                               />
+                                           </div>
                                        </div>
                                    </div>
                                    <div className="col-xs-6 well">
