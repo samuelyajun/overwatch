@@ -26,14 +26,17 @@ export function loadSurveys() {
 }
 
 export function saveSurvey(surveyResponse) {
+    console.log("SaveSurvey reached");
+
     const request = {
-        method: 'post',
+        method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(surveyResponse)
     };
+    console.log(surveyResponse);
 
     return function(dispatch) {
         dispatch(initiateAjaxRequest());

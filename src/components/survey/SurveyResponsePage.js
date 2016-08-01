@@ -12,8 +12,9 @@ import toastr from 'toastr';
 const surveyContainer = {
     marginBottom: '75px'
 };
-let surveyResponse = new Object();
-let answers = new Array();
+
+let surveyResponse = {};
+let answers = [];
 const errorHeader = "Oh no!";
 const errorSubHeader = 'Survey not found';
 const errorMsg = 'Please contact your admin';
@@ -29,7 +30,9 @@ class SurveyResponsePage extends React.Component {
             showSurveyForm: true,
             survey: Object.assign({}, this.props.survey),
             errors: {},
-            saving: false
+            saving: false,
+            answers: [],
+            surveyResponse: {}
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -44,11 +47,12 @@ class SurveyResponsePage extends React.Component {
             const {survey} = this.props;
             surveyResponse.answers = answers;
             surveyResponse.uniqueSurveyId = survey.suid;
-            console.log(surveyResponse.uniqueSurveyId);
             surveyResponse.originatorId = "8991029012321";
-            console.log(surveyResponse);
-            this.props.actions.saveSurvey(surveyResponse);
 
+            console.log(surveyResponse.uniqueSurveyId);
+            console.log(surveyResponse);
+
+            this.props.actions.saveSurvey(surveyResponse);
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
