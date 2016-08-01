@@ -241,9 +241,9 @@ class ScheduleForm extends React.Component {
 
         return(
             <div className="container">
-                <form className name="myForm" noValidate>
+                <form className="myForm" noValidate>
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-4">
                             <SelectInput
                                 name="survey"
                                 label="Select a Survey"
