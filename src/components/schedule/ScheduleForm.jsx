@@ -4,6 +4,7 @@ import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
+import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import toastr from 'toastr';
@@ -394,7 +395,7 @@ class ScheduleForm extends React.Component {
                                                </li>
                                            </ul>
                                        </div>
-                                        </div>
+                                    </div>
                                </div>
                             </div>
                         </div>
@@ -421,8 +422,8 @@ class ScheduleForm extends React.Component {
 
                     <br />
                     <div className="col-md-12">
-                        <span><button onClick={this.onClickSubmit} type="button" className="btn btn-primary">Submit</button></span>
-                        <span><button type="button" className="btn btn-secondary">Cancel</button></span>
+                        <Button label = {'Submit'} type = {'button'} buttonClassName = {'btn btn-primary'} onClick={this.onClickSubmit}/>
+                        <Button label = {'Cancel'} type = {'button'} buttonClassName = {'btn btn-secondary'}/>
                     </div>
                 </form>
             </div>
