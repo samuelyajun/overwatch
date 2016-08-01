@@ -37,9 +37,11 @@ class UpdateScheduleForm extends React.Component {
         this.getLocationAttributeValue = this.getLocationAttributeValue.bind(this);
         this.getClientAttributeValue = this.getClientAttributeValue.bind(this);
         this.getProjectAttributeValue = this.getProjectAttributeValue.bind(this);
-this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
-this.onUpdateLocation = this.onUpdateLocation.bind(this);
-this.resetState = this.resetState.bind(this);
+        this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
+        this.onUpdateLocation = this.onUpdateLocation.bind(this);
+        this.resetState = this.resetState.bind(this);
+        this.onUpdateSurvey = this.onUpdateSurvey.bind(this);
+
         this.state = {
             schedule: Object.assign({}, this.props.schedule),
 
@@ -116,15 +118,14 @@ this.resetState = this.resetState.bind(this);
           if (this.isFormValid()) {
 
               this.resetState();
-              //this causes mutation:
-     // let formattedSchedule = ScheduleUtils.addAttributes( schedule.respondents[0].user.id,attributes);
+          
               console.log("schedule In submit:",this.state.schedule);
    this.props.actions.updateSchedule(this.state.schedule);
               toastr.options.positionClass = 'toast-top-full-width';
               toastr.success('Schedule submitted!');
-              setTimeout(function() {
-                  browserHistory.push("/schedules/manage");
-              }, 1000);
+              
+              browserHistory.push("/schedules/manage");
+              
 
               
           }
@@ -144,7 +145,20 @@ this.resetState = this.resetState.bind(this);
 
         schedule[property] = event.target.value;
         this.setState({errors: errors});
-        console.log("updated attributes?", schedule);
+        console.log("updated attributes?", schedule.property);
+        return this.setState({schedule});
+    }
+
+    onUpdateSurvey(event) {
+        const property = event.target.name;
+        let val = event.target.value;
+        let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
+
+        schedule.survey = event.target.value;
+        this.setState({errors: errors});
+        console.log("updated attributes?", schedule.property);
+        console.log("State onUpdateSurvey()", this.state.schedule.survey);
         return this.setState({schedule});
     }
 
@@ -168,7 +182,7 @@ this.resetState = this.resetState.bind(this);
     }
 
     onUpdateLocation(event) {
-      const type = event.target.name;
+      //const type = event.target.name;
       let val = event.target.value;
       let attributes = Object.assign([], this.state.schedule.respondents[0].allowedAttributes);
       let attribute = attributes.find((attr) => {
@@ -421,7 +435,8 @@ this.resetState = this.resetState.bind(this);
         //const {schedules} = this.props;
        // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        console.log("State inside render()", this.state.schedule);
+        console.log("State inside render()", this.state.schedule.survey);
+        console.log("State inside render() props", this.props);
 
 
         return(
@@ -433,7 +448,7 @@ this.resetState = this.resetState.bind(this);
                                 name="survey"
                                 label="Select a Survey"
                                 value={this.state.schedule.survey}
-                                onChange={this.onUpdate}
+                                onChange={this.onUpdateSurvey}
                                 options={[
                                     {
                                         text: 'Sprint Checkup',

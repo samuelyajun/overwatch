@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
 const ScheduleList = ({schedules, onUpdate}) => {
@@ -54,4 +56,10 @@ ScheduleList.propTypes = {
     schedules: PropTypes.array.isRequired
 };
 
-export default ScheduleList;
+function mapStateToProps(state, ownProps){
+    return {
+        schedules: state.schedules
+    };
+}
+
+export default connect(mapStateToProps, null)(ScheduleList);
