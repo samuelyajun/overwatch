@@ -7,7 +7,6 @@ import RespondentList from './RespondentList.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as surveyActions from '../../actions/surveyActions';
 import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
@@ -22,7 +21,7 @@ class ScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        const errorSurveyRequired = 'Survey is required';
+        const errorTemplateRequired = 'Template is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
@@ -35,9 +34,10 @@ class ScheduleForm extends React.Component {
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
 
+
         this.state = {
             schedule: {
-                survey: '',
+                template: '',
                 frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
@@ -70,7 +70,7 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-              survey: {
+              template: {
                 required: ''
               },
               startDate: {
@@ -93,6 +93,8 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addAttributes(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
+            console.log("FS", this.state.schedule);
+
 
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
@@ -229,15 +231,24 @@ class ScheduleForm extends React.Component {
         return isValid;
     }
 
+    formatTemplateLink(link){
+      const urlPreSplit = link.split('/');
+      const formatUrl = '/' + urlPreSplit[3] + '/' + urlPreSplit[4];
+
+      console.log(formatUrl);
+      return formatUrl;
+
+    }
+
     render() {
         const {schedules, templates} = this.props;
         console.log("TEMPLATES", templates);
         let templateOptions = [];
-        templates.forEach((template) => {
-          templateOptions.push(  {
-                text: template.name,
-                value: template.name
-            })
+        templates.map((template) => {
+          templateOptions.push( {
+            text: template.name,
+            value: this.formatTemplateLink(template._links.self.href)
+          })
         })
 
         return(
@@ -246,12 +257,12 @@ class ScheduleForm extends React.Component {
                     <div className="row">
                         <div className="col-md-4">
                             <SelectInput
-                                name="survey"
-                                label="Select a Survey"
-                                value={this.state.schedule.survey}
+                                name="template"
+                                label="Select a Template"
+                                value={this.state.schedule.template}
                                 onChange={this.onUpdate}
                                 options={templateOptions}
-                                error={this.state.errors.survey.required}
+                                error={this.state.errors.template.required}
                             />
                         </div>
                     </div>
@@ -402,7 +413,6 @@ ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    surveys: PropTypes.array.isRequired,
     templates: PropTypes.array.isRequired
 };
 
@@ -412,14 +422,13 @@ function mapStateToProps(state, ownProps) {
     return {
         users: state.users,
         schedules: state.schedules,
-        surveys: state.surveys,
         templates: state.templates
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, surveyActions, templateActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions), dispatch)
     };
 }
 
