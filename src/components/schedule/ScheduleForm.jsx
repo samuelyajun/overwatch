@@ -36,7 +36,7 @@ class ScheduleForm extends React.Component {
         this.state = {
             schedule: {
                 id: '',
-                survey: '',
+                templateUri: '',
                 frequency: 'ONE_TIME',//'ONE_TIME'
                 startDate: '',
                 endDate: '',
@@ -69,7 +69,7 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-              survey: {
+              templateUri: {
                 required: ''
               },
               startDate: {
@@ -247,7 +247,7 @@ class ScheduleForm extends React.Component {
                             <SelectInput
                                 name="survey"
                                 label="Select a Survey"
-                                value={this.state.schedule.survey}
+                                value={this.state.schedule.templateUri}
                                 onChange={this.onUpdate}
                                 options={[
                                     {

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
 const ScheduleList = ({schedules, onUpdate}) => {
-    console.log(schedules);
+    
     return (
         <table className = "table table-hover">
             <thead>
@@ -22,7 +22,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                 {
                     schedules.map(schedule => {
                         return (
-                            <ScheduleListRow key={schedule.id} schedule={cleanSchedules(schedule)} onUpdate={onUpdate}/>
+                            <ScheduleListRow key={schedule.id} schedule={schedule} onUpdate={onUpdate}/>
                         );
                     })
                 }

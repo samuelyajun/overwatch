@@ -105,9 +105,10 @@ class UpdateScheduleForm extends React.Component {
 
       resetState(){
         let schedule = Object.assign({}, this.state.schedule);
-              let user = `/users/${schedule.respondents[0].user.id}`;
-              console.log("user:", user);
-              console.log("user id:", schedule.respondents[0].user.id);
+        let user = this.props.schedule.respondents[0].user;
+             // let user = `/users/${schedule.respondents[0].user.id}`;
+              //console.log("user:", user);
+             // console.log("user id:", schedule.respondents[0].user.id);
               let respondent = schedule.respondents[0];//.concat( {"user":`users/${schedule.respondents[0].user.id}`} );
               respondent.user = user;
               return this.setState({schedule});
@@ -118,8 +119,10 @@ class UpdateScheduleForm extends React.Component {
           if (this.isFormValid()) {
 
               this.resetState();
-          
-              console.log("schedule In submit:",this.state.schedule);
+         //console.log("schedule In submit:",this.props.users); 
+              //console.log("schedule In submit:",this.state.schedule.respondents[0].user);
+              // console.log("schedule In submit:",this.state.schedule.respondents[1].user);
+               console.log("schedule In submit:",this.state.schedule);
    this.props.actions.updateSchedule(this.state.schedule);
               toastr.options.positionClass = 'toast-top-full-width';
               toastr.success('Schedule submitted!');
@@ -155,10 +158,10 @@ class UpdateScheduleForm extends React.Component {
         let schedule = Object.assign({}, this.state.schedule);
         let errors = Object.assign({},this.state.errors);
 
-        schedule.survey = event.target.value;
+        schedule.templateURI = event.target.value;
         this.setState({errors: errors});
         console.log("updated attributes?", schedule.property);
-        console.log("State onUpdateSurvey()", this.state.schedule.survey);
+        console.log("State onUpdateSurvey()", this.state.schedule.templateURI);
         return this.setState({schedule});
     }
 
@@ -202,9 +205,11 @@ class UpdateScheduleForm extends React.Component {
             const user = this.props.users.find((user) => {
                 return user.id === userId;
             });
-
+            delete user._links
+console.log("update user:", user );
             let respondent = {allowedAttributes: []};
             respondent.user = user;
+            //respondent.id
             respondent.allowedAttributes.push({
                 attributeValue: '',
                 attributeTypes: {
@@ -214,7 +219,7 @@ class UpdateScheduleForm extends React.Component {
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
             schedule.respondents = newRespondents;
-
+console.log("new respondents:", newRespondents );
         } else {
             const newRespondents = [
                 ...schedule.respondents.filter((respondent) => {
@@ -375,19 +380,6 @@ class UpdateScheduleForm extends React.Component {
       }
     }*/
 
-    /*getLocationAttributeValue() {
-
-      var allowedAttributesArray = this.state.schedule.respondents[0].allowedAttributes;
-      console.log('In getLocationAttributeValue(). allowedAttributesArray is ', allowedAttributesArray);
-      for(var i = 0; i <= allowedAttributesArray.length; i++) {
-        if(allowedAttributesArray[i].attributeTypes.name == "Office") {
-          console.log('Inside the location loop');
-          console.log('Location is ', allowedAttributesArray[i].attributeValue)
-          this.state.schedule.respondents[0].allowedAttributes[i].attributeValue = allowedAttributesArray[i].attributeValue;
-          return allowedAttributesArray[i].attributeValue;
-        }
-      }
-    }*/
 
     getLocationAttributeValue() {
 
@@ -435,9 +427,10 @@ class UpdateScheduleForm extends React.Component {
         //const {schedules} = this.props;
        // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        console.log("State inside render()", this.state.schedule.survey);
-        console.log("State inside render() props", this.props);
-
+        //console.log("State inside render()", this.state.schedule.templateURI);
+        //console.log("State inside render() respondents", this.props.schedule.respondents[0].user);
+// console.log("State inside render() respondents", this.props.schedule.respondents[1].user);
+// console.log("State inside render() respondents", this.props.schedule.respondents[2].user);
 
         return(
             <div className="container">
@@ -447,7 +440,7 @@ class UpdateScheduleForm extends React.Component {
                             <SelectInput
                                 name="survey"
                                 label="Select a Survey"
-                                value={this.state.schedule.survey}
+                                value={this.state.schedule.templateURI}
                                 onChange={this.onUpdateSurvey}
                                 options={[
                                     {
@@ -484,7 +477,7 @@ class UpdateScheduleForm extends React.Component {
                         </div>
                         <div className="col-md-2">
                           <RespondentList
-                              respondents={this.state.schedule.respondents}
+                              respondents={this.props.schedule.respondents}
                               onChange={this.updateRole}
                           />
                         </div>

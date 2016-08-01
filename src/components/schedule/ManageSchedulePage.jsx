@@ -37,7 +37,7 @@ class ManageSchedulePage extends React.Component {
 
 
   scheduleRow(schedule, index){
-      return (<div> key={index}>{schedule.survey}</div>);
+      return (<div> key={index}>{schedule.templateURI}</div>);
   }
 
     render() {

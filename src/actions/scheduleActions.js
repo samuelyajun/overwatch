@@ -20,6 +20,7 @@ export function createScheduleSuccess(schedule) {
 }
 
 export function updateScheduleSuccess(schedule) {
+ // console.log(schedule);
     return {type: types.UPDATE_SCHEDULE_SUCCESS, schedule};
 }
 
@@ -167,7 +168,7 @@ export function updateSchedule(schedule) {
     };
 
     return function (dispatch) {
-     // console.log("http update request:",request);
+      console.log("http update request:",request.body);
         dispatch(initiateAjaxRequest());
         return fetch('/schedule/schedules/' + schedule.id, request).then((response) => {
             response.json().then((updatededSchedule) => {
