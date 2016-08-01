@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
 import { Router, browserHistory, Route, IndexRoute, Redirect  } from 'react-router';
-import '../node_modules/bootstrap/dist/js/bootstrap.min';
+//import '../node_modules/bootstrap/dist/js/bootstrap.min';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
 
