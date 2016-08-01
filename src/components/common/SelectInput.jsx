@@ -27,10 +27,10 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
                 {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
                 <select
                     name={name}
-                    value={value}
+                    value={defaultOptionValue}
                     onChange={onChange}
                     className="form-control">
-                    <option value={defaultOptionValue} disabled={isDisabled} selected>{defaultOptionLabel}</option>
+                    <option value={defaultOptionValue} disabled={isDisabled}>{defaultOptionLabel}</option>
                     {options.map((option) => {
                         return <option key={option.value} value={option.value}>{option.text}</option>;
                     })
@@ -48,6 +48,7 @@ SelectInput.propTypes = {
     onChange: PropTypes.func.isRequired,
     defaultOptionValue: PropTypes.string,
     defaultOptionLabel: PropTypes.string,
+    defaultValue: PropTypes.string,
     value: PropTypes.string,
     error: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.object),

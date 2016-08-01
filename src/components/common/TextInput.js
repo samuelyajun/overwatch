@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 const dateWidth = {
     width: '80%'
 }
+
 const TextInput = ({name, label, onChange, placeholder, value, error, type, icon}) => {
     let wrapperClass = 'form-group';
     let showIcon;
