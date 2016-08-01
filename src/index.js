@@ -15,19 +15,18 @@ import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import ReportPage from './components/report/ReportPage';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
-
-
 import {loadSchedules} from './actions/scheduleActions';
 import {loadSurveys} from './actions/surveyActions';
 import {loadReports} from './actions/reportActions';
-
 import {loadUsers} from './actions/userActions';
+import {loadTemplates} from './actions/templateActions';
 
 const store = configureStore();
 store.dispatch(loadUsers());
 store.dispatch(loadSchedules());
 store.dispatch(loadSurveys());
 store.dispatch(loadReports());
+store.dispatch(loadTemplates());
 
 render(
     <Provider store = {store}>
