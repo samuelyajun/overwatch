@@ -1,8 +1,5 @@
 import React, {PropTypes} from 'react';
 import QuestionList from '../question/QuestionList';
-import RadioGroup from '../common/RadioGroup';
-import RadioInput from '../common/RadioInput';
-
 
 const templateOuterDivStyle = {
     margin: '25px'

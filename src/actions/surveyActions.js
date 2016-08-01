@@ -1,13 +1,15 @@
 import * as types from './actionTypes';
+import * as Urls from '../constants/urlConstants';
 import {initiateAjaxRequest, ajaxRequestError} from './ajaxStatusActions';
 
 export function loadSurveysSuccess(surveys) {
     return { type: types.LOAD_SURVEYS_SUCCESS, surveys};
 }
 
-export function saveSurveyResponseSuccess(survey) {
-    return { type: types.SAVE_SURVEY_RESPONSE_SUCCESS, survey};
+export function saveSurveySuccess(survey) {
+    return { type: types.SAVE_SURVEY_SUCCESS, survey};
 }
+
 
 export function loadSurveys() {
     return function(dispatch) {
@@ -23,20 +25,25 @@ export function loadSurveys() {
     };
 }
 
-
-export function saveSurveyResponse(survey) {
-    return (dispatch, getState) => {
-        dispatch(initiateAjaxRequest());
-        return fetch(saveSurveyResponseSuccess, {
-            headers: {
-                'Accept' : 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify(survey)
-        }).then(function(res){
-            console.log(res);
-            dispatch(saveSurveyResponseSuccess(survey));
-        }).catch(function(res){ console.log(res)});
+export function saveSurvey(surveyResponse) {
+    const request = {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(surveyResponse)
     };
+
+    return function(dispatch) {
+        dispatch(initiateAjaxRequest());
+        return fetch(Urls.SAVE_SURVEY_URL, request).then((response) => {
+            response.json().then((postedSurveyResponse) => {
+                dispatch(saveSurveySuccess(postedSurveyResponse));
+            });
+        }).catch((error) => {
+            dispatch(ajaxRequestError(error));
+            throw(error);
+        });
+    }
 }

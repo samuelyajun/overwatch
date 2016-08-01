@@ -12,6 +12,12 @@ export default function surveyReducer(state = initialState.surveys, action) {
                 ...state,
                 Object.assign({}, action.survey)
             ];
+
+        case actionTypes.SAVE_SURVEY_SUCCESS:
+            return [
+                ...state,
+                Object.assign({}, action.survey)
+            ];
         default:
             return state;
     }
