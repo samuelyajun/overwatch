@@ -229,172 +229,195 @@ class ScheduleForm extends React.Component {
 
     render() {
         const {schedules} = this.props;
+        const schedulePanel = {
+            backgroundColor:'#999999',
+            borderColor: '#999999',
+            color: '#ffffff'
+        }
 
         return(
             <div className="container">
                 <form className name="myForm" noValidate>
                     <div className="row">
-                        <div className="col-xs-6">
-                            <div className="row">
-                                <div className="col-md-2">
-                                    <SelectInput
-                                        name="survey"
-                                        label="Select a Survey"
-                                        value={this.state.schedule.survey}
-                                        onChange={this.onUpdate}
-                                        options={[
-                                            {
-                                                text: 'Sprint Checkup',
-                                                value: 'SC'
-                                            },
-                                            {
-                                                text: "SPD Team",
-                                                value: "ST"
-                                            },
-                                            {
-                                                text: "SPD Leaders",
-                                                value: "SL"
-                                            },
-                                            {
-                                                text: "EM Quantitative",
-                                                value: "EMQ"
-                                            },
-                                            {
-                                                text: "TL Quantitative",
-                                                value: "TLQ"
-                                            }
-                                        ]}
-                                        error={this.state.errors.survey.required}
-                                    />
-                                </div>
+                        <div className="panel">
+                            <div className="panel-heading"  style={schedulePanel}><h4>1. General Information</h4></div>
+                            <div className="panel-body"> 
+                                   <div className="col-xs-6">
+                                       <div className="row">
+                                           <div className="col-md-6">
+                                               <SelectInput
+                                                   name="survey"
+                                                   label="Select a Survey"
+                                                   value={this.state.schedule.survey}
+                                                   onChange={this.onUpdate}
+                                                   defaultOptionValue=""
+                                                   defaultOptionLabel="--Select Name--"
+                                                   options={[
+                                                       {
+                                                           text: 'Sprint Checkup',
+                                                           value: 'SC'
+                                                       },
+                                                       {
+                                                           text: "SPD Team",
+                                                           value: "ST"
+                                                       },
+                                                       {
+                                                           text: "SPD Leaders",
+                                                           value: "SL"
+                                                       },
+                                                       {
+                                                           text: "EM Quantitative",
+                                                           value: "EMQ"
+                                                       },
+                                                       {
+                                                           text: "TL Quantitative",
+                                                           value: "TLQ"
+                                                       }
+                                                   ]}
+                                                   error={this.state.errors.survey.required}
+                                               />
+                                           </div>
+                                       </div>
+                                        <div className="row">
+                                           <div className="col-md-4">
+                                               <TextInput
+                                                   name="startDate"
+                                                   label="Start Date"
+                                                   type="date"
+                                                   value={this.state.schedule.startDate}
+                                                   validate={this.validateStartDate}
+                                                   onChange={this.onUpdate}
+                                                   error={this.state.errors.startDate.required}
+                                                   icon="glyphicon glyphicon-calendar"
+                                               />
+                                           </div>
+                                           <div className="col-md-4">
+                                               <TextInput
+                                                   name="endDate"
+                                                   label="End Date"
+                                                   type="date"
+                                                   value={this.state.schedule.endDate}
+                                                   validate={this.validateEndDate}
+                                                   onChange={this.onUpdate}
+                                                   error={this.state.errors.endDate.afterStart}
+                                                   icon="glyphicon glyphicon-calendar"
+                                               />
+                                           </div>
+                                          <div className="col-md-3">
+                                           <SelectInput
+                                               name="frequency"
+                                               label="Frequency"
+                                               value={this.state.schedule.frequency}
+                                               defaultOptionLabel = "One Time"
+                                               defaultOptionValue = "ONE_TIME"
+                                               onChange={this.onUpdate}
+                                               options={[
+                                                   {
+                                                       text: "1 Week",
+                                                       value: "ONE_WEEK"
+                                                   },
+                                                   {
+                                                       text: "2 Weeks",
+                                                       value: "TWO_WEEKS"
+                                                   },
+                                                   {
+                                                       text: "3 Weeks",
+                                                       value: "THREE_WEEKS"
+                                                   },
+                                                   {
+                                                       text: "4 Weeks",
+                                                       value: "MONTHLY"
+                                                   }
+                                               ]}
+                                           />
+                                       </div>
+                                       </div>
+                                   </div>
+                                   <div className="col-xs-6 well">
+                                       <div className="row">
+                                       <div className="col-md-6">
+                                           <ul className="list-unstyled">
+                                               <li>
+                                                   <SelectInput
+                                                       name="CLIENT"
+                                                       label="Client"
+                                                       defaultOption="-choose-"
+                                                       defaultOptionValue="catalyst"
+                                                       defaultOptionLabel="Catalyst"
+                                                       value={this.state.allowedAttributes[0].attributeValue}
+                                                       onChange={this.onUpdate}
+                                                       options={[]}
+                                                       icon="glyphicon glyphicon-user"
+                                                   />
+                                               </li>
+                                               <li>
+                                                   <SelectInput
+                                                       name="PROJECT"
+                                                       label="Project"
+                                                       defaultOptionValue="overwatch"
+                                                       defaultOptionLabel="Overwatch"
+                                                       defaultOption="-choose-"
+                                                       value={this.state.allowedAttributes[1].attributeValue}
+                                                       onChange={this.onUpdate}
+                                                       options={[]}
+                                                       icon="glyphicon glyphicon-briefcase"
+                                                   />
+                                               </li>
+                                           </ul>
+                                       </div>
+                                       <div className="col-md-6">
+                                           <ul className="list-unstyled">
+                                               <li>
+                                                   <SelectInput
+                                                       name="OFFICE"
+                                                       label="Office"
+                                                       defaultOptionValue="beaverton"
+                                                       defaultOptionLabel="Beaverton"
+                                                       value={this.state.allowedAttributes[2].attributeValue}
+                                                       onChange={this.onUpdateAttribute}
+                                                       options={[
+                                                           {
+                                                               text: 'Beaverton',
+                                                               value: 'beaverton'
+                                                           },
+                                                           {
+                                                               text: "Baltimore",
+                                                               value: "baltimore"
+                                                           }
+                                                       ]}
+                                                       icon="glyphicon glyphicon-flag"
+                                                       />
+                                               </li>
+                                           </ul>
+                                       </div>
+                                        </div>
+                               </div>
                             </div>
-                             <div className="row">
-                                <div className="col-md-2">
-                                    <TextInput
-                                        name="startDate"
-                                        label="Start Date"
-                                        type="date"
-                                        value={this.state.schedule.startDate}
-                                        validate={this.validateStartDate}
-                                        onChange={this.onUpdate}
-                                        error={this.state.errors.startDate.required}
-                                    />
-                                </div>
-                                <div className="col-md-2">
-                                    <TextInput
-                                        name="endDate"
-                                        label="End Date"
-                                        type="date"
-                                        value={this.state.schedule.endDate}
-                                        validate={this.validateEndDate}
-                                        onChange={this.onUpdate}
-                                        error={this.state.errors.endDate.afterStart}
-                                    />
-                                </div>
-                               <div className="col-md-2">
-                                <SelectInput
-                                    name="frequency"
-                                    label="Frequency"
-                                    value={this.state.schedule.frequency}
-                                    defaultOptionLabel = "One Time"
-                                    defaultOptionValue = "ONE_TIME"
-                                    onChange={this.onUpdate}
-                                    options={[
-                                        {
-                                            text: "1 Week",
-                                            value: "ONE_WEEK"
-                                        },
-                                        {
-                                            text: "2 Weeks",
-                                            value: "TWO_WEEKS"
-                                        },
-                                        {
-                                            text: "3 Weeks",
-                                            value: "THREE_WEEKS"
-                                        },
-                                        {
-                                            text: "4 Weeks",
-                                            value: "MONTHLY"
-                                        }
-                                    ]}
-                                />
-                            </div>
-                            </div>
-                        </div>
-                        <div className="col-xs-6">
-                        <div className="row">
-                            <div className="col-md-3">
-                                <ul className="list-group">
-                                    <li className="list-group-item">
-                                        <SelectInput
-                                            name="CLIENT"
-                                            label="Client"
-                                            defaultOption="-choose-"
-                                            defaultOptionValue="catalyst"
-                                            defaultOptionLabel="Catalyst"
-                                            value={this.state.allowedAttributes[0].attributeValue}
-                                            onChange={this.onUpdate}
-                                            options={[]}
-                                        />
-                                    </li>
-                                    <li className="list-group-item">
-                                        <SelectInput
-                                            name="PROJECT"
-                                            label="Project"
-                                            defaultOptionValue="overwatch"
-                                            defaultOptionLabel="Overwatch"
-                                            defaultOption="-choose-"
-                                            value={this.state.allowedAttributes[1].attributeValue}
-                                            onChange={this.onUpdate}
-                                            options={[]}
-                                        />
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-md-3">
-                                <ul className="list-group">
-                                    <li className="list-group-item">
-                                        <SelectInput
-                                            name="OFFICE"
-                                            label="Office"
-                                            value={this.state.allowedAttributes[2].attributeValue}
-                                            onChange={this.onUpdateAttribute}
-                                            options={[
-                                                {
-                                                    text: 'Beaverton',
-                                                    value: 'beaverton'
-                                                },
-                                                {
-                                                    text: "Baltimore",
-                                                    value: "baltimore"
-                                                }
-                                            ]}
-                                            />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-2">
-                            <UserCheckboxGroup
-                                users={this.props.users}
-                                onClick={this.updateUsers}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <RespondentList
-                                respondents={this.state.schedule.respondents}
-                                onChange={this.updateRole}
-                            />
+                        <div className="panel">
+                          <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
+                          <div className="panel-body">
+                                <div className="col-md-4">
+                                    <UserCheckboxGroup
+                                        users={this.props.users}
+                                        onClick={this.updateUsers}
+                                    />
+                                </div>
+                                <div className="col-md-8">
+                                    <RespondentList
+                                        respondents={this.state.schedule.respondents}
+                                        onChange={this.updateRole}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <br />
                     <div className="col-md-12">
-                        <span><button onClick={this.onClickSubmit} type="button" className="btn btn-success">Submit</button></span>
+                        <span><button onClick={this.onClickSubmit} type="button" className="btn btn-primary">Submit</button></span>
                         <span><button type="button" className="btn btn-secondary">Cancel</button></span>
                     </div>
                 </form>

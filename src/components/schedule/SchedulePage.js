@@ -9,8 +9,8 @@ const scheduleOuterDivStyle = {
 class SchedulePage extends React.Component {
     render() {
         return (
-            <div style={scheduleOuterDivStyle}>
-                <h1>Schedule Page</h1>
+            <div className="container" style={scheduleOuterDivStyle}>
+                <h1>Schedule Survey</h1>
                 <ScheduleForm />
             </div>
         );
