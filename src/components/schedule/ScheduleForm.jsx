@@ -33,37 +33,36 @@ class ScheduleForm extends React.Component {
         this.updateRole = this.updateRole.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
-
+        this.attrToUrls = this.attrToUrls.bind(this);
 
         this.state = {
             schedule: {
-<<<<<<< HEAD
                 id: '',
                 templateUri: '',
                 frequency: 'ONE_TIME',//'ONE_TIME'
-=======
-                template: '',
-                frequency: 'ONE_TIME',
->>>>>>> c0883c229cb76f20e44b2262f7af49107b8c5d9c
+
                 startDate: '',
                 endDate: '',
                 respondents: []
             },
             allowedAttributes: [
                 {
+                    id:"http://localhost:8090/allowedAttributes/7",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
+                    id:"http://localhost:8090/allowedAttributes/8",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    attributeValue: '',
+                    id:"http://localhost:8090/allowedAttributes/5",
+                    attributeValue: 'Beaverton',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -76,11 +75,8 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-<<<<<<< HEAD
               templateUri: {
-=======
-              template: {
->>>>>>> c0883c229cb76f20e44b2262f7af49107b8c5d9c
+
                 required: ''
               },
               startDate: {
@@ -94,18 +90,20 @@ class ScheduleForm extends React.Component {
         };
     }
 
+   
+
     onClickSubmit() {
         if (this.isFormValid()) {
-
-            const attributes = Object.assign([], this.state.allowedAttributes);
+            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            //attributes = this.attrToUrls(attributes);
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
-            ScheduleUtils.addAttributes(formattedSchedule, attributes);
+            ScheduleUtils.addAttributes2(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-console.log("formattedSchedule:",formattedSchedule);
-           // this.props.actions.createSchedule(formattedSchedule);
+
+            this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -115,7 +113,13 @@ console.log("formattedSchedule:",formattedSchedule);
         }
     }
 
-
+    attrToUrls(attributes){
+        var newAttrs=[];
+          attributes.forEach(function(attr){
+                newAttrs.push(attr.id);
+            })
+        return newAttrs;
+    }
 
     onUpdate(event) {
         const property = event.target.name;
@@ -275,7 +279,7 @@ console.log("formattedSchedule:",formattedSchedule);
                                 value={this.state.schedule.template}
                                 onChange={this.onUpdate}
                                 options={templateOptions}
-                                error={this.state.errors.template.required}
+                                error={this.state.errors.errorStartDateRequired}
 
                             />
                         </div>
@@ -367,7 +371,7 @@ console.log("formattedSchedule:",formattedSchedule);
                                         name="CLIENT"
                                         label="Client"
                                         defaultOption="-choose-"
-                                        defaultOptionValue="catalyst"
+                                        defaultOptionValue="http://localhost:8090/allowedAttributes/7"
                                         defaultOptionLabel="Catalyst"
                                         value={this.state.allowedAttributes[0].attributeValue}
                                         onChange={this.onUpdate}
@@ -380,7 +384,7 @@ console.log("formattedSchedule:",formattedSchedule);
                                     <SelectInput
                                         name="PROJECT"
                                         label="Project"
-                                        defaultOptionValue="overwatch"
+                                        defaultOptionValue="http://localhost:8090/allowedAttributes/8"
                                         defaultOptionLabel="Overwatch"
                                         defaultOption="-choose-"
                                         value={this.state.allowedAttributes[1].attributeValue}
@@ -402,10 +406,12 @@ console.log("formattedSchedule:",formattedSchedule);
                                         onChange={this.onUpdateAttribute}
                                         options={[
                                             {
+                                                id:"http://localhost:8090/allowedAttributes/5",
                                                 text: 'Beaverton',
                                                 value: 'Beaverton'
                                             },
                                             {
+                                                id:"http://localhost:8090/allowedAttributes/6",
                                                 text: "Baltimore",
                                                 value: "Baltimore"
                                             }

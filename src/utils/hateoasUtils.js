@@ -12,7 +12,6 @@ class HateoasUtils {
         }
 
         const selfLink = links.self.href;
-        console.log("link XXXXXXXX", selfLink);
         const relativeUri = LINK_REGEX.exec(selfLink);
 
         //return relativeUri[1];

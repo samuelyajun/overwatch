@@ -13,20 +13,24 @@ const RespondentListRow = ({respondent, onChange, index}) => {
                 onChange={onChange}
                 options={[
                     {
+                        id:1,
                         text: 'Engagement Manager',
-                        value: 'EM'
+                        value: "http://localhost:8090/allowedAttributes/1"
                     },
                     {
+                        id:2,
                         text: "Tech Lead",
-                        value: "TL"
+                        value: "http://localhost:8090/allowedAttributes/2"
                     },
                     {
+                        id:3,
                         text: "Business Analyst",
-                        value: "BA"
+                        value: "http://localhost:8090/allowedAttributes/3"
                     },
                     {
+                        id:4,
                         text: "Developer",
-                        value: "DEV"
+                        value: "http://localhost:8090/allowedAttributes/4"
                     }
                 ]}
             />
