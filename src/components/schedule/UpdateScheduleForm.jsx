@@ -106,11 +106,13 @@ class UpdateScheduleForm extends React.Component {
       resetState(){
         let schedule = Object.assign({}, this.state.schedule);
         let user = this.props.schedule.respondents[0].user;
+        let id = 99;
              // let user = `/users/${schedule.respondents[0].user.id}`;
               //console.log("user:", user);
              // console.log("user id:", schedule.respondents[0].user.id);
               let respondent = schedule.respondents[0];//.concat( {"user":`users/${schedule.respondents[0].user.id}`} );
               respondent.user = user;
+              respondent.id = id;
               return this.setState({schedule});
       }
 
@@ -123,7 +125,7 @@ class UpdateScheduleForm extends React.Component {
               //console.log("schedule In submit:",this.state.schedule.respondents[0].user);
               // console.log("schedule In submit:",this.state.schedule.respondents[1].user);
                console.log("schedule In submit:",this.state.schedule);
-   this.props.actions.updateSchedule(this.state.schedule);
+   //this.props.actions.updateSchedule(this.state.schedule);
               toastr.options.positionClass = 'toast-top-full-width';
               toastr.success('Schedule submitted!');
               
@@ -200,15 +202,18 @@ class UpdateScheduleForm extends React.Component {
         const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
         let schedule = Object.assign({}, this.state.schedule);
+console.log("original respondents:", schedule.respondents );
 
         if (isChecked) {
             const user = this.props.users.find((user) => {
                 return user.id === userId;
             });
             delete user._links
-console.log("update user:", user );
+
+//console.log(schedule);
             let respondent = {allowedAttributes: []};
             respondent.user = user;
+           // respondent.user = `http://localhost:8090/users/${user.id}`
             //respondent.id
             respondent.allowedAttributes.push({
                 attributeValue: '',
@@ -226,6 +231,7 @@ console.log("new respondents:", newRespondents );
                     return respondent.user.id !== userId;
                 })
             ];
+            console.log(newRespondents);
             schedule.respondents = newRespondents;
         }
         return this.setState({schedule});
@@ -427,7 +433,7 @@ console.log("new respondents:", newRespondents );
         //const {schedules} = this.props;
        // console.log("Props inside update schedule form", this.props)
         const {schedule} = this.props;
-        //console.log("State inside render()", this.state.schedule.templateURI);
+        console.log("State inside render()", this.state.schedule);
         //console.log("State inside render() respondents", this.props.schedule.respondents[0].user);
 // console.log("State inside render() respondents", this.props.schedule.respondents[1].user);
 // console.log("State inside render() respondents", this.props.schedule.respondents[2].user);

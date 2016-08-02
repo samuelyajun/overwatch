@@ -94,8 +94,8 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-
-            this.props.actions.createSchedule(formattedSchedule);
+console.log("formattedSchedule:",formattedSchedule);
+           // this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -271,7 +271,7 @@ class ScheduleForm extends React.Component {
                                         value: "TLQ"
                                     }
                                 ]}
-                                error={this.state.errors.survey.required}
+                                error={this.state.errorSurveyRequired}
                             />
                         </div>
                     </div>
