@@ -95,15 +95,16 @@ class ScheduleForm extends React.Component {
     onClickSubmit() {
         if (this.isFormValid()) {
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            console.log("this.state.allowedAttributes",this.state.allowedAttributes);
             //attributes = this.attrToUrls(attributes);
             let formattedSchedule = Object.assign({}, this.state.schedule);
-
-            ScheduleUtils.addAttributes2(formattedSchedule, attributes);
+console.log('Schedule before adding attrs: ', formattedSchedule);
+            ScheduleUtils.addAttributes(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
 
-            this.props.actions.createSchedule(formattedSchedule);
+           // this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -186,6 +187,7 @@ class ScheduleForm extends React.Component {
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         //safe to assume only one attribute since the others get add on save
+        console.log(schedule.respondents[index]);
         schedule.respondents[index].allowedAttributes[0].attributeValue = role;
         return this.setState({schedule});
     }
