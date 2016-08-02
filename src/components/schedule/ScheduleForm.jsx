@@ -95,16 +95,15 @@ class ScheduleForm extends React.Component {
     onClickSubmit() {
         if (this.isFormValid()) {
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
-            console.log("this.state.allowedAttributes",this.state.allowedAttributes);
-            //attributes = this.attrToUrls(attributes);
+            
             let formattedSchedule = Object.assign({}, this.state.schedule);
-console.log('Schedule before adding attrs: ', formattedSchedule);
-            ScheduleUtils.addAttributes(formattedSchedule, attributes);
+
+            ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
 
-           // this.props.actions.createSchedule(formattedSchedule);
+            this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
