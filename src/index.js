@@ -4,8 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
-import '../node_modules/bootstrap/dist/js/bootstrap.min';
+import { Router, browserHistory, Route, IndexRoute, Redirect  } from 'react-router';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
 
@@ -15,22 +14,20 @@ import SchedulePage from './components/schedule/SchedulePage';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import UpdateSchedule from './components/schedule/UpdateSchedule.jsx';
 import ReportPage from './components/report/ReportPage';
-import SurveyPage from './components/survey/SurveyPage';
-import ManageSurveyPage from './components/survey/ManageSurveyPage';
-import LeadSprintPlanningSurvey from './components/survey/LeadSprintPlanningSurvey.jsx';
-import TeamSprintPlanningSurvey from './components/survey/TeamSprintPlanningSurvey.jsx';
-import SurveyConfirmationPage from './components/survey/SurveyConfirmationPage.jsx';
-import TeamLeadQuantitativeSurvey from './components/survey/TeamLeadQuantitativeSurvey.jsx';
-import EMQuantitativeSurvey from './components/survey/EMQuantitativeSurvey.jsx';
-
+import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
 import {loadSchedules} from './actions/scheduleActions';
-
+import {loadSurveys} from './actions/surveyActions';
+import {loadReports} from './actions/reportActions';
 import {loadUsers} from './actions/userActions';
+import {loadTemplates} from './actions/templateActions';
 
 const store = configureStore();
 store.dispatch(loadUsers());
 store.dispatch(loadSchedules());
+store.dispatch(loadSurveys());
+store.dispatch(loadReports());
+store.dispatch(loadTemplates());
 
 render(
     <Provider store = {store}>
@@ -41,14 +38,8 @@ render(
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="schedules/update/:id" component={UpdateSchedule} />
                 <Route path="report" component={ReportPage} />
-                <Route path="survey" component={ManageSurveyPage} />
             </Route>
-            <Route path="/survey/:id" component={SurveyPage} />
-            <Route path="/survey/qualitative/spd-team" component={TeamSprintPlanningSurvey} />
-            <Route path="/survey/qualitative/lead" component={LeadSprintPlanningSurvey} />
-            <Route path="/survey/quantitative/lead" component={TeamLeadQuantitativeSurvey} />
-            <Route path="/survey/quantitative/em" component={EMQuantitativeSurvey} />
-            <Route path="/confirmation" component={SurveyConfirmationPage} />
+            <Route path="surveys" component={SurveyResponsePage} />
         </Router>
     </Provider>, document.getElementById('app')
 );

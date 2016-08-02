@@ -8,8 +8,7 @@ class ManageSurveyPage extends React.Component {
     render() {
         return (
             <div style={templateOuterDivStyle}>
-                <h1>ManageSurvey Page</h1>
-                <p>ManageSurvey Page</p>
+                <h1>Manage Survey</h1>
             </div>
         );
     }

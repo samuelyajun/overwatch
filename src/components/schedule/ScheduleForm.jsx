@@ -6,11 +6,12 @@ import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
+import * as scheduleActions from '../../actions/scheduleActions';
+import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as scheduleActions from '../../actions/scheduleActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
@@ -20,7 +21,7 @@ class ScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        const errorSurveyRequired = 'Survey is required';
+        const errorTemplateRequired = 'Template is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
@@ -33,11 +34,17 @@ class ScheduleForm extends React.Component {
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
 
+
         this.state = {
             schedule: {
+<<<<<<< HEAD
                 id: '',
                 templateUri: '',
                 frequency: 'ONE_TIME',//'ONE_TIME'
+=======
+                template: '',
+                frequency: 'ONE_TIME',
+>>>>>>> c0883c229cb76f20e44b2262f7af49107b8c5d9c
                 startDate: '',
                 endDate: '',
                 respondents: []
@@ -69,7 +76,11 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
+<<<<<<< HEAD
               templateUri: {
+=======
+              template: {
+>>>>>>> c0883c229cb76f20e44b2262f7af49107b8c5d9c
                 required: ''
               },
               startDate: {
@@ -84,7 +95,6 @@ class ScheduleForm extends React.Component {
     }
 
     onClickSubmit() {
-
         if (this.isFormValid()) {
 
             const attributes = Object.assign([], this.state.allowedAttributes);
@@ -236,42 +246,37 @@ console.log("formattedSchedule:",formattedSchedule);
         return isValid;
     }
 
+    formatTemplateLink(link){
+      const urlPreSplit = link.split('/');
+      const formatUrl = '/' + urlPreSplit[3] + '/' + urlPreSplit[4];
+
+      return formatUrl;
+    }
+
     render() {
-        const {schedules} = this.props;
+        const {schedules, templates} = this.props;
+        let templateOptions = [];
+        templates.map((template) => {
+          templateOptions.push( {
+            text: template.name,
+            value: this.formatTemplateLink(template._links.self.href)
+          })
+        })
 
         return(
             <div className="container">
-                <form className name="myForm" noValidate>
+                <form className="myForm" noValidate>
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-4">
                             <SelectInput
-                                name="survey"
-                                label="Select a Survey"
-                                value={this.state.schedule.templateUri}
+
+                                name="template"
+                                label="Select a Template"
+                                value={this.state.schedule.template}
                                 onChange={this.onUpdate}
-                                options={[
-                                    {
-                                        text: 'Sprint Checkup',
-                                        value: 'SC'
-                                    },
-                                    {
-                                        text: "SPD Team",
-                                        value: "ST"
-                                    },
-                                    {
-                                        text: "SPD Leaders",
-                                        value: "SL"
-                                    },
-                                    {
-                                        text: "EM Quantitative",
-                                        value: "EMQ"
-                                    },
-                                    {
-                                        text: "TL Quantitative",
-                                        value: "TLQ"
-                                    }
-                                ]}
-                                error={this.state.errorSurveyRequired}
+                                options={templateOptions}
+                                error={this.state.errors.template.required}
+
                             />
                         </div>
                     </div>
@@ -426,7 +431,8 @@ console.log("formattedSchedule:",formattedSchedule);
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    templates: PropTypes.array.isRequired
 };
 
 
@@ -435,13 +441,14 @@ function mapStateToProps(state, ownProps) {
    console.log('in mapStateToProps() in scheduleForm ');
     return {
         users: state.users,
-        schedules: state.schedules
+        schedules: state.schedules,
+        templates: state.templates
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions), dispatch)
     };
 }
 

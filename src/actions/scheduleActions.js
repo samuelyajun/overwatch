@@ -27,6 +27,7 @@ export function updateScheduleSuccess(schedule) {
 export function loadSchedules() {
     return function(dispatch) {
         return fetch(Urls.BASE_SCHEDULE_URL).then((response) => {
+            dispatch(initiateAjaxRequest());
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
                 dispatch(loadSchedulesSuccess(scheduleArray));
