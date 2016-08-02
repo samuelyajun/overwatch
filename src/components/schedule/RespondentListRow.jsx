@@ -14,12 +14,12 @@ const RespondentListRow = ({respondent, onChange, index}) => {
                 name={`${index}`}
                 value={respondent.allowedAttributes[0].value}
                 onChange={onChange}
-                defaultOptionValue=""
+                defaultOptionValue= ""
                 defaultOptionLabel= "--Select Role--"
                 options={[
                     {
-                        text: 'Engagement Manager',
-                        value: 'EM'
+                        text: "Engagement Manager",
+                        value: "EM"
                     },
                     {
                         text: "Tech Lead",

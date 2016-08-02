@@ -16,29 +16,32 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
         showLabel = 'hidden';
     };
 
-    if (defaultOptionValue === "") {
+    if (defaultOptionValue === '') {
         isDisabled = true;
     }
     return (
-        <div className="form-group" style={style}>
-            <label htmlFor={name} className={showLabel}>{label}</label>
-            <div className="field input-group">
-              <span className={'input-group-addon ' + showIcon }><i className={icon}></i></span>
-                {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
-                <select
-                    name={name}
-                    value={defaultOptionValue}
-                    onChange={onChange}
-                    className="form-control">
-                    <option value={defaultOptionValue} disabled={isDisabled}>{defaultOptionLabel}</option>
-                    {options.map((option) => {
-                        return <option key={option.value} value={option.value}>{option.text}</option>;
-                    })
-                    }
-                </select>
-                {error && <div className="alert alert-danger">{error}</div>}
+        <div>
+            <div className="form-group" style={style}>
+                <label htmlFor={name} className={showLabel}>{label}</label>
+                <div className="field input-group">
+                  <span className={'input-group-addon ' + showIcon }><i className={icon}></i></span>
+                    {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
+                    <select
+                        name={name}
+                        onChange={onChange}
+                        value={value}
+                        defaultValue={defaultOptionValue}
+                        className="form-control">
+                        <option value={defaultOptionValue} disabled={isDisabled}>{defaultOptionLabel}</option>
+                        {options.map((option) => {
+                            return <option key={option.value} value={option.value}>{option.text}</option>;
+                        })
+                        }
+                    </select>
+                </div>
             </div>
-        </div>
+         {error && <div className="alert alert-danger">{error}</div>}
+         </div>
     );
 };
 

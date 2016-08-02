@@ -347,8 +347,8 @@ class ScheduleForm extends React.Component {
                                                        name="CLIENT"
                                                        label="Client"
                                                        defaultOption="-choose-"
-                                                       defaultOptionValue="catalyst"
-                                                       defaultOptionLabel="Catalyst"
+                                                       defaultOptionValue=""
+                                                       defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[]}
@@ -359,8 +359,8 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="PROJECT"
                                                        label="Project"
-                                                       defaultOptionValue="overwatch"
-                                                       defaultOptionLabel="Overwatch"
+                                                       defaultOptionValue=""
+                                                       defaultOptionLabel="--Select Project"
                                                        defaultOption="-choose-"
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdate}
@@ -376,8 +376,8 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="OFFICE"
                                                        label="Office"
-                                                       defaultOptionValue="beaverton"
-                                                       defaultOptionLabel="Beaverton"
+                                                       defaultOptionValue=""
+                                                       defaultOptionLabel="--Select Office--"
                                                        value={this.state.allowedAttributes[2].attributeValue}
                                                        onChange={this.onUpdateAttribute}
                                                        options={[

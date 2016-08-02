@@ -31,21 +31,23 @@ const TextInput = ({name, label, onChange, placeholder, value, error, type, icon
         type = type ? type : "text";
     }
     return (
-        <div className={wrapperClass}>
-            <label htmlFor={name} className={showLabel}>{label}</label>
-            <div className="field input-group">
-                <span className={"input-group-addon" + showIcon}><i className={icon}></i></span>
-                <input type={type}
-                       name = {name}
-                       className={"form-control"}
-                       placeholder={placeholder}
-                       value={value}
-                       onChange = {onChange}
-                       style={inputStyle}
+        <div>
+            <div className={wrapperClass}>
+                <label htmlFor={name} className={showLabel}>{label}</label>
+                <div className="field input-group">
+                    <span className={"input-group-addon" + showIcon}><i className={icon}></i></span>
+                    <input type={type}
+                           name = {name}
+                           className={"form-control"}
+                           placeholder={placeholder}
+                           value={value}
+                           onChange = {onChange}
+                           style={inputStyle}
 
-                />
-                {error && <div className="alert alert-danger">{error}</div>}
+                    />
+                </div>
             </div>
+         {error && <div className="alert alert-danger">{error}</div>}
         </div>
     );
 };
