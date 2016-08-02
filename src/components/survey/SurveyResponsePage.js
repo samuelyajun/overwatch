@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import * as surveyActions from '../../actions/surveyActions';
+import * as surveyResponseActions from '../../actions/responseAction';
 import {bindActionCreators} from 'redux';
 import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
@@ -13,8 +13,7 @@ const surveyContainer = {
     marginBottom: '75px'
 };
 
-let surveyResponse = {};
-let answers = [];
+
 const errorHeader = "Oh no!";
 const errorSubHeader = 'Survey not found';
 const errorMsg = 'Please contact your admin';
@@ -29,10 +28,14 @@ class SurveyResponsePage extends React.Component {
             showConfirmation: false,
             showSurveyForm: true,
             survey: Object.assign({}, this.props.survey),
+            surveyResponse: {
+                'uniqueSurveyId': '',
+                'originatorId': '',
+                'answers': []
+            },
             errors: {},
             saving: false,
-            answers: [],
-            surveyResponse: {}
+
         };
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -44,15 +47,7 @@ class SurveyResponsePage extends React.Component {
         console.log("onSubmit reached");
         event.preventDefault();
         if(this.validateForm() === true){
-            const {survey} = this.props;
-            surveyResponse.answers = answers;
-            surveyResponse.uniqueSurveyId = survey.suid;
-            surveyResponse.originatorId = "8991029012321";
-
-            console.log(surveyResponse.uniqueSurveyId);
-            console.log(surveyResponse);
-
-            this.props.actions.saveSurvey(surveyResponse);
+            this.props.actions.saveSurveyResponse(this.state.surveyResponse);
             this.setState({showConfirmation: !this.state.showConfirmation});
             this.setState({showSurveyForm: !this.state.showSurveyForm});
         }
@@ -62,9 +57,34 @@ class SurveyResponsePage extends React.Component {
     validateForm(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
-        const {survey} = this.props;
+        const {query} = this.props.location;
+        const responseOriginatorId = query.originatorId;
+        console.log(responseOriginatorId);
+        console.log(this.props.survey);
+        let surveyObject = Object.assign({}, this.props.survey);
 
-        survey.template.questions.map(
+        if(!responseOriginatorId) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "700",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+            toastr.error('No Originator ID is detected. Please provide an orignator ID.');
+            isValid = false;
+        }
+        surveyObject.template.questions.map(
             (question, index) => {
                 if(question.value === undefined && question.selectedValue === undefined){
                     toastr.options = {
@@ -96,26 +116,44 @@ class SurveyResponsePage extends React.Component {
 
     // Handles likert question responses
     handleChange(value, event) {
-        const {surveys} = this.props;
+        // const {surveys} = this.props;
+        const {query} = this.props.location;
         const {survey} = this.props;
         const index = event.target.name;
+        const reponseUniqueSurveyId = survey.suid;
+        const responseOriginatorId = query.originatorId;
+        console.log(reponseUniqueSurveyId);
+        this.state.survey.template.questions[index].selectedValue = value;
+        // let questionLink =  "/questions/" + survey.template.questions[index].id;
+        // let answerValue = value;
 
-        survey.template.questions[index].selectedValue = value;
-        let questionLink =  "/questions/" + survey.template.questions[index].id;
+
+        // survey.template.questions[index].selectedValue = value;
         let answerValue = value;
+        let questionLink = "/questions/" + survey.template.questions[index].id;
 
+        // let answer = {questionLink, answerValue};
+
+        let surveyResponse = Object.assign({}, this.state.surveyResponse);
+        surveyResponse.uniqueSurveyId = reponseUniqueSurveyId;
+        surveyResponse.originatorId = responseOriginatorId;
+        console.log("Survey Reponse SUID", surveyResponse.uniqueSurveyId);
         let answer = {questionLink, answerValue};
-
+        let questionLinkPrevious = answer.questionLink;
+        if(!surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+            surveyResponse.answers.push(answer);
+        } else if(surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+            surveyResponse.answers[index] = answer;
+        }
+        console.log('ANSWERS', surveyResponse);
         console.log("(Answer: " + answer.questionLink + ", " + answer.answerValue + "), ");
 
-        answers.push(answer);
-        console.log("AnswerList: " + answers[answer]);
-
-        this.setState({surveys});
+        this.setState({surveyResponse: surveyResponse});
     }
 
     // Handles numeric question responses
     handleNumericChange(event) {
+        let answers = [];
 
         const {surveys} = this.props;
         const {survey} = this.props;
@@ -186,7 +224,7 @@ SurveyResponsePage.propTypes = {
     survey: PropTypes.object,
     actions: PropTypes.object.isRequired,
     location: PropTypes.object,
-    numAjaxRequestsInProgress: PropTypes.func
+    numAjaxRequestsInProgress: PropTypes.number
 };
 
 function getSurveyBySuid(surveys, suid) {
@@ -199,6 +237,7 @@ function getSurveyBySuid(surveys, suid) {
 function mapStateToProps(state, ownProps) {
     const {query} =  ownProps.location;
     const suid = query.suid;
+    const originatorId = query.originatorId;
     /*console.log(suid);
      console.log("QUERY", query);*/
 
@@ -216,6 +255,7 @@ function mapStateToProps(state, ownProps) {
 
    /* console.log(survey);*/
     return {
+        surveyResponse: state.surveyResponse,
         survey: survey,
         surveys: state.surveys,
         numAjaxRequestsInProgress: state.numAjaxRequestsInProgress
@@ -225,7 +265,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(surveyActions, dispatch)
+        actions: bindActionCreators(surveyResponseActions, dispatch)
     };
 }
 
