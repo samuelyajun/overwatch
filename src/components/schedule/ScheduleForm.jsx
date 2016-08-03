@@ -39,8 +39,8 @@ class ScheduleForm extends React.Component {
             schedule: {
                 id: '',
                 templateUri: '',
-                frequency: 'ONE_TIME',//'ONE_TIME'
-
+                templateName: '',
+                frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
                 respondents: []
@@ -76,7 +76,6 @@ class ScheduleForm extends React.Component {
                 length: ''
               },
               templateUri: {
-
                 required: ''
               },
               startDate: {
@@ -90,12 +89,12 @@ class ScheduleForm extends React.Component {
         };
     }
 
-   
+
 
     onClickSubmit() {
         if (this.isFormValid()) {
+            console.log("props log: ",this.props.templateUri);
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
-            
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -273,13 +272,12 @@ console.log("this.state.schedule:",this.state.schedule)
                     <div className="row">
                         <div className="col-md-4">
                             <SelectInput
-
                                 name="templateUri"
                                 label="Select a Template"
                                 value={this.state.schedule.templateUri}
                                 onChange={this.onUpdate}
                                 options={templateOptions}
-                                error={this.state.errors.errorTemplateRequired}
+                                error={this.state.errors.templateUri.required}
 
                             />
                         </div>

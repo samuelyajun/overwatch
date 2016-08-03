@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
 const ScheduleList = ({schedules, onUpdate}) => {
-    
+
     return (
         <table className = "table table-hover">
             <thead>
@@ -22,7 +22,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                 {
                     schedules.map(schedule => {
                         return (
-                            <ScheduleListRow key={schedule.id} schedule={schedule} onUpdate={onUpdate}/>
+                            <ScheduleListRow key={schedule.id} schedule={cleanSchedules(schedule)} onUpdate={onUpdate}/>
                         );
                     })
                 }
@@ -32,23 +32,30 @@ const ScheduleList = ({schedules, onUpdate}) => {
 };
 
 function cleanSchedules(schedule){
+  console.log("Cleaning Schedules...");
     let clientAttribute = "";
     let projectAttribute = "";
     let projectAttributes = schedule.respondents[0].allowedAttributes;
+    let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
+
+    //regex changes the first letter of each word to upper case
+    newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+
     for (let attribute of projectAttributes) {
-        if(attribute.attributeTypes.name === "Client"){
+
+        if(attribute.attributeType.name === "CLIENT"){
+
             clientAttribute = attribute.attributeValue;
         }
-        if(attribute.attributeTypes.name === "Project"){
+        if(attribute.attributeType.name === "PROJECT"){
             projectAttribute = attribute.attributeValue;
         }
     }
-    let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
-    //regex changes the first letter of each word to upper case
-    newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
-   // schedule.frequency = newScheduleFrequency;
-    //schedule.client = clientAttribute;
-    //schedule.project = projectAttribute;
+
+    console.log("schedule", schedule);
+    schedule.frequency = newScheduleFrequency;
+    schedule.client = clientAttribute;
+    schedule.project = projectAttribute;
     return schedule;
 }
 
