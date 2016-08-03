@@ -26,7 +26,7 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
-        return fetch(Urls.BASE_SCHEDULE_URL).then((response) => {
+        return fetch(`/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
@@ -40,7 +40,7 @@ export function loadSchedules() {
 
 export function getScheduleById(scheduleId) {
     return function(dispatch) {
-       //dispatch(initiateAjaxRequest());
+       dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
             //console.log('Returned response is ' , response);
             response.json().then(json => {

@@ -39,8 +39,8 @@ class ScheduleForm extends React.Component {
             schedule: {
                 id: '',
                 templateUri: '',
-                frequency: 'ONE_TIME',//'ONE_TIME'
-
+                templateName: '',
+                frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
                 respondents: []
@@ -76,7 +76,6 @@ class ScheduleForm extends React.Component {
                 length: ''
               },
               templateUri: {
-
                 required: ''
               },
               startDate: {
@@ -90,12 +89,12 @@ class ScheduleForm extends React.Component {
         };
     }
 
-   
+
 
     onClickSubmit() {
         if (this.isFormValid()) {
+            console.log("props log: ",this.props.templateUri);
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
-            
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -126,7 +125,6 @@ class ScheduleForm extends React.Component {
         let val = event.target.value;
         let schedule = Object.assign({}, this.state.schedule);
         let errors = Object.assign({},this.state.errors);
-
         schedule[property] = event.target.value;
         this.setState({errors: errors});
         return this.setState({schedule});
@@ -274,13 +272,12 @@ class ScheduleForm extends React.Component {
                     <div className="row">
                         <div className="col-md-4">
                             <SelectInput
-
-                                name="template"
+                                name="templateUri"
                                 label="Select a Template"
-                                value={this.state.schedule.template}
+                                value={this.state.schedule.templateUri}
                                 onChange={this.onUpdate}
                                 options={templateOptions}
-                                error={this.state.errors.errorStartDateRequired}
+                                error={this.state.errors.templateUri.required}
 
                             />
                         </div>
