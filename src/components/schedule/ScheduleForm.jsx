@@ -34,11 +34,12 @@ class ScheduleForm extends React.Component {
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
         this.attrToUrls = this.attrToUrls.bind(this);
+        this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
 
         this.state = {
             schedule: {
                 id: '',
-                templateUri: '',
+                templateURI: '',
                 templateName: '',
                 frequency: 'ONE_TIME',
                 startDate: '',
@@ -75,7 +76,7 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-              templateUri: {
+              templateURI: {
                 required: ''
               },
               startDate: {
@@ -93,7 +94,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            console.log("props log: ",this.props.templateUri);
+          //  console.log("props log: ",this.props.templateURI);
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
@@ -101,7 +102,7 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-console.log("this.state.schedule:",this.state.schedule)
+//console.log("this.state.schedule:",this.state.schedule)
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
@@ -126,6 +127,18 @@ console.log("this.state.schedule:",this.state.schedule)
         let schedule = Object.assign({}, this.state.schedule);
         let errors = Object.assign({},this.state.errors);
         schedule[property] = event.target.value;
+        this.setState({errors: errors});
+        return this.setState({schedule});
+    }
+
+    onUpdateTemplate(event){
+        let index = event.target.selectedIndex;
+        let selectedText = event.target.options[index].text;
+        const property = event.target.name;
+        let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
+        schedule[property] = event.target.value;
+        schedule.templateName = selectedText;
         this.setState({errors: errors});
         return this.setState({schedule});
     }
@@ -272,12 +285,12 @@ console.log("this.state.schedule:",this.state.schedule)
                     <div className="row">
                         <div className="col-md-4">
                             <SelectInput
-                                name="templateUri"
+                                name="templateURI"
                                 label="Select a Template"
-                                value={this.state.schedule.templateUri}
-                                onChange={this.onUpdate}
+                                value={this.state.schedule.templateURI}
+                                onChange={this.onUpdateTemplate}
                                 options={templateOptions}
-                                error={this.state.errors.templateUri.required}
+                                error={this.state.errors.templateURI.required}
 
                             />
                         </div>

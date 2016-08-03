@@ -22,7 +22,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                 {
                     schedules.map(schedule => {
                         return (
-                            <ScheduleListRow key={schedule.id} schedule={cleanSchedules(schedule)} onUpdate={onUpdate}/>
+                            <ScheduleListRow key={schedule.id} schedule={schedule} onUpdate={onUpdate}/>
                         );
                     })
                 }
@@ -53,9 +53,9 @@ function cleanSchedules(schedule){
     }
 
     console.log("schedule", schedule);
-    schedule.frequency = newScheduleFrequency;
-    schedule.client = clientAttribute;
-    schedule.project = projectAttribute;
+   // schedule.frequency = newScheduleFrequency;
+    //schedule.client = clientAttribute;
+    //schedule.project = projectAttribute;
     return schedule;
 }
 
