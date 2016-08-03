@@ -170,21 +170,39 @@ class SurveyResponsePage extends React.Component {
 
     // Handles numeric question responses
     handleNumericChange(event) {
-        let answers = [];
-
-        const {survey} = this.props;
+        const {query} = this.props.location;
+        const survey = this.state.survey;
+        const surveyResponse = Object.assign({}, this.state.surveyResponse);
         const index = event.target.name;
 
         survey.template.questions[index].value = event.target.value;
         let questionId = survey.template.questions[index].id;
 
-        let answerValue = event.target.value;
-        let questionLink = "/question/" + questionId;
+        const responseUniqueSurveyId = survey.suid;
+        const responseOriginatorId = query.originatorId;
 
-        let answer = {questionLink, answerValue};
-        console.log("(Answer: " + answer.questionLink + ", " + answer.answerValue + "), ");
-        answers.push(answer);
-        console.log("AnswerList: " + answers[answer]);
+        let value = event.target.value;
+        console.log("ANSWER VALUE", value)
+        let questionLink = "/question/" + questionId;
+        let answer = {questionLink, value};
+        console.log("value", value);
+        let questionLinkPrevious = answer.questionLink;
+        surveyResponse.uniqueSurveyId = responseUniqueSurveyId;
+        surveyResponse.originatorId = responseOriginatorId;
+        if(!surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+            surveyResponse.answers.push(answer);
+        } else if(surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+            surveyResponse.answers[index] = answer;
+        }
+
+        console.log("AnswerList: " + surveyResponse);
+        console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
+
+        return this.setState(
+            {
+                surveyResponse: surveyResponse
+            }
+        )
 
     }
 

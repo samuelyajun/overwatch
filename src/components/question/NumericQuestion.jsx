@@ -18,12 +18,12 @@ const questionStyling = {
 let tableStyle = "table table-hover table-striped";
 
 
-const NumericQuestionList = ({survey, handleNumericChange}) => {
+const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
     return (
         <table className={tableStyle}>
             <tbody>
             {
-                survey.template.questions.map((question, index) => {
+                surveyProps.template.questions.map((question, index) => {
                         return (
                             <tr key={index}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
@@ -48,7 +48,7 @@ const NumericQuestionList = ({survey, handleNumericChange}) => {
 };
 
 NumericQuestionList.propTypes = {
-    survey: PropTypes.object.isRequired,
+    surveyProps: PropTypes.object.isRequired,
     handleNumericChange: PropTypes.func
 };
 
