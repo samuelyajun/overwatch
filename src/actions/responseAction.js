@@ -20,7 +20,8 @@ export function saveSurveyResponse(surveyResponse) {
         console.log(request);
         return fetch(`response/surveyResponses`, request).then((response) => {
             response.json().then((postedSurveyResponse) => {
-                dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
+                // dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
+                console.log(postedSurveyResponse);
             });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));

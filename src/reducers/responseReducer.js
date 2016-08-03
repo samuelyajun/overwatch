@@ -5,7 +5,10 @@ export default function responseReducer(state = initialState.surveyResponse, act
     switch (action.type) {
 
         case types.SAVE_SURVEY_RESPONSE_SUCCESS:
-            return action.surveyResponse;
+            return [
+                ...state,
+                Object.assign({}, action.surveyResponse)
+            ];
 
         default:
             return state;
