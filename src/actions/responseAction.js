@@ -7,7 +7,7 @@ export function saveSurveyResponseSuccess(surveyResponse) {
 
 export function saveSurveyResponse(surveyResponse) {
     console.log("SaveSurvey reached");
-
+    console.log("SurveyResponse in ACTION", surveyResponse);
     const request = {
         method: 'POST',
         headers: {
@@ -17,11 +17,10 @@ export function saveSurveyResponse(surveyResponse) {
         body: JSON.stringify(surveyResponse)
     };
     return (dispatch) => {
-        dispatch(initiateAjaxRequest());
+        console.log(request);
         return fetch(`response/surveyResponses`, request).then((response) => {
             response.json().then((postedSurveyResponse) => {
                 dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
-                console.log(postedSurveyResponse);
             });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));
