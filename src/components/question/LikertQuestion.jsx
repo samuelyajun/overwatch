@@ -31,7 +31,7 @@ const radioStyle = {
 
 let tableStyle = "table table-hover table-striped";
 
-const LikertQuestionList = ({surveyProps, questions, handleChange}) => {
+const LikertQuestionList = ({surveyProps, handleChange}) => {
 
     return (
         <table className={tableStyle}>
@@ -57,7 +57,7 @@ const LikertQuestionList = ({surveyProps, questions, handleChange}) => {
                                  <td colSpan="5">
                                     <RadioGroup
                                         name={String(index)}
-                                        selectedValue={this.state.question.selectedValue}
+                                        selectedValue={question.selectedValue}
                                         onChange={handleChange}>
                                         <ul style={radioGroupStyle}>
                                             <li style={radioStyle}>

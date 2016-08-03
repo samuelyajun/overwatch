@@ -45,8 +45,7 @@ class SurveyResponsePage extends React.Component {
     componentWillReceiveProps(nextProps) {
         if(this.props.survey.id !== nextProps.survey.id) {
             this.setState({
-                survey: Object.assign({}, nextProps.survey),
-                surveys: Object.assign({}, nextProps.surveys)
+                survey: Object.assign({}, nextProps.survey)
             });
         }
 
@@ -54,7 +53,6 @@ class SurveyResponsePage extends React.Component {
     onSubmit(event) {
         console.log("onSubmit reached");
         event.preventDefault();
-        this.setState
         if (!this.validateForm()) {
             return;
         }
@@ -73,7 +71,7 @@ class SurveyResponsePage extends React.Component {
         let isValid = true;
         const {query} = this.props.location;
         const responseOriginatorId = query.originatorId;
-        const surveyObject = this.props.survey;
+        const surveyObject = Object.assign({}, this.state.survey);
         console.log("RESPONSE STATE AT VALIDATE", this.state.surveyResponse);
         if(!responseOriginatorId) {
             toastr.options = {
@@ -96,31 +94,31 @@ class SurveyResponsePage extends React.Component {
             toastr.error('No Originator ID is detected. Please provide an orignator ID.');
             isValid = false;
         }
-        // surveyObject.template.questions.map(
-        //     (question, index) => {
-        //         if(question.value === undefined && (question.selectedValue === undefined|| question.selectedValue === null)){
-        //             toastr.options = {
-        //                 "closeButton": true,
-        //                 "debug": false,
-        //                 "newestOnTop": false,
-        //                 "progressBar": false,
-        //                 "positionClass": "toast-top-right",
-        //                 "preventDuplicates": true,
-        //                 "onclick": null,
-        //                 "showDuration": "300",
-        //                 "hideDuration": "1000",
-        //                 "timeOut": "3000",
-        //                 "extendedTimeOut": "700",
-        //                 "showEasing": "swing",
-        //                 "hideEasing": "linear",
-        //                 "showMethod": "fadeIn",
-        //                 "hideMethod": "fadeOut"
-        //             };
-        //             toastr.error('Question ' + ++index +' is missing a response');
-        //             isValid = false;
-        //         }
-        //     }
-        // );
+        surveyObject.template.questions.map(
+            (question, index) => {
+                if(question.value === undefined && (question.selectedValue === undefined|| question.selectedValue === null)){
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "3000",
+                        "extendedTimeOut": "700",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error('Question ' + ++index +' is missing a response');
+                    isValid = false;
+                }
+            }
+        );
 
 
 
@@ -134,35 +132,24 @@ class SurveyResponsePage extends React.Component {
     handleChange(value, event) {
         const {query} = this.props.location;
         const field = event.target.name;
-        const {survey} = this.props;
-        // let someValueTarget = event.target.value;
-        // console.log(someValueTarget);
-
 
         let surveyObject = Object.assign({}, this.state.survey);
         console.log("SURVEY STATE **********", this.state.survey);
-        console.log("SURVEYs STATE ^^^^^^^^^^^^", this.state.surveys);
+        console.log(this.state);
+
         const responseUniqueSurveyId = surveyObject.suid;
         const responseOriginatorId = query.originatorId;
-        // this.state.survey.template.questions[field].selectedValue = value;
         surveyObject.template.questions[field].selectedValue = value;
-        const answerValue = value;
-
-
-            // let questionLink =  "/questions/" + survey.template.questions[index].id;
-        console.log("answerValue", answerValue);
-
-
         // survey.template.questions[index].selectedValue = value;
         // let answerValue = surveyObject.template.questions[index].selectedValue;
         // console.log("ANSWERVALUE", event.target.value);
 
-        let questionLink = "/questions/" + survey.template.questions[field].id;
+        let questionLink = "/questions/" + surveyObject.template.questions[field].id;
 
         let surveyResponse = Object.assign({}, this.state.surveyResponse);
         surveyResponse.uniqueSurveyId = responseUniqueSurveyId;
         surveyResponse.originatorId = responseOriginatorId;
-        let answer = {questionLink, answerValue};
+        let answer = {questionLink, value};
 
         let questionLinkPrevious = answer.questionLink;
         if(!surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
@@ -185,7 +172,6 @@ class SurveyResponsePage extends React.Component {
     handleNumericChange(event) {
         let answers = [];
 
-        const {surveys} = this.props;
         const {survey} = this.props;
         const index = event.target.name;
 
@@ -199,8 +185,6 @@ class SurveyResponsePage extends React.Component {
         console.log("(Answer: " + answer.questionLink + ", " + answer.answerValue + "), ");
         answers.push(answer);
         console.log("AnswerList: " + answers[answer]);
-
-        this.setState({surveys});
 
     }
 
@@ -251,7 +235,6 @@ class SurveyResponsePage extends React.Component {
 }
 
 SurveyResponsePage.propTypes = {
-    surveys: PropTypes.array.isRequired,
     survey: PropTypes.object,
     actions: PropTypes.object.isRequired,
     location: PropTypes.object,
@@ -282,13 +265,10 @@ function mapStateToProps(state, ownProps) {
     }
     console.log("STATE -> PROPS", state);
 
-   /* console.log(survey);*/
     return {
         surveyResponse: state.surveyResponse,
         survey: survey,
-        surveys: state.surveys,
         numAjaxRequestsInProgress: state.numAjaxRequestsInProgress
-
     };
 }
 

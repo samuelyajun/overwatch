@@ -10,11 +10,11 @@ const QuestionListRow = ({question, onChange, selectedValue}) => {
         <tr>
             <td>{question.id}</td>
             <td>{question.questionText}</td>
-            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
-            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
-            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
-            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
-            <td><RadioInput value = {question.responseValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.selectedValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.selectedValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.selectedValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.selectedValue} name = {question.id}/></td>
+            <td><RadioInput value = {question.selectedValue} name = {question.id}/></td>
         </tr>
     );
 };
