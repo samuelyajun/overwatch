@@ -18,9 +18,10 @@ export function saveSurveyResponse(surveyResponse) {
     };
     return (dispatch) => {
         console.log(request);
+        dispatch(initiateAjaxRequest());
         return fetch(`response/surveyResponses`, request).then((response) => {
             response.json().then((postedSurveyResponse) => {
-                // dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
+                dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
                 console.log(postedSurveyResponse);
             });
         }).catch((error) => {

@@ -45,7 +45,8 @@ class SurveyResponsePage extends React.Component {
     componentWillReceiveProps(nextProps) {
         if(this.props.survey.id !== nextProps.survey.id) {
             this.setState({
-                survey: Object.assign({}, nextProps.survey)
+                survey: Object.assign({}, nextProps.survey),
+                surveys: Object.assign({}, nextProps.surveys)
             });
         }
 
@@ -53,6 +54,12 @@ class SurveyResponsePage extends React.Component {
     onSubmit(event) {
         console.log("onSubmit reached");
         event.preventDefault();
+        console.log("STATE OF SURVEYS", this.state.surveys);
+        const surveyQuestions = this.state.survey.template.questions;
+        surveyQuestions.map(question => {
+            question['selectedValue'] = '';
+        });
+        this.setState({survey: this.state.survey});
         if (!this.validateForm()) {
             return;
         }
@@ -175,7 +182,7 @@ class SurveyResponsePage extends React.Component {
         const surveyResponse = Object.assign({}, this.state.surveyResponse);
         const index = event.target.name;
 
-        survey.template.questions[index].value = event.target.value;
+        survey.template.questions[index].selectedValue = event.target.value;
         let questionId = survey.template.questions[index].id;
 
         const responseUniqueSurveyId = survey.suid;
@@ -286,6 +293,7 @@ function mapStateToProps(state, ownProps) {
     return {
         surveyResponse: state.surveyResponse,
         survey: survey,
+        surveys: state.surveys,
         numAjaxRequestsInProgress: state.numAjaxRequestsInProgress
     };
 }
