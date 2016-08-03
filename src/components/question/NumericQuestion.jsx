@@ -30,7 +30,7 @@ const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6">
                                     <NumberInput
-                                        name={index}
+                                        name={`${index}`}
                                         type="number"
                                         min={question.answerType.minRange}
                                         max={question.answerType.maxRange}
