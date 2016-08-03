@@ -4,6 +4,7 @@ import reports from './reportReducer';
 import surveys from './surveyReducer';
 import templates from './templateReducer';
 import users from './userReducer';
+import surveyResponse from './responseReducer';
 import numAjaxRequestsInProgress from './ajaxStatusReducer';
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     surveys,
     templates,
     users,
+    surveyResponse,
     numAjaxRequestsInProgress
 });
 
