@@ -33,8 +33,7 @@ class SurveyResponsePage extends React.Component {
                 'answers': []
             },
             errors: {},
-            saving: false,
-
+            saving: false
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -52,9 +51,9 @@ class SurveyResponsePage extends React.Component {
 
     }
     onSubmit(event) {
-        console.log("onSubmit reached");
+        // console.log("onSubmit reached");
         event.preventDefault();
-        console.log("STATE OF SURVEYS", this.state.surveys);
+        // console.log("STATE OF SURVEYS", this.state.surveys);
         const surveyQuestions = this.state.survey.template.questions;
         surveyQuestions.map(question => {
             question['selectedValue'] = '';
@@ -63,7 +62,7 @@ class SurveyResponsePage extends React.Component {
         if (!this.validateForm()) {
             return;
         }
-        console.log("SURVEY RESPONSE STATE AT SUBMIT", this.state.surveyResponse);
+        // console.log("SURVEY RESPONSE STATE AT SUBMIT", this.state.surveyResponse);
         this.props.actions.saveSurveyResponse(this.state.surveyResponse);
         return this.setState(
             {
@@ -79,7 +78,7 @@ class SurveyResponsePage extends React.Component {
         const {query} = this.props.location;
         const responseOriginatorId = query.originatorId;
         const surveyObject = Object.assign({}, this.state.survey);
-        console.log("RESPONSE STATE AT VALIDATE", this.state.surveyResponse);
+        // console.log("RESPONSE STATE AT VALIDATE", this.state.surveyResponse);
         if(!responseOriginatorId) {
             toastr.options = {
                 "closeButton": true,
@@ -141,8 +140,8 @@ class SurveyResponsePage extends React.Component {
         const field = event.target.name;
 
         let surveyObject = Object.assign({}, this.state.survey);
-        console.log("SURVEY STATE **********", this.state.survey);
-        console.log(this.state);
+        // console.log("SURVEY STATE **********", this.state.survey);
+        // console.log(this.state);
 
         const responseUniqueSurveyId = surveyObject.suid;
         const responseOriginatorId = query.originatorId;
@@ -159,13 +158,18 @@ class SurveyResponsePage extends React.Component {
         let answer = {questionLink, value};
 
         let questionLinkPrevious = answer.questionLink;
-        if(!surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+        if(!surveyResponse.answers.filter((answer)=>
+            {
+                return answer.questionLink === questionLinkPrevious;
+            }).length>0) {
             surveyResponse.answers.push(answer);
-        } else if(surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+        } else if(surveyResponse.answers.filter((answer)=> {
+            return answer.questionLink === questionLinkPrevious;
+        }).length>0) {
             surveyResponse.answers[field] = answer;
         }
-        console.log('ANSWERS', surveyResponse);
-        console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
+        // console.log('ANSWERS', surveyResponse);
+        // console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
 
         return this.setState(
             {
@@ -189,62 +193,67 @@ class SurveyResponsePage extends React.Component {
         const responseOriginatorId = query.originatorId;
 
         let value = event.target.value;
-        console.log("ANSWER VALUE", value)
+        // console.log("ANSWER VALUE", value);
         let questionLink = "/question/" + questionId;
         let answer = {questionLink, value};
-        console.log("value", value);
         let questionLinkPrevious = answer.questionLink;
         surveyResponse.uniqueSurveyId = responseUniqueSurveyId;
         surveyResponse.originatorId = responseOriginatorId;
-        if(!surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+        if(!surveyResponse.answers.filter((answer)=> {
+            return answer.questionLink === questionLinkPrevious;
+        }).length>0) {
             surveyResponse.answers.push(answer);
-        } else if(surveyResponse.answers.filter((answer)=> {return answer.questionLink === questionLinkPrevious}).length>0) {
+        } else if(surveyResponse.answers.filter((answer)=> {
+            return answer.questionLink === questionLinkPrevious;
+        }).length>0) {
             surveyResponse.answers[index] = answer;
         }
 
-        console.log("AnswerList: " + surveyResponse);
-        console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
+        // console.log("AnswerList: " + surveyResponse);
+        // console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
 
         return this.setState(
             {
                 surveyResponse: surveyResponse
             }
-        )
+        );
 
     }
 
     render() {
         const {survey, numAjaxRequestsInProgress} = this.props;
-        console.log(survey);
-       /* console.log(this.props.location);*/
         let surveyObject;
         if(this.props.location.search === "") {
-            //surveyObject = <div>NO SURVEYS</div>
             surveyObject =
-            <div>
-                <SurveyResponsePageHeader
-                    headerTitle={errorHeader}
-                    subHeader={errorSubHeader}
-                />
-                <MessageComponent className={this.state.showError ? 'hidden' : ''}
-                      text={errorMsg}
-                />
-            </div>
+                (
+                    <div>
+                    <SurveyResponsePageHeader
+                        headerTitle={errorHeader}
+                        subHeader={errorSubHeader}
+                    />
+                    <MessageComponent className={this.state.showError ? 'hidden' : ''}
+                          text={errorMsg}
+                    />
+                </div>
+                );
 
         } else if (survey && !numAjaxRequestsInProgress > 0){
             /*console.log(survey);*/
-            surveyObject =<div>
-                <SurveyResponsePageHeader
-                    headerTitle={survey.template.name + ' Survey'}
-                />
-                <SurveyResponseForm
-                    className={this.state.showSurveyForm ? '' : 'hidden'}
-                    surveyProps = {this.state.survey}
-                    onSubmit={this.onSubmit}
-                    handleChange={this.handleChange}
-                    handleNumericChange={this.handleNumericChange}
-                />
-            </div>
+            surveyObject =
+                (
+                    <div>
+                        <SurveyResponsePageHeader
+                            headerTitle={survey.template.name + ' Survey'}
+                        />
+                        <SurveyResponseForm
+                            className={this.state.showSurveyForm ? '' : 'hidden'}
+                            surveyProps = {this.state.survey}
+                            onSubmit={this.onSubmit}
+                            handleChange={this.handleChange}
+                            handleNumericChange={this.handleNumericChange}
+                        />
+                    </div>
+                );
         }
         return (
             <div style={surveyContainer}>
@@ -288,7 +297,7 @@ function mapStateToProps(state, ownProps) {
     if(suid && state.surveys.length > 0) {
         survey = getSurveyBySuid(state.surveys, suid);
     }
-    console.log("STATE -> PROPS", state);
+    // console.log("STATE -> PROPS", state);
 
     return {
         surveyResponse: state.surveyResponse,

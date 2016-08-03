@@ -1,6 +1,6 @@
 import initialState from './initialState';
 import * as actionTypes from '../actions/actionTypes';
-var _ = require('lodash');
+let _ = require('lodash');
 
 export default function surveyReducer(state = initialState.surveys, action) {
 

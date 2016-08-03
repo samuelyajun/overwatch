@@ -9,7 +9,7 @@ const surveyPageOuterDiv = {
 };
 
 
-const SurveyResponseForm = ({ surveyProps, questions, surveyResponse, onSubmit, className, handleChange, handleNumericChange}) => {
+const SurveyResponseForm = ({ surveyProps, onSubmit, className, handleChange, handleNumericChange}) => {
 
     let submitButtonType = 'submit';
     let cancelButtonType = 'reset';
