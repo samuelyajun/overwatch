@@ -102,8 +102,8 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addUserLink(formattedSchedule);
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-
-            this.props.actions.createSchedule(formattedSchedule);
+console.log("this.state.schedule:",this.state.schedule)
+           // this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -126,7 +126,6 @@ class ScheduleForm extends React.Component {
         let val = event.target.value;
         let schedule = Object.assign({}, this.state.schedule);
         let errors = Object.assign({},this.state.errors);
-
         schedule[property] = event.target.value;
         this.setState({errors: errors});
         return this.setState({schedule});
@@ -275,12 +274,12 @@ class ScheduleForm extends React.Component {
                         <div className="col-md-4">
                             <SelectInput
 
-                                name="template"
+                                name="templateUri"
                                 label="Select a Template"
-                                value={this.state.schedule.template}
+                                value={this.state.schedule.templateUri}
                                 onChange={this.onUpdate}
                                 options={templateOptions}
-                                error={this.state.errors.errorStartDateRequired}
+                                error={this.state.errors.errorTemplateRequired}
 
                             />
                         </div>
