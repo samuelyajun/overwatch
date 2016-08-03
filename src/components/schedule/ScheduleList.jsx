@@ -29,44 +29,47 @@ const ScheduleList = ({schedules, onUpdate}) => {
             </tbody>
         </table>
     );
+
 };
 
-function cleanSchedules(schedule){
-  console.log("Cleaning Schedules...");
-    let clientAttribute = "";
-    let projectAttribute = "";
-    let projectAttributes = schedule.respondents[0].allowedAttributes;
-    let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
+// function cleanSchedules(schedule){
+//     console.log("here")
+//   const cleanedSchedule = Object.assign({}, schedule);
+//     let clientAttribute = "";
+//     let projectAttribute = "";
+//     let projectAttributes = schedule.respondents[0].allowedAttributes;
+//     console.log("projectAttributes",projectAttributes)
+//     let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
 
-    //regex changes the first letter of each word to upper case
-    newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+//     //regex changes the first letter of each word to upper case
+//     newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
 
-    for (let attribute of projectAttributes) {
+//     for (let attribute of projectAttributes) {
 
-        if(attribute.attributeType.name === "CLIENT"){
+//         if(attribute.attributeType.name === "CLIENT"){
 
-            clientAttribute = attribute.attributeValue;
-        }
-        if(attribute.attributeType.name === "PROJECT"){
-            projectAttribute = attribute.attributeValue;
-        }
-    }
+//             clientAttribute = attribute.attributeValue;
+//         }
+//         if(attribute.attributeType.name === "PROJECT"){
+//             projectAttribute = attribute.attributeValue;
+//         }
+//     }
 
-    console.log("schedule", schedule);
-   // schedule.frequency = newScheduleFrequency;
-    //schedule.client = clientAttribute;
-    //schedule.project = projectAttribute;
-    return schedule;
-}
+//     cleanedSchedule.frequency = newScheduleFrequency;
+//     cleanedSchedule.client = clientAttribute;
+//     cleanedSchedule.project = projectAttribute;
+//     return cleanedSchedule;
+// }
 
 ScheduleList.propTypes = {
     schedules: PropTypes.array.isRequired
 };
 
-function mapStateToProps(state, ownProps){
-    return {
-        schedules: state.schedules
-    };
-}
+// function mapStateToProps(state, ownProps){
+//     return {
+//         schedules: state.schedules
+//     };
+// }
 
-export default connect(mapStateToProps, null)(ScheduleList);
+// export default connect(mapStateToProps, null)(ScheduleList);
+export default ScheduleList;

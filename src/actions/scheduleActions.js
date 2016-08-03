@@ -28,8 +28,10 @@ export function loadSchedules() {
     return function(dispatch) {
         return fetch(`/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
+            console.log("load schedules", response)
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
+                console.log("load schedules", scheduleArray)
                 dispatch(loadSchedulesSuccess(scheduleArray));
             });
         }).catch((error) => {
@@ -136,7 +138,7 @@ export function createSchedule(schedule) {
         },
         body: JSON.stringify(schedule)
     };
-
+//console.log(JSON.stringify("schedule in createSchedule",schedule));
     return function (dispatch) {
         dispatch(initiateAjaxRequest());
         return fetch(Urls.BASE_SCHEDULE_URL, request).then((response) => {

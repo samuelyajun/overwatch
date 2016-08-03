@@ -39,7 +39,7 @@ class ScheduleForm extends React.Component {
         this.state = {
             schedule: {
                 id: '',
-                templateURI: '',
+                templateUri: '',
                 templateName: '',
                 frequency: 'ONE_TIME',
                 startDate: '',
@@ -76,7 +76,7 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-              templateURI: {
+              templateUri: {
                 required: ''
               },
               startDate: {
@@ -94,18 +94,19 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-          //  console.log("props log: ",this.props.templateURI);
+          //  console.log("props log: ",this.props.templateUri);
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-            console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
+           // console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
 //console.log("this.state.schedule:",this.state.schedule)
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
+            
             browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
@@ -285,12 +286,12 @@ class ScheduleForm extends React.Component {
                     <div className="row">
                         <div className="col-md-4">
                             <SelectInput
-                                name="templateURI"
+                                name="templateUri"
                                 label="Select a Template"
-                                value={this.state.schedule.templateURI}
+                                value={this.state.schedule.templateUri}
                                 onChange={this.onUpdateTemplate}
                                 options={templateOptions}
-                                error={this.state.errors.templateURI.required}
+                                error={this.state.errors.templateUri.required}
 
                             />
                         </div>

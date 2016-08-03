@@ -7,7 +7,7 @@ import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
-
+import ScheduleForm from './ScheduleFormStateless.jsx';
 import {connect} from 'react-redux';
 
 const scheduleOuterDivStyle = {
@@ -19,35 +19,28 @@ class UpdateSchedule extends React.Component {
       super(props, context);
   }
 
-  componentWillMount() {
-     this.props.actions.getScheduleById(this.props.scheduleId);
-  }
+  // componentWillMount() {
+  //    this.props.actions.getScheduleById(this.props.scheduleId);
+  // }
 
 render() {
-
-        if (this.props.schedule && this.props.schedule.id) {
-        //if(1 == 2) {
+        console.log("PROPS SCHEDULE IN UPDate schedule Page", this.props.schedule);
+        const {schedule} = this.props;
           return (
             <div>
-                 <div style={scheduleOuterDivStyle}>
+              {(schedule)?
+                <div style={scheduleOuterDivStyle}>
                      <h1>Update schedule</h1>
-                     <UpdateScheduleForm />
-                 </div>
+                     <ScheduleForm />
+                 </div>:
+                  <div style={scheduleOuterDivStyle}>
+                    <h1>Update schedule</h1>
+                    <p>Searching for schedule...</p>
+                  </div>
+              }                 
            </div>
            );
         } 
-        //else {
-          return(
-            <div>
-              <div style={scheduleOuterDivStyle}>
-                  <h1>Update schedule</h1>
-                  <p>Searching for schedule...</p>
-              </div>
-            </div>
-          )
-       // }
-  }
-
 }
 
 function getScheduleById(schedules, id) {

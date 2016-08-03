@@ -11,6 +11,10 @@ const scheduleOuterDiv = {
     marginTop: '75px'
 };
 
+const alignCenterStyle = {
+    textAlign: 'center'
+
+};
 class ManageSchedulePage extends React.Component {
     constructor(props, context){
         super(props, context);
@@ -41,16 +45,13 @@ class ManageSchedulePage extends React.Component {
   }
 
     render() {
-        const schedules = this.props.schedules;
+        const {schedules} = this.props;
 
-        let alignCenterStyle = {
-            textAlign: 'center'
 
-        };
         return (
             <div style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
-                <ScheduleList onUpdate={this.onClickUpdate}/>
+                <ScheduleList schedules = {schedules} onUpdate={this.onClickUpdate}/>
             </div>
         );
     }
