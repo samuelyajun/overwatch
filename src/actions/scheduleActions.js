@@ -138,12 +138,14 @@ export function createSchedule(schedule) {
         },
         body: JSON.stringify(schedule)
     };
-//console.log(JSON.stringify("schedule in createSchedule",schedule));
+
     return function (dispatch) {
         dispatch(initiateAjaxRequest());
         return fetch(Urls.BASE_SCHEDULE_URL, request).then((response) => {
             response.json().then((postedSchedule) => {
                 dispatch(createScheduleSuccess(postedSchedule));
+                dispatch(loadSchedules());
+
             });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));

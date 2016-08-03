@@ -35,6 +35,7 @@ class ScheduleForm extends React.Component {
         this.validateSeven = this.validateSeven.bind(this);
         this.attrToUrls = this.attrToUrls.bind(this);
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
+        this.viewSchedules = this.viewSchedules.bind(this);
 
         this.state = {
             schedule: {
@@ -106,12 +107,16 @@ class ScheduleForm extends React.Component {
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            
-            browserHistory.push("/schedules/manage");
+            setTimeout(this.viewSchedules,400);
+            //browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
+    }
+
+    viewSchedules(){
+        browserHistory.push("/schedules/manage");
     }
 
     attrToUrls(attributes){
@@ -197,8 +202,6 @@ class ScheduleForm extends React.Component {
         const index = parseInt(event.target.name);
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
-        //safe to assume only one attribute since the others get add on save
-        console.log(schedule.respondents[index]);
         schedule.respondents[index].allowedAttributes[0].attributeValue = role;
         return this.setState({schedule});
     }
