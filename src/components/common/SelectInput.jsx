@@ -19,6 +19,7 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
     if (defaultOptionValue === '') {
         isDisabled = true;
     }
+
     return (
         <div>
             <div className="form-group" style={style}>
@@ -57,5 +58,4 @@ SelectInput.propTypes = {
     options: PropTypes.arrayOf(PropTypes.object),
     icon: PropTypes.string
 };
-
 export default SelectInput;

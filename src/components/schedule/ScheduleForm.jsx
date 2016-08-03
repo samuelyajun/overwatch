@@ -7,11 +7,12 @@ import RespondentList from './RespondentList.jsx';
 import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
+import * as scheduleActions from '../../actions/scheduleActions';
+import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as scheduleActions from '../../actions/scheduleActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
@@ -21,7 +22,7 @@ class ScheduleForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        const errorSurveyRequired = 'Survey is required';
+        const errorTemplateRequired = 'Template is required';
         const errorUsernameRequired = 'Username is required';
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
@@ -33,10 +34,14 @@ class ScheduleForm extends React.Component {
         this.updateRole = this.updateRole.bind(this);
         this.validateStartDate = this.validateStartDate.bind(this);
         this.validateSeven = this.validateSeven.bind(this);
+        this.attrToUrls = this.attrToUrls.bind(this);
+        this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
 
         this.state = {
             schedule: {
-                survey: '',
+                id: '',
+                templateUri: '',
+                templateName: '',
                 frequency: 'ONE_TIME',
                 startDate: '',
                 endDate: '',
@@ -44,19 +49,22 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
+                    id:"http://localhost:8090/allowedAttributes/7",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
+                    id:"http://localhost:8090/allowedAttributes/8",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    attributeValue: '',
+                    id:"http://localhost:8090/allowedAttributes/5",
+                    attributeValue: 'Beaverton',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -69,7 +77,7 @@ class ScheduleForm extends React.Component {
                 required: '',
                 length: ''
               },
-              survey: {
+              templateUri: {
                 required: ''
               },
               startDate: {
@@ -83,19 +91,23 @@ class ScheduleForm extends React.Component {
         };
     }
 
+
+
     onClickSubmit() {
-
         if (this.isFormValid()) {
-
-            const attributes = Object.assign([], this.state.allowedAttributes);
+          //  console.log("props log: ",this.props.templateUri);
+            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
-            ScheduleUtils.addAttributes(formattedSchedule, attributes);
+            ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
+           // console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
+//console.log("this.state.schedule:",this.state.schedule)
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
+            
             browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
@@ -103,13 +115,36 @@ class ScheduleForm extends React.Component {
         }
     }
 
+      redirectToPage() {
+        browserHistory.push('/schedules/manage');
+    }
+
+    attrToUrls(attributes){
+        var newAttrs=[];
+          attributes.forEach(function(attr){
+                newAttrs.push(attr.id);
+            })
+        return newAttrs;
+    }
+
     onUpdate(event) {
         const property = event.target.name;
         let val = event.target.value;
         let schedule = Object.assign({}, this.state.schedule);
         let errors = Object.assign({},this.state.errors);
-
         schedule[property] = event.target.value;
+        this.setState({errors: errors});
+        return this.setState({schedule});
+    }
+
+    onUpdateTemplate(event){
+        let index = event.target.selectedIndex;
+        let selectedText = event.target.options[index].text;
+        const property = event.target.name;
+        let schedule = Object.assign({}, this.state.schedule);
+        let errors = Object.assign({},this.state.errors);
+        schedule[property] = event.target.value;
+        schedule.templateName = selectedText;
         this.setState({errors: errors});
         return this.setState({schedule});
     }
@@ -127,6 +162,7 @@ class ScheduleForm extends React.Component {
         this.setState({errors: errors});
         return this.setState({attributes});
     }
+
 
     updateUsers(event) {
         const isChecked = event.target.checked;
@@ -160,11 +196,14 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
+
+
     updateRole(event) {
         const index = parseInt(event.target.name);
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         //safe to assume only one attribute since the others get add on save
+        console.log(schedule.respondents[index]);
         schedule.respondents[index].allowedAttributes[0].attributeValue = role;
         return this.setState({schedule});
     }
@@ -174,6 +213,7 @@ class ScheduleForm extends React.Component {
                 this.validateEndDate() &&
                 this.validateSeven();
     }
+
 
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
@@ -228,8 +268,15 @@ class ScheduleForm extends React.Component {
         return isValid;
     }
 
+    formatTemplateLink(link){
+      const urlPreSplit = link.split('/');
+      const formatUrl = '/' + urlPreSplit[3] + '/' + urlPreSplit[4];
+
+      return formatUrl;
+    }
+
     render() {
-        const {schedules} = this.props;
+        const {schedules, templates} = this.props;
         const schedulePanel = {
             backgroundColor:'#999999',
             borderColor: '#999999',
@@ -239,10 +286,17 @@ class ScheduleForm extends React.Component {
           const marginTop = {
             marginTop: '20px'
         }
+        let templateOptions = [];
+        templates.map((template) => {
+          templateOptions.push( {
+            text: template.name,
+            value: this.formatTemplateLink(template._links.self.href)
+          })
+        })
 
         return(
             <div className="container">
-                <form className name="myForm" noValidate>
+                <form className="myForm" noValidate>
                     <div className="row">
                         <div className="panel">
                             <div className="panel-heading"  style={schedulePanel}><h4>1. General Information</h4></div>
@@ -250,37 +304,17 @@ class ScheduleForm extends React.Component {
                                    <div className="col-xs-6">
                                        <div className="row">
                                            <div className="col-md-6" style={marginTop}>
-                                               <SelectInput
-                                                   name="survey"
-                                                   label="Select a Survey"
-                                                   value={this.state.schedule.survey}
-                                                   onChange={this.onUpdate}
-                                                   defaultOptionValue=""
-                                                   defaultOptionLabel="--Select Name--"
-                                                   options={[
-                                                       {
-                                                           text: 'Sprint Checkup',
-                                                           value: 'SC'
-                                                       },
-                                                       {
-                                                           text: "SPD Team",
-                                                           value: "ST"
-                                                       },
-                                                       {
-                                                           text: "SPD Leaders",
-                                                           value: "SL"
-                                                       },
-                                                       {
-                                                           text: "EM Quantitative",
-                                                           value: "EMQ"
-                                                       },
-                                                       {
-                                                           text: "TL Quantitative",
-                                                           value: "TLQ"
-                                                       }
-                                                   ]}
-                                                   error={this.state.errors.survey.required}
-                                               />
+                                            <SelectInput
+                                                name="templateUri"
+                                                label="Select a Template"
+                                                value={this.state.schedule.templateUri}
+                                                onChange={this.onUpdateTemplate}
+                                                options={templateOptions}
+                                                defaultOptionValue=""
+                                                defaultOptionLabel="--Select Name--"
+                                                error={this.state.errors.templateUri.required}
+
+                                            />
                                            </div>
                                            <div className="col-md-6"  style={marginTop}>
                                            <SelectInput
@@ -360,8 +394,7 @@ class ScheduleForm extends React.Component {
                                                        name="PROJECT"
                                                        label="Project"
                                                        defaultOptionValue=""
-                                                       defaultOptionLabel="--Select Project"
-                                                       defaultOption="-choose-"
+                                                       defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[]}
@@ -373,25 +406,27 @@ class ScheduleForm extends React.Component {
                                        <div className="col-md-6">
                                            <ul className="list-unstyled">
                                                <li>
-                                                   <SelectInput
-                                                       name="OFFICE"
-                                                       label="Office"
-                                                       defaultOptionValue=""
-                                                       defaultOptionLabel="--Select Office--"
-                                                       value={this.state.allowedAttributes[2].attributeValue}
-                                                       onChange={this.onUpdateAttribute}
-                                                       options={[
-                                                           {
-                                                               text: 'Beaverton',
-                                                               value: 'beaverton'
-                                                           },
-                                                           {
-                                                               text: "Baltimore",
-                                                               value: "baltimore"
-                                                           }
-                                                       ]}
-                                                       icon="glyphicon glyphicon-flag"
-                                                       />
+                                                    <SelectInput
+                                                        name="OFFICE"
+                                                        label="Office"
+                                                        defaultOptionValue=""
+                                                        defaultOptionLabel="--Select Location--"
+                                                        value={this.state.allowedAttributes[2].attributeValue}
+                                                        onChange={this.onUpdateAttribute}
+                                                        options={[
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/5",
+                                                                text: 'Beaverton',
+                                                                value: 'Beaverton'
+                                                            },
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/6",
+                                                                text: "Baltimore",
+                                                                value: "Baltimore"
+                                                            }
+                                                             ]}
+                                                        icon="glyphicon glyphicon-globe"
+                                                    />
                                                </li>
                                            </ul>
                                        </div>
@@ -419,11 +454,10 @@ class ScheduleForm extends React.Component {
                             </div>
                         </div>
                     </div>
-
                     <br />
                     <div className="col-md-12">
                         <Button label = {'Submit'} type = {'button'} buttonClassName = {'btn btn-primary'} onClick={this.onClickSubmit}/>
-                        <Button label = {'Cancel'} type = {'button'} buttonClassName = {'btn btn-secondary'}/>
+                        <Button label = {'Cancel'} type = {'button'} buttonClassName = {'btn btn-secondary'} onClick={this.redirectToPage}/>
                     </div>
                 </form>
             </div>
@@ -434,21 +468,24 @@ class ScheduleForm extends React.Component {
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    templates: PropTypes.array.isRequired
 };
 
 
 
 function mapStateToProps(state, ownProps) {
+   console.log('in mapStateToProps() in scheduleForm ');
     return {
         users: state.users,
-        schedules: state.schedules
+        schedules: state.schedules,
+        templates: state.templates
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions), dispatch)
     };
 }
 

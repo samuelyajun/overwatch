@@ -10,6 +10,19 @@ class ScheduleUtils {
         });
     }
 
+      static addRoles(schedule, attributes) {
+        schedule.respondents.forEach((respondent) => {
+            respondent.allowedAttributes = attributes.concat(respondent.allowedAttributes[0].attributeValue);
+        });
+    }
+
+    static addAttributes2(schedule, attributes) {
+        schedule.respondents.forEach((respondent) => {
+          
+            respondent.allowedAttributes = attributes;
+        });
+    }
+
     static addUserLink(schedule) {
         schedule.respondents.forEach((respondent) => {
             respondent.user = HateoasUtils.getObjectLink(respondent.user);

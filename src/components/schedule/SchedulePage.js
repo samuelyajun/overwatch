@@ -3,7 +3,8 @@ import Header from '../common/Header';
 import ScheduleForm from "./ScheduleForm.jsx";
 
 const scheduleOuterDivStyle = {
-    marginTop: '75px'
+    marginTop: '75px',
+    marginBottom:'50px'
 };
 
 class SchedulePage extends React.Component {

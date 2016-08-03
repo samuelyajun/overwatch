@@ -14,7 +14,8 @@ class HateoasUtils {
         const selfLink = links.self.href;
         const relativeUri = LINK_REGEX.exec(selfLink);
 
-        return relativeUri[1];
+        //return relativeUri[1];
+        return selfLink;
     }
 
     //returns the json object from a call to a rest repo

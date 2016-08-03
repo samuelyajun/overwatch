@@ -6,32 +6,37 @@ const noMargin = {
 }
 
 const RespondentListRow = ({respondent, onChange, index}) => {
+
     return (
         <div className='well col-md-5 col-md-offset-1' >
             <span className='col-md-5'><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
             <SelectInput
                 style={noMargin}
                 name={`${index}`}
-                value={respondent.allowedAttributes[0].value}
+                value={respondent.allowedAttributes[0].attributeValue}
                 onChange={onChange}
                 defaultOptionValue= ""
                 defaultOptionLabel= "--Select Role--"
                 options={[
                     {
-                        text: "Engagement Manager",
-                        value: "EM"
+                        id:1,
+                        text: 'Engagement Manager',
+                        value: "http://localhost:8090/allowedAttributes/1"
                     },
                     {
+                        id:2,
                         text: "Tech Lead",
-                        value: "TL"
+                        value: "http://localhost:8090/allowedAttributes/2"
                     },
                     {
+                        id:3,
                         text: "Business Analyst",
-                        value: "BA"
+                        value: "http://localhost:8090/allowedAttributes/3"
                     },
                     {
+                        id:4,
                         text: "Developer",
-                        value: "DEV"
+                        value: "http://localhost:8090/allowedAttributes/4"
                     }
                 ]}
                 className='col-md-7'
