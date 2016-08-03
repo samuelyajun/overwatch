@@ -103,7 +103,7 @@ class ScheduleForm extends React.Component {
 
             console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
 console.log("this.state.schedule:",this.state.schedule)
-           // this.props.actions.createSchedule(formattedSchedule);
+            this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
