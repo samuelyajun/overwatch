@@ -33,7 +33,6 @@ class ManageSchedulePage extends React.Component {
 
     render() {
         const {schedules} = this.props;
-        console.log("ManageSchedulePage render", this.props.schedules[0]);
         return (
             <div className="container" style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
@@ -57,7 +56,6 @@ ManageSchedulePage.contextTypes = {
 };
 
 function mapStateToProps(state, ownProps){
-    console.log("mapStateToProps", state)
     return {
         schedules: state.schedules
     };
