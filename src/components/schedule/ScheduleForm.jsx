@@ -156,7 +156,6 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
-        console.log("attribute",attribute);
         this.setState({errors: errors});
         return this.setState({attributes});
     }

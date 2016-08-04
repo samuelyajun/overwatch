@@ -30,7 +30,7 @@ render() {
               {(schedule)?
                 <div style={scheduleOuterDivStyle}>
                      <h1>Update schedule</h1>
-                     <ScheduleForm startDate={this.props.schedule.startDate}/>
+                     <ScheduleForm startDate={this.props.schedule.startDate} everything={this.props.schedule} />
                  </div>:
                   <div style={scheduleOuterDivStyle}>
                     <h1>Update schedule</h1>
