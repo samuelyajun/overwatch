@@ -105,7 +105,7 @@ class ScheduleForm extends React.Component {
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(this.viewSchedules,400);
+            setTimeout(this.viewSchedules,300);
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');

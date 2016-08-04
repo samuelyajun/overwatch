@@ -29,7 +29,39 @@ export function loadSchedules() {
             dispatch(initiateAjaxRequest());
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
-                dispatch(loadSchedulesSuccess(scheduleArray));
+                let cleanedSchedules=[];
+                scheduleArray.map(schedule => {
+                const cleanedSchedule = Object.assign({}, schedule);
+
+                let clientAttribute = "";
+                let projectAttribute = "";
+
+                let projectAttributes = schedule.respondents[0].allowedAttributes;
+               
+                let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
+
+                //regex changes the first letter of each word to upper case
+                newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+
+                    for (let attribute of projectAttributes) {
+
+                        if(attribute.attributeType.name === "CLIENT"){
+
+                            clientAttribute = attribute.attributeValue;
+                        }
+                        if(attribute.attributeType.name === "PROJECT"){
+                            projectAttribute = attribute.attributeValue;
+                        }
+                    }
+                
+                cleanedSchedule.frequency = newScheduleFrequency;
+                cleanedSchedule.client = clientAttribute;
+                cleanedSchedule.project = projectAttribute;
+              
+                cleanedSchedules.push(cleanedSchedule);
+                })
+
+                dispatch(loadSchedulesSuccess(cleanedSchedules));
             });
         }).catch((error) => {
             throw(error);
