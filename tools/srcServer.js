@@ -25,6 +25,14 @@ const scheduleProxyOptions = {
     }
 };
 
+const responseProxyOptions = {
+    target: 'http://localhost:8050',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/response': '/' //remove /schedule from url before making request
+    }
+};
+
 
 const surveyProxyOptions = {
     target: 'http://localhost:8070',
@@ -47,6 +55,7 @@ const reportProxyOptions = {
 app.use('/schedule', proxy(scheduleProxyOptions));
 app.use('/survey', proxy(surveyProxyOptions));
 app.use('/report', proxy(reportProxyOptions));
+app.use('/response', proxy(responseProxyOptions));
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,

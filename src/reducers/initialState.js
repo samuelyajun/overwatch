@@ -4,5 +4,6 @@ export default {
     templates: [],
     surveys: [],
     questions: [],
+    surveyResponse: {},
     numAjaxRequestsInProgress : 0
 };

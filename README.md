@@ -40,3 +40,16 @@ After a few minutes, you should now be able to start project by running:
 
 Observe that changes you make to the `components` and other `js` files are updated live via hot reloading.
 
+### RUNNING THE BACK ENDS
+ In each console window
+    For Each Back-end console window:
+        1. "mvn clean install"
+    
+    for Survey:
+        2. "java -jar target/overwatch-survey-0.1-SNAPSHOT.jar"
+    
+    for Survey-Response:
+        2. "java -jar target/overwatch-survey-response-0.1-SNAPSHOT.jar"
+    
+    for Schedule:
+        2. "java -jar target/overwatch-schedule-0.1-SNAPSHOT.jar"
