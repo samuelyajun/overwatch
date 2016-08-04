@@ -101,7 +101,7 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
-
+console.log(formattedSchedule);
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
@@ -156,6 +156,7 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
+        console.log("attribute",attribute);
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -379,8 +380,19 @@ class ScheduleForm extends React.Component {
                                                        defaultOptionValue=""
                                                        defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
-                                                       onChange={this.onUpdate}
-                                                       options={[]}
+                                                       onChange={this.onUpdateAttribute}
+                                                       options={[
+                                                          {
+                                                                id:"http://localhost:8090/allowedAttributes/5",
+                                                                text: 'Beaverton',
+                                                                value: 'Beaverton'
+                                                            },
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/6",
+                                                                text: "Baltimore",
+                                                                value: "Baltimore"
+                                                            }
+                                                        ]}
                                                        icon="glyphicon glyphicon-user"
                                                    />
                                                </li>
@@ -391,8 +403,19 @@ class ScheduleForm extends React.Component {
                                                        defaultOptionValue=""
                                                        defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
-                                                       onChange={this.onUpdate}
-                                                       options={[]}
+                                                       onChange={this.onUpdateAttribute}
+                                                       options={[
+                                                          {
+                                                                id:"http://localhost:8090/allowedAttributes/5",
+                                                                text: 'Beaverton',
+                                                                value: 'Beaverton'
+                                                            },
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/6",
+                                                                text: "Baltimore",
+                                                                value: "Baltimore"
+                                                            }
+                                                        ]}
                                                        icon="glyphicon glyphicon-briefcase"
                                                    />
                                                </li>
