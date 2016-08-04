@@ -8,7 +8,7 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as templateActions from '../../actions/templateActions'
+import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
@@ -96,7 +96,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            const attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -117,10 +117,10 @@ class ScheduleForm extends React.Component {
     }
 
     attrToUrls(attributes){
-        var newAttrs=[];
+        const newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
-            })
+            });
         return newAttrs;
     }
 
@@ -277,18 +277,18 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        }
+        };
 
           const marginTop = {
             marginTop: '20px'
-        }
+        };
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
             text: template.name,
             value: this.formatTemplateLink(template._links.self.href)
-          })
-        })
+          });
+        });
 
         return(
             <div className="container">

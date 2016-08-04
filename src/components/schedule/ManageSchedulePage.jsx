@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
-import UpdateSchedule from './UpdateSchedule.jsx'
+import UpdateSchedule from './UpdateSchedule.jsx';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 
 
@@ -85,7 +85,7 @@ class ManageSchedulePage extends React.Component {
             cleanedSchedule.project = projectAttribute;
           
             newSchedules.push(cleanedSchedule);
-            })
+            });
         return newSchedules;
     }
 
@@ -105,7 +105,7 @@ if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
                 <p>Searching for schedule...</p>
             </div>
-            )
+            );
     }
 }
 
@@ -113,6 +113,7 @@ if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
 
 ManageSchedulePage.propTypes = {
     schedules: PropTypes.array.isRequired,
+    schedule: PropTypes.object,
     actions: PropTypes.object.isRequired
 };
 

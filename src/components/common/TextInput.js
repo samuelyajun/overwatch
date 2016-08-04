@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const dateWidth = {
     width: '80%'
-}
+};
 
 const TextInput = ({name, label, onChange, placeholder, value, error, type, icon}) => {
     let wrapperClass = 'form-group';
@@ -14,13 +14,13 @@ const TextInput = ({name, label, onChange, placeholder, value, error, type, icon
         showIcon = '';
     } else {
         showIcon = 'hidden';
-    };
+    }
 
     if (label) {
         showLabel = '';
     } else {
         showLabel = 'hidden';
-    };
+    }
 
     if(type === 'date') {
         inputStyle = dateWidth;

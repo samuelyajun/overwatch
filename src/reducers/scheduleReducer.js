@@ -14,7 +14,7 @@ export default function scheduleReducer(state = initialState.schedules, action) 
         ];
 
         case types.UPDATE_SCHEDULE_SUCCESS:
-        console.log("schedule reducer after update:", action.schedule)
+        console.log("schedule reducer after update:", action.schedule);
         return [
           ...state.filter(schedule => schedule.id !== action.schedule.id),
           Object.assign({}, action.schedule)

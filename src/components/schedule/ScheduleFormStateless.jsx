@@ -12,6 +12,7 @@ const ScheduleFormStateless = ({startDate }) => {
 };
 
 ScheduleFormStateless.propTypes = {
+    startDate: PropTypes.object
 };
 
 export default ScheduleFormStateless;

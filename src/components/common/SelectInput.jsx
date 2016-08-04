@@ -8,13 +8,13 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
         showIcon = '';
     } else {
         showIcon = 'hidden';
-    };
+    }
 
     if (label) {
         showLabel = '';
     } else {
         showLabel = 'hidden';
-    };
+    }
 
     if (defaultOptionValue === '') {
         isDisabled = true;
@@ -25,7 +25,7 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
             <div className="form-group" style={style}>
                 <label htmlFor={name} className={showLabel}>{label}</label>
                 <div className="field input-group">
-                  <span className={'input-group-addon ' + showIcon }><i className={icon}></i></span>
+                  <span className={'input-group-addon ' + showIcon}><i className={icon}></i></span>
                     {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
                     <select
                         name={name}
@@ -56,6 +56,7 @@ SelectInput.propTypes = {
     value: PropTypes.string,
     error: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.object),
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    style: PropTypes.object
 };
 export default SelectInput;
