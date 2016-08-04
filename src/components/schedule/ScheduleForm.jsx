@@ -321,7 +321,6 @@ class ScheduleForm extends React.Component {
                                                label="Frequency"
                                                value={this.state.schedule.frequency}
                                                defaultOptionLabel = "One Time"
-                                               defaultOptionValue = "ONE_TIME"
                                                onChange={this.onUpdate}
                                                options={[
                                                    {
@@ -379,12 +378,28 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="CLIENT"
                                                        label="Client"
-                                                       defaultOption="-choose-"
-                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
                                                        onChange={this.onUpdate}
-                                                       options={[]}
+                                                       options={[
+                                                           {
+                                                                text: 'Catalyst DevWorks',
+                                                                value: 'Catalyst DevWorks'
+                                                            },
+                                                            {
+                                                                text: "Cambia",
+                                                                value: "Cambia"
+                                                            },
+                                                             {
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                text: "Cockram",
+                                                                value: "Cockram"
+                                                            }
+
+                                                        ]}
                                                        icon="glyphicon glyphicon-user"
                                                    />
                                                </li>
@@ -392,11 +407,27 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="PROJECT"
                                                        label="Project"
-                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdate}
-                                                       options={[]}
+                                                       options={[
+                                                              {
+                                                                text: 'Overwatch',
+                                                                value: 'Overwatch'
+                                                            },
+                                                            {
+                                                                text: "Mobile",
+                                                                value: "Mobile"
+                                                            },
+                                                             {
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                text: "3DS MAC and AutoCAD",
+                                                                value: "3DS MAC and AutoCAD"
+                                                            }
+                                                        ]}
                                                        icon="glyphicon glyphicon-briefcase"
                                                    />
                                                </li>
@@ -408,7 +439,6 @@ class ScheduleForm extends React.Component {
                                                     <SelectInput
                                                         name="OFFICE"
                                                         label="Office"
-                                                        defaultOptionValue=""
                                                         defaultOptionLabel="--Select Location--"
                                                         value={this.state.allowedAttributes[2].attributeValue}
                                                         onChange={this.onUpdateAttribute}

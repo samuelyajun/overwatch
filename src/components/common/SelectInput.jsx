@@ -4,6 +4,8 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
     let isDisabled;
     let showIcon;
     let showLabel;
+
+
     if (icon) {
         showIcon = '';
     } else {
@@ -16,10 +18,6 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
         showLabel = 'hidden';
     };
 
-    if (defaultOptionValue === '') {
-        isDisabled = true;
-    }
-
     return (
         <div>
             <div className="form-group" style={style}>
@@ -30,10 +28,9 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
                     <select
                         name={name}
                         onChange={onChange}
-                        value={value}
-                        defaultValue={defaultOptionValue}
+                        defaultValue={defaultOptionLabel}
                         className="form-control">
-                        <option value={defaultOptionValue} disabled={isDisabled}>{defaultOptionLabel}</option>
+                        <option value={defaultOptionLabel} disabled>{defaultOptionLabel}</option>
                         {options.map((option) => {
                             return <option key={option.value} value={option.value}>{option.text}</option>;
                         })
