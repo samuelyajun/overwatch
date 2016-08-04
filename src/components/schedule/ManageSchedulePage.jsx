@@ -28,62 +28,59 @@ class ManageSchedulePage extends React.Component {
         this.cleanSchedules = this.cleanSchedules.bind(this);
     }
 
-    // componentWillMount(){
-    //     this.props.actions.loadSchedules();
-    // }
+    updateScheduleState(event) {
+        const field = event.target.name;
+        let schedule = this.state.schedule;
+        schedule[field] = event.target.value;
+        return this.setState({schedule: schedule});
+    }
 
-  updateScheduleState(event) {
-    const field = event.target.name;
-    let schedule = this.state.schedule;
-    schedule[field] = event.target.value;
-    return this.setState({schedule: schedule});
-  }
-
-  onClickUpdate(event) {
-    event.persist();
-    browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
-  }
+    onClickUpdate(event) {
+        event.persist();
+        console.log('/schedules/update/', event.currentTarget.value.id);
+        browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
+    }
 
 
-  scheduleRow(schedule, index){
+    scheduleRow(schedule, index){
       return (<div> key={index}>{schedule.templateURI}</div>);
-  }
+    }
 
-cleanSchedules(schedules){
-    let newSchedules=[];
-    const cleanedSchedules = Object.assign([], schedules);
-  
-      cleanedSchedules.map(schedule => {
-        const cleanedSchedule = Object.assign({}, schedule);
-
-        let clientAttribute = "";
-        let projectAttribute = "";
-        let projectAttributes = schedule.respondents[0].allowedAttributes;
-        console.log("projectAttributes",projectAttributes)
-        let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
-
-        //regex changes the first letter of each word to upper case
-        newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
-
-            for (let attribute of projectAttributes) {
-
-                if(attribute.attributeType.name === "CLIENT"){
-
-                    clientAttribute = attribute.attributeValue;
-                }
-                if(attribute.attributeType.name === "PROJECT"){
-                    projectAttribute = attribute.attributeValue;
-                }
-            }
-
-        cleanedSchedule.frequency = newScheduleFrequency;
-        cleanedSchedule.client = clientAttribute;
-        cleanedSchedule.project = projectAttribute;
+    cleanSchedules(schedules){
+        let newSchedules=[];
+        const cleanedSchedules = Object.assign([], schedules);
       
-        newSchedules.push(cleanedSchedule);
-        })
-    return newSchedules;
-}
+          cleanedSchedules.map(schedule => {
+            const cleanedSchedule = Object.assign({}, schedule);
+
+            let clientAttribute = "";
+            let projectAttribute = "";
+            let projectAttributes = schedule.respondents[0].allowedAttributes;
+            console.log("projectAttributes",projectAttributes)
+            let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
+
+            //regex changes the first letter of each word to upper case
+            newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
+
+                for (let attribute of projectAttributes) {
+
+                    if(attribute.attributeType.name === "CLIENT"){
+
+                        clientAttribute = attribute.attributeValue;
+                    }
+                    if(attribute.attributeType.name === "PROJECT"){
+                        projectAttribute = attribute.attributeValue;
+                    }
+                }
+
+            cleanedSchedule.frequency = newScheduleFrequency;
+            cleanedSchedule.client = clientAttribute;
+            cleanedSchedule.project = projectAttribute;
+          
+            newSchedules.push(cleanedSchedule);
+            })
+        return newSchedules;
+    }
 
     render() {
         const {schedules} = this.props;
