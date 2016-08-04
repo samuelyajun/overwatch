@@ -96,7 +96,6 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-          //  console.log("props log: ",this.props.templateUri);
             var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
