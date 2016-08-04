@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import Button from '../common/Button.jsx';
 
-const ScheduleFormStatless = ({startDate }) => {
+const ScheduleFormStateless = ({startDate }) => {
 	console.log("date",startDate);
     return (
         <div>
@@ -11,7 +11,7 @@ const ScheduleFormStatless = ({startDate }) => {
     );
 };
 
-ScheduleFormStatless.propTypes = {
+ScheduleFormStateless.propTypes = {
 };
 
-export default ScheduleFormStatless;
+export default ScheduleFormStateless;
