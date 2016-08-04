@@ -52,7 +52,7 @@ class ManageSchedulePage extends React.Component {
     }
 
     cleanSchedules(schedules){
-        console.log("in clean schedules");
+        console.log("in clean schedules XXXXXXXXXXXXXXXX");
         let newSchedules=[];
         const cleanedSchedules = Object.assign([], schedules);
       
@@ -91,8 +91,8 @@ class ManageSchedulePage extends React.Component {
 
     render() {
         const {schedules} = this.props;
-        console.log("ManageSchedulePage render", this.props.schedules[0].respondents[0].allowedAttributes);
-if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
+        console.log("ManageSchedulePage render", this.props.schedules[0]);
+if(this.props.schedules[0]){
         return (
             <div className="container" style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
