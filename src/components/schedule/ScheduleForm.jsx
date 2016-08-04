@@ -334,7 +334,7 @@ class ScheduleForm extends React.Component {
                                                    },
                                                    {
                                                        text: "4 Weeks",
-                                                       value: "MONTHLY"
+                                                       value: "FOUR_WEEKS"
                                                    }
                                                ]}
                                            />
