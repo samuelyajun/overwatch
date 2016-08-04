@@ -50,14 +50,14 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    id:"http://localhost:8090/allowedAttributes/7",
+                    id:"http://localhost:8090/allowedAttributes/9",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/8",
+                    id:"http://localhost:8090/allowedAttributes/13",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
@@ -375,7 +375,7 @@ class ScheduleForm extends React.Component {
                                                        name="CLIENT"
                                                        label="Client"
                                                        defaultOptionLabel="--Select Client--"
-                                                       value={this.state.allowedAttributes[3].attributeValue}
+                                                       value={this.state.allowedAttributes[0].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[
                                                             {
@@ -407,7 +407,7 @@ class ScheduleForm extends React.Component {
                                                        name="PROJECT"
                                                        label="Project"
                                                        defaultOptionLabel="--Select Project--"
-                                                       value={this.state.allowedAttributes[4].attributeValue}
+                                                       value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[
                                                              {
