@@ -28,10 +28,10 @@ class ManageSchedulePage extends React.Component {
         this.cleanSchedules = this.cleanSchedules.bind(this);
     }
 
-    componentWillMount() {
-        this.props.actions.loadSchedules();
-        //this.setState()
-    }
+    // componentWillMount() {
+    //     this.props.actions.loadSchedules();
+    //     //this.setState()
+    // }
 
     // updateScheduleState(event) {
     //     const field = event.target.name;
