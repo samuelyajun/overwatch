@@ -3,7 +3,7 @@ import RespondentListRow from './RespondentListRow.jsx';
 
 const RespondentList = ({respondents, onChange}) => {
     return (
-        <div>
+        <div className="col-xs-12">
             {
                 respondents.map((respondent, index) => {
                     return (

@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import Button from '../common/Button.jsx';
+import { browserHistory, Route } from 'react-router';
 
-const ScheduleListRow = ({schedule}) => {
+const ScheduleListRow = ({schedule, onUpdate}) => {
 
     let submitButtonClass = 'btn btn-default';
     let submitButtonType = 'Update';
@@ -17,10 +18,8 @@ const ScheduleListRow = ({schedule}) => {
 
     return (
         <tr>
-            <td style = {updateButtonStyle} >
-                <Button label = {submitButtonType} buttonClassName = {submitButtonClass} type="button" />
-            </td>
-            <td style = {alignMiddleStyle}>{schedule.survey}</td>
+            <td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>
+            <td style = {alignMiddleStyle}>{schedule.templateName}</td>
             <td style = {alignMiddleStyle}>{schedule.client}</td>
             <td style = {alignMiddleStyle}>{schedule.project}</td>
             <td style = {alignMiddleStyle}>{schedule.frequency}</td>
@@ -35,3 +34,4 @@ ScheduleListRow.propTypes = {
 };
 
 export default ScheduleListRow;
+//<td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>
