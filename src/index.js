@@ -12,6 +12,7 @@ import App from './container/App';
 import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
+import UpdateSchedule from './components/schedule/UpdateSchedule.jsx';
 import ReportPage from './components/report/ReportPage';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
 
@@ -35,6 +36,7 @@ render(
                 <IndexRoute component={HomePage} />
                 <Route path="schedules" component={SchedulePage} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
+                <Route path="schedules/update/:id" component={UpdateSchedule} />
                 <Route path="report" component={ReportPage} />
             </Route>
             <Route path="surveys" component={SurveyResponsePage} />
