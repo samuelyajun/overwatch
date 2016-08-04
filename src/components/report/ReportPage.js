@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import * as reportActions from '../../actions/reportActions';
 import Button from '../common/Button';
 import ReportList from './ReportList.js';
+import {Link} from 'react-router';
+
 const reportOuterDivStyle = {
     marginTop: '75px'
 };
@@ -20,11 +22,12 @@ class ReportPage extends React.Component {
         return (
             <div className="container-fluid" style={reportOuterDivStyle}>
                 <div>
-                <h1>Report Page</h1>
-                <a href={reportsLink} className="btn btn-info " role="button">Generate New Report</a>
+                <h1>Current Reports</h1>
+                {/*<a href={reportsLink} className="btn btn-info " role="button">Generate New Report</a>*/}
                 </div>
-                {
-                    <ReportList reports={reports} />
+                {(reports.length>0)?
+                    <ReportList reports={reports} />:
+                    <div>NO REPORTS. Please click to <Link to={`/schedules`}>schedule Surveys.</Link></div>
                 }
             </div>
         );

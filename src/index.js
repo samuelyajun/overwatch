@@ -37,7 +37,8 @@ render(
                 <Route path="schedules" component={SchedulePage} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="schedules/update/:id" component={UpdateSchedule} />
-                <Route path="report" component={ReportPage} />
+                <Route path="reports" component={ReportPage} />
+
             </Route>
             <Route path="surveys" component={SurveyResponsePage} />
         </Router>
