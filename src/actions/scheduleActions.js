@@ -20,7 +20,6 @@ export function createScheduleSuccess(schedule) {
 }
 
 export function updateScheduleSuccess(schedule) {
- // console.log(schedule);
     return {type: types.UPDATE_SCHEDULE_SUCCESS, schedule};
 }
 
@@ -47,89 +46,15 @@ export function getScheduleById(scheduleId) {
             console.log('Returned response is ' , response);
             response.json().then(json => {
                 let schedule = Object.assign({}, json);
-                //debugger;
-                //console.log('Retrieved schedule ', schedule);
                 dispatch(getScheduleByIdSuccess(schedule));
             });
         }).catch((error) => {
-           // console.log('getScheduleById() error is ', error);
             throw(error);
         });
     };
   }
 
-  /*export function getScheduleById(id) {
-     console.log('id in getScheduleById() is ', id);
-      return function(dispatch) {
-         console.log('between 2 returns');
-         dispatch(initiateAjaxRequest());
-          return fetch(`/schedule/schedules/${id}`).then((response) => {
-              console.log('Returned response is ' , response);
-              response.json().then(json => {
-                  let schedule = Object.assign({}, json);
-                  console.log('Retrieved schedule ', schedule);
-                  dispatch(getScheduleByIdSuccess(schedule));
-              });
-          }).catch((error) => {
-              console.log('getScheduleById() error is ', error);
-              throw(error);
-          });
-      };
-    }*/
-
-   /*debugger;
-   return dispatch => {
-   fetch(`/schedule/schedules`, (response) => {
-     if(response.status == 200){
-       dispatch(getScheduleByIdSuccess(response.json)); // Use a normal function to set the received state
-     }else {
-       console.log('Error occured');
-     }
-   })
- }*/
-
-
-
-    /*return function(dispatch) {
-        return fetch(`/schedule/schedules/${id}`).then((response) => {
-            console.log('Returned response is ' , response);
-            //response.json().then(json => {
-            //    let schedule = Object.assign({}, json);
-            //    console.log('Retrieved schedule ', schedule);
-            //    dispatch(getScheduleByIdSuccess(schedule));
-            });
-        }).catch((error) => {
-            console.log('getScheduleById() error is ', error);
-            throw(error);
-        });
-    };*/
-
-
-    /*return function(dispatch) {
-        return fetch(`/schedule/schedules/${id}`, (response) => {
-            console.log('Returned response is ' , response);
-            if(response.status == 200){
-              dispatch(getScheduleByIdSuccess(response.json)); // Use a normal function to set the received state
-            }
-         })
-     };*/
-
-
-
-/*export function saveSchedule(schedule) {
-  console.log('Schedule in saveSchedule() in scheduleActions ', schedule);
-  return function (dispatch) {
-    dispatch(initiateAjaxRequest());
-    return ScheduleApi.saveSchedule(schedule).then(schedule => {
-      schedule.id ? dispatch(updateScheduleSuccess(schedule)) :
-        dispatch(createScheduleSuccess(schedule));
-    }).catch(error => {
-      dispatch(ajaxRequestError(error));
-      throw(error);
-    });
-  };*/
-
-export function createSchedule(schedule) {
+ export function createSchedule(schedule) {
     const request = {
         method: 'post',
         headers: {
@@ -151,13 +76,6 @@ export function createSchedule(schedule) {
             dispatch(ajaxRequestError(error));
             throw(error);
         });
-        // return ScheduleApi.saveSchedule(schedule).then(schedule => {
-        //   schedule.id ? dispatch(updateScheduleSuccess(schedule)) :
-        //     dispatch(createScheduleSuccess(schedule));
-        // }).catch(error => {
-        //   dispatch(ajaxRequestError(error));
-        //   throw(error);
-        // });
     };
 }
 

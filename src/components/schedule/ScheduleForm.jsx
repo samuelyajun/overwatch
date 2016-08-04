@@ -102,13 +102,10 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-           // console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-            //console.log("this.state.schedule:",this.state.schedule)
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             setTimeout(this.viewSchedules,400);
-            //browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');

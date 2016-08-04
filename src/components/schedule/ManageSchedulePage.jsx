@@ -15,6 +15,7 @@ const alignCenterStyle = {
     textAlign: 'center'
 
 };
+
 class ManageSchedulePage extends React.Component {
     constructor(props, context){
         super(props, context);
