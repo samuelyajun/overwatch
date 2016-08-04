@@ -50,14 +50,14 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    id:"http://localhost:8090/allowedAttributes/7",
+                    id:"http://localhost:8090/allowedAttributes/9",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/8",
+                    id:"http://localhost:8090/allowedAttributes/13",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
@@ -96,7 +96,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            const attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -117,7 +117,7 @@ class ScheduleForm extends React.Component {
     }
 
     attrToUrls(attributes){
-        const newAttrs=[];
+        let newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
             });
@@ -306,7 +306,6 @@ class ScheduleForm extends React.Component {
                                                 value={this.state.schedule.templateUri}
                                                 onChange={this.onUpdateTemplate}
                                                 options={templateOptions}
-                                                defaultOptionValue=""
                                                 defaultOptionLabel="--Select Name--"
                                                 error={this.state.errors.templateUri.required}
 
@@ -318,7 +317,6 @@ class ScheduleForm extends React.Component {
                                                label="Frequency"
                                                value={this.state.schedule.frequency}
                                                defaultOptionLabel = "One Time"
-                                               defaultOptionValue = "ONE_TIME"
                                                onChange={this.onUpdate}
                                                options={[
                                                    {
@@ -376,21 +374,29 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="CLIENT"
                                                        label="Client"
-                                                       defaultOption="-choose-"
-                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
-                                                       onChange={this.onUpdateAttribute}
+                                                       onChange={this.onUpdate}
                                                        options={[
-                                                          {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
-                                                                text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/7",
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/8",
+                                                                text: "Cockram",
+                                                                value: "Cockram"
+                                                            },
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/9",
+                                                                text: 'Catalyst DevWorks',
+                                                                value: 'Catalyst DevWorks'
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                id:"http://localhost:8090/allowedAttributes/10",
+                                                                text: "Cambia",
+                                                                value: "Cambia"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-user"
@@ -400,20 +406,29 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="PROJECT"
                                                        label="Project"
-                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
-                                                       onChange={this.onUpdateAttribute}
+                                                       onChange={this.onUpdate}
                                                        options={[
-                                                          {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
-                                                                text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/11",
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/12",
+                                                                text: "3DS MAC and AutoCAD",
+                                                                value: "3DS MAC and AutoCAD"
+                                                            },
+                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/13",
+                                                                text: 'Overwatch',
+                                                                value: 'Overwatch'
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                id:"http://localhost:8090/allowedAttributes/14",
+                                                                text: "Mobile",
+                                                                value: "Mobile"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-briefcase"
@@ -427,7 +442,6 @@ class ScheduleForm extends React.Component {
                                                     <SelectInput
                                                         name="OFFICE"
                                                         label="Office"
-                                                        defaultOptionValue=""
                                                         defaultOptionLabel="--Select Location--"
                                                         value={this.state.allowedAttributes[2].attributeValue}
                                                         onChange={this.onUpdateAttribute}

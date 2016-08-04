@@ -59,7 +59,7 @@ export function loadSchedules() {
                 cleanedSchedule.project = projectAttribute;
               
                 cleanedSchedules.push(cleanedSchedule);
-                })
+                });
 
                 dispatch(loadSchedulesSuccess(cleanedSchedules));
             });

@@ -8,7 +8,7 @@ const noMargin = {
 const RespondentListRow = ({respondent, onChange, index}) => {
 
     return (
-        <div className="well col-md-5 col-md-offset-1" >
+        <div className="well col-md-5 col-md-offset-1">
             <span className="col-md-5"><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
             <SelectInput
                 style={noMargin}
