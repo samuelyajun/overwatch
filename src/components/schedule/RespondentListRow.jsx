@@ -3,13 +3,13 @@ import SelectInput from '../common/SelectInput.jsx';
 
 const noMargin = {
     marginBottom: '0px'
-}
+};
 
 const RespondentListRow = ({respondent, onChange, index}) => {
 
     return (
-        <div className='well col-md-5 col-md-offset-1' >
-            <span className='col-md-5'><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
+        <div className="well col-md-5 col-md-offset-1">
+            <span className="col-md-5"><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
             <SelectInput
                 style={noMargin}
                 name={`${index}`}
@@ -39,7 +39,7 @@ const RespondentListRow = ({respondent, onChange, index}) => {
                         value: "http://localhost:8090/allowedAttributes/4"
                     }
                 ]}
-                className='col-md-7'
+                className="col-md-7"
             />
         </div>
     );

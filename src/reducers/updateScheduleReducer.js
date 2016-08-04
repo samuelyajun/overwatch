@@ -2,7 +2,6 @@ import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
 export default function scheduleReducer(state = initialState.scheduleToUpdate, action) {
-console.log("get schedule:",action.schedule)
     switch (action.type) {
         case types.GET_SCHEDULE_BY_ID_SUCCESS:
         	return action.schedule;

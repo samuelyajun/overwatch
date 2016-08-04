@@ -19,19 +19,18 @@ class UpdateSchedule extends React.Component {
       super(props, context);
   }
 
-  // componentWillMount() {
-  //    this.props.actions.getScheduleById(this.props.scheduleId);
-  // }
+  componentWillMount() {
+    this.props.actions.getScheduleById(this.props.params.id);
+  }
 
 render() {
-        console.log("PROPS SCHEDULE IN UPDate schedule Page", this.props.schedule);
         const {schedule} = this.props;
           return (
             <div>
               {(schedule)?
                 <div style={scheduleOuterDivStyle}>
                      <h1>Update schedule</h1>
-                     <ScheduleForm />
+                     <ScheduleForm startDate={this.props.schedule.startDate}/>
                  </div>:
                   <div style={scheduleOuterDivStyle}>
                     <h1>Update schedule</h1>
@@ -42,15 +41,6 @@ render() {
            );
         } 
 }
-
-function getScheduleById(schedules, id) {
-  const schedule = schedules.filter(schedule => schedule.id == id);
- // console.log('schedule.length is ' , schedule.length);
-  //console.log('Updating Schedule ...' , schedule[0]);
-  if (schedule.length) return schedule[0]; //since filter returns an array, have to grab the first.
-  return null;
-}
-
 
 function mapStateToProps(state, ownProps) {
 

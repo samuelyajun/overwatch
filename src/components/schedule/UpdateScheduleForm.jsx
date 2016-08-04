@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+/*import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
@@ -384,7 +384,7 @@ console.log("new respondents:", newRespondents );
           //return allowedAttributesArray[i].attributeValue;
         }
       }
-    }*/
+    }
 
 
     getLocationAttributeValue() {
@@ -641,3 +641,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpdateScheduleForm);
+*/

@@ -8,7 +8,7 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as templateActions from '../../actions/templateActions'
+import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
@@ -96,20 +96,16 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-          //  console.log("props log: ",this.props.templateUri);
-            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-           // console.log('***Schedule in ScheduleForm*** ', formattedSchedule);
-            //console.log("this.state.schedule:",this.state.schedule)
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(this.viewSchedules,400);
-            //browserHistory.push("/schedules/manage");
+            setTimeout(this.viewSchedules,300);
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -121,10 +117,10 @@ class ScheduleForm extends React.Component {
     }
 
     attrToUrls(attributes){
-        var newAttrs=[];
+        let newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
-            })
+            });
         return newAttrs;
     }
 
@@ -160,6 +156,7 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
+        console.log("attribute",attribute);
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -280,18 +277,18 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        }
+        };
 
           const marginTop = {
             marginTop: '20px'
-        }
+        };
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
             text: template.name,
             value: this.formatTemplateLink(template._links.self.href)
-          })
-        })
+          });
+        });
 
         return(
             <div className="container">
@@ -309,7 +306,6 @@ class ScheduleForm extends React.Component {
                                                 value={this.state.schedule.templateUri}
                                                 onChange={this.onUpdateTemplate}
                                                 options={templateOptions}
-                                                defaultOptionValue=""
                                                 defaultOptionLabel="--Select Name--"
                                                 error={this.state.errors.templateUri.required}
 
@@ -379,26 +375,29 @@ class ScheduleForm extends React.Component {
                                                        name="CLIENT"
                                                        label="Client"
                                                        defaultOptionLabel="--Select Client--"
-                                                       value={this.state.allowedAttributes[0].attributeValue}
+                                                       value={this.state.allowedAttributes[3].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[
-                                                           {
-                                                                text: 'Catalyst DevWorks',
-                                                                value: 'Catalyst DevWorks'
-                                                            },
                                                             {
-                                                                text: "Cambia",
-                                                                value: "Cambia"
-                                                            },
-                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/7",
                                                                 text: "Cake Systems",
                                                                 value: "Cake Systems"
                                                             },
                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/8",
                                                                 text: "Cockram",
                                                                 value: "Cockram"
+                                                            },
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/9",
+                                                                text: 'Catalyst DevWorks',
+                                                                value: 'Catalyst DevWorks'
+                                                            },
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/10",
+                                                                text: "Cambia",
+                                                                value: "Cambia"
                                                             }
-
                                                         ]}
                                                        icon="glyphicon glyphicon-user"
                                                    />
@@ -408,24 +407,28 @@ class ScheduleForm extends React.Component {
                                                        name="PROJECT"
                                                        label="Project"
                                                        defaultOptionLabel="--Select Project--"
-                                                       value={this.state.allowedAttributes[1].attributeValue}
+                                                       value={this.state.allowedAttributes[4].attributeValue}
                                                        onChange={this.onUpdate}
                                                        options={[
-                                                              {
-                                                                text: 'Overwatch',
-                                                                value: 'Overwatch'
-                                                            },
-                                                            {
-                                                                text: "Mobile",
-                                                                value: "Mobile"
-                                                            },
                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/11",
                                                                 text: "Cake Systems",
                                                                 value: "Cake Systems"
                                                             },
                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/12",
                                                                 text: "3DS MAC and AutoCAD",
                                                                 value: "3DS MAC and AutoCAD"
+                                                            },
+                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/13",
+                                                                text: 'Overwatch',
+                                                                value: 'Overwatch'
+                                                            },
+                                                            {
+                                                                id:"http://localhost:8090/allowedAttributes/14",
+                                                                text: "Mobile",
+                                                                value: "Mobile"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-briefcase"
@@ -504,7 +507,6 @@ ScheduleForm.propTypes = {
 
 
 function mapStateToProps(state, ownProps) {
-   console.log('in mapStateToProps() in scheduleForm ');
     return {
         users: state.users,
         schedules: state.schedules,

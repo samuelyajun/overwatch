@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import { browserHistory, Route, Link } from 'react-router';
 import Button from '../common/Button.jsx';
-import { browserHistory, Route } from 'react-router';
+
 
 const ScheduleListRow = ({schedule, onUpdate}) => {
 
@@ -34,3 +34,4 @@ ScheduleListRow.propTypes = {
 };
 
 export default ScheduleListRow;
+//<td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>
