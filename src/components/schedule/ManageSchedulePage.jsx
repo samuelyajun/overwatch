@@ -24,21 +24,25 @@ class ManageSchedulePage extends React.Component {
         };
 
         this.onClickUpdate = this.onClickUpdate.bind(this);
-        this.updateScheduleState = this.updateScheduleState.bind(this);
+      //  this.updateScheduleState = this.updateScheduleState.bind(this);
         this.cleanSchedules = this.cleanSchedules.bind(this);
     }
 
-    updateScheduleState(event) {
-        const field = event.target.name;
-        let schedule = this.state.schedule;
-        schedule[field] = event.target.value;
-        console.log("updateScheduleState",event.target.value )
-        return this.setState({schedule: schedule});
+    componentWillMount() {
+        this.props.actions.loadSchedules();
+        //this.setState()
     }
+
+    // updateScheduleState(event) {
+    //     const field = event.target.name;
+    //     let schedule = this.state.schedule;
+    //     schedule[field] = event.target.value;
+    //     console.log("updateScheduleState",event.target.value )
+    //     return this.setState({schedule: schedule});
+    // }
 
     onClickUpdate(event) {
         event.persist();
-        console.log('/schedules/update/', event.currentTarget.value.id);
         browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
     }
 
@@ -48,6 +52,7 @@ class ManageSchedulePage extends React.Component {
     }
 
     cleanSchedules(schedules){
+        console.log("in clean schedules");
         let newSchedules=[];
         const cleanedSchedules = Object.assign([], schedules);
       
@@ -86,14 +91,21 @@ class ManageSchedulePage extends React.Component {
 
     render() {
         const {schedules} = this.props;
-        const cleanedSchedules = this.cleanSchedules(schedules);
-
+        console.log("ManageSchedulePage render", this.props.schedules[0].respondents[0].allowedAttributes);
+if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
         return (
             <div className="container" style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
-                <ScheduleList schedules = {cleanedSchedules} onUpdate={this.onClickUpdate}/>
+                <ScheduleList schedules = {this.cleanSchedules(schedules)} onUpdate={this.onClickUpdate}/>
             </div>
         );
+    }
+     return (
+            <div className="container" style={scheduleOuterDiv}>
+                <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
+                <p>Searching for schedule...</p>
+            </div>
+            )
     }
 }
 

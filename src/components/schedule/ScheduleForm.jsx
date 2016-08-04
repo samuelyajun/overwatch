@@ -101,7 +101,7 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
-console.log(formattedSchedule);
+
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
@@ -493,7 +493,6 @@ ScheduleForm.propTypes = {
 
 
 function mapStateToProps(state, ownProps) {
-   console.log('in mapStateToProps() in scheduleForm ');
     return {
         users: state.users,
         schedules: state.schedules,

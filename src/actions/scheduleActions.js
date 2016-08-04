@@ -27,10 +27,8 @@ export function loadSchedules() {
     return function(dispatch) {
         return fetch(`/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
-            console.log("load schedules", response)
             response.json().then(json => {
                 let scheduleArray = Object.assign([], json._embedded.schedules);
-                console.log("load schedules", scheduleArray)
                 dispatch(loadSchedulesSuccess(scheduleArray));
             });
         }).catch((error) => {
@@ -79,7 +77,6 @@ export function getScheduleById(scheduleId) {
 }
 
 export function updateSchedule(schedule) {
-   console.log("schedule action update request schedule:",schedule);
     const request = {
         method: 'put',
         headers: {
@@ -90,11 +87,9 @@ export function updateSchedule(schedule) {
     };
 
     return function (dispatch) {
-      console.log("http update request:",request.body);
         dispatch(initiateAjaxRequest());
         return fetch('/schedule/schedules/' + schedule.id, request).then((response) => {
             response.json().then((updatededSchedule) => {
-              console.log("response from server:",updatededSchedule);
                 dispatch(updateScheduleSuccess(updatededSchedule));
             });
         }).catch((error) => {
