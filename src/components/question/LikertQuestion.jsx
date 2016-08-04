@@ -31,7 +31,7 @@ const radioStyle = {
 
 let tableStyle = "table table-hover table-striped";
 
-const LikertQuestionList = ({survey, handleChange}) => {
+const LikertQuestionList = ({surveyProps, handleChange}) => {
 
     return (
         <table className={tableStyle}>
@@ -49,7 +49,7 @@ const LikertQuestionList = ({survey, handleChange}) => {
             <tbody>
 
                 {
-                    survey.template.questions.map((question, index) => {
+                    surveyProps.template.questions.map((question, index) => {
                         return (
                             <tr key={index}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
@@ -88,7 +88,7 @@ const LikertQuestionList = ({survey, handleChange}) => {
 };
 
 LikertQuestionList.propTypes = {
-    survey: PropTypes.object.isRequired,
+    surveyProps: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired
 };
 

@@ -18,3 +18,29 @@ export function loadSurveys() {
         });
     };
 }
+
+// export function saveSurvey(surveyResponse) {
+//     console.log("SaveSurvey reached");
+//
+//     const request = {
+//         method: 'POST',
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(surveyResponse)
+//     };
+//     console.log(surveyResponse);
+//
+//     return function(dispatch) {
+//         dispatch(initiateAjaxRequest());
+//         return fetch(Urls.SAVE_SURVEY_URL, request).then((response) => {
+//             response.json().then((postedSurveyResponse) => {
+//                 dispatch(saveSurveySuccess(postedSurveyResponse));
+//             });
+//         }).catch((error) => {
+//             dispatch(ajaxRequestError(error));
+//             throw(error);
+//         });
+//     }
+// }
