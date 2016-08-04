@@ -36,7 +36,6 @@ class ScheduleForm extends React.Component {
         this.validateSeven = this.validateSeven.bind(this);
         this.attrToUrls = this.attrToUrls.bind(this);
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
-        this.viewSchedules = this.viewSchedules.bind(this);
 
         this.state = {
             schedule: {
@@ -105,15 +104,11 @@ class ScheduleForm extends React.Component {
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(this.viewSchedules,300);
+            browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
-    }
-
-    viewSchedules(){
-        browserHistory.push("/schedules/manage");
     }
 
     attrToUrls(attributes){
@@ -193,8 +188,6 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
-
-
     updateRole(event) {
         const index = parseInt(event.target.name);
         const role = event.target.value;
@@ -208,7 +201,6 @@ class ScheduleForm extends React.Component {
                 this.validateEndDate() &&
                 this.validateSeven();
     }
-
 
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
