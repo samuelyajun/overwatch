@@ -54,14 +54,15 @@ class SurveyResponsePage extends React.Component {
         // console.log("onSubmit reached");
         event.preventDefault();
         // console.log("STATE OF SURVEYS", this.state.surveys);
+
+        if (!this.validateForm()) {
+            return;
+        }
         const surveyQuestions = this.state.survey.template.questions;
         surveyQuestions.map(question => {
             question['selectedValue'] = '';
         });
         this.setState({survey: this.state.survey});
-        if (!this.validateForm()) {
-            return;
-        }
         // console.log("SURVEY RESPONSE STATE AT SUBMIT", this.state.surveyResponse);
         this.props.actions.saveSurveyResponse(this.state.surveyResponse);
         return this.setState(
@@ -102,7 +103,7 @@ class SurveyResponsePage extends React.Component {
         }
         surveyObject.template.questions.map(
             (question, index) => {
-                if(question.value === undefined && (question.selectedValue === undefined|| question.selectedValue === null)){
+                if(question.selectedValue === undefined || question.selectedValue === null || question.selectedValue == ''){
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,

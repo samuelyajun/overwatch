@@ -18,28 +18,8 @@ const alignCenterStyle = {
 class ManageSchedulePage extends React.Component {
     constructor(props, context){
         super(props, context);
-
-        this.state = {
-           schedule: Object.assign({}, props.schedule)
-        };
-
         this.onClickUpdate = this.onClickUpdate.bind(this);
-      //  this.updateScheduleState = this.updateScheduleState.bind(this);
-        this.cleanSchedules = this.cleanSchedules.bind(this);
     }
-
-    // componentWillMount() {
-    //     this.props.actions.loadSchedules();
-    //     //this.setState()
-    // }
-
-    // updateScheduleState(event) {
-    //     const field = event.target.name;
-    //     let schedule = this.state.schedule;
-    //     schedule[field] = event.target.value;
-    //     console.log("updateScheduleState",event.target.value )
-    //     return this.setState({schedule: schedule});
-    // }
 
     onClickUpdate(event) {
         event.persist();
@@ -51,61 +31,15 @@ class ManageSchedulePage extends React.Component {
       return (<div> key={index}>{schedule.templateURI}</div>);
     }
 
-    cleanSchedules(schedules){
-        console.log("in clean schedules");
-        let newSchedules=[];
-        const cleanedSchedules = Object.assign([], schedules);
-      
-          cleanedSchedules.map(schedule => {
-            const cleanedSchedule = Object.assign({}, schedule);
-
-            let clientAttribute = "";
-            let projectAttribute = "";
-
-            let projectAttributes = schedule.respondents[0].allowedAttributes;
-           
-            let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
-
-            //regex changes the first letter of each word to upper case
-            newScheduleFrequency = newScheduleFrequency.replace(/\b[a-z]/g,function(f){return f.toUpperCase();});
-
-                for (let attribute of projectAttributes) {
-
-                    if(attribute.attributeType.name === "CLIENT"){
-
-                        clientAttribute = attribute.attributeValue;
-                    }
-                    if(attribute.attributeType.name === "PROJECT"){
-                        projectAttribute = attribute.attributeValue;
-                    }
-                }
-            
-            cleanedSchedule.frequency = newScheduleFrequency;
-            cleanedSchedule.client = clientAttribute;
-            cleanedSchedule.project = projectAttribute;
-          
-            newSchedules.push(cleanedSchedule);
-            });
-        return newSchedules;
-    }
-
     render() {
         const {schedules} = this.props;
-        console.log("ManageSchedulePage render", this.props.schedules[0].respondents[0].allowedAttributes);
-if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
         return (
             <div className="container" style={scheduleOuterDiv}>
                 <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
-                <ScheduleList schedules = {this.cleanSchedules(schedules)} onUpdate={this.onClickUpdate}/>
+                <ScheduleList schedules = {schedules} onUpdate={this.onClickUpdate}/>
             </div>
         );
-    }
-     return (
-            <div className="container" style={scheduleOuterDiv}>
-                <h1 style={alignCenterStyle}>List of Schedules</h1><br></br><br></br>
-                <p>Searching for schedule...</p>
-            </div>
-            );
+
     }
 }
 
@@ -113,7 +47,6 @@ if(this.props.schedules[0].respondents[0].allowedAttributes.length > 0){
 
 ManageSchedulePage.propTypes = {
     schedules: PropTypes.array.isRequired,
-    schedule: PropTypes.object,
     actions: PropTypes.object.isRequired
 };
 
