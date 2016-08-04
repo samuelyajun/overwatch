@@ -25,7 +25,7 @@ class Header extends React.Component {
                                </ul>
                             </li>
                             <li><Link to="/surveys" activeclassNameName="active">Survey</Link></li>
-                            <li><Link to="/report" activeclassNameName="active">Report</Link></li>
+                            <li><Link to="/reports" activeclassNameName="active">Report</Link></li>
                         </ul>
                     </div>
                 </div>

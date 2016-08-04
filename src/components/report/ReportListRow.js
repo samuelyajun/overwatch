@@ -8,15 +8,15 @@ import Button from '../common/Button.jsx';
 const ReportListRow = ({ report }) => {
     return (
         <tr>
-            <td>{report.creationDate}</td>
-            <td>{report.surveyName}</td>
+            <td>{report.generationDate}</td>
+            <td>{report.clientName}</td>
             <td>{report.projectName}</td>
+            <td>{report.surveyName}</td>
+
             <td>&nbsp;</td>
             <td>
-                <a href={report.linkXLSX}>
-                    <Button className={"btn btn-info"} type={"button"} label={"Excel"}/>
-                </a>
-                <a href={report.linkCSV}>
+               
+                <a href={report.reportBucketUrl}>
                     <Button className={"btn btn-info"} type={"button"} label={"CSV"}/>
                 </a>
 
