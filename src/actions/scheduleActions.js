@@ -43,7 +43,6 @@ export function getScheduleById(scheduleId) {
     return function(dispatch) {
        dispatch(initiateAjaxRequest());
         return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
-            console.log('Returned response is ' , response);
             response.json().then(json => {
                 let schedule = Object.assign({}, json);
                 dispatch(getScheduleByIdSuccess(schedule));

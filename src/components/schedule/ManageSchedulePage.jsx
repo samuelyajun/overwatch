@@ -24,17 +24,17 @@ class ManageSchedulePage extends React.Component {
         };
 
         this.onClickUpdate = this.onClickUpdate.bind(this);
-        //this.updateScheduleState = this.updateScheduleState.bind(this);
+        this.updateScheduleState = this.updateScheduleState.bind(this);
         this.cleanSchedules = this.cleanSchedules.bind(this);
     }
 
-    // updateScheduleState(event) {
-    //     const field = event.target.name;
-    //     let schedule = this.state.schedule;
-    //     schedule[field] = event.target.value;
-    //     console.log("updateScheduleState",event.target.value )
-    //     return this.setState({schedule: schedule});
-    // }
+    updateScheduleState(event) {
+        const field = event.target.name;
+        let schedule = this.state.schedule;
+        schedule[field] = event.target.value;
+        console.log("updateScheduleState",event.target.value )
+        return this.setState({schedule: schedule});
+    }
 
     onClickUpdate(event) {
         event.persist();
