@@ -374,14 +374,14 @@ class ScheduleForm extends React.Component {
                                                        onChange={this.onUpdateAttribute}
                                                        options={[
                                                           {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
+                                                                id:"http://localhost:8090/allowedAttributes/7",
                                                                 text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                                value: 'http://localhost:8090/allowedAttributes/7'
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                id:"7",
+                                                                text: "Catalyst",
+                                                                value: "http://localhost:8090/allowedAttributes/7"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-user"
@@ -397,13 +397,13 @@ class ScheduleForm extends React.Component {
                                                        onChange={this.onUpdateAttribute}
                                                        options={[
                                                           {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
-                                                                text: 'Beaverton',
+                                                                id:"http://localhost:8090/allowedAttributes/8",
+                                                                text: 'Overwatch',
                                                                 value: 'Beaverton'
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
+                                                                id:"8",
+                                                                text: "Overwatch",
                                                                 value: "Baltimore"
                                                             }
                                                         ]}
