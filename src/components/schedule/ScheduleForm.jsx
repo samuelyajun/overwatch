@@ -49,21 +49,21 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    id:0,
+                    id:"http://localhost:8090/allowedAttributes/7",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:0,
+                    id:"http://localhost:8090/allowedAttributes/8",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    id:0,
+                    id:"http://localhost:8090/allowedAttributes/5",
                     attributeValue: 'Beaverton',
                     attributeTypes: {
                         name: 'OFFICE'
@@ -100,8 +100,8 @@ class ScheduleForm extends React.Component {
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
-            console.log(formattedSchedule)
-            //this.props.actions.createSchedule(formattedSchedule);
+
+            this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -142,7 +142,6 @@ class ScheduleForm extends React.Component {
     }
 
     onUpdateAttribute(event) {
-      console.log(event.target.value);
         const type = event.target.name;
         let val = event.target.value;
         let attributes = Object.assign([], this.state.allowedAttributes);
@@ -152,9 +151,10 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
+        console.log("attributes",attributes);
+        console.log("attribute",attribute);
         attribute.id = event.target.value;
-        console.log("attributes:",attributes);
-        console.log("attribute:",attribute);
+        
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -301,6 +301,7 @@ class ScheduleForm extends React.Component {
                                                 value={this.state.schedule.templateUri}
                                                 onChange={this.onUpdateTemplate}
                                                 options={templateOptions}
+                                                defaultOptionValue=""
                                                 defaultOptionLabel="--Select Name--"
                                                 error={this.state.errors.templateUri.required}
 
@@ -312,6 +313,7 @@ class ScheduleForm extends React.Component {
                                                label="Frequency"
                                                value={this.state.schedule.frequency}
                                                defaultOptionLabel = "One Time"
+                                               defaultOptionValue = "ONE_TIME"
                                                onChange={this.onUpdate}
                                                options={[
                                                    {
@@ -370,6 +372,7 @@ class ScheduleForm extends React.Component {
                                                        name="CLIENT"
                                                        label="Client"
                                                        defaultOption="-choose-"
+                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
                                                        onChange={this.onUpdateAttribute}
@@ -402,6 +405,7 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="PROJECT"
                                                        label="Project"
+                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdateAttribute}
@@ -438,6 +442,7 @@ class ScheduleForm extends React.Component {
                                                     <SelectInput
                                                         name="OFFICE"
                                                         label="Office"
+                                                        defaultOptionValue=""
                                                         defaultOptionLabel="--Select Location--"
                                                         value={this.state.allowedAttributes[2].attributeValue}
                                                         onChange={this.onUpdateAttribute}
