@@ -375,13 +375,23 @@ class ScheduleForm extends React.Component {
                                                        options={[
                                                           {
                                                                 id:"http://localhost:8090/allowedAttributes/7",
-                                                                text: 'Beaverton',
-                                                                value: 'http://localhost:8090/allowedAttributes/7'
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/8",
+                                                                text: "Cockram",
+                                                                value: "Cockram"
+                                                            },
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/9",
+                                                                text: 'Catalyst DevWorks',
+                                                                value: 'Catalyst DevWorks'
                                                             },
                                                             {
-                                                                id:"7",
-                                                                text: "Catalyst",
-                                                                value: "http://localhost:8090/allowedAttributes/7"
+                                                                id:"http://localhost:8090/allowedAttributes/10",
+                                                                text: "Cambia",
+                                                                value: "Cambia"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-user"
@@ -396,15 +406,25 @@ class ScheduleForm extends React.Component {
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdateAttribute}
                                                        options={[
-                                                          {
-                                                                id:"http://localhost:8090/allowedAttributes/8",
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/11",
+                                                                text: "Cake Systems",
+                                                                value: "Cake Systems"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/12",
+                                                                text: "3DS MAC and AutoCAD",
+                                                                value: "3DS MAC and AutoCAD"
+                                                            },
+                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/13",
                                                                 text: 'Overwatch',
-                                                                value: 'Beaverton'
+                                                                value: 'Overwatch'
                                                             },
                                                             {
-                                                                id:"8",
-                                                                text: "Overwatch",
-                                                                value: "Baltimore"
+                                                                id:"http://localhost:8090/allowedAttributes/14",
+                                                                text: "Mobile",
+                                                                value: "Mobile"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-briefcase"
