@@ -57,9 +57,8 @@ export function loadSchedules() {
                 cleanedSchedule.frequency = newScheduleFrequency;
                 cleanedSchedule.client = clientAttribute;
                 cleanedSchedule.project = projectAttribute;
-              
-                cleanedSchedules.push(cleanedSchedule);
-                });
+                cleanedSchedules.unshift(cleanedSchedule);
+                })
 
                 dispatch(loadSchedulesSuccess(cleanedSchedules));
             });
