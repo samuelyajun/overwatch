@@ -8,7 +8,7 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as templateActions from '../../actions/templateActions'
+import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
@@ -95,7 +95,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -112,10 +112,10 @@ class ScheduleForm extends React.Component {
     }
 
     attrToUrls(attributes){
-        var newAttrs=[];
+        let newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
-            })
+            });
         return newAttrs;
     }
 
@@ -151,8 +151,8 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
-        console.log("attributes",attributes);
-        console.log("attribute",attribute);
+        // console.log("attributes",attributes);
+        // console.log("attribute",attribute);
         attribute.id = event.target.value;
         
         this.setState({errors: errors});
@@ -272,11 +272,12 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        }
+        };
 
           const marginTop = {
             marginTop: '20px'
-        }
+        };
+        
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {

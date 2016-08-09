@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLabel, value, error, options, icon}) => {
-    let isDisabled;
+    let isDisabled = false;
     let showIcon;
     let showLabel;
 
@@ -18,6 +18,10 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
         showLabel = 'hidden';
     }
 
+    if (defaultOptionValue === "") {
+        isDisabled = true;
+    }
+
     return (
         <div>
             <div className="form-group">
@@ -30,7 +34,7 @@ const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLa
                         onChange={onChange}
                         defaultValue={defaultOptionLabel}
                         className="form-control">
-                        <option value={defaultOptionLabel} disabled>{defaultOptionLabel}</option>
+                        <option value={defaultOptionLabel} disabled={isDisabled}>{defaultOptionLabel}</option>
                         {options.map((option) => {
                             return <option key={option.value} value={option.value}>{option.text}</option>;
                         })
