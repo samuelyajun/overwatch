@@ -24,8 +24,7 @@ class Header extends React.Component {
                                    <li><Link to="/schedules/manage" activeclassNameName="active">View</Link></li>
                                </ul>
                             </li>
-                            <li><Link to="/surveys" activeclassNameName="active">Survey</Link></li>
-                            <li><Link to="/reports" activeclassNameName="active">Report</Link></li>
+                            <li><Link to="/reports" activeclassNameName="active">Reports</Link></li>
                         </ul>
                     </div>
                 </div>
