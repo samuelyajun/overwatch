@@ -5,11 +5,20 @@ const noMargin = {
     marginBottom: '0px'
 };
 
+const recipientWell = {
+    height: '80px'
+};
+
+const recipientLabel = {
+    height: '100%',
+    overflow: 'hidden',
+};
+
 const RespondentListRow = ({respondent, onChange, index}) => {
 
     return (
-        <div className="well col-md-5 col-md-offset-1">
-            <span className="col-md-5"><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
+        <div className="well col-md-5 col-md-offset-1" style={recipientWell}>
+            <span className="col-md-5" style={recipientLabel}><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
             <SelectInput
                 style={noMargin}
                 name={`${index}`}
