@@ -277,7 +277,7 @@ class ScheduleForm extends React.Component {
           const marginTop = {
             marginTop: '20px'
         };
-        
+
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
@@ -473,13 +473,13 @@ class ScheduleForm extends React.Component {
                         <div className="panel">
                           <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
                           <div className="panel-body">
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <UserCheckboxGroup
                                         users={this.props.users}
                                         onClick={this.updateUsers}
                                     />
                                 </div>
-                                <div className="col-md-8">
+                                <div className="col-md-9">
                                     <RespondentList
                                         respondents={this.state.schedule.respondents}
                                         onChange={this.updateRole}
