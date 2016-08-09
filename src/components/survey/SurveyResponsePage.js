@@ -100,6 +100,7 @@ class SurveyResponsePage extends React.Component {
             };
             toastr.error('No Originator ID is detected. Please provide an orignator ID.');
             isValid = false;
+            errors.color = 'errors';
         }
         surveyObject.template.questions.map(
             (question, index) => {
@@ -122,6 +123,8 @@ class SurveyResponsePage extends React.Component {
                         "hideMethod": "fadeOut"
                     };
                     toastr.error('Question ' + ++index +' is missing a response');
+                    errors.title = 'Missing response to question(s)';
+                    errors.color = 'errors';
                     isValid = false;
                 }
             }
@@ -131,7 +134,7 @@ class SurveyResponsePage extends React.Component {
 
 
 
-        this.setState({errors});
+        this.setState({errors: errors});
         return isValid;
     }
 
@@ -252,6 +255,7 @@ class SurveyResponsePage extends React.Component {
                             onSubmit={this.onSubmit}
                             handleChange={this.handleChange}
                             handleNumericChange={this.handleNumericChange}
+                            errors={this.state.errors}
                         />
                     </div>
                 );

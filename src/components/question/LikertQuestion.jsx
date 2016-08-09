@@ -31,9 +31,13 @@ const radioStyle = {
 
 let tableStyle = "table table-hover table-striped";
 
-const LikertQuestionList = ({surveyProps, handleChange}) => {
-
+const LikertQuestionList = ({surveyProps, handleChange, error}) => {
+    let wrapperClass = 'form-group';
+    if (error && error.length > 0){
+        wrapperClass += " " + 'has-error';
+    }
     return (
+
         <table className={tableStyle}>
             <thead>
             <tr>
@@ -50,8 +54,9 @@ const LikertQuestionList = ({surveyProps, handleChange}) => {
 
                 {
                     surveyProps.template.questions.map((question, index) => {
+
                         return (
-                            <tr key={index}>
+                            <tr key={index} className={wrapperClass}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
@@ -77,6 +82,7 @@ const LikertQuestionList = ({surveyProps, handleChange}) => {
                                             </li>
                                         </ul>
                                     </RadioGroup>
+                                     {error && <div className="alert alert-danger">{error}</div>}
                                 </td>
                             </tr>
                         );
@@ -89,7 +95,8 @@ const LikertQuestionList = ({surveyProps, handleChange}) => {
 
 LikertQuestionList.propTypes = {
     surveyProps: PropTypes.object.isRequired,
-    handleChange: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
+    error: PropTypes.string
 };
 
 export default LikertQuestionList;

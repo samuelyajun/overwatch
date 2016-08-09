@@ -18,24 +18,30 @@ const questionStyling = {
 let tableStyle = "table table-hover table-striped";
 
 
-const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
+const NumericQuestionList = ({surveyProps, handleNumericChange, error}) => {
+    let wrapperClass = 'form-group';
+    if (error && error.length > 0){
+        wrapperClass += " " + 'has-error';
+    }
     return (
         <table className={tableStyle}>
             <tbody>
             {
                 surveyProps.template.questions.map((question, index) => {
                         return (
-                            <tr key={index}>
+                            <tr key={index} className={wrapperClass}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
-                                <td className="col-xs-6">
+                                <td className="col-xs-6 field">
                                     <NumberInput
                                         name={`${index}`}
                                         type="number"
                                         min={question.answerType.minRange}
                                         max={question.answerType.maxRange}
                                         onChange={handleNumericChange}
+                                        className="form-control"
                                     />
+                                    {error && <div className="alert alert-danger">{error}</div>}
                                 </td>
                             </tr>
                         );
@@ -48,8 +54,9 @@ const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
 };
 
 NumericQuestionList.propTypes = {
-    surveyProps: PropTypes.object.isRequired,
-    handleNumericChange: PropTypes.func
+    surveyProps: React.PropTypes.object.isRequired,
+    handleNumericChange: React.PropTypes.func,
+    error: PropTypes.string
 };
 
 export default NumericQuestionList;
