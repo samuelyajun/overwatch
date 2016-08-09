@@ -8,7 +8,7 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as templateActions from '../../actions/templateActions';
+import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
@@ -49,14 +49,14 @@ class ScheduleForm extends React.Component {
             },
             allowedAttributes: [
                 {
-                    id:"http://localhost:8090/allowedAttributes/9",
+                    id:"http://localhost:8090/allowedAttributes/7",
                     attributeValue: 'Catalyst DevWorks', //hardcoded for now
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/13",
+                    id:"http://localhost:8090/allowedAttributes/8",
                     attributeValue: 'Overwatch', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
@@ -95,7 +95,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -112,10 +112,10 @@ class ScheduleForm extends React.Component {
     }
 
     attrToUrls(attributes){
-        let newAttrs=[];
+        var newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
-            });
+            })
         return newAttrs;
     }
 
@@ -272,11 +272,11 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        };
+        }
 
           const marginTop = {
             marginTop: '20px'
-        };
+        }
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
@@ -301,6 +301,7 @@ class ScheduleForm extends React.Component {
                                                 value={this.state.schedule.templateUri}
                                                 onChange={this.onUpdateTemplate}
                                                 options={templateOptions}
+                                                defaultOptionValue=""
                                                 defaultOptionLabel="--Select Name--"
                                                 error={this.state.errors.templateUri.required}
 
@@ -312,6 +313,7 @@ class ScheduleForm extends React.Component {
                                                label="Frequency"
                                                value={this.state.schedule.frequency}
                                                defaultOptionLabel = "One Time"
+                                               defaultOptionValue = "ONE_TIME"
                                                onChange={this.onUpdate}
                                                options={[
                                                    {
@@ -369,9 +371,11 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="CLIENT"
                                                        label="Client"
+                                                       defaultOption="-choose-"
+                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Client--"
                                                        value={this.state.allowedAttributes[0].attributeValue}
-                                                       onChange={this.onUpdate}
+                                                       onChange={this.onUpdateAttribute}
                                                        options={[
                                                           {
                                                                 id:"http://localhost:8090/allowedAttributes/7",
@@ -401,9 +405,10 @@ class ScheduleForm extends React.Component {
                                                    <SelectInput
                                                        name="PROJECT"
                                                        label="Project"
+                                                       defaultOptionValue=""
                                                        defaultOptionLabel="--Select Project--"
                                                        value={this.state.allowedAttributes[1].attributeValue}
-                                                       onChange={this.onUpdate}
+                                                       onChange={this.onUpdateAttribute}
                                                        options={[
                                                            {
                                                                 id:"http://localhost:8090/allowedAttributes/11",
@@ -437,6 +442,7 @@ class ScheduleForm extends React.Component {
                                                     <SelectInput
                                                         name="OFFICE"
                                                         label="Office"
+                                                        defaultOptionValue=""
                                                         defaultOptionLabel="--Select Location--"
                                                         value={this.state.allowedAttributes[2].attributeValue}
                                                         onChange={this.onUpdateAttribute}
