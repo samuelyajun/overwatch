@@ -8,11 +8,13 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
+import * as surveyActions from '../../actions/surveyActions';
 import * as templateActions from '../../actions/templateActions'
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import {} from '../../actions/surveyActions';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
@@ -102,7 +104,7 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-            this.props.actions.createSchedule(formattedSchedule);
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             setTimeout(this.viewSchedules,300);
@@ -277,18 +279,18 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        }
+        };
 
           const marginTop = {
             marginTop: '20px'
-        }
+        };
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
             text: template.name,
             value: this.formatTemplateLink(template._links.self.href)
           })
-        })
+        });
 
         return(
             <div className="container">
@@ -502,7 +504,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions, surveyActions), dispatch)
+
     };
 }
 
