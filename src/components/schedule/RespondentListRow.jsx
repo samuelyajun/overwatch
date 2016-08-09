@@ -11,7 +11,7 @@ const recipientWell = {
 
 const recipientLabel = {
     height: '100%',
-    overflow: 'hidden',
+    overflow: 'hidden'
 };
 
 const RespondentListRow = ({respondent, onChange, index}) => {
