@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import { browserHistory, Route, Link } from 'react-router';
 import Button from '../common/Button.jsx';
-import { browserHistory, Route } from 'react-router';
+
 
 const ScheduleListRow = ({schedule, onUpdate}) => {
 
@@ -30,7 +30,8 @@ const ScheduleListRow = ({schedule, onUpdate}) => {
 };
 
 ScheduleListRow.propTypes = {
-    schedule: PropTypes.object.isRequired
+    schedule: PropTypes.object.isRequired,
+    onUpdate: PropTypes.func
 };
 
 export default ScheduleListRow;

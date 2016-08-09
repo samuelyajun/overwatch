@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Header from '../common/Header';
 import UpdateScheduleForm from "./UpdateScheduleForm.jsx";
 import * as scheduleActions from '../../actions/scheduleActions';
@@ -30,7 +30,7 @@ render() {
               {(schedule)?
                 <div style={scheduleOuterDivStyle}>
                      <h1>Update schedule</h1>
-                     <ScheduleForm startDate={this.props.schedule.startDate}/>
+                     <ScheduleForm startDate={this.props.schedule.startDate} everything={this.props.schedule} />
                  </div>:
                   <div style={scheduleOuterDivStyle}>
                     <h1>Update schedule</h1>
@@ -41,6 +41,14 @@ render() {
            );
         } 
 }
+
+UpdateSchedule.propTypes = {
+    actions: PropTypes.func,
+    getScheduleById: PropTypes.func,
+    schedule: PropTypes.object,
+    params: PropTypes.object,
+    id: PropTypes.number
+};
 
 function mapStateToProps(state, ownProps) {
 
