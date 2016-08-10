@@ -4,6 +4,7 @@ import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
+import UserForm from './UserForm.jsx';
 import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
@@ -468,23 +469,7 @@ class ScheduleForm extends React.Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="panel">
-                          <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
-                          <div className="panel-body">
-                                <div className="col-md-3">
-                                    <UserCheckboxGroup
-                                        users={this.props.users}
-                                        onClick={this.updateUsers}
-                                    />
-                                </div>
-                                <div className="col-md-9">
-                                    <RespondentList
-                                        respondents={this.state.schedule.respondents}
-                                        onChange={this.updateRole}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                       <UserForm users={this.props.users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole} />
                     </div>
                     <br />
                     <div className="col-md-12">
