@@ -3,6 +3,7 @@ import {Link, IndexLink} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
+import ScheduleList from './ScheduleList.jsx';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -22,9 +23,9 @@ class SchedulePage extends React.Component {
                 {(schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page</h1>
-
+                    <ScheduleList schedules={schedules} />
                     <button className="dropdown btn">
-                        <Link to="/schedule/create" role="button">Create Schedule</Link>
+                        <Link to="/schedule/create" role="button">Manage Schedules</Link>
                     </button>   
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>

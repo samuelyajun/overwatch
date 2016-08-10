@@ -9,7 +9,6 @@ const ScheduleList = ({schedules, onUpdate}) => {
         <table className = "table table-hover">
             <thead>
             <tr>
-                <th></th>
                 <th>Survey Type</th>
                 <th>Client</th>
                 <th>Project</th>
