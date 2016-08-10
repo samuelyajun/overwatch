@@ -1,6 +1,10 @@
-import React from 'react';
-import Header from '../common/Header';
-import ScheduleForm from './ScheduleForm.jsx';
+import React, {PropTypes} from 'react';
+import {Link, IndexLink} from 'react-router';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as scheduleActions from '../../actions/scheduleActions';
+import ScheduleList from './ScheduleList.jsx';
+import {  browserHistory  } from 'react-router';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -8,14 +12,48 @@ const scheduleOuterDivStyle = {
 };
 
 class SchedulePage extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onClickUpdate = this.onClickUpdate.bind(this);
+    }
+
+    onClickUpdate(event) {
+        event.persist();
+       // browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
+    }
+
     render() {
+        const {schedules} = this.props;
         return (
-            <div className="container" style={scheduleOuterDivStyle}>
-                <h1>Schedule Survey</h1>
-                <ScheduleForm />
+            <div>
+                {(schedules.length>0)?
+                <div className="container" style={scheduleOuterDivStyle}>
+                    <button className="dropdown btn">
+                        <Link to="/schedule/create" role="button">Add Schedule</Link>
+                    </button>   
+                    <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
+                </div>:
+                <div className="container" style={scheduleOuterDivStyle}>
+                    <h1>Schedule Page - there are no surveys scheduled!</h1>
+                    <button className="dropdown btn">
+                        <Link to="/schedule/create" role="button">Create Schedule</Link>
+                    </button>   
+                </div>
+                }
             </div>
         );
     }
 }
 
-export default SchedulePage;
+
+SchedulePage.propTypes = {
+    schedules: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, ownProps){
+    return {
+        schedules: state.schedules
+    };
+}
+
+export default connect(mapStateToProps, null)(SchedulePage);
