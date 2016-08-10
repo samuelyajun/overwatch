@@ -16,7 +16,6 @@ class SchedulePage extends React.Component {
     }
 
     render() {
-        console.log(this.props.schedules);
         const {schedules} = this.props;
         return (
             <div>
