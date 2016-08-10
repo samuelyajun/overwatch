@@ -7,24 +7,20 @@ import ReportList from './ReportList.js';
 import {Link} from 'react-router';
 
 const reportOuterDivStyle = {
-    marginTop: '75px'
+    marginTop: '75px',
+    marginBottom:'50px'
 };
-const reportsLink='http://localhost:8040/report/1';
 
 class ReportPage extends React.Component {
     constructor(props, context){
         super(props, context);
     }
-    
     render() {
         const reports = this.props.reports;
 
         return (
-            <div className="container-fluid" style={reportOuterDivStyle}>
-                <div>
+            <div className="container" style={reportOuterDivStyle}>
                 <h1>Current Reports</h1>
-                {/*<a href={reportsLink} className="btn btn-info " role="button">Generate New Report</a>*/}
-                </div>
                 {(reports.length>0)?
                     <ReportList reports={reports} />:
                     <div>NO REPORTS. Please click to <Link to={`/schedules`}>schedule Surveys.</Link></div>
