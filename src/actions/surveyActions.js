@@ -12,7 +12,7 @@ export function saveSurveySuccess(surveyObject) {
         type: types.CREATE_SURVEY_SUCCESS,
         surveyObject,
         receivedAt: Date.now()
-    }
+    };
 }
 
 export function loadSurveys() {
@@ -66,5 +66,5 @@ export function postToSurveyWithSchedule(schedule) {
             dispatch(ajaxRequestError(error));
             throw(error);
         });
-    }
+    };
 }

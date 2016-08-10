@@ -35,7 +35,8 @@ const ScheduleList = ({schedules, onUpdate}) => {
 };
 
 ScheduleList.propTypes = {
-    schedules: PropTypes.array
+    schedules: PropTypes.array,
+    onUpdate: PropTypes.func
 };
 
 export default ScheduleList;
