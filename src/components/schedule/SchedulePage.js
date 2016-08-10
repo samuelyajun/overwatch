@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link, IndexLink} from 'react-router';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as scheduleActions from '../../actions/scheduleActions';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -7,24 +10,27 @@ const scheduleOuterDivStyle = {
 };
 
 class SchedulePage extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+    }
+
     render() {
-        const {schedule} = this.props;
+        console.log(this.props.schedules);
+        const {schedules} = this.props;
         return (
             <div>
-                {(schedule)?
+                {(schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page</h1>
 
-                    <button className="dropdown btn btn-success">
-                        <Link to="/schedule/create" role="button"
-                                   aria-haspopup="true" aria-expanded="false">Create Schedule</Link>
+                    <button className="dropdown btn">
+                        <Link to="/schedule/create" role="button">Create Schedule</Link>
                     </button>   
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>
-                    <h1>Schedule Page - there are no schedules!</h1>
+                    <h1>Schedule Page - there are no surveys scheduled!</h1>
                     <button className="dropdown btn">
-                        <Link to="/schedule/create" role="button"
-                                   >Create Schedule</Link>
+                        <Link to="/schedule/create" role="button">Create Schedule</Link>
                     </button>   
                 </div>
                 }
@@ -33,4 +39,15 @@ class SchedulePage extends React.Component {
     }
 }
 
-export default SchedulePage;
+
+SchedulePage.propTypes = {
+    schedules: PropTypes.array.isRequired
+};
+
+function mapStateToProps(state, ownProps){
+    return {
+        schedules: state.schedules
+    };
+}
+
+export default connect(mapStateToProps, null)(SchedulePage);
