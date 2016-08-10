@@ -1,13 +1,12 @@
 import React, {PropTypes} from 'react';
 import Header from '../common/Header';
-import UpdateScheduleForm from "./UpdateScheduleForm.jsx";
+import ScheduleForm from "./ScheduleForm.jsx";
 import * as scheduleActions from '../../actions/scheduleActions';
 import { bindActionCreators } from 'redux';
-import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
+import { Router, browserHistory, Route, IndexRoute } from 'react-router';
 
 import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
-import ScheduleForm from './ScheduleFormStateless.jsx';
 import {connect} from 'react-redux';
 
 const scheduleOuterDivStyle = {
@@ -36,10 +35,10 @@ render() {
                     <h1>Update schedule</h1>
                     <p>Searching for schedule...</p>
                   </div>
-              }                 
+              }
            </div>
            );
-        } 
+        }
 }
 
 UpdateSchedule.propTypes = {
