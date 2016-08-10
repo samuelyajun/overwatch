@@ -46,5 +46,3 @@ render(
         </Router>
     </Provider>, document.getElementById('app')
 );
-
-// <Router history={browserHistory} routes={routes} />

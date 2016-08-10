@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
+import {  browserHistory  } from 'react-router';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -13,6 +14,12 @@ const scheduleOuterDivStyle = {
 class SchedulePage extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.onClickUpdate = this.onClickUpdate.bind(this);
+    }
+
+    onClickUpdate(event) {
+        event.persist();
+       // browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
     }
 
     render() {
@@ -21,11 +28,10 @@ class SchedulePage extends React.Component {
             <div>
                 {(schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
-                    <h1>Schedule Page</h1>
-                    <ScheduleList schedules={schedules} />
                     <button className="dropdown btn">
-                        <Link to="/schedule/create" role="button">Manage Schedules</Link>
+                        <Link to="/schedule/create" role="button">Add Schedule</Link>
                     </button>   
+                    <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page - there are no surveys scheduled!</h1>
