@@ -21,13 +21,8 @@ class Header extends React.Component {
                                 <IndexLink to="/" activeclassNameName="active">Home</IndexLink>
                             </li>
                             <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">Schedules &nbsp;<span
-                                    className="caret"></span></a>
-                                <ul className="dropdown-menu">
-                                    <li><Link to="/schedules" activeclassNameName="active">Create</Link></li>
-                                    <li><Link to="/schedules/manage" activeclassNameName="active">View</Link></li>
-                                </ul>
+                                <Link to="/schedules" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false">Schedules &nbsp;</Link>
                             </li>
                             <li><Link to="/reports" activeclassNameName="active">Reports</Link></li>
                         </ul>
