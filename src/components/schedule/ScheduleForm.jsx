@@ -8,7 +8,7 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
-import * as templateActions from '../../actions/templateActions'
+import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
@@ -36,7 +36,6 @@ class ScheduleForm extends React.Component {
         this.validateSeven = this.validateSeven.bind(this);
         this.attrToUrls = this.attrToUrls.bind(this);
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
-        this.viewSchedules = this.viewSchedules.bind(this);
 
         this.state = {
             schedule: {
@@ -96,7 +95,7 @@ class ScheduleForm extends React.Component {
 
     onClickSubmit() {
         if (this.isFormValid()) {
-            var attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
 
             ScheduleUtils.addRoles(formattedSchedule, attributes);
@@ -105,22 +104,18 @@ class ScheduleForm extends React.Component {
             this.props.actions.createSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            setTimeout(this.viewSchedules,300);
+            browserHistory.push("/schedules/manage");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
         }
     }
 
-    viewSchedules(){
-        browserHistory.push("/schedules/manage");
-    }
-
     attrToUrls(attributes){
-        var newAttrs=[];
+        let newAttrs=[];
           attributes.forEach(function(attr){
                 newAttrs.push(attr.id);
-            })
+            });
         return newAttrs;
     }
 
@@ -156,7 +151,8 @@ class ScheduleForm extends React.Component {
             return attr.attributeTypes.name === type;
         });
         attribute.attributeValue = event.target.value;
-        console.log("attribute",attribute);
+        attribute.id = event.target.value;
+        
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -194,8 +190,6 @@ class ScheduleForm extends React.Component {
         return this.setState({schedule});
     }
 
-
-
     updateRole(event) {
         const index = parseInt(event.target.name);
         const role = event.target.value;
@@ -209,7 +203,6 @@ class ScheduleForm extends React.Component {
                 this.validateEndDate() &&
                 this.validateSeven();
     }
-
 
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
@@ -277,18 +270,19 @@ class ScheduleForm extends React.Component {
             backgroundColor:'#999999',
             borderColor: '#999999',
             color: '#ffffff'
-        }
+        };
 
           const marginTop = {
             marginTop: '20px'
-        }
+        };
+
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
             text: template.name,
             value: this.formatTemplateLink(template._links.self.href)
-          })
-        })
+          });
+        });
 
         return(
             <div className="container">
@@ -335,7 +329,7 @@ class ScheduleForm extends React.Component {
                                                    },
                                                    {
                                                        text: "4 Weeks",
-                                                       value: "MONTHLY"
+                                                       value: "FOUR_WEEKS"
                                                    }
                                                ]}
                                            />
@@ -383,14 +377,24 @@ class ScheduleForm extends React.Component {
                                                        onChange={this.onUpdateAttribute}
                                                        options={[
                                                           {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
-                                                                text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                                id:"http://localhost:8090/allowedAttributes/7",
+                                                                text: "Cake Systems",
+                                                                value: "http://localhost:8090/allowedAttributes/7"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/8",
+                                                                text: "Cockram",
+                                                                value: "http://localhost:8090/allowedAttributes/8"
+                                                            },
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/9",
+                                                                text: 'Catalyst DevWorks',
+                                                                value: "http://localhost:8090/allowedAttributes/9"
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                id:"http://localhost:8090/allowedAttributes/10",
+                                                                text: "Cambia",
+                                                                value: "http://localhost:8090/allowedAttributes/10"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-user"
@@ -405,15 +409,25 @@ class ScheduleForm extends React.Component {
                                                        value={this.state.allowedAttributes[1].attributeValue}
                                                        onChange={this.onUpdateAttribute}
                                                        options={[
-                                                          {
-                                                                id:"http://localhost:8090/allowedAttributes/5",
-                                                                text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                           {
+                                                                id:"http://localhost:8090/allowedAttributes/11",
+                                                                text: "Cake Systems",
+                                                                value: "http://localhost:8090/allowedAttributes/11"
+                                                            },
+                                                             {
+                                                                id:"http://localhost:8090/allowedAttributes/12",
+                                                                text: "3DS MAC and AutoCAD",
+                                                                value: "http://localhost:8090/allowedAttributes/12"
+                                                            },
+                                                              {
+                                                                id:"http://localhost:8090/allowedAttributes/13",
+                                                                text: 'Overwatch',
+                                                                value: "http://localhost:8090/allowedAttributes/13"
                                                             },
                                                             {
-                                                                id:"http://localhost:8090/allowedAttributes/6",
-                                                                text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                id:"http://localhost:8090/allowedAttributes/14",
+                                                                text: "Mobile",
+                                                                value: "http://localhost:8090/allowedAttributes/14"
                                                             }
                                                         ]}
                                                        icon="glyphicon glyphicon-briefcase"
@@ -435,12 +449,12 @@ class ScheduleForm extends React.Component {
                                                             {
                                                                 id:"http://localhost:8090/allowedAttributes/5",
                                                                 text: 'Beaverton',
-                                                                value: 'Beaverton'
+                                                                value: "http://localhost:8090/allowedAttributes/5"
                                                             },
                                                             {
                                                                 id:"http://localhost:8090/allowedAttributes/6",
                                                                 text: "Baltimore",
-                                                                value: "Baltimore"
+                                                                value: "http://localhost:8090/allowedAttributes/6"
                                                             }
                                                              ]}
                                                         icon="glyphicon glyphicon-globe"
@@ -457,13 +471,13 @@ class ScheduleForm extends React.Component {
                         <div className="panel">
                           <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
                           <div className="panel-body">
-                                <div className="col-md-4">
+                                <div className="col-md-3">
                                     <UserCheckboxGroup
                                         users={this.props.users}
                                         onClick={this.updateUsers}
                                     />
                                 </div>
-                                <div className="col-md-8">
+                                <div className="col-md-9">
                                     <RespondentList
                                         respondents={this.state.schedule.respondents}
                                         onChange={this.updateRole}
