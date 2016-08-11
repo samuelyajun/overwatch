@@ -28,14 +28,14 @@ class SchedulePage extends React.Component {
                 {(schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
                     <button className="dropdown btn">
-                        <Link to="/schedule/create" role="button">Add Schedule</Link>
+                        <Link to="/schedules/manage" role="button">Add Schedule</Link>
                     </button>
                     <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page - there are no surveys scheduled!</h1>
                     <button className="dropdown btn">
-                        <Link to="/schedule/create" role="button">Create Schedule</Link>
+                        <Link to="/schedules/manage" role="button">Create Schedule</Link>
                     </button>
                 </div>
                 }
