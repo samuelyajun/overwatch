@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
-import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 import UserForm from './UserSelection.jsx';
@@ -11,13 +10,12 @@ import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
+import * as surveyActions from '../../actions/surveyActions';
 import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
 import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
-import HateoasUtils from '../../utils/hateoasUtils';
 import ScheduleUtils from '../../utils/scheduleUtils';
 
 class ScheduleForm extends React.Component {
@@ -104,7 +102,7 @@ class ScheduleForm extends React.Component {
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-            this.props.actions.createSchedule(formattedSchedule);
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
             browserHistory.push("/schedules/manage");
@@ -278,7 +276,6 @@ class ScheduleForm extends React.Component {
           const marginTop = {
             marginTop: '20px'
         };
-
         let templateOptions = [];
         templates.map((template) => {
           templateOptions.push( {
@@ -352,7 +349,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions), dispatch)
+        actions: bindActionCreators(Object.assign({}, userActions, scheduleActions, templateActions, surveyActions), dispatch)
+
     };
 }
 
