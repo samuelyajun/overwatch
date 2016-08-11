@@ -4,7 +4,7 @@ import TextInput from '../common/TextInput';
 import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
-import UserForm from './UserForm.jsx';
+import UserForm from './UserSelection.jsx';
 import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
