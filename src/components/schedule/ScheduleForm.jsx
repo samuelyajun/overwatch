@@ -5,6 +5,7 @@ import CheckboxGroup from '../common/CheckboxGroup.jsx';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 import UserForm from './UserSelection.jsx';
+import SurveyScheduleDate from './SurveyScheduleDate.jsx';
 import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
@@ -292,77 +293,19 @@ class ScheduleForm extends React.Component {
                         <div className="panel">
                             <div className="panel-heading"  style={schedulePanel}><h4>1. General Information</h4></div>
                             <div className="panel-body"> 
-                                   <div className="col-xs-6">
-                                       <div className="row">
-                                           <div className="col-md-6" style={marginTop}>
-                                            <SelectInput
-                                                name="templateUri"
-                                                label="Select a Template"
-                                                value={this.state.schedule.templateUri}
-                                                onChange={this.onUpdateTemplate}
-                                                options={templateOptions}
-                                                defaultOptionValue=""
-                                                defaultOptionLabel="--Select Name--"
-                                                error={this.state.errors.templateUri.required}
 
-                                            />
-                                           </div>
-                                           <div className="col-md-6"  style={marginTop}>
-                                           <SelectInput
-                                               name="frequency"
-                                               label="Frequency"
-                                               value={this.state.schedule.frequency}
-                                               defaultOptionLabel = "One Time"
-                                               defaultOptionValue = "ONE_TIME"
-                                               onChange={this.onUpdate}
-                                               options={[
-                                                   {
-                                                       text: "1 Week",
-                                                       value: "ONE_WEEK"
-                                                   },
-                                                   {
-                                                       text: "2 Weeks",
-                                                       value: "TWO_WEEKS"
-                                                   },
-                                                   {
-                                                       text: "3 Weeks",
-                                                       value: "THREE_WEEKS"
-                                                   },
-                                                   {
-                                                       text: "4 Weeks",
-                                                       value: "FOUR_WEEKS"
-                                                   }
-                                               ]}
-                                           />
-                                       </div>
-                                       </div>
-                                        <div className="row">
-                                           <div className="col-md-6">
-                                               <TextInput
-                                                   name="startDate"
-                                                   label="Start Date"
-                                                   type="date"
-                                                   value={this.state.schedule.startDate}
-                                                   validate={this.validateStartDate}
-                                                   onChange={this.onUpdate}
-                                                   error={this.state.errors.startDate.required}
-                                                   icon="glyphicon glyphicon-calendar"
-                                               />
-                                           </div>
-                                           <div className="col-md-6">
-                                               <TextInput
-                                                   name="endDate"
-                                                   label="End Date"
-                                                   type="date"
-                                                   value={this.state.schedule.endDate}
-                                                   validate={this.validateEndDate}
-                                                   onChange={this.onUpdate}
-                                                   error={this.state.errors.endDate.afterStart}
-                                                   icon="glyphicon glyphicon-calendar"
-                                               />
-                                           </div>
-                                       </div>
-                                   </div>
+                              <div className="col-xs-6">
+
+                                <SurveyScheduleDate templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                                  templateOptions={templateOptions} errorsTemplateUri={this.state.errors.templateUri.required}
+                                  scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                                  validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                                  scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                                  validateEndDate={this.state.errors.endDate.afterStart}
+                                />
+
+                              </div>
+                              
                                    <div className="col-xs-6 well">
                                        <div className="row">
                                        <div className="col-md-6">
