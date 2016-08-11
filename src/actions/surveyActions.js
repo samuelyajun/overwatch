@@ -50,7 +50,7 @@ export function postToSurveyWithSchedule(schedule) {
             },
             body: JSON.stringify(surveyObject)
         };
-        return fetch(`/survey/surveys`, request).then(
+        return fetch(`survey/surveys`, request).then(
             response => {
             response.json().then((postSurveyObject) => {
                 return dispatch(saveSurveySuccess(postSurveyObject));
