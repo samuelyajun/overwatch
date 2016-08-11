@@ -153,7 +153,7 @@ class ScheduleForm extends React.Component {
         });
         attribute.attributeValue = event.target.value;
         attribute.id = event.target.value;
-        
+
         this.setState({errors: errors});
         return this.setState({attributes});
     }
@@ -284,13 +284,14 @@ class ScheduleForm extends React.Component {
           });
         });
 
+        console.log(typeof this.onUpdateTemplate);
         return(
             <div className="container">
                 <form className="myForm" noValidate>
                     <div className="row">
                         <div className="panel">
                             <div className="panel-heading"  style={schedulePanel}><h4>1. General Information</h4></div>
-                              <div className="panel-body"> 
+                              <div className="panel-body">
 
                                   <div className="col-xs-6">
 
@@ -299,7 +300,7 @@ class ScheduleForm extends React.Component {
                                       scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
                                       validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
                                       scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
-                                      validateEndDate={this.state.errors.endDate.afterStart}
+                                      errorsEndDate={this.state.errors.endDate.afterStart}
                                     />
 
                                   </div>
@@ -310,7 +311,7 @@ class ScheduleForm extends React.Component {
                                       allowedAttributesTwo={this.state.allowedAttributes[2].attributeValue}
                                       onUpdateAttribute={this.onUpdateAttribute}
                                      />
-                                    
+
                                   </div>
 
                               </div>

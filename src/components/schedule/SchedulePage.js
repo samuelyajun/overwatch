@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react';
-import {Link, IndexLink} from 'react-router';
+import {Link, IndexLink, browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
-import {  browserHistory  } from 'react-router';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -30,14 +29,14 @@ class SchedulePage extends React.Component {
                 <div className="container" style={scheduleOuterDivStyle}>
                     <button className="dropdown btn">
                         <Link to="/schedule/create" role="button">Add Schedule</Link>
-                    </button>   
+                    </button>
                     <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page - there are no surveys scheduled!</h1>
                     <button className="dropdown btn">
                         <Link to="/schedule/create" role="button">Create Schedule</Link>
-                    </button>   
+                    </button>
                 </div>
                 }
             </div>

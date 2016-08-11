@@ -32,4 +32,11 @@ const UserForm = ({users, respondents, updateUsers, updateRole}) => {
 
 };
 
+UserForm.propTypes = {
+  users: PropTypes.array,
+  respondents: PropTypes.array,
+  updateUsers: PropTypes.func,
+  updateRole: PropTypes.func
+};
+
 export default UserForm;

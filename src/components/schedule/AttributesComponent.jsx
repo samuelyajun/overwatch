@@ -107,9 +107,16 @@ const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allow
        </div>
 
     </div>
-			
+
     );
 
+};
+
+AttributesComponent.propTypes = {
+  allowedAttributesZero: PropTypes.string,
+  allowedAttributesOne: PropTypes.string,
+  allowedAttributesTwo: PropTypes.string,
+  onUpdateAttribute: PropTypes.func
 };
 
 export default AttributesComponent;

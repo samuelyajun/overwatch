@@ -12,9 +12,9 @@ const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, err
         color: '#ffffff'
     };
 
-	const marginTop = {
-	    marginTop: '20px'
-	};
+		const marginTop = {
+			marginTop: '20px'
+		};
 
     return (
     <div>
@@ -66,34 +66,49 @@ const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, err
             </div>
 
 			<div className="row">
-			  <div className="col-md-6">
-			     <TextInput
-			         name="startDate"
-			         label="Start Date"
-			         type="date"
-			         value={scheduleStartDate}
-			         validate={validateStartDate}
-			         onChange={onUpdate}
-			         error={errorsStartDate}
-			         icon="glyphicon glyphicon-calendar"
-			     />
-			  </div>
-			  <div className="col-md-6">
-			     <TextInput
-			         name="endDate"
-			         label="End Date"
-			         type="date"
-			         value={scheduleEndDate}
-			         validate={validateEndDate}
-			         onChange={onUpdate}
-			         error={errorsEndDate}
-			         icon="glyphicon glyphicon-calendar"
-			     />
-			  </div>
+				<div className="col-md-6">
+					<TextInput
+						name="startDate"
+						label="Start Date"
+						type="date"
+						value={scheduleStartDate}
+						validate={validateStartDate}
+						onChange={onUpdate}
+						error={errorsStartDate}
+						icon="glyphicon glyphicon-calendar"
+						/>
+				</div>
+				<div className="col-md-6">
+					<TextInput
+						name="endDate"
+						label="End Date"
+						type="date"
+						value={scheduleEndDate}
+						validate={validateEndDate}
+						onChange={onUpdate}
+						error={errorsEndDate}
+						icon="glyphicon glyphicon-calendar"
+						/>
+				</div>
 			</div>
     </div>
     );
 
+};
+
+SurveyScheduleDate.propTypes = {
+	templateUri: PropTypes.string,
+	onUpdateTemplate: PropTypes.func,
+	templateOptions: PropTypes.array,
+	errorsTemplateUri: PropTypes.string,
+	scheduleFrequency: PropTypes.string,
+	onUpdate: PropTypes.func,
+	scheduleStartDate: PropTypes.string,
+	validateStartDate: PropTypes.func,
+	errorsStartDate: PropTypes.string,
+	scheduleEndDate: PropTypes.string,
+	validateEndDate: PropTypes.func,
+	errorsEndDate: PropTypes.string
 };
 
 export default SurveyScheduleDate;
