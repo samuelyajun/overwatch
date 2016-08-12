@@ -35,7 +35,7 @@ class SchedulePage extends React.Component {
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page - there are no surveys scheduled!</h1>
                     <button className="dropdown btn">
-                        <Link to="/schedules/manage" role="button">Create Schedule</Link>
+                        <Link to="/schedule/create" role="button">Create Schedule</Link>
                     </button>
                 </div>
                 }
