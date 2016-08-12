@@ -35,4 +35,3 @@ ScheduleListRow.propTypes = {
 };
 
 export default ScheduleListRow;
-//<td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>
