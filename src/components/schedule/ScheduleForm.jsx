@@ -37,22 +37,30 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
 
                                   <div className="col-xs-6">
 
-                                    <SurveyScheduleDate templateUri={templateUri} onUpdateTemplate={onUpdateTemplate}
-                                      templateOptions={templateOptions} errorsTemplateUri={errorsTemplateUri}
-                                      scheduleFrequency={scheduleFrequency} onUpdate={onUpdate} scheduleStartDate={scheduleStartDate}
-                                      validateStartDate={validateStartDate} errorsStartDate={errorsStartDate}
-                                      scheduleEndDate={scheduleEndDate} validateEndDate={validateEndDate}
+                                    <SurveyScheduleDate 
+                                      templateUri={templateUri} 
+                                      onUpdateTemplate={onUpdateTemplate}
+                                      templateOptions={templateOptions} 
+                                      errorsTemplateUri={errorsTemplateUri}
+                                      scheduleFrequency={scheduleFrequency} 
+                                      onUpdate={onUpdate} 
+                                      scheduleStartDate={scheduleStartDate}
+                                      validateStartDate={validateStartDate} 
+                                      errorsStartDate={errorsStartDate}
+                                      scheduleEndDate={scheduleEndDate} 
+                                      validateEndDate={validateEndDate}
                                       errorsEndDate={errorsEndDate}
                                     />
 
                                   </div>
 
                                   <div className="col-xs-6 well">
-                                    <AttributesComponent allowedAttributesZero={allowedAttributesZero}
+                                    <AttributesComponent 
+                                      allowedAttributesZero={allowedAttributesZero}
                                       allowedAttributesOne={allowedAttributesOne}
                                       allowedAttributesTwo={allowedAttributesTwo}
                                       onUpdateAttribute={onUpdateAttribute}
-                                     />
+                                    />
 
                                   </div>
 
