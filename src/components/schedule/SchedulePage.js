@@ -23,6 +23,7 @@ class SchedulePage extends React.Component {
 
     render() {
         const {schedules} = this.props;
+       
         return (
             <div>
                 {(schedules.length>0)?

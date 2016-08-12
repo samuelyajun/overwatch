@@ -13,7 +13,7 @@ import * as scheduleActions from '../../actions/scheduleActions';
 import * as surveyActions from '../../actions/surveyActions';
 import * as templateActions from '../../actions/templateActions';
 import toastr from 'toastr';
-import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
+import { Router, browserHistory, Route, IndexRoute, Link  } from 'react-router';
 
 const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
   onUpdateTemplate, errorsTemplateUri, scheduleFrequency, onUpdate, scheduleStartDate,

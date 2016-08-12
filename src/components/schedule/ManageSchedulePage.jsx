@@ -306,9 +306,7 @@ class ManageSchedulePage extends React.Component {
 
         return (
             <div className="container" style={scheduleOuterDiv}>
-                <h1 style={alignCenterStyle}>Manage Schedules</h1><br></br><br></br>
-                <ScheduleList schedules = {schedules} onUpdate={this.onClickUpdate}/>
-                <br></br><br></br>
+                <h1 style={alignCenterStyle}>Add Schedule</h1><br></br><br></br>
             <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
                 templates={templates} schedules={schedules} templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
