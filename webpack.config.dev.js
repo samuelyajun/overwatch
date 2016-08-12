@@ -27,7 +27,7 @@ export default {
     ],
     module: {
         loaders: [
-            {test: /\.jsx?$/, include: path.join(__dirname, 'src'), loaders: ['babel']},
+            {test: /\.jsx?$/, include: path.join(__dirname, 'src'), loaders: ['babel', 'eslint-loader'], exclude: /node_modules/},
             {test: /(\.css)$/, loaders: ['style', 'css']},
             {test: /(\.scss)$/, loaders: ['style', 'css', 'sass']},
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},

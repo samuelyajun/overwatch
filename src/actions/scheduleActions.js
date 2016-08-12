@@ -58,8 +58,8 @@ export function loadSchedules() {
                 cleanedSchedule.client = clientAttribute;
                 cleanedSchedule.project = projectAttribute;
               
-                cleanedSchedules.push(cleanedSchedule);
-                })
+                cleanedSchedules.unshift(cleanedSchedule);
+                });
 
                 dispatch(loadSchedulesSuccess(cleanedSchedules));
             });
@@ -84,7 +84,8 @@ export function getScheduleById(scheduleId) {
   }
 
  export function createSchedule(schedule) {
-    const request = {
+
+     const request = {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -93,13 +94,13 @@ export function getScheduleById(scheduleId) {
         body: JSON.stringify(schedule)
     };
 
+
     return function (dispatch) {
         dispatch(initiateAjaxRequest());
         return fetch(Urls.BASE_SCHEDULE_URL, request).then((response) => {
             response.json().then((postedSchedule) => {
                 dispatch(createScheduleSuccess(postedSchedule));
                 dispatch(loadSchedules());
-
             });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));

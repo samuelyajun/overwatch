@@ -1,39 +1,40 @@
 import React, {PropTypes} from 'react';
 
-const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLabel, value, error, options, icon, style}) => {
-    let isDisabled;
+const SelectInput = ({name, label, onChange, defaultOptionValue, defaultOptionLabel, value, error, options, icon}) => {
+    let isDisabled = false;
     let showIcon;
     let showLabel;
+
+
     if (icon) {
         showIcon = '';
     } else {
         showIcon = 'hidden';
-    };
+    }
 
     if (label) {
         showLabel = '';
     } else {
         showLabel = 'hidden';
-    };
+    }
 
-    if (defaultOptionValue === '') {
+    if (defaultOptionValue === "") {
         isDisabled = true;
     }
 
     return (
         <div>
-            <div className="form-group" style={style}>
+            <div className="form-group">
                 <label htmlFor={name} className={showLabel}>{label}</label>
                 <div className="field input-group">
-                  <span className={'input-group-addon ' + showIcon }><i className={icon}></i></span>
+                  <span className={'input-group-addon ' + showIcon}><i className={icon}></i></span>
                     {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
                     <select
                         name={name}
                         onChange={onChange}
-                        value={value}
-                        defaultValue={defaultOptionValue}
+                        defaultValue={defaultOptionLabel}
                         className="form-control">
-                        <option value={defaultOptionValue} disabled={isDisabled}>{defaultOptionLabel}</option>
+                        <option value={defaultOptionLabel} disabled={isDisabled}>{defaultOptionLabel}</option>
                         {options.map((option) => {
                             return <option key={option.value} value={option.value}>{option.text}</option>;
                         })

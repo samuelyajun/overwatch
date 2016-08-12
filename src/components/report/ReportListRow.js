@@ -6,18 +6,21 @@ import { Link } from 'react-router';
 import Button from '../common/Button.jsx';
 
 const ReportListRow = ({ report }) => {
+    let alignMiddleStyle = {
+        verticalAlign: 'middle'
+    };
     return (
         <tr>
-            <td>{report.generationDate}</td>
-            <td>{report.clientName}</td>
-            <td>{report.projectName}</td>
-            <td>{report.surveyName}</td>
-
+            <td style = {alignMiddleStyle}>{report.generationDate}</td>
+            <td style = {alignMiddleStyle}>{report.clientName}</td>
+            <td style = {alignMiddleStyle}>{report.projectName}</td>
+            <td style = {alignMiddleStyle}>{report.surveyName}</td>
             <td>&nbsp;</td>
             <td>
                
                 <a href={report.reportBucketUrl}>
-                    <Button className={"btn btn-info"} type={"button"} label={"CSV"}/>
+                    {/*<Button className={"btn btn-info"} type={"button"} label={"CSV"}/>*/}
+                    <Button label = {'CSV'} type = {'button'} buttonClassName = {'btn btn-primary'}/>
                 </a>
 
             </td>

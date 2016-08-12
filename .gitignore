@@ -1,6 +1,7 @@
 node_modules
-/src/components/course/CourseForm.js
 .idea
 .DS_Store
 npm-debug.log*
 overwatch-frontend.iml
+dist/
+

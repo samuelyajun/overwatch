@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
 import MessageComponent from '../common/MessageComponent.jsx';
+import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
 
@@ -50,6 +51,7 @@ class SurveyResponsePage extends React.Component {
 
     }
     onSubmit(event) {
+        // console.log("onSubmit reached");
         event.preventDefault();
         // console.log("STATE OF SURVEYS", this.state.surveys);
 
@@ -73,13 +75,12 @@ class SurveyResponsePage extends React.Component {
     // Validation that all questions have responses
     validateForm(){
         let errors = {};
-        errors.questions = [];
-        let errorList = errors.questions;
+        let questionsErrorArray = errors.questions = [];
         let isValid = true;
-
         const {query} = this.props.location;
         const responseOriginatorId = query.originatorId;
         const surveyObject = Object.assign({}, this.state.survey);
+        // console.log("RESPONSE STATE AT VALIDATE", this.state.surveyResponse);
         if(!responseOriginatorId) {
             toastr.options = {
                 "closeButton": true,
@@ -100,13 +101,10 @@ class SurveyResponsePage extends React.Component {
             };
             toastr.error('No Originator ID is detected. Please provide an orignator ID.');
             isValid = false;
-            errors.color = 'errors';
         }
         surveyObject.template.questions.map(
             (question, index) => {
                 if(question.selectedValue === undefined || question.selectedValue === null || question.selectedValue == ''){
-                    let style = 'fresh';
-                    question.style = 'fresh';
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -125,21 +123,14 @@ class SurveyResponsePage extends React.Component {
                         "hideMethod": "fadeOut"
                     };
                     toastr.error('Question ' + ++index +' is missing a response');
-                    /*errors.question = {question: index};*/
-                    question.style = 'unanswered';
-                    console.log("ErrorList: " , errorList);
-                    errors.title = 'Missing response to question(s)';
-                    errors.color = 'errors';
+                    questionsErrorArray.push({question: question});
                     isValid = false;
-
-                } else {
-                    question.style = 'unanswered';
                 }
             }
         );
 
-        console.log("outside errors: ", errors);
-        this.setState({errors: errors, answered: answered});
+        console.log("ERRORS OBJECT IN OUTER LOOP BEFORE SETTING STATE +++>", errors);
+        this.setState({errors});
         return isValid;
     }
 
@@ -260,6 +251,7 @@ class SurveyResponsePage extends React.Component {
                             onSubmit={this.onSubmit}
                             handleChange={this.handleChange}
                             handleNumericChange={this.handleNumericChange}
+                            errors = {this.state.errors}
                         />
                     </div>
                 );

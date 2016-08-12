@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 const error = {
   color:'red',
   textAlign:'center'
-}
+};
 
 const MessageComponent = ({title, text, className}) => {
     return (

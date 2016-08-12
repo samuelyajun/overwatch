@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import {RadioGroup, Radio} from 'react-radio-group';
-
+let _ = require('lodash');
 
 const listStyle = {
     textAlign: 'center'
@@ -13,18 +13,6 @@ const rowStyles = {
 const questionStyling = {
     textAlign: 'left'
 };
-
-const unanswered = {
-    backgroundColor: 'red'
-};
-
-const answered = {
-    backgroundColor: 'green'
-}
-
-const fresh = {
-    backgroundColor: 'blue'
-}
 
 const radioGroupStyle = {
    textAlign: 'center',
@@ -41,18 +29,15 @@ const radioStyle = {
     float: 'left'
 };
 
-
 let tableStyle = "table table-hover table-striped";
 
 const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
-    trStyle = fresh;
-    let trStyle;
 
-    if(answered){
-        trStyle = answered;
-    } else {
-        trStyle = unanswered;
-    }
+    const errorStyle = {
+        border: 'red 2px solid'
+    };
+
+
 
     return (
         <table className={tableStyle}>
@@ -69,42 +54,49 @@ const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
             </thead>
             <tbody>
 
-                {
-                    surveyProps.template.questions.map((question, index) => {
-                        return (
-                            <tr key={index} style={trStyle}>
-                                <td style={rowStyles}><b>{index+1}.</b></td>
-                                <td style={rowStyles}> {question.questionText}</td>
-                                 <td colSpan="5">
-                                    <RadioGroup
-                                        name={String(index)}
-                                        selectedValue={question.selectedValue}
-                                        onChange={handleChange}
-                                        error={errors}
-                                        >
-                                        <ul style={radioGroupStyle}>
-                                            <li style={radioStyle}>
-                                                <Radio value = {1} />
-                                            </li>
-                                            <li style={radioStyle}>
-                                                <Radio value = {2}/>
-                                            </li>
-                                            <li style={radioStyle}>
-                                                <Radio value = {3}/>
-                                            </li>
-                                            <li style={radioStyle}>
-                                                <Radio value = {4}/>
-                                            </li>
-                                            <li style={radioStyle}>
-                                                <Radio value = {5}/>
-                                            </li>
-                                        </ul>
-                                    </RadioGroup>
-                                </td>
-                            </tr>
-                        );
-                    })
-                }
+            {
+                surveyProps.template.questions.map((question, index) => {
+                    let dirtyStyle = {};
+                    if(!_.isEmpty(errors) && errors.questions.length > 0) {
+                        errors.questions.filter(questionInErrorArray => {
+                            if(questionInErrorArray.question.id === question.id) {
+                                dirtyStyle = errorStyle;
+                            }
+                        });
+                    }
+
+                    return (
+                        <tr key={index} style={dirtyStyle}>
+                            <td style={rowStyles}><b>{index + 1}.</b></td>
+                            <td style={rowStyles}> {question.questionText}</td>
+                            <td colSpan="5">
+                                <RadioGroup
+                                    name={String(index)}
+                                    selectedValue={question.selectedValue}
+                                    onChange={handleChange}>
+                                    <ul style={radioGroupStyle}>
+                                        <li style={radioStyle}>
+                                            <Radio value={1}/>
+                                        </li>
+                                        <li style={radioStyle}>
+                                            <Radio value={2}/>
+                                        </li>
+                                        <li style={radioStyle}>
+                                            <Radio value={3}/>
+                                        </li>
+                                        <li style={radioStyle}>
+                                            <Radio value={4}/>
+                                        </li>
+                                        <li style={radioStyle}>
+                                            <Radio value={5}/>
+                                        </li>
+                                    </ul>
+                                </RadioGroup>
+                            </td>
+                        </tr>
+                    );
+                })
+            }
             </tbody>
         </table>
     );
@@ -113,8 +105,7 @@ const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
 LikertQuestionList.propTypes = {
     surveyProps: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
-    errors: PropTypes.string,
-    emptyAnswer: PropTypes.bool
+    errors: PropTypes.object.isRequired
 };
 
 export default LikertQuestionList;
