@@ -75,13 +75,36 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
                 </form>
             </div>
         );
-    }
+    };
 
 
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    initialState: PropTypes.object.isRequired,
+    formatTemplateLink: PropTypes.func.isRequired,
+    templateOptions: PropTypes.array.isRequired,
+    templateUri: PropTypes.string.isRequired,
+    errorsTemplateUri: PropTypes.string.isRequired,
+    onUpdateTemplate: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func.isRequired,
+    scheduleFrequency: PropTypes.string.isRequired,
+    scheduleStartDate: PropTypes.string.isRequired,
+    errorsStartDate: PropTypes.string.isRequired,
+    scheduleEndDate: PropTypes.string.isRequired,
+    errorsEndDate: PropTypes.string.isRequired,
+    allowedAttributesZero: PropTypes.string,
+    allowedAttributesOne: PropTypes.string,
+    allowedAttributesTwo: PropTypes.string,
+    respondents: PropTypes.array.isRequired,
+    validateStartDate: PropTypes.func.isRequired,
+    validateEndDate: PropTypes.func.isRequired,
+    onUpdateAttribute: PropTypes.func.isRequired,
+    updateUsers: PropTypes.func.isRequired,
+    updateRole: PropTypes.func.isRequired,
+    onClickSubmit: PropTypes.func.isRequired,
+    viewSchedules: PropTypes.func.isRequired
 };
 
 
