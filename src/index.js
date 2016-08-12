@@ -11,6 +11,7 @@ import '../node_modules/toastr/build/toastr.min.css';
 import App from './container/App';
 import HomePage from './components/home/HomePage';
 import SchedulePage from './components/schedule/SchedulePage';
+import ScheduleForm from './components/schedule/ScheduleForm.jsx';
 import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import UpdateSchedule from './components/schedule/UpdateSchedule.jsx';
 import ReportPage from './components/report/ReportPage';
@@ -35,6 +36,7 @@ render(
             <Route path="/" component={App}>
                 <IndexRoute component={HomePage} />
                 <Route path="schedules" component={SchedulePage} />
+                <Route path="schedule/create" component={ScheduleForm} />
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="schedules/update/:id" component={UpdateSchedule} />
                 <Route path="reports" component={ReportPage} />
@@ -44,5 +46,3 @@ render(
         </Router>
     </Provider>, document.getElementById('app')
 );
-
-// <Router history={browserHistory} routes={routes} />
