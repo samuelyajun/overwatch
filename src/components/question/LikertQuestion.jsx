@@ -14,6 +14,18 @@ const questionStyling = {
     textAlign: 'left'
 };
 
+const unanswered = {
+    backgroundColor: 'red'
+};
+
+const answered = {
+    backgroundColor: 'green'
+}
+
+const fresh = {
+    backgroundColor: 'blue'
+}
+
 const radioGroupStyle = {
    textAlign: 'center',
     padding: '0px',
@@ -29,15 +41,20 @@ const radioStyle = {
     float: 'left'
 };
 
+
 let tableStyle = "table table-hover table-striped";
 
-const LikertQuestionList = ({surveyProps, handleChange, error}) => {
-    let wrapperClass = 'form-group';
-    if (error && error.length > 0){
-        wrapperClass += " " + 'has-error';
-    }
-    return (
+const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
+    trStyle = fresh;
+    let trStyle;
 
+    if(answered){
+        trStyle = answered;
+    } else {
+        trStyle = unanswered;
+    }
+
+    return (
         <table className={tableStyle}>
             <thead>
             <tr>
@@ -54,16 +71,17 @@ const LikertQuestionList = ({surveyProps, handleChange, error}) => {
 
                 {
                     surveyProps.template.questions.map((question, index) => {
-
                         return (
-                            <tr key={index} className={wrapperClass}>
+                            <tr key={index} style={trStyle}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                  <td colSpan="5">
                                     <RadioGroup
                                         name={String(index)}
                                         selectedValue={question.selectedValue}
-                                        onChange={handleChange}>
+                                        onChange={handleChange}
+                                        error={errors}
+                                        >
                                         <ul style={radioGroupStyle}>
                                             <li style={radioStyle}>
                                                 <Radio value = {1} />
@@ -82,7 +100,6 @@ const LikertQuestionList = ({surveyProps, handleChange, error}) => {
                                             </li>
                                         </ul>
                                     </RadioGroup>
-                                     {error && <div className="alert alert-danger">{error}</div>}
                                 </td>
                             </tr>
                         );
@@ -96,7 +113,8 @@ const LikertQuestionList = ({surveyProps, handleChange, error}) => {
 LikertQuestionList.propTypes = {
     surveyProps: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
-    error: PropTypes.string
+    errors: PropTypes.string,
+    emptyAnswer: PropTypes.bool
 };
 
 export default LikertQuestionList;
