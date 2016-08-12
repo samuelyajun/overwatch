@@ -13,7 +13,7 @@ import Button from '../common/Button.jsx';
 const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
   onUpdateTemplate, errorsTemplateUri, scheduleFrequency, onUpdate, scheduleStartDate,
   validateStartDate, errorsStartDate, scheduleEndDate, validateEndDate, errorsEndDate,
-  allowedAttributesZero, allowedAttributesOne, allowedAttributesTwo, onUpdateAttribute,
+  allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, onUpdateAttribute,
   users, respondents, updateUsers, updateRole, onClickSubmit, viewSchedules, templateOptions
 })  =>  {
 
@@ -56,9 +56,9 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
 
                                   <div className="col-xs-6 well">
                                     <AttributesComponent 
-                                      allowedAttributesZero={allowedAttributesZero}
-                                      allowedAttributesOne={allowedAttributesOne}
-                                      allowedAttributesTwo={allowedAttributesTwo}
+                                      allowedAttributesClient={allowedAttributesClient}
+                                      allowedAttributesProject={allowedAttributesProject}
+                                      allowedAttributesLocation={allowedAttributesLocation}
                                       onUpdateAttribute={onUpdateAttribute}
                                     />
 
@@ -97,9 +97,9 @@ ScheduleForm.propTypes = {
     errorsStartDate: PropTypes.string.isRequired,
     scheduleEndDate: PropTypes.string.isRequired,
     errorsEndDate: PropTypes.string.isRequired,
-    allowedAttributesZero: PropTypes.string,
-    allowedAttributesOne: PropTypes.string,
-    allowedAttributesTwo: PropTypes.string,
+    allowedAttributesClient: PropTypes.string,
+    allowedAttributesProject: PropTypes.string,
+    allowedAttributesLocation: PropTypes.string,
     respondents: PropTypes.array.isRequired,
     validateStartDate: PropTypes.func.isRequired,
     validateEndDate: PropTypes.func.isRequired,

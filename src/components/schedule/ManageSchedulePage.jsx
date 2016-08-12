@@ -300,9 +300,9 @@ class ManageSchedulePage extends React.Component {
                 validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
                 scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
                 errorsEndDate={this.state.errors.endDate.afterStart}
-                allowedAttributesZero={this.state.allowedAttributes[0].attributeValue}
-                allowedAttributesOne={this.state.allowedAttributes[1].attributeValue}
-                allowedAttributesTwo={this.state.allowedAttributes[2].attributeValue}
+                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
                 onUpdateAttribute={this.onUpdateAttribute}
                 users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}

@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 
-const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allowedAttributesTwo, onUpdateAttribute}) => {
+const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, onUpdateAttribute}) => {
 
     return (
       <div className="row">
@@ -16,7 +16,7 @@ const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allow
                        defaultOption="-choose-"
                        defaultOptionValue=""
                        defaultOptionLabel="--Select Client--"
-                       value={allowedAttributesZero}
+                       value={allowedAttributesClient}
                        onChange={onUpdateAttribute}
                        options={[
                           {
@@ -49,7 +49,7 @@ const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allow
                        label="Project"
                        defaultOptionValue=""
                        defaultOptionLabel="--Select Project--"
-                       value={allowedAttributesOne}
+                       value={allowedAttributesProject}
                        onChange={onUpdateAttribute}
                        options={[
                            {
@@ -86,7 +86,7 @@ const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allow
                         label="Office"
                         defaultOptionValue=""
                         defaultOptionLabel="--Select Location--"
-                        value={allowedAttributesTwo}
+                        value={allowedAttributesLocation}
                         onChange={onUpdateAttribute}
                         options={[
                             {
@@ -113,9 +113,9 @@ const AttributesComponent = ({allowedAttributesZero, allowedAttributesOne, allow
 };
 
 AttributesComponent.propTypes = {
-  allowedAttributesZero: PropTypes.string,
-  allowedAttributesOne: PropTypes.string,
-  allowedAttributesTwo: PropTypes.string,
+  allowedAttributesClient: PropTypes.string,
+  allowedAttributesProject: PropTypes.string,
+  allowedAttributesLocation: PropTypes.string,
   onUpdateAttribute: PropTypes.func
 };
 
