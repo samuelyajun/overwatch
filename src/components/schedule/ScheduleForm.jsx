@@ -7,13 +7,8 @@ import UserForm from './UserSelection.jsx';
 import SurveyScheduleDate from './SurveyScheduleDate.jsx';
 import AttributesComponent from './AttributesComponent.jsx';
 import Button from '../common/Button.jsx';
-//redux imports
-import * as userActions from '../../actions/userActions';
-import * as scheduleActions from '../../actions/scheduleActions';
-import * as surveyActions from '../../actions/surveyActions';
-import * as templateActions from '../../actions/templateActions';
-import toastr from 'toastr';
-import { Router, browserHistory, Route, IndexRoute  } from 'react-router';
+
+
 
 const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
   onUpdateTemplate, errorsTemplateUri, scheduleFrequency, onUpdate, scheduleStartDate,

@@ -1,14 +1,4 @@
 import React, {PropTypes} from 'react';
-import ScheduleList from './ScheduleList.jsx';
-import UpdateSchedule from './UpdateSchedule.jsx';
-import SelectInput from '../common/SelectInput.jsx';
-import TextInput from '../common/TextInput';
-import UserCheckboxGroup from './UserCheckboxGroup.jsx';
-import RespondentList from './RespondentList.jsx';
-import UserForm from './UserSelection.jsx';
-import SurveyScheduleDate from './SurveyScheduleDate.jsx';
-import AttributesComponent from './AttributesComponent.jsx';
-import Button from '../common/Button.jsx';
 //redux imports
 import * as userActions from '../../actions/userActions';
 import * as scheduleActions from '../../actions/scheduleActions';
