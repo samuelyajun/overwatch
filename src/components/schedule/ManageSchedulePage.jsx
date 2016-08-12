@@ -126,7 +126,7 @@ class ManageSchedulePage extends React.Component {
             this.props.actions.postToSurveyWithSchedule(formattedSchedule);
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.success('Schedule submitted!');
-            browserHistory.push("/schedules/manage");
+            browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -290,10 +290,8 @@ class ManageSchedulePage extends React.Component {
 
     render() {
         const {schedules, templates, users} = this.props;
-//console.log("templates",users);
         let templateOptions = [];
         templates.map((template) => {
-        console.log("template",template);
         templateOptions.push( {
             text: template.name,
             value: this.formatTemplateLink(template._links.self.href)

@@ -81,7 +81,6 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
     schedules: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
     templates: PropTypes.array.isRequired
 };
 
