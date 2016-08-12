@@ -18,7 +18,7 @@ const ScheduleListRow = ({schedule, onUpdate}) => {
 
     return (
         <tr>
-            <td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>
+            <td style = {alignMiddleStyle}> <button value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update</button> </td>
             <td style = {alignMiddleStyle}>{schedule.templateName}</td>
             <td style = {alignMiddleStyle}>{schedule.client}</td>
             <td style = {alignMiddleStyle}>{schedule.project}</td>
@@ -35,4 +35,3 @@ ScheduleListRow.propTypes = {
 };
 
 export default ScheduleListRow;
-//<td style = {alignMiddleStyle} input type = "submit" name = "submitButton" value = {schedule} className={submitButtonClass} onClick={onUpdate}> Update </td>

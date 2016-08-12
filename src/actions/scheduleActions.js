@@ -101,6 +101,7 @@ export function getScheduleById(scheduleId) {
             response.json().then((postedSchedule) => {
                 dispatch(createScheduleSuccess(postedSchedule));
                 dispatch(loadSchedules());
+
             });
         }).catch((error) => {
             dispatch(ajaxRequestError(error));
