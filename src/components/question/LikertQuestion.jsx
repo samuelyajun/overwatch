@@ -34,7 +34,8 @@ let tableStyle = "table table-hover table-striped";
 const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
 
     const errorStyle = {
-        border: 'red 2px solid'
+        backgroundColor: '#ffb3b3',
+        maxWidth: '500px'
     };
 
     return (

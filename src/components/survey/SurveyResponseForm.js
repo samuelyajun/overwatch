@@ -41,6 +41,4 @@ SurveyResponseForm.propTypes = {
     errors: PropTypes.object.isRequired
 };
 
-
-
 export default SurveyResponseForm;

@@ -9,7 +9,8 @@ const listStyle = {
 };
 
 const rowStyles = {
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    overflow: 'hidden'
 };
 
 const questionStyling = {
@@ -21,7 +22,8 @@ let tableStyle = "table table-hover table-striped";
 
 const NumericQuestionList = ({surveyProps, handleNumericChange, errors}) => {
     const errorStyle = {
-        border: 'red 2px solid'
+        backgroundColor: '#ffb3b3',
+        maxWidth: '500px'
     };
 
     return (
@@ -49,6 +51,7 @@ const NumericQuestionList = ({surveyProps, handleNumericChange, errors}) => {
                                         max={question.answerType.maxRange}
                                         onChange={handleNumericChange}
                                         className="form-control"
+
                                     />
                                     {/*{error && <div className="alert alert-danger">{error}</div>}*/}
                                 </td>
