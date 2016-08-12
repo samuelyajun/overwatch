@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as scheduleActions from '../../actions/scheduleActions';
 import ScheduleList from './ScheduleList.jsx';
+import Button from '../common/Button.jsx';
 
 const scheduleOuterDivStyle = {
     marginTop: '75px',
@@ -14,11 +15,16 @@ class SchedulePage extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.onClickUpdate = this.onClickUpdate.bind(this);
+        this.onClickSubmit = this.onClickSubmit.bind(this);
     }
 
     onClickUpdate(event) {
         event.persist();
        // browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
+    }
+
+    onClickSubmit(){
+        browserHistory.push('/schedules/manage');
     }
 
     render() {
@@ -28,16 +34,12 @@ class SchedulePage extends React.Component {
             <div>
                 {(schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
-                    <button className="dropdown btn">
-                        <Link to="/schedules/manage" role="button">Add Schedule</Link>
-                    </button>
+                    <Button label = {'Add Schedule'} type = {'button'} buttonClassName = {'btn'} onClick={this.onClickSubmit}/>
                     <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                 </div>:
                 <div className="container" style={scheduleOuterDivStyle}>
                     <h1>Schedule Page - there are no surveys scheduled!</h1>
-                    <button className="dropdown btn">
-                        <Link to="/schedules/manage" role="button">Create Schedule</Link>
-                    </button>
+                    <Button label = {'Add Schedule'} type = {'button'} buttonClassName = {'btn'} onClick={this.onClickSubmit}/>
                 </div>
                 }
             </div>
