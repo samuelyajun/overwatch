@@ -111,12 +111,7 @@ class ManageSchedulePage extends React.Component {
         browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
     }
 
-
-    // scheduleRow(schedule, index){
-    //   return (<div> key={index}>{schedule.templateURI}</div>);
-    // }
-
-     onClickSubmit() {
+    onClickSubmit() {
         if (this.isFormValid()) {
             let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
