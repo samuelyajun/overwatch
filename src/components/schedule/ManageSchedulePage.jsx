@@ -50,6 +50,7 @@ class ManageSchedulePage extends React.Component {
         this.attrToUrls = this.attrToUrls.bind(this);
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
+        this.viewSchedules = this.viewSchedules.bind(this);
 
         this.state = {
             schedule: {
@@ -139,6 +140,11 @@ class ManageSchedulePage extends React.Component {
                 newAttrs.push(attr.id);
             });
         return newAttrs;
+    }
+
+     viewSchedules(event) {
+        event.persist();
+        browserHistory.push('/schedules/');
     }
 
     onUpdate(event) {
@@ -316,8 +322,8 @@ class ManageSchedulePage extends React.Component {
                 allowedAttributesTwo={this.state.allowedAttributes[2].attributeValue}
                 onUpdateAttribute={this.onUpdateAttribute}
                 users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
-                onClickSubmit={this.onClickSubmit}
-            />  viewSchedules={this.viewSchedules}
+                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+            />  
             </div>
         );
 
