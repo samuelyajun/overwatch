@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import NumberInput from '../common/NumberInput';
+let _ = require('lodash');
 
 
 const listStyle = {
@@ -18,18 +19,26 @@ const questionStyling = {
 let tableStyle = "table table-hover table-striped";
 
 
-const NumericQuestionList = ({surveyProps, handleNumericChange, error}) => {
-    let wrapperClass = 'form-group';
-    if (error && error.length > 0){
-        wrapperClass += " " + 'has-error';
-    }
+const NumericQuestionList = ({surveyProps, handleNumericChange, errors}) => {
+    const errorStyle = {
+        border: 'red 2px solid'
+    };
+
     return (
         <table className={tableStyle}>
             <tbody>
             {
                 surveyProps.template.questions.map((question, index) => {
+                    let dirtyStyle = {};
+                    if(!_.isEmpty(errors) && errors.questions.length > 0) {
+                        errors.questions.filter(questionInErrorArray => {
+                            if(questionInErrorArray.question.id === question.id) {
+                                dirtyStyle = errorStyle;
+                            }
+                        });
+                    }
                         return (
-                            <tr key={index} className={wrapperClass}>
+                            <tr key={index} style={dirtyStyle}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
                                 <td className="col-xs-6 field">
@@ -41,7 +50,7 @@ const NumericQuestionList = ({surveyProps, handleNumericChange, error}) => {
                                         onChange={handleNumericChange}
                                         className="form-control"
                                     />
-                                    {error && <div className="alert alert-danger">{error}</div>}
+                                    {/*{error && <div className="alert alert-danger">{error}</div>}*/}
                                 </td>
                             </tr>
                         );
@@ -56,7 +65,7 @@ const NumericQuestionList = ({surveyProps, handleNumericChange, error}) => {
 NumericQuestionList.propTypes = {
     surveyProps: React.PropTypes.object.isRequired,
     handleNumericChange: React.PropTypes.func,
-    error: PropTypes.string
+    errors: PropTypes.object.isRequired
 };
 
 export default NumericQuestionList;

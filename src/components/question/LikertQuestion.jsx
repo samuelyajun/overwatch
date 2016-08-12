@@ -37,8 +37,6 @@ const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
         border: 'red 2px solid'
     };
 
-
-
     return (
         <table className={tableStyle}>
             <thead>

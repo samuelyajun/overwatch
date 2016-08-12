@@ -22,7 +22,7 @@ const SurveyResponseForm = ({ surveyProps, onSubmit, className, handleChange, ha
                     <div className="table-responsive">
                         {surveyProps.template.type === "Qualitative" ?
                             <LikertQuestion surveyProps = {surveyProps} handleChange={handleChange} errors = {errors}/> :
-                            <NumericQuestion surveyProps = {surveyProps} handleNumericChange={handleNumericChange} />
+                            <NumericQuestion surveyProps = {surveyProps} handleNumericChange={handleNumericChange} errors = {errors} />
                         }
                     </div>
                 <Button label = {submitButtonType} type = {'button'} buttonClassName = {submitButtonClass} onClick={onSubmit}/>
