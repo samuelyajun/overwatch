@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as reportActions from '../../actions/reportActions';
-import Button from '../common/Button';
+import Button from '../common/Button.jsx';
 import ReportList from './ReportList.js';
 import {Link} from 'react-router';
+import PageTitle from '../common/PageTitle.jsx';
 
 const reportOuterDivStyle = {
     marginTop: '75px',
@@ -20,7 +21,7 @@ class ReportPage extends React.Component {
 
         return (
             <div className="container" style={reportOuterDivStyle}>
-                <h1>Current Reports</h1>
+                <PageTitle name={'Current Reports'}/>
                 {(reports.length>0)?
                     <ReportList reports={reports} />:
                     <div>NO REPORTS. Please click to <Link to={`/schedules`}>schedule Surveys.</Link></div>
