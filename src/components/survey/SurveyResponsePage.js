@@ -75,6 +75,7 @@ class SurveyResponsePage extends React.Component {
     // Validation that all questions have responses
     validateForm(){
         let errors = {};
+        let questionsErrorArray = errors.questions = [];
         let isValid = true;
         const {query} = this.props.location;
         const responseOriginatorId = query.originatorId;
@@ -122,15 +123,13 @@ class SurveyResponsePage extends React.Component {
                         "hideMethod": "fadeOut"
                     };
                     toastr.error('Question ' + ++index +' is missing a response');
+                    questionsErrorArray.push({question: question});
                     isValid = false;
                 }
             }
         );
 
-
-
-
-
+        console.log("ERRORS OBJECT IN OUTER LOOP BEFORE SETTING STATE +++>", errors);
         this.setState({errors});
         return isValid;
     }
@@ -252,6 +251,7 @@ class SurveyResponsePage extends React.Component {
                             onSubmit={this.onSubmit}
                             handleChange={this.handleChange}
                             handleNumericChange={this.handleNumericChange}
+                            errors = {this.state.errors}
                         />
                     </div>
                 );
