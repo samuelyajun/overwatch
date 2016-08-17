@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import NumberInput from '../common/NumberInput';
+let _ = require('lodash');
 
 
 const listStyle = {
@@ -8,7 +9,8 @@ const listStyle = {
 };
 
 const rowStyles = {
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    overflow: 'hidden'
 };
 
 const questionStyling = {
@@ -18,23 +20,38 @@ const questionStyling = {
 let tableStyle = "table table-hover table-striped";
 
 
-const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
+const NumericQuestionList = ({surveyProps, handleNumericChange, errors}) => {
+    const errorStyle = {
+        backgroundColor: '#ffb3b3',
+        maxWidth: '500px'
+    };
+
     return (
         <table className={tableStyle}>
             <tbody>
             {
                 surveyProps.template.questions.map((question, index) => {
+                    let dirtyStyle = {};
+                    if(!_.isEmpty(errors) && errors.questions.length > 0) {
+                        errors.questions.filter(questionInErrorArray => {
+                            if(questionInErrorArray.question.id === question.id) {
+                                dirtyStyle = errorStyle;
+                            }
+                        });
+                    }
                         return (
-                            <tr key={index}>
+                            <tr key={index} style={dirtyStyle}>
                                 <td style={rowStyles}><b>{index+1}.</b></td>
                                 <td style={rowStyles}> {question.questionText}</td>
-                                <td className="col-xs-6">
+                                <td className="col-xs-6 field">
                                     <NumberInput
                                         name={`${index}`}
                                         type="number"
                                         min={question.answerType.minRange}
                                         max={question.answerType.maxRange}
                                         onChange={handleNumericChange}
+                                        className="form-control"
+
                                     />
                                 </td>
                             </tr>
@@ -48,8 +65,9 @@ const NumericQuestionList = ({surveyProps, handleNumericChange}) => {
 };
 
 NumericQuestionList.propTypes = {
-    surveyProps: PropTypes.object.isRequired,
-    handleNumericChange: PropTypes.func
+    surveyProps: React.PropTypes.object.isRequired,
+    handleNumericChange: React.PropTypes.func,
+    errors: PropTypes.object.isRequired
 };
 
 export default NumericQuestionList;
