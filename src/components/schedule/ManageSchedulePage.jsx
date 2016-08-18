@@ -103,6 +103,8 @@ class ManageSchedulePage extends React.Component {
     }
 
     onClickSubmit() {
+        console.log("ALLOWED ATTIBUTES ON SUBMIT", this.state.allowedAttributes);
+        console.log("SCHEDULE STATE ON SUBMIT----->", this.state.schedule);
         if (this.isFormValid()) {
             let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);

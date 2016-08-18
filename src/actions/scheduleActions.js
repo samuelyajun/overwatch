@@ -28,13 +28,14 @@ export function loadSchedules() {
         return fetch(`/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
             response.json().then(json => {
+                console.log(json);
                 let scheduleArray = Object.assign([], json._embedded.schedules);
                 let cleanedSchedules=[];
                 scheduleArray.map(schedule => {
                 const cleanedSchedule = Object.assign({}, schedule);
 
-                let clientAttribute = "";
-                let projectAttribute = "";
+                let clientAttribute;
+                let projectAttribute;
 
                 let projectAttributes = schedule.respondents[0].allowedAttributes;
                
