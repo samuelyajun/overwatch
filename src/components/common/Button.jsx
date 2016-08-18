@@ -1,12 +1,16 @@
 import React, {PropTypes} from 'react';
 
-const Button = ({type, buttonClassName, onClick, label, style}) =>  {
+const buttonMargin = {
+    margin: '15px 15px 15px 0px'
+};
+
+const Button = ({type, buttonClassName, onClick, label}) =>  {
     return (
         <button 
             type = {type}
             className = {buttonClassName}
             onClick = {onClick}
-            style = {style}
+            style = {buttonMargin}
         >{label}
         </button>
     );
@@ -16,8 +20,7 @@ Button.propTypes = {
     type: PropTypes.string.isRequired,
     buttonClassName: PropTypes.string,
     onClick: PropTypes.func,
-    label: PropTypes.string.isRequired,
-    style: PropTypes.string
+    label: PropTypes.string.isRequired
 };
 
 export default Button;

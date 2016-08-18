@@ -12,11 +12,6 @@ const scheduleOuterDivStyle = {
     marginBottom:'50px'
 };
 
-const buttonMargin = {
-    marginTop: '15px',
-    marginBottom: '15px'
-};
-
 const jumbotronStyle = {
     paddingTop: '150px',
     paddingBottom: '150px',
@@ -46,9 +41,9 @@ class SchedulePage extends React.Component {
         return (
             <div className="container" style={scheduleOuterDivStyle}>
                 <PageTitle name={'Schedule Page'}/>
-                {(schedules.length>0)?
+                {(schedules.length===0)?
                     <div>
-                        <Button label = {'Create New'} type = {'button'} buttonClassName = {'btn btn-success'} style={buttonMargin} onClick={this.onClickSubmit}/>
+                        <Button label = {'Create New'} type = {'button'} buttonClassName = {'btn btn-success'} onClick={this.onClickSubmit}/>
                         <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                     </div>
                 :

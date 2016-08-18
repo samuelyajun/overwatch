@@ -5,7 +5,7 @@ const PageTitle = ({name}) =>  {
       <h1 
         className="pageTitle"
         style={{
-            marginBottom: '25px'
+            marginBottom: '15px'
         }}>{name}
         </h1>
     );
