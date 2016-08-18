@@ -21,10 +21,10 @@ class ReportPage extends React.Component {
 
         return (
             <div className="container" style={reportOuterDivStyle}>
-                <PageTitle name={'Current Reports'}/>
+                <PageTitle name={'Reports'}/>
                 {(reports.length>0)?
                     <ReportList reports={reports} />:
-                    <div>NO REPORTS. Please click to <Link to={`/schedules`}>schedule Surveys.</Link></div>
+                    <div>NO REPORTS. Please click to <Link to={`/schedules`}>schedule surveys.</Link></div>
                 }
             </div>
         );

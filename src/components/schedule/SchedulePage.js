@@ -40,16 +40,16 @@ class SchedulePage extends React.Component {
 
         return (
             <div className="container" style={scheduleOuterDivStyle}>
-                <PageTitle name={'Schedule Page'}/>
                  {(!numAjaxRequestsInProgress>0 && schedules.length>0)?
                     <div>
-                        <Button label = {'Create New'} type = {'button'} buttonClassName = {'btn btn-success'} onClick={this.onClickSubmit}/>
+                        <PageTitle name={'Schedules'}/>
+                        <Button label = {'Schedule New Survey'} type = {'button'} buttonClassName = {'btn btn-success'} onClick={this.onClickSubmit}/>
                         <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
                     </div>
                 :
                    <div className="jumbotron" style={jumbotronStyle}> 
                         <p>Looks like there are no surveys scheduled.</p>
-                        <Button label = {'Create a Survey'} type = {'button'} buttonClassName = {'btn btn-success btn-lg'} onClick={this.onClickSubmit}/>
+                        <Button label = {'Schedule a Survey'} type = {'button'} buttonClassName = {'btn btn-success btn-lg'} onClick={this.onClickSubmit}/>
                     </div>
                 }
             </div>

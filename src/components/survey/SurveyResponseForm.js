@@ -26,7 +26,7 @@ const SurveyResponseForm = ({ surveyProps, onSubmit, className, handleChange, ha
                         }
                     </div>
                 <Button label = {submitButtonType} type = {'button'} buttonClassName = {submitButtonClass} onClick={onSubmit}/>
-                <Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>
+                {/*<Button label = {cancelButtonType} type = {cancelButtonType} buttonClassName = {cancelButtonClass}/>*/}
             </form>
         </div>
     );
