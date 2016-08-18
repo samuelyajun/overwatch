@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import ScheduleUtils from '../../utils/scheduleUtils';
 import ScheduleForm from './ScheduleForm.jsx';
+import PageTitle from '../common/PageTitle.jsx';
 
 
 const scheduleOuterDiv = {
@@ -292,23 +293,23 @@ class ManageSchedulePage extends React.Component {
         });
 
         return (
-            <div className="container" style={scheduleOuterDiv}>
-                <h1 style={alignCenterStyle}>Add Schedule</h1><br></br><br></br>
-            <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
-                templates={templates} schedules={schedules} templateOptions={templateOptions}
-                templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
-                errorsTemplateUri={this.state.errors.templateUri.required}
-                scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
-                validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
-                scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
-                errorsEndDate={this.state.errors.endDate.afterStart}
-                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
-                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
-                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
-                onUpdateAttribute={this.onUpdateAttribute}
-                users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
-                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
-            />  
+                <div className="container" style={scheduleOuterDiv}>
+                <PageTitle name={'Create Schedule'}/>
+                <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                    templates={templates} schedules={schedules} templateOptions={templateOptions}
+                    templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                    errorsTemplateUri={this.state.errors.templateUri.required}
+                    scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                    validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                    scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                    errorsEndDate={this.state.errors.endDate.afterStart}
+                    allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                    allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                    allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                    onUpdateAttribute={this.onUpdateAttribute}
+                    users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
+                    onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+                />  
             </div>
         );
 

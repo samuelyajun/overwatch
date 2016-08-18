@@ -15,6 +15,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                 <th>Frequency</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>

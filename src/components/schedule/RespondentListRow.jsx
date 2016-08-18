@@ -10,7 +10,8 @@ const recipientWell = {
 };
 
 const recipientLabel = {
-    height: '100%',
+    height: '40px',
+    verticalAlign: 'middle',
     overflow: 'hidden'
 };
 
@@ -18,38 +19,42 @@ const RespondentListRow = ({respondent, onChange, index}) => {
 
     return (
         <div className="well col-md-5 col-md-offset-1" style={recipientWell}>
-            <span className="col-md-5" style={recipientLabel}><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
-            <SelectInput
-                style={noMargin}
-                name={`${index}`}
-                value={respondent.allowedAttributes[0].attributeValue}
-                onChange={onChange}
-                defaultOptionValue= ""
-                defaultOptionLabel= "--Select Role--"
-                options={[
-                    {
-                        id:1,
-                        text: 'Engagement Manager',
-                        value: "http://localhost:8090/allowedAttributes/1"
-                    },
-                    {
-                        id:2,
-                        text: "Tech Lead",
-                        value: "http://localhost:8090/allowedAttributes/2"
-                    },
-                    {
-                        id:3,
-                        text: "Business Analyst",
-                        value: "http://localhost:8090/allowedAttributes/3"
-                    },
-                    {
-                        id:4,
-                        text: "Developer",
-                        value: "http://localhost:8090/allowedAttributes/4"
-                    }
-                ]}
-                className="col-md-7"
-            />
+            <div style={recipientLabel}>
+            <span className="col-md-5"><label>{`${respondent.user.firstName} ${respondent.user.lastName}`}</label></span>
+               <div className="col-md-7"> 
+                    <SelectInput
+                       style={noMargin}
+                       name={`${index}`}
+                       value={respondent.allowedAttributes[0].attributeValue}
+                       onChange={onChange}
+                       defaultOptionValue= ""
+                       defaultOptionLabel= "--Select Role--"
+                       options={[
+                           {
+                               id:1,
+                               text: 'Engagement Manager',
+                               value: "http://localhost:8090/allowedAttributes/1"
+                           },
+                           {
+                               id:2,
+                               text: "Tech Lead",
+                               value: "http://localhost:8090/allowedAttributes/2"
+                           },
+                           {
+                               id:3,
+                               text: "Business Analyst",
+                               value: "http://localhost:8090/allowedAttributes/3"
+                           },
+                           {
+                               id:4,
+                               text: "Developer",
+                               value: "http://localhost:8090/allowedAttributes/4"
+                           }
+                       ]}
+                       className="col-md-7"
+                   />
+                </div>
+            </div>
         </div>
     );
 };
