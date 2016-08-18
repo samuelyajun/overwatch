@@ -28,11 +28,11 @@ class SchedulePage extends React.Component {
     }
 
     render() {
-        const {schedules} = this.props;
+        const {schedules, numAjaxRequestsInProgress} = this.props;
 
         return (
             <div>
-                {(schedules.length>0)?
+                {(!numAjaxRequestsInProgress>0 && schedules.length>0)?
                 <div className="container" style={scheduleOuterDivStyle}>
                     <Button label = {'Add Schedule'} type = {'button'} buttonClassName = {'btn'} onClick={this.onClickSubmit}/>
                     <ScheduleList schedules={schedules} onUpdate={this.onClickUpdate} />
@@ -49,7 +49,8 @@ class SchedulePage extends React.Component {
 
 
 SchedulePage.propTypes = {
-    schedules: PropTypes.array.isRequired
+    schedules: PropTypes.array.isRequired,
+    numAjaxRequestsInProgress: PropTypes.number
 };
 
 function mapStateToProps(state, ownProps){
