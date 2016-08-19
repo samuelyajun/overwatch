@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import SurveyResponsePageHeader from './SurveyResponsePageHeader.jsx';
 import SurveyResponseForm from './SurveyResponseForm';
 import MessageComponent from '../common/MessageComponent.jsx';
-import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
 
@@ -25,7 +24,6 @@ class SurveyResponsePage extends React.Component {
         super(props, context);
         this.state = {
             showError: false,
-            showConfirmation: false,
             showSurveyForm: true,
             surveyResponse: {
                 'uniqueSurveyId': '',
@@ -51,9 +49,8 @@ class SurveyResponsePage extends React.Component {
 
     }
     onSubmit(event) {
-        // console.log("onSubmit reached");
+        console.log("onSubmit reached!");
         event.preventDefault();
-        // console.log("STATE OF SURVEYS", this.state.surveys);
 
         if (!this.validateForm()) {
             return;
@@ -63,13 +60,8 @@ class SurveyResponsePage extends React.Component {
             question['selectedValue'] = '';
         });
         this.setState({survey: this.state.survey});
-        // console.log("SURVEY RESPONSE STATE AT SUBMIT", this.state.surveyResponse);
+        console.log("SURVEY RESPONSE STATE AT SUBMIT-------->", this.state.surveyResponse);
         this.props.actions.saveSurveyResponse(this.state.surveyResponse);
-        return this.setState(
-            {
-                showConfirmation: !this.state.showConfirmation,
-                showSurveyForm: !this.state.showSurveyForm
-            });
     }
 
     // Validation that all questions have responses
@@ -140,15 +132,10 @@ class SurveyResponsePage extends React.Component {
         const field = event.target.name;
 
         let surveyObject = Object.assign({}, this.state.survey);
-        // console.log("SURVEY STATE **********", this.state.survey);
-        // console.log(this.state);
 
         const responseUniqueSurveyId = surveyObject.suid;
         const responseOriginatorId = query.originatorId;
         surveyObject.template.questions[field].selectedValue = value;
-        // survey.template.questions[index].selectedValue = value;
-        // let answerValue = surveyObject.template.questions[index].selectedValue;
-        // console.log("ANSWERVALUE", event.target.value);
 
         let questionLink = "/questions/" + surveyObject.template.questions[field].id;
 
@@ -168,8 +155,6 @@ class SurveyResponsePage extends React.Component {
         }).length>0) {
             surveyResponse.answers[field] = answer;
         }
-        // console.log('ANSWERS', surveyResponse);
-        // console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
 
         return this.setState(
             {
@@ -208,9 +193,6 @@ class SurveyResponsePage extends React.Component {
         }).length>0) {
             surveyResponse.answers[index] = answer;
         }
-
-        // console.log("AnswerList: " + surveyResponse);
-        // console.log("(Answer: " + answer.questionLink + ", " + answer.value + "), ");
 
         return this.setState(
             {
@@ -259,11 +241,6 @@ class SurveyResponsePage extends React.Component {
         return (
             <div style={surveyContainer}>
                 {surveyObject}
-                <MessageComponent
-                    className={this.state.showConfirmation ? '' : 'hidden'}
-                    title={'Survey Submitted!'}
-                    text={'Thanks for submitting your survey!'}
-                />
             </div>
         );
     }

@@ -16,6 +16,9 @@ import ManageSchedulePage from './components/schedule/ManageSchedulePage.jsx';
 import UpdateSchedule from './components/schedule/UpdateSchedule.jsx';
 import ReportPage from './components/report/ReportPage';
 import SurveyResponsePage from './components/survey/SurveyResponsePage';
+import SurveySuccessPage from './components/common/SuccessPage.jsx';
+import NotFoundPage from './components/common/NotFoundPage.jsx';
+import FailurePage from './components/common/FailurePage.jsx';
 
 import {loadSchedules} from './actions/scheduleActions';
 import {loadSurveys} from './actions/surveyActions';
@@ -40,9 +43,12 @@ render(
                 <Route path="schedules/manage" component={ManageSchedulePage} />
                 <Route path="schedules/update/:id" component={UpdateSchedule} />
                 <Route path="reports" component={ReportPage} />
-
             </Route>
             <Route path="surveys" component={SurveyResponsePage} />
+            <Route path="surveys/success" component={SurveySuccessPage} />
+            <Route path="surveys/fail" component={FailurePage} />
+            <Route path="*" component={NotFoundPage} />
+
         </Router>
     </Provider>, document.getElementById('app')
 );
