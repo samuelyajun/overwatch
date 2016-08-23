@@ -25,7 +25,7 @@ export function updateScheduleSuccess(schedule) {
 
 export function loadSchedules() {
     return function(dispatch) {
-        return fetch(`/schedule/schedules?projection=scheduleDetails`).then((response) => {
+        return fetch(`/api/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
             response.json().then(json => {
                 console.log(json);
@@ -73,7 +73,7 @@ export function loadSchedules() {
 export function getScheduleById(scheduleId) {
     return function(dispatch) {
        dispatch(initiateAjaxRequest());
-        return fetch(`/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
+        return fetch(`/api/schedule/schedules/${scheduleId}?projection=scheduleDetails`).then((response) => {
             response.json().then(json => {
                 let schedule = Object.assign({}, json);
                 dispatch(getScheduleByIdSuccess(schedule));
@@ -123,7 +123,7 @@ export function updateSchedule(schedule) {
 
     return function (dispatch) {
         dispatch(initiateAjaxRequest());
-        return fetch('/schedule/schedules/' + schedule.id, request).then((response) => {
+        return fetch('/api/schedule/schedules/' + schedule.id, request).then((response) => {
             response.json().then((updatededSchedule) => {
                 dispatch(updateScheduleSuccess(updatededSchedule));
             });
