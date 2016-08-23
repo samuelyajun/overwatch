@@ -41,6 +41,7 @@ class ManageSchedulePage extends React.Component {
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
         this.viewSchedules = this.viewSchedules.bind(this);
+        this.validateTemplate = this.validateTemplate.bind(this);
 
         this.state = {
             schedule: {
@@ -151,6 +152,7 @@ class ManageSchedulePage extends React.Component {
         schedule[property] = event.target.value;
         schedule.templateName = selectedText;
         this.setState({errors: errors});
+        this.validateTemplate();
         return this.setState({schedule});
     }
 
@@ -214,7 +216,19 @@ class ManageSchedulePage extends React.Component {
     isFormValid() {
         return this.validateStartDate() &&
                 this.validateEndDate() &&
-                this.validateSeven();
+                this.validateSeven() &&
+                this.validateTemplate;
+    }
+
+    validateTemplate(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.schedule.templateUri === ''){
+            errors.templateUri.required = 'Template required';
+            isValid = false;
+        }
+        this.setState({errors});
+        return isValid;
     }
 
     validateStartDate(){
