@@ -21,7 +21,7 @@ const scheduleProxyOptions = {
     target: 'http://localhost:8090',
     changeOrigin: true,
     pathRewrite: {
-        '^/schedule': '/' //remove /schedule from url before making request
+        '^/api/schedule': '/' //remove /schedule from url before making request
     }
 };
 
@@ -29,7 +29,7 @@ const responseProxyOptions = {
     target: 'http://localhost:8050',
     changeOrigin: true,
     pathRewrite: {
-        '^/response': '/' //remove /schedule from url before making request
+        '^/api/response': '/' //remove /schedule from url before making request
     }
 };
 
@@ -38,7 +38,7 @@ const surveyProxyOptions = {
     target: 'http://localhost:8070',
     changeOrigin: true,
     pathRewrite: {
-        '^/survey': '/' //remove /survey from url before making request
+        '^/api/survey': '/' //remove /survey from url before making request
     }
 };
 
@@ -46,7 +46,7 @@ const reportProxyOptions = {
     target: 'http://localhost:8040',
     changeOrigin: true,
     pathRewrite: {
-        '^/report': '/' //remove /report from url before making request
+        '^/api/report': '/' //remove /report from url before making request
     }
 };
 

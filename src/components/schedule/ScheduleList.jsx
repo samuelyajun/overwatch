@@ -9,13 +9,13 @@ const ScheduleList = ({schedules, onUpdate}) => {
         <table className = "table table-hover">
             <thead>
             <tr>
-                <th></th>
                 <th>Survey Type</th>
                 <th>Client</th>
                 <th>Project</th>
                 <th>Frequency</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                {/*<th></th>*/}
             </tr>
             </thead>
             <tbody>
@@ -23,7 +23,15 @@ const ScheduleList = ({schedules, onUpdate}) => {
                     
                     schedules.map(schedule => {
                         return (
-                            <ScheduleListRow key={schedule.id} schedule={schedule} onUpdate={onUpdate}/>
+                            <ScheduleListRow
+                                key={schedule.id}
+                                templateName = {schedule.templateName}
+                                clientName = {schedule.client}
+                                project = {schedule.project}
+                                frequency = {schedule.frequency}
+                                startDate = {schedule.startDate}
+                                endDate = {schedule.endDate}
+                                onUpdate={onUpdate}/>
                         );
                     })
 
@@ -40,3 +48,7 @@ ScheduleList.propTypes = {
 };
 
 export default ScheduleList;
+
+// if(schedule.endDate === '' || schedule.endDate === null) {
+//     schedule.endDate = 'TBD';
+// }

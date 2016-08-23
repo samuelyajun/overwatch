@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import {initiateAjaxRequest, ajaxRequestError} from './ajaxStatusActions';
+import { browserHistory } from 'react-router';
 
 export function saveSurveyResponseSuccess(surveyResponse) {
     return {
@@ -11,6 +12,7 @@ export function saveSurveyResponseSuccess(surveyResponse) {
 export function saveSurveyResponse(surveyResponse) {
     // console.log("SaveSurvey reached");
     // console.log("SurveyResponse in ACTION", surveyResponse);
+
     const request = {
         method: 'POST',
         headers: {
@@ -22,13 +24,20 @@ export function saveSurveyResponse(surveyResponse) {
     return (dispatch) => {
         // console.log(request);
         dispatch(initiateAjaxRequest());
-        return fetch(`response/surveyResponses`, request).then((response) => {
-            response.json().then((postedSurveyResponse) => {
-                dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
-            });
+        return fetch(`/api/response/surveyResponses`, request).then((response) => {
+            console.log('RESPONSE', response);
+            if(response.status === 500) {
+                browserHistory.push('/surveys/fail');
+            } else {
+                response.json().then((postedSurveyResponse) => {
+                    dispatch(saveSurveyResponseSuccess(postedSurveyResponse));
+                    browserHistory.push('/surveys/success');
+                });
+            }
         }).catch((error) => {
             dispatch(ajaxRequestError(error));
             throw(error);
+
         });
     };
 }

@@ -10,7 +10,7 @@ export function loadUsersSuccess(users) {
 export function loadUsers() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        return fetch('/schedule/users').then((response) => {
+        return fetch('/api/schedule/users/?size=1000&sort=firstName&firstName.dir=desc').then((response) => {
             response.json().then((json) => {
                 let userArray = HateoasUtils.getObjects(json);
                 dispatch(loadUsersSuccess(userArray));
