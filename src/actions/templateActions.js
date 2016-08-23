@@ -17,7 +17,7 @@ export function updateTemplateSuccess(template) {
 export function loadTemplates() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        return fetch(`/survey/templates?projection=inlineTemplateDetail`).then((response) => {
+        return fetch(`/api/survey/templates?projection=inlineTemplateDetail`).then((response) => {
             response.json().then(templateResponseJson => {
                 let templateArray = Object.assign([], templateResponseJson._embedded.templates);
                 dispatch(loadTemplatesSuccess(templateArray));

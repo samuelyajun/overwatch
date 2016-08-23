@@ -18,7 +18,7 @@ export function saveSurveySuccess(surveyObject) {
 export function loadSurveys() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        return fetch(`survey/surveys?projection=inlineSurveyDetail`).then((response) => {
+        return fetch(`/api/survey/surveys?projection=inlineSurveyDetail`).then((response) => {
             response.json().then(surveyResponseJson => {
                 let surveyArray = Object.assign([], surveyResponseJson._embedded.surveys);
                 dispatch(loadSurveysSuccess(surveyArray));
@@ -50,7 +50,7 @@ export function postToSurveyWithSchedule(schedule) {
             },
             body: JSON.stringify(surveyObject)
         };
-        return fetch(`/survey/surveys`, request).then(
+        return fetch(`/api/survey/surveys`, request).then(
             response => {
             response.json().then((postSurveyObject) => {
                 return dispatch(saveSurveySuccess(postSurveyObject));

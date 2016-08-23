@@ -24,7 +24,7 @@ export function saveSurveyResponse(surveyResponse) {
     return (dispatch) => {
         // console.log(request);
         dispatch(initiateAjaxRequest());
-        return fetch(`response/surveyResponses`, request).then((response) => {
+        return fetch(`/api/response/surveyResponses`, request).then((response) => {
             console.log('RESPONSE', response);
             if(response.status === 500) {
                 browserHistory.push('/surveys/fail');

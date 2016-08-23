@@ -13,8 +13,7 @@ export function generateReportSuccess(report) {
 export function loadReports() {
     return function(dispatch) {
         dispatch(initiateAjaxRequest());
-        //return fetch(`/report/reports`).then((response) =>
-        return fetch(`/report/report/get_reports`).then((response) =>
+        return fetch(`/api/report/report/get_reports`).then((response) =>
 
         {
             response.json().then(json => {

@@ -1,1 +1,1 @@
-export const BASE_SCHEDULE_URL = '/schedule/schedules';
+export const BASE_SCHEDULE_URL = '/api/schedule/schedules';
