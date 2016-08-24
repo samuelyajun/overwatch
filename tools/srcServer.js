@@ -23,6 +23,7 @@ const scheduleProxyOptions = {
     pathRewrite: {
         '^/api/schedule': '/' //remove /schedule from url before making request
     }
+
 };
 
 const responseProxyOptions = {
@@ -52,10 +53,10 @@ const reportProxyOptions = {
 
 
 //uncomment others as needed, don't forget to uncomment the options for them too
-app.use('/schedule', proxy(scheduleProxyOptions));
-app.use('/survey', proxy(surveyProxyOptions));
-app.use('/report', proxy(reportProxyOptions));
-app.use('/response', proxy(responseProxyOptions));
+app.use('/api/schedule', proxy(scheduleProxyOptions));
+app.use('/api/survey', proxy(surveyProxyOptions));
+app.use('/api/report', proxy(reportProxyOptions));
+app.use('/api/response', proxy(responseProxyOptions));
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
