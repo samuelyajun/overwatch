@@ -25,13 +25,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                         return (
                             <ScheduleListRow
                                 key={schedule.id}
-                                id={schedule.id}
-                                templateName = {schedule.templateName}
-                                clientName = {schedule.client}
-                                project = {schedule.project}
-                                frequency = {schedule.frequency}
-                                startDate = {schedule.startDate}
-                                endDate = {schedule.endDate}
+                                schedule={schedule}
                                 onUpdate={onUpdate}/>
                         );
                     })

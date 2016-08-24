@@ -3,9 +3,9 @@ import { browserHistory, Route, Link } from 'react-router';
 import Button from '../common/Button.jsx';
 
 
-const ScheduleListRow = ({templateName, clientName, project, frequency, startDate, endDate, onUpdate, id}) => {
+const ScheduleListRow = ({schedule, onUpdate}) => {
 
-(function(){console.log("XXXXXXXXXXXXXXXXXXXXXXXXX",id)})()
+(function(){console.log("XXXXXXXXXXXXXXXXXXXXXXXXX",schedule.id)})()
     let submitButtonClass = 'btn';
 
     let btnUpdate = {
@@ -21,26 +21,21 @@ const ScheduleListRow = ({templateName, clientName, project, frequency, startDat
 
     return (
         <tr>
-            <td style = {alignMiddleStyle}>{templateName}</td>
-            <td style = {alignMiddleStyle}>{clientName}</td>
-            <td style = {alignMiddleStyle}>{project}</td>
-            <td style = {alignMiddleStyle}>{frequency}</td>
-            <td style = {alignMiddleStyle}>{startDate}</td>
-            <td style = {alignMiddleStyle}>{endDate}</td>
+            <td style = {alignMiddleStyle}>{schedule.templateName}</td>
+            <td style = {alignMiddleStyle}>{schedule.clientName}</td>
+            <td style = {alignMiddleStyle}>{schedule.project}</td>
+            <td style = {alignMiddleStyle}>{schedule.frequency}</td>
+            <td style = {alignMiddleStyle}>{schedule.startDate}</td>
+            <td style = {alignMiddleStyle}>{schedule.endDate}</td>
             <td style = {alignMiddleStyle}> 
-                <Button type={'button'} value={id} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/>
+                <Button type={'button'} value={schedule.id} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/>
             </td>
         </tr>
     );
 };
 
 ScheduleListRow.propTypes = {
-    templateName: PropTypes.string.isRequired,
-    clientName: PropTypes.string,
-    project: PropTypes.string,
-    frequency: PropTypes.string.isRequired,
-    endDate: PropTypes.string,
-    startDate: PropTypes.string.isRequired,
+    schedule: PropTypes.object,
     onUpdate: PropTypes.func
 };
 
