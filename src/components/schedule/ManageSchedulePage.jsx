@@ -124,8 +124,6 @@ class ManageSchedulePage extends React.Component {
     }
 
     onClickSubmit() {
-        console.log("this.isFormValid()", this.isFormValid());
-        console.log("SCHEDULE STATE ON SUBMIT----->", this.state.schedule);
         if (this.isFormValid()) {
             let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
@@ -133,10 +131,10 @@ class ManageSchedulePage extends React.Component {
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-            // this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-            // toastr.options.positionClass = 'toast-top-full-width';
-            // toastr.success('Schedule submitted!');
-            // browserHistory.push("/schedules/");
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+            toastr.options.positionClass = 'toast-top-full-width';
+            toastr.success('Schedule submitted!');
+            browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -271,7 +269,7 @@ class ManageSchedulePage extends React.Component {
     validateRespondents(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        if(!this.state.schedule.respondents){
+        if(this.state.schedule.respondents.length<1){
             errors.respondents.required = 'Respondents required';
             isValid = false;
         }else{
@@ -297,7 +295,6 @@ class ManageSchedulePage extends React.Component {
     }
 
     validateOffice(){
-       // console.log("validateOffice",this.state.allowedAttributes[2].attributeValue);
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[2].attributeValue === ''){
@@ -311,7 +308,6 @@ class ManageSchedulePage extends React.Component {
     }
 
     validateClient(){
-       // console.log("validateClient",this.state.allowedAttributes[0].attributeValue);
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[0].attributeValue === ''){
@@ -325,7 +321,6 @@ class ManageSchedulePage extends React.Component {
     }
 
     validateFrequency(){
-       // console.log("validateFrequency",this.state.schedule.frequency);
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.schedule.frequency === ''){
