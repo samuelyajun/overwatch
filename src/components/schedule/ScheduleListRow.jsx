@@ -5,7 +5,6 @@ import Button from '../common/Button.jsx';
 
 const ScheduleListRow = ({schedule, onUpdate}) => {
 
-(function(){console.log("XXXXXXXXXXXXXXXXXXXXXXXXX",schedule.id)})()
     let submitButtonClass = 'btn';
 
     let btnUpdate = {
@@ -28,7 +27,7 @@ const ScheduleListRow = ({schedule, onUpdate}) => {
             <td style = {alignMiddleStyle}>{schedule.startDate}</td>
             <td style = {alignMiddleStyle}>{schedule.endDate}</td>
             <td style = {alignMiddleStyle}> 
-                <Button type={'button'} value={schedule.id} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/>
+                <button value={schedule.id} className='btn' onClick={onUpdate} />
             </td>
         </tr>
     );
