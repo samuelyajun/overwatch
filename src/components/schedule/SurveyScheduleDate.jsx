@@ -4,7 +4,7 @@ import TextInput from '../common/TextInput';
 
 const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, errorsTemplateUri,
 	scheduleFrequency, onUpdate, scheduleStartDate, validateStartDate, errorsStartDate,
-	scheduleEndDate, validateEndDate, errorsEndDate}) => {
+	scheduleEndDate, validateEndDate, errorsEndDate, errorsFrequency}) => {
 
     const schedulePanel = {
         backgroundColor:'#999999',
@@ -28,9 +28,8 @@ const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, err
                         onChange={onUpdateTemplate}
                         options={templateOptions}
                         defaultOptionValue=""
-                        defaultOptionLabel="--Select Name--"
+                        defaultOptionLabel="--Select a Template--"
                         error={errorsTemplateUri}
-
                     />
                 </div>
 
@@ -39,9 +38,10 @@ const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, err
                        name="frequency"
                        label="Frequency"
                        value={scheduleFrequency}
-                       defaultOptionLabel = "One Time"
-                       defaultOptionValue = "ONE_TIME"
+                       defaultOptionLabel = "--Select Frequency--"
+                       defaultOptionValue = ""
                        onChange={onUpdate}
+                       error={errorsFrequency}
                        options={[
                            {
                                text: "1 Week",
@@ -67,29 +67,29 @@ const SurveyScheduleDate = ({templateUri, onUpdateTemplate, templateOptions, err
 
 			<div className="row">
 				<div className="col-md-6">
-					<TextInput
-						name="startDate"
-						label="Start Date"
-						type="date"
-						value={scheduleStartDate}
-						validate={validateStartDate}
-						onChange={onUpdate}
-						error={errorsStartDate}
-						icon="glyphicon glyphicon-calendar"
-						/>
-				</div>
-				<div className="col-md-6">
-					<TextInput
-						name="endDate"
-						label="End Date"
-						type="date"
-						value={scheduleEndDate}
-						validate={validateEndDate}
-						onChange={onUpdate}
-						error={errorsEndDate}
-						icon="glyphicon glyphicon-calendar"
-						/>
-				</div>
+          <TextInput
+            name="startDate"
+            label="Start Date"
+            type="date"
+            value={scheduleStartDate}
+            validate={validateStartDate}
+            onChange={onUpdate}
+            error={errorsStartDate}
+            icon="glyphicon glyphicon-calendar"
+            />
+        </div>
+        <div className="col-md-6">
+          <TextInput
+            name="endDate"
+            label="End Date"
+            type="date"
+            value={scheduleEndDate}
+            validate={validateEndDate}
+            onChange={onUpdate}
+            error={errorsEndDate}
+            icon="glyphicon glyphicon-calendar"
+            />
+        </div>
 			</div>
     </div>
     );
@@ -108,7 +108,8 @@ SurveyScheduleDate.propTypes = {
 	errorsStartDate: PropTypes.string,
 	scheduleEndDate: PropTypes.string,
 	validateEndDate: PropTypes.func,
-	errorsEndDate: PropTypes.string
+	errorsEndDate: PropTypes.string,
+  errorsFrequency: PropTypes.string
 };
 
 export default SurveyScheduleDate;
