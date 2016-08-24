@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import SelectInput from '../common/SelectInput.jsx';
 import TextInput from '../common/TextInput';
 
-const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, onUpdateAttribute}) => {
+const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation,
+  onUpdateAttribute, errorsClient, errorsLocation, errorsProject}) => {
 
     return (
       <div className="row">
@@ -18,6 +19,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                        defaultOptionLabel="--Select Client--"
                        value={allowedAttributesClient}
                        onChange={onUpdateAttribute}
+                       error={errorsClient}
                        options={[
                           {
                                 id:"http://localhost:8090/allowedAttributes/7",
@@ -51,6 +53,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                        defaultOptionLabel="--Select Project--"
                        value={allowedAttributesProject}
                        onChange={onUpdateAttribute}
+                       error={errorsProject}
                        options={[
                            {
                                 id:"http://localhost:8090/allowedAttributes/11",
@@ -88,6 +91,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                         defaultOptionLabel="--Select Location--"
                         value={allowedAttributesLocation}
                         onChange={onUpdateAttribute}
+                        error={errorsLocation}
                         options={[
                             {
                                 id:"http://localhost:8090/allowedAttributes/5",
@@ -116,7 +120,10 @@ AttributesComponent.propTypes = {
   allowedAttributesClient: PropTypes.string,
   allowedAttributesProject: PropTypes.string,
   allowedAttributesLocation: PropTypes.string,
-  onUpdateAttribute: PropTypes.func
+  onUpdateAttribute: PropTypes.func,
+  errorsClient: PropTypes.string.isRequired,
+  errorsLocation: PropTypes.string.isRequired,
+  errorsProject: PropTypes.string.isRequired
 };
 
 export default AttributesComponent;
