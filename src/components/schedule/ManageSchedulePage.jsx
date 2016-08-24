@@ -41,9 +41,6 @@ class ManageSchedulePage extends React.Component {
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
         this.viewSchedules = this.viewSchedules.bind(this);
-        this.addUserLink = this.addUserLink.bind(this);
-        this.addRoles = this.addRoles.bind(this);
-        this.getStatefulUsers = this.getStatefulUsers.bind(this);
         this.validateTemplate = this.validateTemplate.bind(this);
         this.validateFrequency = this.validateFrequency.bind(this);
         this.validateOffice = this.validateOffice.bind(this);
@@ -127,7 +124,7 @@ class ManageSchedulePage extends React.Component {
     }
 
     onClickSubmit() {
-        console.log("ALLOWED ATTIBUTES ON SUBMIT", this.state.allowedAttributes);
+        console.log("this.isFormValid()", this.isFormValid());
         console.log("SCHEDULE STATE ON SUBMIT----->", this.state.schedule);
         if (this.isFormValid()) {
             let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
@@ -136,10 +133,10 @@ class ManageSchedulePage extends React.Component {
             ScheduleUtils.addRoles(formattedSchedule, attributes);
             ScheduleUtils.addUserLink(formattedSchedule);
 
-            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
-            browserHistory.push("/schedules/");
+            // this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+            // toastr.options.positionClass = 'toast-top-full-width';
+            // toastr.success('Schedule submitted!');
+            // browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -178,7 +175,6 @@ class ManageSchedulePage extends React.Component {
         schedule[property] = event.target.value;
         schedule.templateName = selectedText;
         this.setState({errors: errors});
-        this.validateTemplate();
         return this.setState({schedule});
     }
 
@@ -314,7 +310,7 @@ class ManageSchedulePage extends React.Component {
         return isValid;
     }
 
-     validateClient(){
+    validateClient(){
        // console.log("validateClient",this.state.allowedAttributes[0].attributeValue);
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
