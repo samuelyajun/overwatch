@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 
-const UserForm = ({users, respondents, updateUsers, updateRole}) => {
+const UserForm = ({users, respondents, updateUsers, updateRole, errorsRespondents, errorsRoles}) => {
 
     const schedulePanel = {
         backgroundColor:'#999999',
@@ -18,12 +18,14 @@ const UserForm = ({users, respondents, updateUsers, updateRole}) => {
                         <UserCheckboxGroup users={users}
                             onClick={updateUsers}
                         />
+                        {errorsRespondents.required && <div className="alert alert-danger">{errorsRespondents.required}</div>}
                     </div>
                     <div className="col-md-9">
                         <RespondentList
                             respondents={respondents}
                             onChange={updateRole}
                         />
+                        {errorsRoles.required && <div className="alert alert-danger">{errorsRoles.required}</div>}
                     </div>
                 </div>
                 <div>{updateUsers}</div>
@@ -33,10 +35,12 @@ const UserForm = ({users, respondents, updateUsers, updateRole}) => {
 };
 
 UserForm.propTypes = {
-  users: PropTypes.array,
-  respondents: PropTypes.array,
-  updateUsers: PropTypes.func,
-  updateRole: PropTypes.func
+    users: PropTypes.array,
+    respondents: PropTypes.array,
+    updateUsers: PropTypes.func,
+    updateRole: PropTypes.func,
+    errorsRespondents: PropTypes.object.isRequired,
+    errorsRoles: PropTypes.object.isRequired
 };
 
 export default UserForm;
