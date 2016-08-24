@@ -234,6 +234,17 @@ class ManageSchedulePage extends React.Component {
     }
 
     isFormValid() {
+        this.validateStartDate();
+                this.validateEndDate();
+                this.validateSeven();
+                this.validateTemplate();
+                this.validateFrequency();
+                this.validateClient();
+                this.validateOffice();
+                this.validateProject();
+                this.validateRespondents();
+                this.validateRoles();
+
         return this.validateStartDate() &&
                 this.validateEndDate() &&
                 this.validateSeven()&&
