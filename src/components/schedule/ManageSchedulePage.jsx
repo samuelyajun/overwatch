@@ -30,7 +30,6 @@ class ManageSchedulePage extends React.Component {
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
 
-        this.onClickUpdate = this.onClickUpdate.bind(this);
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
@@ -42,36 +41,42 @@ class ManageSchedulePage extends React.Component {
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
         this.viewSchedules = this.viewSchedules.bind(this);
+        this.addUserLink = this.addUserLink.bind(this);
+        this.addRoles = this.addRoles.bind(this);
+        this.getStatefulUsers = this.getStatefulUsers.bind(this);
         this.validateTemplate = this.validateTemplate.bind(this);
+        this.validateFrequency = this.validateFrequency.bind(this);
+        this.validateOffice = this.validateOffice.bind(this);
+        this.validateProject = this.validateProject.bind(this);
+        this.validateRespondents = this.validateRespondents.bind(this);
+        this.validateRoles = this.validateRoles.bind(this);
 
         this.state = {
-            schedule: {
-                id: '',
+            schedule: {id: '',
                 templateUri: '',
                 templateName: '',
-                frequency: 'ONE_TIME',
+                frequency: '',
                 startDate: '',
                 endDate: '',
-                respondents: []
-            },
+                respondents: []},
             allowedAttributes: [
                 {
-                    id:"http://localhost:8090/allowedAttributes/7",
-                    attributeValue: 'Catalyst DevWorks', //hardcoded for now
+                    id:"",
+                    attributeValue: '', 
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/8",
-                    attributeValue: 'Overwatch', //hardcoded for now
+                    id:"",
+                    attributeValue: '', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/5",
-                    attributeValue: 'Beaverton',
+                    id:"",
+                    attributeValue: '',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -87,12 +92,30 @@ class ManageSchedulePage extends React.Component {
               templateUri: {
                 required: ''
               },
+              frequency: {
+                required: ''
+              },
               startDate: {
                 required: ''
               },
               endDate: {
                 afterStart: '',
                 sevenDays: ''
+              },
+              client: {
+                required: ''
+              },
+              location: {
+                required: ''
+              },
+              project: {
+                required: ''
+              },
+              respondents: {
+                required: ''
+              },
+              roles: {
+                required: ''
               }
             }
         };
@@ -219,8 +242,104 @@ class ManageSchedulePage extends React.Component {
     isFormValid() {
         return this.validateStartDate() &&
                 this.validateEndDate() &&
-                this.validateSeven() &&
-                this.validateTemplate;
+                this.validateSeven()&&
+                this.validateTemplate()&&
+                this.validateFrequency()&&
+                this.validateClient()&&
+                this.validateOffice()&&
+                this.validateProject()&&
+                this.validateRespondents()&&
+                this.validateRoles();
+    }
+
+    validateRoles(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = false;
+        let roles = this.state.schedule.respondents.map((resp)=>{return resp.allowedAttributes[0].attributeValue;});
+        let result=false;
+        roles.forEach(function(){
+            for(let i=0;i<roles.length;i++){
+                if(!roles[i]){
+                    errors.roles.required = 'Each respondent must have a role';
+                    return;
+                }   
+            }
+            isValid = true;
+            errors.roles.required = '';
+        });
+
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateRespondents(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = false;
+        if(!this.state.schedule.respondents){
+            errors.respondents.required = 'Respondents required';
+            isValid = false;
+        }else{
+            errors.respondents.required = '';
+            isValid = true;
+        }
+        
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateProject(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[1].attributeValue === ''){
+            errors.project.required = 'Project required';
+            isValid = false;
+        }else{
+            errors.project.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateOffice(){
+       // console.log("validateOffice",this.state.allowedAttributes[2].attributeValue);
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[2].attributeValue === ''){
+            errors.location.required = 'Office required';
+            isValid = false;
+        }else{
+            errors.location.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+     validateClient(){
+       // console.log("validateClient",this.state.allowedAttributes[0].attributeValue);
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[0].attributeValue === ''){
+            errors.client.required = 'Frequency required';
+            isValid = false;
+        }else{
+            errors.client.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateFrequency(){
+       // console.log("validateFrequency",this.state.schedule.frequency);
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.schedule.frequency === ''){
+            errors.frequency.required = 'Frequency required';
+            isValid = false;
+        }else{
+            errors.frequency.required = '';
+        }
+        this.setState({errors});
+        return isValid;
     }
 
     validateTemplate(){
@@ -229,6 +348,8 @@ class ManageSchedulePage extends React.Component {
         if(this.state.schedule.templateUri === ''){
             errors.templateUri.required = 'Template required';
             isValid = false;
+        }else{
+            errors.templateUri.required = '';
         }
         this.setState({errors});
         return isValid;
@@ -309,21 +430,29 @@ class ManageSchedulePage extends React.Component {
         return (
                 <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Create Schedule'}/>
-                <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
-                    templates={templates} schedules={schedules} templateOptions={templateOptions}
-                    templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
-                    errorsTemplateUri={this.state.errors.templateUri.required}
-                    scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
-                    validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
-                    scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
-                    errorsEndDate={this.state.errors.endDate.afterStart}
-                    allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
-                    allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
-                    allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
-                    onUpdateAttribute={this.onUpdateAttribute}
-                    users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
-                    onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
-                />  
+                 <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                templateOptions={templateOptions}
+                templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                errorsTemplateUri={this.state.errors.templateUri.required}
+                scheduleFrequency={this.state.schedule.frequency} 
+                errorsFrequency={this.state.errors.frequency.required}
+                onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                errorsEndDate={this.state.errors.endDate.afterStart}
+                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                errorsClient={this.state.errors.client.required}
+                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                errorsProject={this.state.errors.project.required}
+                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                errorsLocation={this.state.errors.location.required}
+                onUpdateAttribute={this.onUpdateAttribute}
+                users={users} respondents={this.state.schedule.respondents}
+                errorsRespondents={this.state.errors.respondents}
+                errorsRoles={this.state.errors.roles}  
+                updateUsers={this.updateUsers} updateRole={this.updateRole}
+                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+            />  
             </div>
         );
 
