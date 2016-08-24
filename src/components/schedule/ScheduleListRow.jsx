@@ -3,9 +3,9 @@ import { browserHistory, Route, Link } from 'react-router';
 import Button from '../common/Button.jsx';
 
 
-const ScheduleListRow = ({templateName, clientName, project, frequency, startDate, endDate, onUpdate}) => {
+const ScheduleListRow = ({templateName, clientName, project, frequency, startDate, endDate, onUpdate, id}) => {
 
-
+(function(){console.log("XXXXXXXXXXXXXXXXXXXXXXXXX",id)})()
     let submitButtonClass = 'btn';
 
     let btnUpdate = {
@@ -28,7 +28,7 @@ const ScheduleListRow = ({templateName, clientName, project, frequency, startDat
             <td style = {alignMiddleStyle}>{startDate}</td>
             <td style = {alignMiddleStyle}>{endDate}</td>
             <td style = {alignMiddleStyle}> 
-                <Button type={'button'} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/>
+                <Button type={'button'} value={id} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/>
             </td>
         </tr>
     );
