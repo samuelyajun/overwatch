@@ -19,7 +19,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   errorsRoles
 })  =>  {
 (function(){
-  console.log("errorsRoles",errorsRoles);
+  console.log("allowedAttributesProject",allowedAttributesProject);
 })();
         const schedulePanel = {
             backgroundColor:'#999999',
@@ -112,7 +112,7 @@ ScheduleForm.propTypes = {
     scheduleFrequency: PropTypes.string.isRequired,
     scheduleStartDate: PropTypes.string.isRequired,
     errorsStartDate: PropTypes.string.isRequired,
-    scheduleEndDate: PropTypes.string.isRequired,
+    scheduleEndDate: PropTypes.string,
     errorsEndDate: PropTypes.string.isRequired,
     allowedAttributesClient: PropTypes.string,
     allowedAttributesProject: PropTypes.string,

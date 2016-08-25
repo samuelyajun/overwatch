@@ -152,7 +152,8 @@ class ManageSchedulePage extends React.Component {
     }
 
      onClickSubmit() {
-        console.log("this.validateRoles;",this.validateRoles());
+        console.log("this.validateRoles;",this.isFormValid());
+        console.log("this.state.schedule",this.state.schedule);
         if (this.isFormValid()) {
             console.log("VALIDATION PASSED");
             let formattedSchedule = Object.assign({}, this.state.schedule);
@@ -286,7 +287,15 @@ console.log("onClickSubmit",formattedSchedule)
             let g =    this.validateProject();
             let h =    this.validateRespondents();
             let i =    this.validateRoles();
-
+console.log("validateEndDate", a);
+console.log("validateSeven", b);
+console.log("validateTemplate", c);
+console.log("validateFrequency", d);
+console.log("validateClient", e);
+console.log("validateOffice", f);
+console.log("validateProject", g);
+console.log("validateRespondents", h);
+console.log("validateRoles", i);
         return a&&b&&c&&d&&e&&f&&g&&h&&i;
     }
 
@@ -546,7 +555,7 @@ console.log("onClickSubmit",formattedSchedule)
             />  
             </div>:
             <div className="container" style={scheduleOuterDiv}>
-                <h1 style={alignCenterStyle}>Update Schedule</h1><br></br><br></br>
+                <PageTitle name={'Update Schedule'}/>
             <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
                 templates={templates} templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
