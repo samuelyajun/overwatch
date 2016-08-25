@@ -11,7 +11,7 @@ import {bindActionCreators} from 'redux';
 import ScheduleUtils from '../../utils/scheduleUtils';
 import ScheduleForm from './ScheduleForm.jsx';
 import PageTitle from '../common/PageTitle.jsx';
-
+import HateoasUtils from '../../utils/hateoasUtils';
 
 const scheduleOuterDiv = {
     marginTop: '75px'
@@ -41,6 +41,9 @@ class ManageSchedulePage extends React.Component {
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
         this.viewSchedules = this.viewSchedules.bind(this);
+        this.addUserLink = this.addUserLink.bind(this);
+        this.addRoles = this.addRoles.bind(this);
+        this.getStatefulUsers = this.getStatefulUsers.bind(this);
         this.validateTemplate = this.validateTemplate.bind(this);
         this.validateFrequency = this.validateFrequency.bind(this);
         this.validateOffice = this.validateOffice.bind(this);
@@ -114,27 +117,66 @@ class ManageSchedulePage extends React.Component {
               roles: {
                 required: ''
               }
-            }
+            },
+            scheduleToUpdate: {},
+            statefulUsers:[]
         };
     }
 
-    onClickUpdate(event) {
-        event.persist();
-        browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
+    addUserLink(schedule) {
+        let modifiedSchedule = Object.assign({}, this.state.schedule);
+       // console.log("in addUserLink");
+        if(!this.props.params.id){
+            schedule.respondents.forEach((respondent) => {
+                respondent.user = HateoasUtils.getObjectLink(respondent.user);
+            });
+        }else if(this.props.params.id){
+            schedule.respondents.forEach((respondent) => {
+                respondent.user = HateoasUtils.createObjectLink(respondent.user);
+                delete respondent.id;
+            });
+        }
+        modifiedSchedule = schedule;
+      //  console.log("in addUserLink",modifiedSchedule); 
+        return this.setState({schedule:modifiedSchedule});
     }
 
-    onClickSubmit() {
+    addRoles(schedule, attributes) {
+        let modifiedSchedule = Object.assign({}, this.state.schedule);
+        schedule.respondents.forEach((respondent) => {
+            respondent.allowedAttributes = attributes.concat(respondent.allowedAttributes[0].attributeValue);
+        });
+        modifiedSchedule = schedule; 
+       // console.log("in addRoles");
+        return this.setState({schedule:modifiedSchedule});
+    }
+
+     onClickSubmit() {
+        console.log("this.validateRoles;",this.validateRoles());
         if (this.isFormValid()) {
-            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+            console.log("VALIDATION PASSED");
             let formattedSchedule = Object.assign({}, this.state.schedule);
+console.log("onClickSubmit",formattedSchedule)
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
 
-            ScheduleUtils.addRoles(formattedSchedule, attributes);
-            ScheduleUtils.addUserLink(formattedSchedule);
-
-            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
-            browserHistory.push("/schedules/");
+            this.addRoles(formattedSchedule, attributes);
+            this.addUserLink(formattedSchedule);
+            //this.checkFrequency(formattedSchedule);
+           
+            //console.log("getting new copy of state.schedule",this.state.schedule);
+//             setTimeout(function(){
+// console.log("*** formattedSchedule after scheduleUtils ****",formattedSchedule)}, 1500);
+//we need to further clean the schedule before update, to make sure the values fit the right format-
+//if not updated by the user, the defaults are not all formatted correctly and the user will be undefined - 
+//several fields are dependent on click events to be formatted correctly. start with frequency?
+// if(this.props.params.id){
+//     this.props.actions.updateSchedule(this.state.schedule);
+// }else{
+//     this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+// }
+            // toastr.options.positionClass = 'toast-top-full-width';
+            // toastr.success('Schedule submitted!');
+             browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -408,7 +450,61 @@ class ManageSchedulePage extends React.Component {
       return formatUrl;
     }
 
+    getStatefulUsers(schedule, allUsers){
+       // console.log("getStatefulUsers");
+        let checkedUsers = schedule.respondents.map((respondent)=>{
+                let respondent1 = Object.assign({}, respondent);
+                respondent1.user["checked"] = true;
+                let respondent2 = Object.assign({}, respondent1);
+                return respondent2.user;
+        });
+        allUsers = allUsers.map(user => {
+                   let user1 = Object.assign({}, user);
+                    user1.checked = false;
+                    let user2 = Object.assign({}, user1);
+                    return user2;
+                });
+        let newUsers1;
+        let newUsers = checkedUsers.concat(allUsers);
+            for(let i = 0; i<newUsers.length;i++ ){
+                if(newUsers[i].checked){
+                    for(let j = 0;j<newUsers.length;j++){
+                      if(newUsers[j].id === newUsers[i].id && !newUsers[j].checked){
+                          newUsers.splice(j,1);
+                        }
+                    }
+                }
+            }
+        newUsers1 = Object.assign([], newUsers);
+        let formattedUsers = [];
+                newUsers1.forEach((user) => {
+                    formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
+                });
+    return formattedUsers;
+    }
 
+    componentWillMount(){
+        //we should be setting props.funUsers and sending them as the props to the checkboxes!!!!!!!!!
+      //  console.log("componentWillMount*******", this.props.schedules)
+        let schedule;
+        if(this.props.params.id) {
+            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
+            schedule = schedule[0];
+        }
+        let statefulUsers = [];
+        if(schedule){
+        if(this.props.users.length>0){          
+    //console.log(schedule, users.length);
+            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
+        }
+
+      //  console.log("componentWillMount******* schedule",schedule.respondents[0].user)
+        return this.setState({schedule,statefulUsers});
+        }else{
+          //  console.log("In else - componentWillMount*******", this.props.schedules)
+           return this.setState({schedules:this.props.schedules}); 
+        }
+    }
 
     render() {
         const {schedules, templates, users} = this.props;
@@ -421,6 +517,8 @@ class ManageSchedulePage extends React.Component {
         });
 
         return (
+            <div>
+                {(!this.state.schedule.id)?
                 <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Create Schedule'}/>
                  <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
@@ -446,6 +544,28 @@ class ManageSchedulePage extends React.Component {
                 updateUsers={this.updateUsers} updateRole={this.updateRole}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
             />  
+            </div>:
+            <div className="container" style={scheduleOuterDiv}>
+                <h1 style={alignCenterStyle}>Update Schedule</h1><br></br><br></br>
+            <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                templates={templates} templateOptions={templateOptions}
+                templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                errorsTemplateUri={this.state.errors.templateUri.required}
+                scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                errorsEndDate={this.state.errors.endDate.afterStart}
+                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                onUpdateAttribute={this.onUpdateAttribute}
+                users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
+                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+                schedule={this.state.schedule}
+                statefulUsers={this.state.statefulUsers}
+            />
+            </div>
+        }
             </div>
         );
 
@@ -453,12 +573,12 @@ class ManageSchedulePage extends React.Component {
 }
 
 
-
 ManageSchedulePage.propTypes = {
     schedules: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    params: PropTypes.object.isRequired
 };
 
 //Pulling in the React Router context, so router is available via this.context.router
@@ -466,8 +586,71 @@ ManageSchedulePage.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
+function getScheduleById(schedules, scheduleId) {
+    const schedule = schedules.filter( schedule => schedule.id === parseInt(scheduleId));
+    return (schedule)? schedule[0]: null;
+}
+
+function getUsers(schedule, allUsers){
+        console.log("getStatefulUsers");
+    let checkedUsers = schedule.respondents.map((respondent)=>{
+            let respondent1 = Object.assign({}, respondent);
+            respondent1.user["checked"] = true;
+            let respondent2 = Object.assign({}, respondent1);
+            return respondent2.user;
+    });
+    allUsers = allUsers.map(user => {
+               let user1 = Object.assign({}, user);
+                user1.checked = false;
+                let user2 = Object.assign({}, user1);
+                return user2;
+            });
+    let newUsers1;
+    let newUsers = checkedUsers.concat(allUsers);
+        for(let i = 0; i<newUsers.length;i++ ){
+            if(newUsers[i].checked){
+                for(let j = 0;j<newUsers.length;j++){
+                  if(newUsers[j].id === newUsers[i].id && !newUsers[j].checked){
+                      newUsers.splice(j,1);
+                    }
+                }
+            }
+        }
+    newUsers1 = Object.assign([], newUsers);
+    let formattedUsers = [];
+            newUsers1.forEach((user) => {
+                formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
+            });
+    return formattedUsers;
+}
+
+
 function mapStateToProps(state, ownProps){
+
+    const scheduleId = ownProps.params.id;
+    let schedule = {
+        id: '',
+        templateUri: '',
+        templateName: '',
+        frequency: '',
+        startDate: '',
+        endDate: '',
+        respondents: []
+    };
+
+let chosenSchedule = getScheduleById(state.schedules, scheduleId);
+let funUsers = [];
+    if(chosenSchedule){
+    if(state.users.length>0){          
+        funUsers = getUsers(chosenSchedule,state.users);
+//console.log(funUsers);
+    }  
+}
+    //console.log("OWN PROPS", funUsers);
+    //console.log("******statefulUsers******", statefulUsers);
     return {
+        funUsers: state.funUsers,
+        schedule: schedule,
         users: state.users,
         schedules: state.schedules,
         templates: state.templates
