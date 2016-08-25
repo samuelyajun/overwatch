@@ -8,7 +8,9 @@ const scrollStyle = {
     overflowY: 'scroll'
 };
 
+
 const ScrollableCheckboxGroup = ({options, onClick}) => {
+
     return(
         <div className="container" style={scrollStyle}>
             {
@@ -18,7 +20,9 @@ const ScrollableCheckboxGroup = ({options, onClick}) => {
                             key={option.id}
                             value={option.id}
                             name={option.name}
-                            onClick={onClick} />
+                            onClick={onClick}
+                            defaultChecked={option.checked}
+                             />
                     );
                 })
             }

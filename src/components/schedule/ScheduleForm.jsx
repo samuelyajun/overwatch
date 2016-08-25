@@ -15,10 +15,12 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   validateStartDate, errorsStartDate, scheduleEndDate, validateEndDate, errorsEndDate,
   allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, onUpdateAttribute,
   users, respondents, updateUsers, updateRole, onClickSubmit, viewSchedules, templateOptions,
-  errorsFrequency, errorsClient, errorsLocation, errorsProject, errorsRespondents,
+  schedule, statefulUsers, errorsFrequency, errorsClient, errorsLocation, errorsProject, errorsRespondents,
   errorsRoles
 })  =>  {
-
+(function(){
+  console.log("errorsRoles",errorsRoles);
+})();
         const schedulePanel = {
             backgroundColor:'#999999',
             borderColor: '#999999',
@@ -39,7 +41,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
 
                                   <div className="col-xs-6">
 
-                                    <SurveyScheduleDate 
+                                    <SurveyScheduleDate
                                       templateUri={templateUri}
                                       onUpdateTemplate={onUpdateTemplate}
                                       templateOptions={templateOptions}
@@ -53,12 +55,13 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
                                       scheduleEndDate={scheduleEndDate}
                                       validateEndDate={validateEndDate}
                                       errorsEndDate={errorsEndDate}
+                                      scheduleToUpdate={schedule}
                                     />
 
                                   </div>
 
                                   <div className="col-xs-6 well">
-                                    <AttributesComponent 
+                                    <AttributesComponent
                                       allowedAttributesClient={allowedAttributesClient}
                                       errorsClient={errorsClient}
                                       allowedAttributesProject={allowedAttributesProject}
@@ -66,6 +69,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
                                       allowedAttributesLocation={allowedAttributesLocation}
                                       errorsLocation={errorsLocation}
                                       onUpdateAttribute={onUpdateAttribute}
+                                      scheduleToUpdate={schedule}
                                     />
 
                                   </div>
@@ -75,12 +79,14 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
                     </div>
                     <div className="row">
                        <UserForm users={users} 
-                        respondents={respondents} 
-                        updateUsers={updateUsers} 
-                        updateRole={updateRole}
+                        respondents={respondents}
                         errorsRespondents={errorsRespondents}
-                        errorsRoles={errorsRoles}
-                        />
+                        errorsRoles={errorsRoles} 
+                        updateUsers={updateUsers} 
+                        updateRole={updateRole} 
+                        scheduleToUpdate={schedule}
+                        statefulUsers={statefulUsers}
+                       />
                     </div>
                     <br />
                     <div className="col-md-12">
@@ -119,12 +125,8 @@ ScheduleForm.propTypes = {
     updateRole: PropTypes.func.isRequired,
     onClickSubmit: PropTypes.func.isRequired,
     viewSchedules: PropTypes.func.isRequired,
-    errorsFrequency: PropTypes.string.isRequired,
-    errorsClient: PropTypes.string.isRequired,
-    errorsLocation: PropTypes.string.isRequired,
-    errorsProject: PropTypes.string.isRequired,
-    errorsRespondents: PropTypes.object.isRequired,
-    errorsRoles: PropTypes.object.isRequired
+    schedule: PropTypes.object,
+    statefulUsers: PropTypes.array
 };
 
 
