@@ -29,7 +29,7 @@ class SchedulePage extends React.Component {
     onClickUpdate(event) {
         console.log("event.target.value",event.target.value);
         let id = parseInt(event.target.value);
-        browserHistory.push('/schedule/' + id);
+        browserHistory.push('/schedules/update/' + id);
     }
 
     onClickSubmit(){
