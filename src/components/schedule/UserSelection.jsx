@@ -2,8 +2,11 @@ import React, {PropTypes} from 'react';
 import UserCheckboxGroup from './UserCheckboxGroup.jsx';
 import RespondentList from './RespondentList.jsx';
 
-const UserForm = ({users, respondents, updateUsers, updateRole, errorsRespondents, errorsRoles}) => {
-
+const UserForm = ({users, respondents, updateUsers, updateRole, scheduleToUpdate,
+ statefulUsers, errorsRespondents, errorsRoles}) => {
+(function(){
+  //console.log("UserForm",errorsRespondents.required.length);
+})();
     const schedulePanel = {
         backgroundColor:'#999999',
         borderColor: '#999999',
@@ -12,13 +15,15 @@ const UserForm = ({users, respondents, updateUsers, updateRole, errorsRespondent
 
     return (
     <div>
+      {(!scheduleToUpdate)?
+        <div>
         <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
                 <div className="panel-body">
                     <div className="col-md-3">
                         <UserCheckboxGroup users={users}
                             onClick={updateUsers}
                         />
-                        {errorsRespondents.required && <div className="alert alert-danger">{errorsRespondents.required}</div>}
+                      {errorsRespondents.required && <div className="alert alert-danger">{errorsRespondents.required}</div>}
                     </div>
                     <div className="col-md-9">
                         <RespondentList
@@ -29,6 +34,28 @@ const UserForm = ({users, respondents, updateUsers, updateRole, errorsRespondent
                     </div>
                 </div>
                 <div>{updateUsers}</div>
+                </div>:
+
+    <div>
+        <div className="panel-heading" style={schedulePanel}><h4>2. Select Recipients</h4></div>
+                <div className="panel-body">
+                    <div className="col-md-3">
+                        <UserCheckboxGroup statefulUsers={statefulUsers}
+                            onClick={updateUsers}
+                            scheduleToUpdate={scheduleToUpdate}
+                        />
+                    </div>
+                    <div className="col-md-9">
+                        <RespondentList
+                            respondents={respondents}
+                            onChange={updateRole}
+                            scheduleToUpdate={scheduleToUpdate}
+                        />
+                    </div>
+                </div>
+                <div>{updateUsers}</div>
+    </div>
+      }
     </div>
     );
 
@@ -39,8 +66,8 @@ UserForm.propTypes = {
     respondents: PropTypes.array,
     updateUsers: PropTypes.func,
     updateRole: PropTypes.func,
-    errorsRespondents: PropTypes.object.isRequired,
-    errorsRoles: PropTypes.object.isRequired
+    scheduleToUpdate: PropTypes.object,
+    statefulUsers: PropTypes.array
 };
 
 export default UserForm;
