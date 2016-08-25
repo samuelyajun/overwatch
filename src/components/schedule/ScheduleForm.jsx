@@ -20,6 +20,8 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
 })  =>  {
 (function(){
   console.log("allowedAttributesProject",allowedAttributesProject);
+  console.log("errorsClient",errorsClient);
+  console.log("errorsProject",errorsProject);
 })();
         const schedulePanel = {
             backgroundColor:'#999999',
