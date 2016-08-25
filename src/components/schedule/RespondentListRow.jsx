@@ -16,7 +16,12 @@ const recipientLabel = {
 };
 
 const RespondentListRow = ({respondent, onChange, index}) => {
-
+(function(){
+  console.log("RespondentListRow",respondent);
+  // console.log("allowedAttributes 0",respondent.allowedAttributes[0].attributeValue);
+  // console.log("allowedAttributes 1",respondent.allowedAttributes[1].attributeValue);
+  // console.log("allowedAttributes 2",respondent.allowedAttributes[2].attributeValue);
+})();
     return (
         <div className="well col-md-5 col-md-offset-1" style={recipientWell}>
             <div style={recipientLabel}>
@@ -25,10 +30,9 @@ const RespondentListRow = ({respondent, onChange, index}) => {
                     <SelectInput
                        style={noMargin}
                        name={`${index}`}
-                       value={respondent.allowedAttributes[0].attributeValue}
+                       defaultOptionValue= "--Select--"
+                       defaultOptionLabel= {respondent.allowedAttributes[0].attributeValue}
                        onChange={onChange}
-                       defaultOptionValue= ""
-                       defaultOptionLabel= "--Select Role--"
                        options={[
                            {
                                id:1,

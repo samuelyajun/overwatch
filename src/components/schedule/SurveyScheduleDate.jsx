@@ -127,6 +127,7 @@ let frequency;
                        defaultOptionLabel = {scheduleFrequency}
                        defaultOptionValue = {scheduleFrequency}
                        onChange={onUpdate}
+                       error={errorsFrequency}
                        options={[
                           {
                                text: "1 Time",

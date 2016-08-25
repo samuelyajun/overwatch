@@ -124,6 +124,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                      defaultOptionLabel={scheduleToUpdate.client}
                      value={allowedAttributesClient}
                      onChange={onUpdateAttribute}
+                     error={errorsClient}
                      options={[
                         {
                               id:"http://localhost:8090/allowedAttributes/7",
@@ -157,6 +158,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                      defaultOptionLabel="--Select Location--"
                      value={scheduleToUpdate.project}
                      onChange={onUpdateAttribute}
+                     error={errorsProject}
                      options={[
                          {
                               id:"http://localhost:8090/allowedAttributes/11",
@@ -194,6 +196,7 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                       defaultOptionLabel="--Select Location--"
                       value={allowedAttributesLocation}
                       onChange={onUpdateAttribute}
+                      error={errorsLocation}
                       options={[
                           {
                               id:"http://localhost:8090/allowedAttributes/5",

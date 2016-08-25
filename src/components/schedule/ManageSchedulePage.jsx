@@ -119,7 +119,8 @@ class ManageSchedulePage extends React.Component {
               }
             },
             scheduleToUpdate: {},
-            statefulUsers:[]
+            statefulUsers:[],
+            users:[]
         };
     }
 
@@ -302,7 +303,9 @@ console.log("validateRoles", i);
     validateRoles(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        let roles = this.state.schedule.respondents.map((resp)=>{return resp.allowedAttributes[0].attributeValue;});
+        let roles = this.state.schedule.respondents.map((resp)=>{
+console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0].attributeValue);
+            return resp.allowedAttributes[0].attributeValue;});
         let result=false;
         roles.forEach(function(){
             for(let i=0;i<roles.length;i++){
@@ -364,7 +367,7 @@ console.log("validateRoles", i);
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[0].attributeValue === ''){
-            errors.client.required = 'Frequency required';
+            errors.client.required = 'Client required';
             isValid = false;
         }else{
             errors.client.required = '';
@@ -494,7 +497,7 @@ console.log("validateRoles", i);
 
     componentWillMount(){
         //we should be setting props.funUsers and sending them as the props to the checkboxes!!!!!!!!!
-      //  console.log("componentWillMount*******", this.props.schedules)
+        console.log("componentWillMount******* this.props.params" , this.props.params)
         let schedule;
         if(this.props.params.id) {
             schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
@@ -508,15 +511,16 @@ console.log("validateRoles", i);
         }
 
       //  console.log("componentWillMount******* schedule",schedule.respondents[0].user)
-        return this.setState({schedule,statefulUsers});
+        return this.setState({schedule,statefulUsers,users:this.props.users});
         }else{
           //  console.log("In else - componentWillMount*******", this.props.schedules)
-           return this.setState({schedules:this.props.schedules}); 
+           return this.setState({schedules:this.props.schedules,users:this.props.users}); 
         }
     }
 
     render() {
-        const {schedules, templates, users} = this.props;
+        const {schedules, templates} = this.props;
+        const users = this.state.users;
         let templateOptions = [];
         templates.map((template) => {
         templateOptions.push( {
@@ -524,7 +528,7 @@ console.log("validateRoles", i);
             value: this.formatTemplateLink(template._links.self.href)
         });
         });
-
+console.log("schedule in render", this.state.schedule);
         return (
             <div>
                 {(!this.state.schedule.id)?
@@ -560,15 +564,23 @@ console.log("validateRoles", i);
                 templates={templates} templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
                 errorsTemplateUri={this.state.errors.templateUri.required}
-                scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                scheduleFrequency={this.state.schedule.frequency} 
+                errorsFrequency={this.state.errors.frequency.required}
+                onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
                 validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
                 scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
                 errorsEndDate={this.state.errors.endDate.afterStart}
                 allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                errorsClient={this.state.errors.client.required}
                 allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                errorsProject={this.state.errors.project.required}
                 allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                errorsLocation={this.state.errors.location.required}
                 onUpdateAttribute={this.onUpdateAttribute}
-                users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
+                users={users} respondents={this.state.schedule.respondents}
+                errorsRespondents={this.state.errors.respondents}
+                updateUsers={this.updateUsers} updateRole={this.updateRole}
+                errorsRoles={this.state.errors.roles}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
                 schedule={this.state.schedule}
                 statefulUsers={this.state.statefulUsers}

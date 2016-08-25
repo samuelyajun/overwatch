@@ -43,7 +43,9 @@ const UserForm = ({users, respondents, updateUsers, updateRole, scheduleToUpdate
                         <UserCheckboxGroup statefulUsers={statefulUsers}
                             onClick={updateUsers}
                             scheduleToUpdate={scheduleToUpdate}
+
                         />
+                        {errorsRespondents.required && <div className="alert alert-danger">{errorsRespondents.required}</div>}
                     </div>
                     <div className="col-md-9">
                         <RespondentList
@@ -51,6 +53,7 @@ const UserForm = ({users, respondents, updateUsers, updateRole, scheduleToUpdate
                             onChange={updateRole}
                             scheduleToUpdate={scheduleToUpdate}
                         />
+                        {errorsRoles.required && <div className="alert alert-danger">{errorsRoles.required}</div>}
                     </div>
                 </div>
                 <div>{updateUsers}</div>
