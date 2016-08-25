@@ -5,13 +5,7 @@ import Button from '../common/Button.jsx';
 
 const ScheduleListRow = ({schedule, onUpdate}) => {
 
-    let submitButtonClass = 'btn';
-
-    let btnUpdate = {
-        textAlign: 'center',
-        color: '#ffffff',
-        background: '#999999'
-    };
+    let submitButtonClass = 'btn btn-success';
 
     let alignMiddleStyle = {
         verticalAlign: 'middle'
@@ -27,7 +21,7 @@ const ScheduleListRow = ({schedule, onUpdate}) => {
             <td style = {alignMiddleStyle}>{schedule.startDate}</td>
             <td style = {alignMiddleStyle}>{schedule.endDate}</td>
             <td style = {alignMiddleStyle}> 
-                <button value={schedule.id} className='btn' onClick={onUpdate} />
+                <button value={schedule.id} className={submitButtonClass} onClick={onUpdate}>Update</button>
             </td>
         </tr>
     );
@@ -39,5 +33,3 @@ ScheduleListRow.propTypes = {
 };
 
 export default ScheduleListRow;
-
-// {/*<td style = {alignMiddleStyle}> <button value = {submitButtonType} className={submitButtonClass} onClick={onUpdate}> Update</button> </td>*/}
