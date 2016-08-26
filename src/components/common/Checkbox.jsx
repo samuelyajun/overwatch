@@ -1,11 +1,12 @@
 import React, {PropTypes} from 'react';
 
 const Checkbox = (props) => {
+
     return(
         <label className="col-xs-12">
             <input
                 type="checkbox"
-                checked={props.checked}
+                defaultChecked={props.defaultChecked}
                 value={props.value}
                 name={props.name}
                 onClick={props.onClick}
@@ -18,6 +19,7 @@ Checkbox.propTypes = {
     onClick: PropTypes.func.isRequired,
     name: PropTypes.string,
     checked: PropTypes.bool,
+    defaultChecked: PropTypes.bool,
     value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number

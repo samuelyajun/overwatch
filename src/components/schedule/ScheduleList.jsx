@@ -15,7 +15,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                 <th>Frequency</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                {/*<th></th>*/}
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -25,12 +25,7 @@ const ScheduleList = ({schedules, onUpdate}) => {
                         return (
                             <ScheduleListRow
                                 key={schedule.id}
-                                templateName = {schedule.templateName}
-                                clientName = {schedule.client}
-                                project = {schedule.project}
-                                frequency = {schedule.frequency}
-                                startDate = {schedule.startDate}
-                                endDate = {schedule.endDate}
+                                schedule={schedule}
                                 onUpdate={onUpdate}/>
                         );
                     })

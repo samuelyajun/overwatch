@@ -28,15 +28,15 @@ export function loadSchedules() {
         return fetch(`/api/schedule/schedules?projection=scheduleDetails`).then((response) => {
             dispatch(initiateAjaxRequest());
             response.json().then(json => {
-                console.log(json);
                 let scheduleArray = Object.assign([], json._embedded.schedules);
+                console.log("schedule before clean",scheduleArray[5].respondents);//allowedAttributes comes back in random order
                 let cleanedSchedules=[];
                 scheduleArray.map(schedule => {
                 const cleanedSchedule = Object.assign({}, schedule);
 
                 let clientAttribute;
                 let projectAttribute;
-
+                let officeAttribute;
                 let projectAttributes = schedule.respondents[0].allowedAttributes;
                
                 let newScheduleFrequency = schedule.frequency.toLowerCase().replace("_", " ");
@@ -46,19 +46,22 @@ export function loadSchedules() {
 
                     for (let attribute of projectAttributes) {
 
+                //need to change these to objects containing value (name) and link so it can be put on update page
+                // clientAttribute = {value:attribute.attributeValue, id:attribute.href or link?}
                         if(attribute.attributeType.name === "CLIENT"){
-
                             clientAttribute = attribute.attributeValue;
                         }
                         if(attribute.attributeType.name === "PROJECT"){
                             projectAttribute = attribute.attributeValue;
                         }
+                        if(attribute.attributeType.name === "OFFICE"){
+                            officeAttribute = attribute.attributeValue;
+                        }
                     }
-                
                 cleanedSchedule.frequency = newScheduleFrequency;
                 cleanedSchedule.client = clientAttribute;
                 cleanedSchedule.project = projectAttribute;
-              
+                cleanedSchedule.office = officeAttribute;
                 cleanedSchedules.unshift(cleanedSchedule);
                 });
 

@@ -3,16 +3,9 @@ import { browserHistory, Route, Link } from 'react-router';
 import Button from '../common/Button.jsx';
 
 
-const ScheduleListRow = ({templateName, clientName, project, frequency, startDate, endDate, onUpdate}) => {
+const ScheduleListRow = ({schedule, onUpdate}) => {
 
-
-    let submitButtonClass = 'btn';
-
-    let btnUpdate = {
-        textAlign: 'center',
-        color: '#ffffff',
-        background: '#999999'
-    };
+    let submitButtonClass = 'btn btn-success';
 
     let alignMiddleStyle = {
         verticalAlign: 'middle'
@@ -21,29 +14,22 @@ const ScheduleListRow = ({templateName, clientName, project, frequency, startDat
 
     return (
         <tr>
-            <td style = {alignMiddleStyle}>{templateName}</td>
-            <td style = {alignMiddleStyle}>{clientName}</td>
-            <td style = {alignMiddleStyle}>{project}</td>
-            <td style = {alignMiddleStyle}>{frequency}</td>
-            <td style = {alignMiddleStyle}>{startDate}</td>
-            <td style = {alignMiddleStyle}>{endDate}</td>
-            {/*<td style = {alignMiddleStyle}> */}
-                {/*<Button type={'button'} buttonClassName={submitButtonClass} style = {btnUpdate} onClick={onUpdate} label={'Update'}/> */}
-            {/*</td>*/}
+            <td style = {alignMiddleStyle}>{schedule.templateName}</td>
+            <td style = {alignMiddleStyle}>{schedule.clientName}</td>
+            <td style = {alignMiddleStyle}>{schedule.project}</td>
+            <td style = {alignMiddleStyle}>{schedule.frequency}</td>
+            <td style = {alignMiddleStyle}>{schedule.startDate}</td>
+            <td style = {alignMiddleStyle}>{schedule.endDate}</td>
+            <td style = {alignMiddleStyle}> 
+                <button value={schedule.id} className={submitButtonClass} onClick={onUpdate}>Update</button>
+            </td>
         </tr>
     );
 };
 
 ScheduleListRow.propTypes = {
-    templateName: PropTypes.string.isRequired,
-    clientName: PropTypes.string,
-    project: PropTypes.string,
-    frequency: PropTypes.string.isRequired,
-    endDate: PropTypes.string,
-    startDate: PropTypes.string.isRequired,
+    schedule: PropTypes.object,
     onUpdate: PropTypes.func
 };
 
 export default ScheduleListRow;
-
-// {/*<td style = {alignMiddleStyle}> <button value = {submitButtonType} className={submitButtonClass} onClick={onUpdate}> Update</button> </td>*/}
