@@ -5,7 +5,7 @@ import RespondentList from './RespondentList.jsx';
 const UserForm = ({users, respondents, updateUsers, updateRole, scheduleToUpdate,
  statefulUsers, errorsRespondents, errorsRoles}) => {
 (function(){
-  //console.log("UserForm",errorsRespondents.required.length);
+  console.log("UserForm",respondents);
 })();
     const schedulePanel = {
         backgroundColor:'#999999',

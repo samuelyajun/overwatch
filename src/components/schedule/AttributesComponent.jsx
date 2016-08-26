@@ -4,7 +4,10 @@ import TextInput from '../common/TextInput';
 
 const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, 
   onUpdateAttribute, scheduleToUpdate, errorsClient, errorsLocation, errorsProject}) => {
-
+// (function(){
+//   console.log("scheduleToUpdate ScheduleForm",scheduleToUpdate);
+  
+// })();
     return (
       <div>
         {(!scheduleToUpdate)?
@@ -154,8 +157,9 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                  <SelectInput
                      name="PROJECT"
                      label="Project"
+                     defaultOption={scheduleToUpdate.project}
                      defaultOptionValue={scheduleToUpdate.project}
-                     defaultOptionLabel="--Select Location--"
+                     defaultOptionLabel={scheduleToUpdate.project}
                      value={scheduleToUpdate.project}
                      onChange={onUpdateAttribute}
                      error={errorsProject}
@@ -192,9 +196,10 @@ const AttributesComponent = ({allowedAttributesClient, allowedAttributesProject,
                   <SelectInput
                       name="OFFICE"
                       label="Office"
+                      defaultOption={scheduleToUpdate.office}
                       defaultOptionValue=""
-                      defaultOptionLabel="--Select Location--"
-                      value={allowedAttributesLocation}
+                      defaultOptionLabel={scheduleToUpdate.office}
+                      value={scheduleToUpdate.office}
                       onChange={onUpdateAttribute}
                       error={errorsLocation}
                       options={[

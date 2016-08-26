@@ -8,12 +8,37 @@ class HateoasUtils {
     static getObjectLink(obj) {
         const links = obj._links;
         if (!links) {
+            console.log("HateoasUtils - NO LINKS?", obj._links)
             return;
         }
 
         const selfLink = links.self.href;
         const relativeUri = LINK_REGEX.exec(selfLink);
+//console.log("HateoasUtils", selfLink)
+        //return relativeUri[1];
+        return selfLink;
+    }
 
+     static createObjectLink(obj) {
+
+        const selfLink = 'http://localhost:8090/users/' + obj.id;
+        //const relativeUri = LINK_REGEX.exec(selfLink);
+console.log("HateoasUtils", selfLink)
+        //return relativeUri[1];
+        return selfLink;
+    }
+
+    static getUserLink(obj) {
+        console.log(obj);
+        const links = obj._links;
+        if (!links) {
+            console.log("HateoasUtils - NO LINKS?", obj._links)
+            return;
+        }
+
+        const selfLink = links.self.href;
+        const relativeUri = LINK_REGEX.exec(selfLink);
+console.log("HateoasUtils", selfLink)
         //return relativeUri[1];
         return selfLink;
     }

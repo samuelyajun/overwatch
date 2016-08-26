@@ -19,7 +19,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   errorsRoles
 })  =>  {
 (function(){
-  //console.log("errorsRespondents",errorsRespondents);
+  console.log("schedule ScheduleForm",respondents);
   
 })();
         const schedulePanel = {

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ScheduleListRow from './ScheduleListRow.jsx';
 
 const ScheduleList = ({schedules, onUpdate}) => {
-(function(){console.log(schedules)})()
+
     return (
         <table className = "table table-hover">
             <thead>

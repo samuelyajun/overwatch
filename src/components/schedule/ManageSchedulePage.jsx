@@ -133,7 +133,8 @@ class ManageSchedulePage extends React.Component {
             });
         }else if(this.props.params.id){
             schedule.respondents.forEach((respondent) => {
-                respondent.user = HateoasUtils.createObjectLink(respondent.user);
+                console.log("hateos respondent",respondent);//user has no id property - this not working!
+                respondent.user = HateoasUtils.createObjectLink(respondent.user);//this is a url
                 delete respondent.id;
             });
         }
@@ -152,19 +153,21 @@ class ManageSchedulePage extends React.Component {
         return this.setState({schedule:modifiedSchedule});
     }
 
-     onClickSubmit() {
-        console.log("this.validateRoles;",this.isFormValid());
-        console.log("this.state.schedule",this.state.schedule);
+     onClickSubmit() {//something happens to the respondents - they don't have respondent.user.idl; but they did?() 
+//respondents/roles is a mess          
+       // console.log("this.validateRoles;",this.isFormValid());
+        console.log("this.state.schedule",this.state.schedule);//user is already a url
         if (this.isFormValid()) {
             console.log("VALIDATION PASSED");
             let formattedSchedule = Object.assign({}, this.state.schedule);
-console.log("onClickSubmit",formattedSchedule)
-            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
-
+console.log("onClickSubmit - schedule on submit",formattedSchedule)
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));//allowedAttributes is separate from schedule
+//console.log("schedule before addRoles",  this.state.schedule);
             this.addRoles(formattedSchedule, attributes);
+            console.log("schedule after addRoles",  this.state.schedule);
             this.addUserLink(formattedSchedule);
+            console.log("schedule after addUserLink",  this.state.schedule);
             //this.checkFrequency(formattedSchedule);
-           
             //console.log("getting new copy of state.schedule",this.state.schedule);
 //             setTimeout(function(){
 // console.log("*** formattedSchedule after scheduleUtils ****",formattedSchedule)}, 1500);
@@ -231,17 +234,18 @@ console.log("onClickSubmit",formattedSchedule)
         });
         attribute.attributeValue = event.target.value;
         attribute.id = event.target.value;
-
+//console.log("onUpdateAttribute schedule",this.state.schedule)
         this.setState({errors: errors});
         return this.setState({attributes});
     }
 
 
     updateUsers(event) {
+       // console.log("event.target.checked",event.target.checked);
         const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
         let schedule = Object.assign({}, this.state.schedule);
-
+//console.log("schedule in updateUsers", this.state.schedule.respondents);
         if (isChecked) {
             const user = this.props.users.find((user) => {
                 return user.id === userId;
@@ -258,6 +262,7 @@ console.log("onClickSubmit",formattedSchedule)
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
             schedule.respondents = newRespondents;
+    console.log("schedule.respondents in updateUsers", newRespondents);        
         } else {
             const newRespondents = [
                 ...schedule.respondents.filter((respondent) => {
@@ -271,9 +276,11 @@ console.log("onClickSubmit",formattedSchedule)
 
     updateRole(event) {
         const index = parseInt(event.target.name);
+        console.log("update role - index", index);
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         schedule.respondents[index].allowedAttributes[0].attributeValue = role;
+        console.log("schedule updateRole",schedule);
         return this.setState({schedule});
     }
 
@@ -288,15 +295,15 @@ console.log("onClickSubmit",formattedSchedule)
             let g =    this.validateProject();
             let h =    this.validateRespondents();
             let i =    this.validateRoles();
-console.log("validateEndDate", a);
-console.log("validateSeven", b);
-console.log("validateTemplate", c);
-console.log("validateFrequency", d);
-console.log("validateClient", e);
-console.log("validateOffice", f);
-console.log("validateProject", g);
-console.log("validateRespondents", h);
-console.log("validateRoles", i);
+// console.log("validateEndDate", a);
+// console.log("validateSeven", b);
+// console.log("validateTemplate", c);
+// console.log("validateFrequency", d);
+// console.log("validateClient", e);
+// console.log("validateOffice", f);
+// console.log("validateProject", g);
+// console.log("validateRespondents", h);
+// console.log("validateRoles", i);
         return a&&b&&c&&d&&e&&f&&g&&h&&i;
     }
 
@@ -492,35 +499,50 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
                 newUsers1.forEach((user) => {
                     formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
                 });
-    return formattedUsers;
+                let users2 = Object.assign([], formattedUsers)
+    return users2;
     }
 
-    componentWillMount(){
-        //we should be setting props.funUsers and sending them as the props to the checkboxes!!!!!!!!!
-        console.log("componentWillMount******* this.props.params" , this.props.params)
+    componentWillMount(){      
+       // console.log("componentWillMount******* this.props.params" , this.props.params)
         let schedule;
         if(this.props.params.id) {
             schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
             schedule = schedule[0];
         }
-        let statefulUsers = [];
+        let statefulUsers;
         if(schedule){
         if(this.props.users.length>0){          
-    //console.log(schedule, users.length);
-            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
+    console.log("componentWillMount******* schedule" ,schedule);//get respondents
+    //set state of allowedAttributes and each respondent's role
+            statefulUsers = Object.assign([],this.getStatefulUsers(schedule,this.props.users));     
         }
-
-      //  console.log("componentWillMount******* schedule",schedule.respondents[0].user)
-        return this.setState({schedule,statefulUsers,users:this.props.users});
+//take allowedAttributes from first respondent and set state of project and client and office
+//loop thru respondents for roles, set state with roles
+        console.log("componentWillMount******* schedule.respondents",schedule.respondents[0])
+        let respondentRole;//schedule.respondent=respondentRole --{
+            //     attributeValue: '',
+            //     attributeTypes: {
+            //         name: 'ROLE'
+            //     }
+            // }
+        schedule.respondents.map(respondent => {
+            for (let attribute of respondent.allowedAttributes) {
+                if(attribute.attributeType.name==="ROLE"){
+                 console.log(respondent.id, attribute.attributeType.name,attribute.attributeValue);
+                }
+        }
+        });
+        return this.setState({schedule,statefulUsers});
         }else{
           //  console.log("In else - componentWillMount*******", this.props.schedules)
-           return this.setState({schedules:this.props.schedules,users:this.props.users}); 
+           return this.setState({schedules:this.props.schedules}); 
         }
     }
 
     render() {
-        const {schedules, templates} = this.props;
-        const users = this.state.users;
+        const {schedules, templates, users} = this.props;
+        //const users = this.state.users;
         let templateOptions = [];
         templates.map((template) => {
         templateOptions.push( {
@@ -534,7 +556,7 @@ console.log("schedule in render", this.state.schedule);
                 {(!this.state.schedule.id)?
                 <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Create Schedule'}/>
-                 <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
                 templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
                 errorsTemplateUri={this.state.errors.templateUri.required}
@@ -556,7 +578,7 @@ console.log("schedule in render", this.state.schedule);
                 errorsRoles={this.state.errors.roles}  
                 updateUsers={this.updateUsers} updateRole={this.updateRole}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
-            />  
+                />  
             </div>:
             <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Update Schedule'}/>

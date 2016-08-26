@@ -17,7 +17,7 @@ const recipientLabel = {
 
 const RespondentListRow = ({respondent, onChange, index}) => {
 (function(){
-  console.log("RespondentListRow",respondent);
+  //console.log("RespondentListRow",respondent);
   // console.log("allowedAttributes 0",respondent.allowedAttributes[0].attributeValue);
   // console.log("allowedAttributes 1",respondent.allowedAttributes[1].attributeValue);
   // console.log("allowedAttributes 2",respondent.allowedAttributes[2].attributeValue);

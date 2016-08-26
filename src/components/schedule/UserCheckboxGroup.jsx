@@ -6,11 +6,11 @@ const UserCheckboxGroup = ({users, onClick, statefulUsers}) => {
     let formattedUsers = [];
     if(statefulUsers) {
         statefulUsers.forEach((user) => {
-          formattedUsers.push(user);
+          formattedUsers.push(Object.assign({},user));
         });
     }else{
         users.forEach((user) => {
-            formattedUsers.push({id: user.id, name: user.firstName + ' ' + user.lastName});
+            formattedUsers.push(Object.assign({},{id: user.id, name: user.firstName + ' ' + user.lastName}));
         });
     }
 
