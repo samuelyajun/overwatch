@@ -1,12 +1,18 @@
 import React, {PropTypes} from 'react';
 import ScrollableCheckboxGroup from '../common/ScrollableCheckboxGroup.jsx';
 
-const UserCheckboxGroup = ({users, onClick}) => {
+const UserCheckboxGroup = ({users, onClick, statefulUsers}) => {
 
     let formattedUsers = [];
-    users.forEach((user) => {
-        formattedUsers.push({id: user.id, name: user.firstName + ' ' + user.lastName});
-    });
+    if(statefulUsers) {
+        statefulUsers.forEach((user) => {
+          formattedUsers.push(user);
+        });
+    }else{
+        users.forEach((user) => {
+            formattedUsers.push({id: user.id, name: user.firstName + ' ' + user.lastName});
+        });
+    }
 
     return(
         <ScrollableCheckboxGroup
@@ -17,8 +23,10 @@ const UserCheckboxGroup = ({users, onClick}) => {
 };
 
 UserCheckboxGroup.propTypes = {
-    users: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired
+    users: PropTypes.array,
+    scheduleToUpdate: PropTypes.object,
+    onClick: PropTypes.func.isRequired,
+    statefulUsers: PropTypes.array
 };
 
 export default UserCheckboxGroup;

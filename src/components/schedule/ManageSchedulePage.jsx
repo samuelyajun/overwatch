@@ -11,7 +11,7 @@ import {bindActionCreators} from 'redux';
 import ScheduleUtils from '../../utils/scheduleUtils';
 import ScheduleForm from './ScheduleForm.jsx';
 import PageTitle from '../common/PageTitle.jsx';
-
+import HateoasUtils from '../../utils/hateoasUtils';
 
 const scheduleOuterDiv = {
     marginTop: '75px'
@@ -30,7 +30,6 @@ class ManageSchedulePage extends React.Component {
         const errorStartDateRequired = 'Start date is required';
         const errorEndDatePreviousToStartDate = 'End date must occur after start date';
 
-        this.onClickUpdate = this.onClickUpdate.bind(this);
         this.onClickSubmit = this.onClickSubmit.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onUpdateAttribute = this.onUpdateAttribute.bind(this);
@@ -42,35 +41,42 @@ class ManageSchedulePage extends React.Component {
         this.onUpdateTemplate = this.onUpdateTemplate.bind(this);
         this.formatTemplateLink =this.formatTemplateLink.bind(this);
         this.viewSchedules = this.viewSchedules.bind(this);
+        this.addUserLink = this.addUserLink.bind(this);
+        this.addRoles = this.addRoles.bind(this);
+        this.getStatefulUsers = this.getStatefulUsers.bind(this);
+        this.validateTemplate = this.validateTemplate.bind(this);
+        this.validateFrequency = this.validateFrequency.bind(this);
+        this.validateOffice = this.validateOffice.bind(this);
+        this.validateProject = this.validateProject.bind(this);
+        this.validateRespondents = this.validateRespondents.bind(this);
+        this.validateRoles = this.validateRoles.bind(this);
 
         this.state = {
-            schedule: {
-                id: '',
+            schedule: {id: '',
                 templateUri: '',
                 templateName: '',
-                frequency: 'ONE_TIME',
+                frequency: '',
                 startDate: '',
                 endDate: '',
-                respondents: []
-            },
+                respondents: []},
             allowedAttributes: [
                 {
-                    id:"http://localhost:8090/allowedAttributes/7",
-                    attributeValue: 'Catalyst DevWorks', //hardcoded for now
+                    id:"",
+                    attributeValue: '', 
                     attributeTypes: {
                         name: 'CLIENT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/8",
-                    attributeValue: 'Overwatch', //hardcoded for now
+                    id:"",
+                    attributeValue: '', //hardcoded for now
                     attributeTypes: {
                         name: 'PROJECT'
                     }
                 },
                 {
-                    id:"http://localhost:8090/allowedAttributes/5",
-                    attributeValue: 'Beaverton',
+                    id:"",
+                    attributeValue: '',
                     attributeTypes: {
                         name: 'OFFICE'
                     }
@@ -86,36 +92,93 @@ class ManageSchedulePage extends React.Component {
               templateUri: {
                 required: ''
               },
+              frequency: {
+                required: ''
+              },
               startDate: {
                 required: ''
               },
               endDate: {
                 afterStart: '',
                 sevenDays: ''
+              },
+              client: {
+                required: ''
+              },
+              location: {
+                required: ''
+              },
+              project: {
+                required: ''
+              },
+              respondents: {
+                required: ''
+              },
+              roles: {
+                required: ''
               }
-            }
+            },
+            scheduleToUpdate: {},
+            statefulUsers:[]
         };
     }
 
-    onClickUpdate(event) {
-        event.persist();
-        browserHistory.push('/schedules/update/' + event.currentTarget.value.id);
+    componentWillMount(){
+
+        let schedule;
+        if(this.props.params.id) {
+            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
+            schedule = schedule[0];
+        }
+        let statefulUsers = [];
+        if(schedule){
+        if(this.props.users.length>0){          
+            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
+        }
+        return this.setState({schedule,statefulUsers});
+        }else{
+           return this.setState({schedules:this.props.schedules}); 
+        }
     }
 
-    onClickSubmit() {
-        console.log("ALLOWED ATTIBUTES ON SUBMIT", this.state.allowedAttributes);
-        console.log("SCHEDULE STATE ON SUBMIT----->", this.state.schedule);
+    addUserLink(schedule) {
+        let modifiedSchedule = Object.assign({}, this.state.schedule);
+        if(!this.props.params.id){
+            schedule.respondents.forEach((respondent) => {
+                respondent.user = HateoasUtils.getObjectLink(respondent.user);
+            });
+        }else if(this.props.params.id){
+            schedule.respondents.forEach((respondent) => {
+                respondent.user = HateoasUtils.createObjectLink(respondent.user);
+                delete respondent.id;
+            });
+        }
+        modifiedSchedule = schedule; 
+        return this.setState({schedule:modifiedSchedule});
+    }
+
+    addRoles(schedule, attributes) {
+        let modifiedSchedule = Object.assign({}, this.state.schedule);
+        schedule.respondents.forEach((respondent) => {
+            respondent.allowedAttributes = attributes.concat(respondent.allowedAttributes[0].attributeValue);
+        });
+        modifiedSchedule = schedule; 
+        return this.setState({schedule:modifiedSchedule});
+    }
+
+     onClickSubmit() {
         if (this.isFormValid()) {
-            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
             let formattedSchedule = Object.assign({}, this.state.schedule);
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
 
-            ScheduleUtils.addRoles(formattedSchedule, attributes);
-            ScheduleUtils.addUserLink(formattedSchedule);
-
+            this.addRoles(formattedSchedule, attributes);
+            this.addUserLink(formattedSchedule);
+           
             this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-            toastr.options.positionClass = 'toast-top-full-width';
-            toastr.success('Schedule submitted!');
-            browserHistory.push("/schedules/");
+
+             toastr.options.positionClass = 'toast-top-full-width';
+             toastr.success('Schedule submitted!');
+             browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -215,17 +278,131 @@ class ManageSchedulePage extends React.Component {
     }
 
     isFormValid() {
-        return this.validateStartDate() &&
-                this.validateEndDate() &&
-                this.validateSeven();
+
+        return this.validateStartDate()
+            & this.validateEndDate()
+            & this.validateSeven()
+            & this.validateTemplate()
+            & this.validateFrequency()
+            & this.validateClient()
+            & this.validateOffice()
+            & this.validateProject()
+            & this.validateRespondents()
+            & this.validateRoles()
+            & this.validateStartDate();
+    }
+
+    validateRoles(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = false;
+        let roles = this.state.schedule.respondents.map( (resp) =>{return resp.allowedAttributes[0].attributeValue;});
+        roles.map(() => {
+            for(let i=0; i<roles.length; i++){
+                if(!roles[i]){
+                    errors.roles.required = 'Each respondent must have a role';
+                    return;
+                }   
+            }
+            isValid = true;
+            errors.roles.required = '';
+        });
+
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateRespondents(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = false;
+        if(this.state.schedule.respondents.length < 1){
+            errors.respondents.required = 'Respondents required';
+            isValid = false;
+        }else{
+            errors.respondents.required = '';
+            isValid = true;
+        }
+        
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateProject(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[1].attributeValue === ''){
+            errors.project.required = 'Project is required';
+            isValid = false;
+        }else{
+            errors.project.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateOffice(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[2].attributeValue === ''){
+            errors.location.required = 'Office is required';
+            isValid = false;
+        }else{
+            errors.location.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateClient(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.allowedAttributes[0].attributeValue === ''){
+            errors.client.required = 'Client is required';
+            isValid = false;
+        }else{
+            errors.client.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateFrequency(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.schedule.frequency === ''){
+            errors.frequency.required = 'Frequency is required';
+            isValid = false;
+        }else{
+            errors.frequency.required = '';
+        }
+        this.setState({errors});
+        return isValid;
+    }
+
+    validateTemplate(){
+        let errors = Object.assign({},this.state.errors);
+        let isValid = true;
+        if(this.state.schedule.templateUri === ''){
+            errors.templateUri.required = 'Template is required';
+            isValid = false;
+        }else{
+            errors.templateUri.required = '';
+        }
+        this.setState({errors});
+        return isValid;
     }
 
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
+        let dateChosen = new Date((this.state.schedule.startDate).replace(/-/g,",")).setHours(0,0,0,0);
+        let today = new Date(Date.now()).setHours(0,0,0,0);
 
         if(this.state.schedule.startDate === ''){
             errors.startDate.required = 'Start date is required';
+            isValid = false;
+        }
+        else if(dateChosen<today){
+            errors.startDate.required = 'Start date must not be in the past';
             isValid = false;
         }
         else{
@@ -280,10 +457,41 @@ class ManageSchedulePage extends React.Component {
       return formatUrl;
     }
 
+    getStatefulUsers(schedule, allUsers){
+        let checkedUsers = schedule.respondents.map((respondent)=>{
+                let respondent1 = Object.assign({}, respondent);
+                respondent1.user["checked"] = true;
+                let respondent2 = Object.assign({}, respondent1);
+                return respondent2.user;
+        });
+        allUsers = allUsers.map(user => {
+                   let user1 = Object.assign({}, user);
+                    user1.checked = false;
+                    let user2 = Object.assign({}, user1);
+                    return user2;
+                });
+        let newUsers1;
+        let newUsers = checkedUsers.concat(allUsers);
+            for(let i = 0; i<newUsers.length;i++ ){
+                if(newUsers[i].checked){
+                    for(let j = 0;j<newUsers.length;j++){
+                      if(newUsers[j].id === newUsers[i].id && !newUsers[j].checked){
+                          newUsers.splice(j,1);
+                        }
+                    }
+                }
+            }
+        newUsers1 = Object.assign([], newUsers);
+        let formattedUsers = [];
+                newUsers1.forEach((user) => {
+                    formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
+                });
+    return formattedUsers;
+    }
 
 
     render() {
-        const {schedules, templates, users} = this.props;
+        const {templates, users} = this.props;
         let templateOptions = [];
         templates.map((template) => {
         templateOptions.push( {
@@ -293,23 +501,55 @@ class ManageSchedulePage extends React.Component {
         });
 
         return (
+            <div>
+                {(!this.state.schedule.id)?
                 <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Create Schedule'}/>
-                <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
-                    templates={templates} schedules={schedules} templateOptions={templateOptions}
-                    templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
-                    errorsTemplateUri={this.state.errors.templateUri.required}
-                    scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
-                    validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
-                    scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
-                    errorsEndDate={this.state.errors.endDate.afterStart}
-                    allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
-                    allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
-                    allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
-                    onUpdateAttribute={this.onUpdateAttribute}
-                    users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
-                    onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
-                />  
+                 <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                templateOptions={templateOptions}
+                templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                errorsTemplateUri={this.state.errors.templateUri.required}
+                scheduleFrequency={this.state.schedule.frequency} 
+                errorsFrequency={this.state.errors.frequency.required}
+                onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                errorsEndDate={this.state.errors.endDate.afterStart}
+                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                errorsClient={this.state.errors.client.required}
+                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                errorsProject={this.state.errors.project.required}
+                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                errorsLocation={this.state.errors.location.required}
+                onUpdateAttribute={this.onUpdateAttribute}
+                users={users} respondents={this.state.schedule.respondents}
+                errorsRespondents={this.state.errors.respondents}
+                errorsRoles={this.state.errors.roles}  
+                updateUsers={this.updateUsers} updateRole={this.updateRole}
+                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+            />  
+            </div>:
+            <div className="container" style={scheduleOuterDiv}>
+                <h1 style={alignCenterStyle}>Update Schedule</h1><br></br><br></br>
+            <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                templates={templates} templateOptions={templateOptions}
+                templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
+                errorsTemplateUri={this.state.errors.templateUri.required}
+                scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
+                scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
+                errorsEndDate={this.state.errors.endDate.afterStart}
+                allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
+                allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
+                allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
+                onUpdateAttribute={this.onUpdateAttribute}
+                users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
+                onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
+                schedule={this.state.schedule}
+                statefulUsers={this.state.statefulUsers}
+            />
+            </div>
+        }
             </div>
         );
 
@@ -317,12 +557,12 @@ class ManageSchedulePage extends React.Component {
 }
 
 
-
 ManageSchedulePage.propTypes = {
     schedules: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
-    templates: PropTypes.array.isRequired
+    templates: PropTypes.array.isRequired,
+    params: PropTypes.object.isRequired
 };
 
 //Pulling in the React Router context, so router is available via this.context.router
@@ -330,8 +570,60 @@ ManageSchedulePage.contextTypes = {
     router: PropTypes.object.isRequired
 };
 
+function getScheduleById(schedules, scheduleId) {
+    const schedule = schedules.filter( schedule => schedule.id === parseInt(scheduleId));
+    return (schedule)? schedule[0]: null;
+}
+
+function getUsers(schedule, allUsers){
+        console.log("getStatefulUsers");
+    let checkedUsers = schedule.respondents.map((respondent)=>{
+            let respondent1 = Object.assign({}, respondent);
+            respondent1.user["checked"] = true;
+            let respondent2 = Object.assign({}, respondent1);
+            return respondent2.user;
+    });
+    allUsers = allUsers.map(user => {
+               let user1 = Object.assign({}, user);
+                user1.checked = false;
+                let user2 = Object.assign({}, user1);
+                return user2;
+            });
+    let newUsers1;
+    let newUsers = checkedUsers.concat(allUsers);
+        for(let i = 0; i<newUsers.length;i++ ){
+            if(newUsers[i].checked){
+                for(let j = 0;j<newUsers.length;j++){
+                  if(newUsers[j].id === newUsers[i].id && !newUsers[j].checked){
+                      newUsers.splice(j,1);
+                    }
+                }
+            }
+        }
+    newUsers1 = Object.assign([], newUsers);
+    let formattedUsers = [];
+            newUsers1.forEach((user) => {
+                formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
+            });
+    return formattedUsers;
+}
+
+
 function mapStateToProps(state, ownProps){
+
+    const scheduleId = ownProps.params.id;
+    let schedule = {
+        id: '',
+        templateUri: '',
+        templateName: '',
+        frequency: '',
+        startDate: '',
+        endDate: '',
+        respondents: []
+    };
+
     return {
+        schedule: schedule,
         users: state.users,
         schedules: state.schedules,
         templates: state.templates

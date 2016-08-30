@@ -10,11 +10,13 @@ import Button from '../common/Button.jsx';
 
 
 
-const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
+const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   onUpdateTemplate, errorsTemplateUri, scheduleFrequency, onUpdate, scheduleStartDate,
   validateStartDate, errorsStartDate, scheduleEndDate, validateEndDate, errorsEndDate,
   allowedAttributesClient, allowedAttributesProject, allowedAttributesLocation, onUpdateAttribute,
-  users, respondents, updateUsers, updateRole, onClickSubmit, viewSchedules, templateOptions
+  users, respondents, updateUsers, updateRole, onClickSubmit, viewSchedules, templateOptions,
+  schedule, statefulUsers, errorsFrequency, errorsClient, errorsLocation, errorsProject, errorsRespondents,
+  errorsRoles
 })  =>  {
 
         const schedulePanel = {
@@ -37,29 +39,35 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
 
                                   <div className="col-xs-6">
 
-                                    <SurveyScheduleDate 
-                                      templateUri={templateUri} 
+                                    <SurveyScheduleDate
+                                      templateUri={templateUri}
                                       onUpdateTemplate={onUpdateTemplate}
-                                      templateOptions={templateOptions} 
+                                      templateOptions={templateOptions}
                                       errorsTemplateUri={errorsTemplateUri}
-                                      scheduleFrequency={scheduleFrequency} 
-                                      onUpdate={onUpdate} 
+                                      scheduleFrequency={scheduleFrequency}
+                                      errorsFrequency={errorsFrequency}
+                                      onUpdate={onUpdate}
                                       scheduleStartDate={scheduleStartDate}
-                                      validateStartDate={validateStartDate} 
+                                      validateStartDate={validateStartDate}
                                       errorsStartDate={errorsStartDate}
-                                      scheduleEndDate={scheduleEndDate} 
+                                      scheduleEndDate={scheduleEndDate}
                                       validateEndDate={validateEndDate}
                                       errorsEndDate={errorsEndDate}
+                                      scheduleToUpdate={schedule}
                                     />
 
                                   </div>
 
                                   <div className="col-xs-6 well">
-                                    <AttributesComponent 
+                                    <AttributesComponent
                                       allowedAttributesClient={allowedAttributesClient}
+                                      errorsClient={errorsClient}
                                       allowedAttributesProject={allowedAttributesProject}
+                                      errorsProject={errorsProject}
                                       allowedAttributesLocation={allowedAttributesLocation}
+                                      errorsLocation={errorsLocation}
                                       onUpdateAttribute={onUpdateAttribute}
+                                      scheduleToUpdate={schedule}
                                     />
 
                                   </div>
@@ -68,7 +76,15 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
                             </div>
                     </div>
                     <div className="row">
-                       <UserForm users={users} respondents={respondents} updateUsers={updateUsers} updateRole={updateRole} />
+                       <UserForm users={users} 
+                        respondents={respondents}
+                        errorsRespondents={errorsRespondents}
+                        errorsRoles={errorsRoles} 
+                        updateUsers={updateUsers} 
+                        updateRole={updateRole} 
+                        scheduleToUpdate={schedule}
+                        statefulUsers={statefulUsers}
+                       />
                     </div>
                     <br />
                     <div className="col-md-12">
@@ -83,8 +99,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templates, templateUri,
 
 ScheduleForm.propTypes = {
     users: PropTypes.array.isRequired,
-    schedules: PropTypes.array.isRequired,
-    templates: PropTypes.array.isRequired,
+    schedules: PropTypes.array,
     initialState: PropTypes.object.isRequired,
     formatTemplateLink: PropTypes.func.isRequired,
     templateOptions: PropTypes.array.isRequired,
@@ -107,7 +122,15 @@ ScheduleForm.propTypes = {
     updateUsers: PropTypes.func.isRequired,
     updateRole: PropTypes.func.isRequired,
     onClickSubmit: PropTypes.func.isRequired,
-    viewSchedules: PropTypes.func.isRequired
+    viewSchedules: PropTypes.func.isRequired,
+    schedule: PropTypes.object,
+    statefulUsers: PropTypes.array,
+    errorsFrequency: PropTypes.string.isRequired,
+    errorsClient: PropTypes.string.isRequired,
+    errorsLocation: PropTypes.string.isRequired,
+    errorsProject: PropTypes.string.isRequired,
+    errorsRespondents: PropTypes.object.isRequired,
+    errorsRoles: PropTypes.object.isRequired
 };
 
 
