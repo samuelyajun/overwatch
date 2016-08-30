@@ -129,8 +129,8 @@ ScheduleForm.propTypes = {
     errorsClient: PropTypes.string.isRequired,
     errorsLocation: PropTypes.string.isRequired,
     errorsProject: PropTypes.string.isRequired,
-    errorsRespondents: PropTypes.string.isRequired,
-    errorsRoles: PropTypes.string.isRequired
+    errorsRespondents: PropTypes.object.isRequired,
+    errorsRoles: PropTypes.object.isRequired
 };
 
 
