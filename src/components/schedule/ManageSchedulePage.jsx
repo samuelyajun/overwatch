@@ -174,11 +174,11 @@ class ManageSchedulePage extends React.Component {
             this.addRoles(formattedSchedule, attributes);
             this.addUserLink(formattedSchedule);
            
-            // this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
 
-            //  toastr.options.positionClass = 'toast-top-full-width';
-            //  toastr.success('Schedule submitted!');
-            //  browserHistory.push("/schedules/");
+             toastr.options.positionClass = 'toast-top-full-width';
+             toastr.success('Schedule submitted!');
+             browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
