@@ -174,11 +174,11 @@ class ManageSchedulePage extends React.Component {
             this.addRoles(formattedSchedule, attributes);
             this.addUserLink(formattedSchedule);
            
-            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+            // this.props.actions.postToSurveyWithSchedule(formattedSchedule);
 
-             toastr.options.positionClass = 'toast-top-full-width';
-             toastr.success('Schedule submitted!');
-             browserHistory.push("/schedules/");
+            //  toastr.options.positionClass = 'toast-top-full-width';
+            //  toastr.success('Schedule submitted!');
+            //  browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
             toastr.error('Validation errors');
@@ -396,11 +396,17 @@ class ManageSchedulePage extends React.Component {
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
+        let dateChosen = new Date((this.state.schedule.startDate).replace(/-/g,",")).setHours(0,0,0,0);
+        let today = new Date(Date.now()).setHours(0,0,0,0);
 
         if(this.state.schedule.startDate === ''){
             errors.startDate.required = 'Start date is required';
             isValid = false;
         }
+        // else if(dateChosen<today){
+        //     errors.startDate.required = 'Start date must not be in the past';
+        //     isValid = false;
+        // }
         else{
             errors.startDate.required = '';
             isValid = true;
