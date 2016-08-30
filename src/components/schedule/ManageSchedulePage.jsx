@@ -123,9 +123,26 @@ class ManageSchedulePage extends React.Component {
         };
     }
 
+    componentWillMount(){
+
+        let schedule;
+        if(this.props.params.id) {
+            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
+            schedule = schedule[0];
+        }
+        let statefulUsers = [];
+        if(schedule){
+        if(this.props.users.length>0){          
+            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
+        }
+        return this.setState({schedule,statefulUsers});
+        }else{
+           return this.setState({schedules:this.props.schedules}); 
+        }
+    }
+
     addUserLink(schedule) {
         let modifiedSchedule = Object.assign({}, this.state.schedule);
-       // console.log("in addUserLink");
         if(!this.props.params.id){
             schedule.respondents.forEach((respondent) => {
                 respondent.user = HateoasUtils.getObjectLink(respondent.user);
@@ -136,8 +153,7 @@ class ManageSchedulePage extends React.Component {
                 delete respondent.id;
             });
         }
-        modifiedSchedule = schedule;
-      //  console.log("in addUserLink",modifiedSchedule); 
+        modifiedSchedule = schedule; 
         return this.setState({schedule:modifiedSchedule});
     }
 
@@ -147,35 +163,21 @@ class ManageSchedulePage extends React.Component {
             respondent.allowedAttributes = attributes.concat(respondent.allowedAttributes[0].attributeValue);
         });
         modifiedSchedule = schedule; 
-       // console.log("in addRoles");
         return this.setState({schedule:modifiedSchedule});
     }
 
      onClickSubmit() {
-        console.log("this.validateRoles;",this.validateRoles());
         if (this.isFormValid()) {
-            console.log("VALIDATION PASSED");
             let formattedSchedule = Object.assign({}, this.state.schedule);
-console.log("onClickSubmit",formattedSchedule)
             let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
 
             this.addRoles(formattedSchedule, attributes);
             this.addUserLink(formattedSchedule);
-            //this.checkFrequency(formattedSchedule);
            
-            //console.log("getting new copy of state.schedule",this.state.schedule);
-//             setTimeout(function(){
-// console.log("*** formattedSchedule after scheduleUtils ****",formattedSchedule)}, 1500);
-//we need to further clean the schedule before update, to make sure the values fit the right format-
-//if not updated by the user, the defaults are not all formatted correctly and the user will be undefined - 
-//several fields are dependent on click events to be formatted correctly. start with frequency?
-// if(this.props.params.id){
-//     this.props.actions.updateSchedule(this.state.schedule);
-// }else{
-//     this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-// }
-            // toastr.options.positionClass = 'toast-top-full-width';
-            // toastr.success('Schedule submitted!');
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+
+             toastr.options.positionClass = 'toast-top-full-width';
+             toastr.success('Schedule submitted!');
              browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
@@ -286,8 +288,9 @@ console.log("onClickSubmit",formattedSchedule)
             let g =    this.validateProject();
             let h =    this.validateRespondents();
             let i =    this.validateRoles();
+            let j =    this.validateStartDate();
 
-        return a&&b&&c&&d&&e&&f&&g&&h&&i;
+        return a&&b&&c&&d&&e&&f&&g&&h&&i&&j;
     }
 
     validateRoles(){
@@ -483,28 +486,6 @@ console.log("onClickSubmit",formattedSchedule)
     return formattedUsers;
     }
 
-    componentWillMount(){
-        //we should be setting props.funUsers and sending them as the props to the checkboxes!!!!!!!!!
-      //  console.log("componentWillMount*******", this.props.schedules)
-        let schedule;
-        if(this.props.params.id) {
-            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
-            schedule = schedule[0];
-        }
-        let statefulUsers = [];
-        if(schedule){
-        if(this.props.users.length>0){          
-    //console.log(schedule, users.length);
-            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
-        }
-
-      //  console.log("componentWillMount******* schedule",schedule.respondents[0].user)
-        return this.setState({schedule,statefulUsers});
-        }else{
-          //  console.log("In else - componentWillMount*******", this.props.schedules)
-           return this.setState({schedules:this.props.schedules}); 
-        }
-    }
 
     render() {
         const {schedules, templates, users} = this.props;

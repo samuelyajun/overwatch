@@ -18,9 +18,7 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   schedule, statefulUsers, errorsFrequency, errorsClient, errorsLocation, errorsProject, errorsRespondents,
   errorsRoles
 })  =>  {
-(function(){
-  console.log("errorsRoles",errorsRoles);
-})();
+
         const schedulePanel = {
             backgroundColor:'#999999',
             borderColor: '#999999',
