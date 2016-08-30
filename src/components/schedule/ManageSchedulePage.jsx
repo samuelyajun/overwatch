@@ -454,7 +454,6 @@ class ManageSchedulePage extends React.Component {
     }
 
     getStatefulUsers(schedule, allUsers){
-       // console.log("getStatefulUsers");
         let checkedUsers = schedule.respondents.map((respondent)=>{
                 let respondent1 = Object.assign({}, respondent);
                 respondent1.user["checked"] = true;
@@ -619,18 +618,7 @@ function mapStateToProps(state, ownProps){
         respondents: []
     };
 
-let chosenSchedule = getScheduleById(state.schedules, scheduleId);
-let funUsers = [];
-    if(chosenSchedule){
-    if(state.users.length>0){          
-        funUsers = getUsers(chosenSchedule,state.users);
-//console.log(funUsers);
-    }  
-}
-    //console.log("OWN PROPS", funUsers);
-    //console.log("******statefulUsers******", statefulUsers);
     return {
-        funUsers: state.funUsers,
         schedule: schedule,
         users: state.users,
         schedules: state.schedules,

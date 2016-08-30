@@ -67,7 +67,9 @@ UserForm.propTypes = {
     updateUsers: PropTypes.func,
     updateRole: PropTypes.func,
     scheduleToUpdate: PropTypes.object,
-    statefulUsers: PropTypes.array
+    statefulUsers: PropTypes.array,
+    errorsRespondents: PropTypes.string.isRequired,
+    errorsRoles: PropTypes.string.isRequired
 };
 
 export default UserForm;

@@ -224,7 +224,10 @@ AttributesComponent.propTypes = {
   allowedAttributesProject: PropTypes.string,
   allowedAttributesLocation: PropTypes.string,
   onUpdateAttribute: PropTypes.func,
-  scheduleToUpdate: PropTypes.object
+  scheduleToUpdate: PropTypes.object,
+  errorsClient: PropTypes.string.isRequired,
+  errorsLocation: PropTypes.string.isRequired,
+  errorsProject: PropTypes.string.isRequired
 };
 
 export default AttributesComponent;
