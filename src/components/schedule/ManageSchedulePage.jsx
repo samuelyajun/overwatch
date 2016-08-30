@@ -278,28 +278,26 @@ class ManageSchedulePage extends React.Component {
     }
 
     isFormValid() {
-        this.validateStartDate();
-            let a =    this.validateEndDate();
-            let b =    this.validateSeven();
-            let c =    this.validateTemplate();
-            let d =    this.validateFrequency();
-            let e =    this.validateClient();
-            let f =    this.validateOffice();
-            let g =    this.validateProject();
-            let h =    this.validateRespondents();
-            let i =    this.validateRoles();
-            let j =    this.validateStartDate();
 
-        return a&&b&&c&&d&&e&&f&&g&&h&&i&&j;
+        return this.validateStartDate()
+            & this.validateEndDate()
+            & this.validateSeven()
+            & this.validateTemplate()
+            & this.validateFrequency()
+            & this.validateClient()
+            & this.validateOffice()
+            & this.validateProject()
+            & this.validateRespondents()
+            & this.validateRoles()
+            & this.validateStartDate();
     }
 
     validateRoles(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        let roles = this.state.schedule.respondents.map((resp)=>{return resp.allowedAttributes[0].attributeValue;});
-        let result=false;
-        roles.forEach(function(){
-            for(let i=0;i<roles.length;i++){
+        let roles = this.state.schedule.respondents.map( (resp) =>{return resp.allowedAttributes[0].attributeValue;});
+        roles.map(() => {
+            for(let i=0; i<roles.length; i++){
                 if(!roles[i]){
                     errors.roles.required = 'Each respondent must have a role';
                     return;
@@ -316,7 +314,7 @@ class ManageSchedulePage extends React.Component {
     validateRespondents(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        if(this.state.schedule.respondents.length<1){
+        if(this.state.schedule.respondents.length < 1){
             errors.respondents.required = 'Respondents required';
             isValid = false;
         }else{
@@ -332,7 +330,7 @@ class ManageSchedulePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[1].attributeValue === ''){
-            errors.project.required = 'Project required';
+            errors.project.required = 'Project is required';
             isValid = false;
         }else{
             errors.project.required = '';
@@ -345,7 +343,7 @@ class ManageSchedulePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[2].attributeValue === ''){
-            errors.location.required = 'Office required';
+            errors.location.required = 'Office is required';
             isValid = false;
         }else{
             errors.location.required = '';
@@ -358,7 +356,7 @@ class ManageSchedulePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[0].attributeValue === ''){
-            errors.client.required = 'Frequency required';
+            errors.client.required = 'Client is required';
             isValid = false;
         }else{
             errors.client.required = '';
@@ -371,7 +369,7 @@ class ManageSchedulePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.schedule.frequency === ''){
-            errors.frequency.required = 'Frequency required';
+            errors.frequency.required = 'Frequency is required';
             isValid = false;
         }else{
             errors.frequency.required = '';
@@ -384,7 +382,7 @@ class ManageSchedulePage extends React.Component {
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.schedule.templateUri === ''){
-            errors.templateUri.required = 'Template required';
+            errors.templateUri.required = 'Template is required';
             isValid = false;
         }else{
             errors.templateUri.required = '';
@@ -403,10 +401,10 @@ class ManageSchedulePage extends React.Component {
             errors.startDate.required = 'Start date is required';
             isValid = false;
         }
-        // else if(dateChosen<today){
-        //     errors.startDate.required = 'Start date must not be in the past';
-        //     isValid = false;
-        // }
+        else if(dateChosen<today){
+            errors.startDate.required = 'Start date must not be in the past';
+            isValid = false;
+        }
         else{
             errors.startDate.required = '';
             isValid = true;
@@ -493,7 +491,7 @@ class ManageSchedulePage extends React.Component {
 
 
     render() {
-        const {schedules, templates, users} = this.props;
+        const {templates, users} = this.props;
         let templateOptions = [];
         templates.map((template) => {
         templateOptions.push( {
