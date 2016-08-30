@@ -42,8 +42,8 @@ const LikertQuestionList = ({surveyProps, handleChange, errors}) => {
         <table className={tableStyle}>
             <thead>
             <tr>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
+                <th> </th>
+                <th> </th>
                 <th style={listStyle}>Strongly <br/> Disagree</th>
                 <th style={listStyle}>Disagree</th>
                 <th style={listStyle}>Neutral</th>
