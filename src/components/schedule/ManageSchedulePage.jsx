@@ -119,27 +119,40 @@ class ManageSchedulePage extends React.Component {
               }
             },
             scheduleToUpdate: {},
-            statefulUsers:[],
-            users:[]
+            statefulUsers:[]
         };
+    }
+
+    componentWillMount(){
+        let schedule;
+        if(this.props.params.id) {
+            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
+            schedule = schedule[0];
+        }
+        let statefulUsers = [];
+        if(schedule){
+        if(this.props.users.length>0){          
+            statefulUsers = this.getStatefulUsers(schedule,this.props.users);
+        }
+        return this.setState({schedule,statefulUsers});
+        }else{
+           return this.setState({schedules:this.props.schedules}); 
+        }
     }
 
     addUserLink(schedule) {
         let modifiedSchedule = Object.assign({}, this.state.schedule);
-       // console.log("in addUserLink");
         if(!this.props.params.id){
             schedule.respondents.forEach((respondent) => {
                 respondent.user = HateoasUtils.getObjectLink(respondent.user);
             });
         }else if(this.props.params.id){
             schedule.respondents.forEach((respondent) => {
-                console.log("hateos respondent",respondent);//user has no id property - this not working!
-                respondent.user = HateoasUtils.createObjectLink(respondent.user);//this is a url
+                respondent.user = HateoasUtils.createObjectLink(respondent.user);
                 delete respondent.id;
             });
         }
-        modifiedSchedule = schedule;
-      //  console.log("in addUserLink",modifiedSchedule); 
+        modifiedSchedule = schedule; 
         return this.setState({schedule:modifiedSchedule});
     }
 
@@ -149,38 +162,21 @@ class ManageSchedulePage extends React.Component {
             respondent.allowedAttributes = attributes.concat(respondent.allowedAttributes[0].attributeValue);
         });
         modifiedSchedule = schedule; 
-       // console.log("in addRoles");
         return this.setState({schedule:modifiedSchedule});
     }
 
-     onClickSubmit() {//something happens to the respondents - they don't have respondent.user.idl; but they did?() 
-//respondents/roles is a mess          
-       // console.log("this.validateRoles;",this.isFormValid());
-        console.log("this.state.schedule",this.state.schedule);//user is already a url
+     onClickSubmit() {
         if (this.isFormValid()) {
-            console.log("VALIDATION PASSED");
             let formattedSchedule = Object.assign({}, this.state.schedule);
-console.log("onClickSubmit - schedule on submit",formattedSchedule)
-            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));//allowedAttributes is separate from schedule
-//console.log("schedule before addRoles",  this.state.schedule);
+            let attributes = Object.assign([], this.attrToUrls(this.state.allowedAttributes));
+
             this.addRoles(formattedSchedule, attributes);
-            console.log("schedule after addRoles",  this.state.schedule);
             this.addUserLink(formattedSchedule);
-            console.log("schedule after addUserLink",  this.state.schedule);
-            //this.checkFrequency(formattedSchedule);
-            //console.log("getting new copy of state.schedule",this.state.schedule);
-//             setTimeout(function(){
-// console.log("*** formattedSchedule after scheduleUtils ****",formattedSchedule)}, 1500);
-//we need to further clean the schedule before update, to make sure the values fit the right format-
-//if not updated by the user, the defaults are not all formatted correctly and the user will be undefined - 
-//several fields are dependent on click events to be formatted correctly. start with frequency?
-// if(this.props.params.id){
-//     this.props.actions.updateSchedule(this.state.schedule);
-// }else{
-//     this.props.actions.postToSurveyWithSchedule(formattedSchedule);
-// }
-            // toastr.options.positionClass = 'toast-top-full-width';
-            // toastr.success('Schedule submitted!');
+           
+            this.props.actions.postToSurveyWithSchedule(formattedSchedule);
+
+             toastr.options.positionClass = 'toast-top-full-width';
+             toastr.success('Schedule submitted!');
              browserHistory.push("/schedules/");
         } else {
             toastr.options.positionClass = 'toast-top-full-width';
@@ -234,18 +230,17 @@ console.log("onClickSubmit - schedule on submit",formattedSchedule)
         });
         attribute.attributeValue = event.target.value;
         attribute.id = event.target.value;
-//console.log("onUpdateAttribute schedule",this.state.schedule)
+
         this.setState({errors: errors});
         return this.setState({attributes});
     }
 
 
     updateUsers(event) {
-       // console.log("event.target.checked",event.target.checked);
         const isChecked = event.target.checked;
         const userId = parseInt(event.target.value);
         let schedule = Object.assign({}, this.state.schedule);
-//console.log("schedule in updateUsers", this.state.schedule.respondents);
+
         if (isChecked) {
             const user = this.props.users.find((user) => {
                 return user.id === userId;
@@ -262,7 +257,6 @@ console.log("onClickSubmit - schedule on submit",formattedSchedule)
 
             const newRespondents = [...schedule.respondents, Object.assign({}, respondent)];
             schedule.respondents = newRespondents;
-    console.log("schedule.respondents in updateUsers", newRespondents);        
         } else {
             const newRespondents = [
                 ...schedule.respondents.filter((respondent) => {
@@ -276,46 +270,33 @@ console.log("onClickSubmit - schedule on submit",formattedSchedule)
 
     updateRole(event) {
         const index = parseInt(event.target.name);
-        console.log("update role - index", index);
         const role = event.target.value;
         const schedule = Object.assign({}, this.state.schedule);
         schedule.respondents[index].allowedAttributes[0].attributeValue = role;
-        console.log("schedule updateRole",schedule);
         return this.setState({schedule});
     }
 
     isFormValid() {
-        this.validateStartDate();
-            let a =    this.validateEndDate();
-            let b =    this.validateSeven();
-            let c =    this.validateTemplate();
-            let d =    this.validateFrequency();
-            let e =    this.validateClient();
-            let f =    this.validateOffice();
-            let g =    this.validateProject();
-            let h =    this.validateRespondents();
-            let i =    this.validateRoles();
-// console.log("validateEndDate", a);
-// console.log("validateSeven", b);
-// console.log("validateTemplate", c);
-// console.log("validateFrequency", d);
-// console.log("validateClient", e);
-// console.log("validateOffice", f);
-// console.log("validateProject", g);
-// console.log("validateRespondents", h);
-// console.log("validateRoles", i);
-        return a&&b&&c&&d&&e&&f&&g&&h&&i;
+
+        return this.validateStartDate()
+            & this.validateEndDate()
+            & this.validateSeven()
+            & this.validateTemplate()
+            & this.validateFrequency()
+            & this.validateClient()
+            & this.validateOffice()
+            & this.validateProject()
+            & this.validateRespondents()
+            & this.validateRoles()
+            & this.validateStartDate();
     }
 
     validateRoles(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        let roles = this.state.schedule.respondents.map((resp)=>{
-console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0].attributeValue);
-            return resp.allowedAttributes[0].attributeValue;});
-        let result=false;
-        roles.forEach(function(){
-            for(let i=0;i<roles.length;i++){
+        let roles = this.state.schedule.respondents.map( (resp) =>{return resp.allowedAttributes[0].attributeValue;});
+        roles.map(() => {
+            for(let i=0; i<roles.length; i++){
                 if(!roles[i]){
                     errors.roles.required = 'Each respondent must have a role';
                     return;
@@ -332,7 +313,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
     validateRespondents(){
         let errors = Object.assign({},this.state.errors);
         let isValid = false;
-        if(this.state.schedule.respondents.length<1){
+        if(this.state.schedule.respondents.length < 1){
             errors.respondents.required = 'Respondents required';
             isValid = false;
         }else{
@@ -348,7 +329,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[1].attributeValue === ''){
-            errors.project.required = 'Project required';
+            errors.project.required = 'Project is required';
             isValid = false;
         }else{
             errors.project.required = '';
@@ -361,7 +342,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[2].attributeValue === ''){
-            errors.location.required = 'Office required';
+            errors.location.required = 'Office is required';
             isValid = false;
         }else{
             errors.location.required = '';
@@ -374,7 +355,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.allowedAttributes[0].attributeValue === ''){
-            errors.client.required = 'Client required';
+            errors.client.required = 'Client is required';
             isValid = false;
         }else{
             errors.client.required = '';
@@ -387,7 +368,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.schedule.frequency === ''){
-            errors.frequency.required = 'Frequency required';
+            errors.frequency.required = 'Frequency is required';
             isValid = false;
         }else{
             errors.frequency.required = '';
@@ -400,7 +381,7 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
         if(this.state.schedule.templateUri === ''){
-            errors.templateUri.required = 'Template required';
+            errors.templateUri.required = 'Template is required';
             isValid = false;
         }else{
             errors.templateUri.required = '';
@@ -412,9 +393,15 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
     validateStartDate(){
         let errors = Object.assign({},this.state.errors);
         let isValid = true;
+        let dateChosen = new Date((this.state.schedule.startDate).replace(/-/g,",")).setHours(0,0,0,0);
+        let today = new Date(Date.now()).setHours(0,0,0,0);
 
         if(this.state.schedule.startDate === ''){
             errors.startDate.required = 'Start date is required';
+            isValid = false;
+        }
+        else if(dateChosen<today){
+            errors.startDate.required = 'Start date must not be in the past';
             isValid = false;
         }
         else{
@@ -470,7 +457,6 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
     }
 
     getStatefulUsers(schedule, allUsers){
-       // console.log("getStatefulUsers");
         let checkedUsers = schedule.respondents.map((respondent)=>{
                 let respondent1 = Object.assign({}, respondent);
                 respondent1.user["checked"] = true;
@@ -499,50 +485,12 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
                 newUsers1.forEach((user) => {
                     formattedUsers.push(Object.assign({}, {id: user.id, name: user.firstName + ' ' + user.lastName, checked:user.checked}));
                 });
-                let users2 = Object.assign([], formattedUsers)
-    return users2;
+    return formattedUsers;
     }
 
-    componentWillMount(){      
-       // console.log("componentWillMount******* this.props.params" , this.props.params)
-        let schedule;
-        if(this.props.params.id) {
-            schedule = this.props.schedules.filter( schedule => schedule.id === parseInt(this.props.params.id));
-            schedule = schedule[0];
-        }
-        let statefulUsers;
-        if(schedule){
-        if(this.props.users.length>0){          
-    console.log("componentWillMount******* schedule" ,schedule);//get respondents
-    //set state of allowedAttributes and each respondent's role
-            statefulUsers = Object.assign([],this.getStatefulUsers(schedule,this.props.users));     
-        }
-//take allowedAttributes from first respondent and set state of project and client and office
-//loop thru respondents for roles, set state with roles
-        console.log("componentWillMount******* schedule.respondents",schedule.respondents[0])
-        let respondentRole;//schedule.respondent=respondentRole --{
-            //     attributeValue: '',
-            //     attributeTypes: {
-            //         name: 'ROLE'
-            //     }
-            // }
-        schedule.respondents.map(respondent => {
-            for (let attribute of respondent.allowedAttributes) {
-                if(attribute.attributeType.name==="ROLE"){
-                 console.log(respondent.id, attribute.attributeType.name,attribute.attributeValue);
-                }
-        }
-        });
-        return this.setState({schedule,statefulUsers});
-        }else{
-          //  console.log("In else - componentWillMount*******", this.props.schedules)
-           return this.setState({schedules:this.props.schedules}); 
-        }
-    }
 
     render() {
-        const {schedules, templates, users} = this.props;
-        //const users = this.state.users;
+        const {templates, users} = this.props;
         let templateOptions = [];
         templates.map((template) => {
         templateOptions.push( {
@@ -550,13 +498,13 @@ console.log("resp.allowedAttributes[0].attributeValue",resp.allowedAttributes[0]
             value: this.formatTemplateLink(template._links.self.href)
         });
         });
-console.log("schedule in render", this.state.schedule);
+
         return (
             <div>
                 {(!this.state.schedule.id)?
                 <div className="container" style={scheduleOuterDiv}>
                 <PageTitle name={'Create Schedule'}/>
-                <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
+                 <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
                 templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
                 errorsTemplateUri={this.state.errors.templateUri.required}
@@ -578,31 +526,23 @@ console.log("schedule in render", this.state.schedule);
                 errorsRoles={this.state.errors.roles}  
                 updateUsers={this.updateUsers} updateRole={this.updateRole}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
-                />  
+            />  
             </div>:
             <div className="container" style={scheduleOuterDiv}>
-                <PageTitle name={'Update Schedule'}/>
+                <h1 style={alignCenterStyle}>Update Schedule</h1><br></br><br></br>
             <ScheduleForm initialState={this.state} formatTemplateLink={this.formatTemplateLink}
                 templates={templates} templateOptions={templateOptions}
                 templateUri={this.state.schedule.templateUri} onUpdateTemplate={this.onUpdateTemplate}
                 errorsTemplateUri={this.state.errors.templateUri.required}
-                scheduleFrequency={this.state.schedule.frequency} 
-                errorsFrequency={this.state.errors.frequency.required}
-                onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
+                scheduleFrequency={this.state.schedule.frequency} onUpdate={this.onUpdate} scheduleStartDate={this.state.schedule.startDate}
                 validateStartDate={this.validateStartDate} errorsStartDate={this.state.errors.startDate.required}
                 scheduleEndDate={this.state.schedule.endDate} validateEndDate={this.validateEndDate}
                 errorsEndDate={this.state.errors.endDate.afterStart}
                 allowedAttributesClient={this.state.allowedAttributes[0].attributeValue}
-                errorsClient={this.state.errors.client.required}
                 allowedAttributesProject={this.state.allowedAttributes[1].attributeValue}
-                errorsProject={this.state.errors.project.required}
                 allowedAttributesLocation={this.state.allowedAttributes[2].attributeValue}
-                errorsLocation={this.state.errors.location.required}
                 onUpdateAttribute={this.onUpdateAttribute}
-                users={users} respondents={this.state.schedule.respondents}
-                errorsRespondents={this.state.errors.respondents}
-                updateUsers={this.updateUsers} updateRole={this.updateRole}
-                errorsRoles={this.state.errors.roles}
+                users={users} respondents={this.state.schedule.respondents} updateUsers={this.updateUsers} updateRole={this.updateRole}
                 onClickSubmit={this.onClickSubmit} viewSchedules={this.viewSchedules}
                 schedule={this.state.schedule}
                 statefulUsers={this.state.statefulUsers}
@@ -681,18 +621,7 @@ function mapStateToProps(state, ownProps){
         respondents: []
     };
 
-let chosenSchedule = getScheduleById(state.schedules, scheduleId);
-let funUsers = [];
-    if(chosenSchedule){
-    if(state.users.length>0){          
-        funUsers = getUsers(chosenSchedule,state.users);
-//console.log(funUsers);
-    }  
-}
-    //console.log("OWN PROPS", funUsers);
-    //console.log("******statefulUsers******", statefulUsers);
     return {
-        funUsers: state.funUsers,
         schedule: schedule,
         users: state.users,
         schedules: state.schedules,

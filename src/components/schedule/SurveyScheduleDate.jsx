@@ -199,7 +199,8 @@ SurveyScheduleDate.propTypes = {
   scheduleEndDate: PropTypes.string,
   validateEndDate: PropTypes.func,
   errorsEndDate: PropTypes.string,
-  scheduleToUpdate: PropTypes.object
+  scheduleToUpdate: PropTypes.object,
+  errorsFrequency: PropTypes.string.isRequired
 };
 
 export default SurveyScheduleDate;

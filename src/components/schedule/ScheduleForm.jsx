@@ -18,10 +18,6 @@ const ScheduleForm = ({initialState,formatTemplateLink, templateUri,
   schedule, statefulUsers, errorsFrequency, errorsClient, errorsLocation, errorsProject, errorsRespondents,
   errorsRoles
 })  =>  {
-(function(){
-  console.log("schedule ScheduleForm",respondents);
-  
-})();
         const schedulePanel = {
             backgroundColor:'#999999',
             borderColor: '#999999',
@@ -127,7 +123,13 @@ ScheduleForm.propTypes = {
     onClickSubmit: PropTypes.func.isRequired,
     viewSchedules: PropTypes.func.isRequired,
     schedule: PropTypes.object,
-    statefulUsers: PropTypes.array
+    statefulUsers: PropTypes.array,
+    errorsFrequency: PropTypes.string.isRequired,
+    errorsClient: PropTypes.string.isRequired,
+    errorsLocation: PropTypes.string.isRequired,
+    errorsProject: PropTypes.string.isRequired,
+    errorsRespondents: PropTypes.object.isRequired,
+    errorsRoles: PropTypes.object.isRequired
 };
 
 
